@@ -75,7 +75,7 @@ footer{padding:14px;text-align:center;color:#6b7684;font-size:12px}
 
 <footer>ROOK'S FIELD COMPANION v0.2 - Built for Viking Matt - No keys, no cloud, local only</footer>
 
-<script>
+fetch('data/library.json').then(r=>r.json()).then(d=>{document.getElementById('libraryList').innerHTML=d.entries.map(e=>'<div class="item"><b>'+e.title+'</b><br><small>'+e.body+'</small></div>').join('')}).catch(()=>{document.getElementById('libraryList').innerHTML='Library offline'});<script>
 let tasks=JSON.parse(localStorage.getItem('rooks_tasks')||'[]');
 let notes=JSON.parse(localStorage.getItem('rooks_notes')||'[]');
 let logs=JSON.parse(localStorage.getItem('rooks_log')||'[]');
