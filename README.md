@@ -9,7 +9,7 @@ A practical field terminal, not a bloated dashboard.
 Status, tasks, notes and mission log in one place.
 Eventually connects to the Viking AI Council, but v0.1 works on its own.
 
-## What is in v0.1
+## What is in v0.1 - LIVE AND WORKING
 
 1. Command Deck - Status panel, quick actions and navigation.
 2. Mission Log - Record jobs, plans, incidents, ideas and outcomes.
@@ -17,18 +17,23 @@ Eventually connects to the Viking AI Council, but v0.1 works on its own.
 4. Notes - Simple notes that can be searched and edited.
 5. Cyberpunk UI - Matte black, gunmetal, hazard orange and icy blue.
 
+Live site: https://matthewharcourtjc-oss.github.io/rooks-field-companion/
+
+Tested on Android: Tasks, Notes and Log all saving and counting correctly in local storage.
+
 ## How it works
 
 - Plain HTML, CSS and JavaScript. No frameworks, no build steps.
 - Runs as a static web app on GitHub Pages.
 - Data is saved in your browser local storage.
 - No AI API, no account, no subscription in v0.1.
+- Single file app: index.html contains all UI and logic.
 
 ## Important warning about data
 
 Data is stored in your browser only. It is NOT encrypted and it is NOT a secure vault.
 If you clear browser storage, your tasks and notes will be lost.
-Export and backup will come in a later version.
+Export and backup will come in v0.2.
 
 ## Rules - these are non-negotiable
 
@@ -41,5 +46,7 @@ Export and backup will come in a later version.
 ## Current status
 
 - Repo: rooks-field-companion
-- Status: v0.1 planning / setup
-- Next up: First working app file - index.html
+- Status: v0.1 LIVE and working on GitHub Pages
+- Files: README.md, index.html
+- Next up: v0.2 - Add to Home Screen and Export/Backup
+- Future: Read-only Council report viewer, PWA, voice input
