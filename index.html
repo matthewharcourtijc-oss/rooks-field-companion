@@ -54,6 +54,7 @@ footer{padding:14px;text-align:center;color:#6b7684;font-size:12px}
 <div class="card"><h2>QUICK ACTIONS</h2><button class="btn" onclick="show('tasks')">+ NEW TASK</button><button class="btn blue" onclick="show('notes')">+ NEW NOTE</button><button class="btn" style="background:#2a2f36;color:#fff;border:1px solid #ff6a00" onclick="show('log')">+ LOG ENTRY</button></div>
 <div class="card"><h2 style="color:#ff6a00">BACKUP</h2><p style="font-size:13px;line-height:1.4;color:#9aa5b1">Download everything to a file you keep. You can restore it later on this or another phone.</p><button class="btn" onclick="exportData()">⬇ DOWNLOAD BACKUP</button><button class="btn blue" onclick="document.getElementById('importFile').click()">⬆ RESTORE BACKUP</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)"></div>
 <div class="card"><h2>FIELD BRIEF</h2><p style="font-size:14px;line-height:1.5">Practical deck, not a bloated dashboard. Tasks, notes and log all in one place. Works without internet, without an account, without any AI connection in v0.2.</p></div>
+  <div class="card"><h2 class="o">HARCOM LIBRARY</h2><div id="libraryList">Loading library...</div></div>
 </div>
 
 <div id="tasks" class="panel">
