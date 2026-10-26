@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rook's Field Companion</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0a0a0c;color:#e8edf2;font-family:system-ui,-apple-system,Arial,sans-serif}
+header{background:#111418;border-bottom:3px solid #ff6a00;padding:14px 16px;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:20px;letter-spacing:1px}
+header h1 span{color:#ff6a00}
+header p{margin:4px 0 0;color:#7dd8ff;font-size:13px}
+.warn{background:#2a1500;border:1px solid #ff6a00;color:#ffb27a;padding:10px 12px;margin:12px;font-size:13px;border-radius:8px}
+.tabs{display:flex;gap:8px;padding:0 12px;margin:12px 0}
+.tabs button{flex:1;padding:12px 6px;border:2px solid #2a2f36;background:#1a1e23;color:#fff;border-radius:10px;font-weight:700;font-size:14px}
+.tabs button.active{background:#ff6a00;border-color:#ff6a00;color:#000}
+.panel{display:none;padding:0 12px 40px}
+.panel.active{display:block}
+.card{background:#14181d;border:1px solid #2a2f36;border-radius:12px;padding:14px;margin-bottom:12px}
+.card h2{margin:0 0 8px;font-size:16px;color:#7dd8ff}
+.card h2.o{color:#ff6a00}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;background:#0f1215;border:1px solid #333a44;color:#fff;border-radius:8px;font-size:15px}
+button.btn{width:100%;padding:14px;background:#ff6a00;border:none;border-radius:10px;font-weight:800;font-size:15px;color:#000;margin-top:6px}
+button.btn.blue{background:#7dd8ff}
+button.small{padding:8px 10px;border-radius:8px;border:none;font-weight:700;margin-left:6px}
+.item{background:#1c2127;border-left:4px solid #7dd8ff;padding:10px 12px;border-radius:8px;margin:8px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.item.high{border-left-color:#ff3b30}
+.item.med{border-left-color:#ff6a00}
+.item.low{border-left-color:#7dd8ff}
+.item.done{opacity:.55;text-decoration:line-through}
+.item b{display:block}
+.item small{color:#9aa5b1}
+.row{display:flex;gap:6px}
+.stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #222}
+.stat:last-child{border:none}
+footer{padding:14px;text-align:center;color:#6b7684;font-size:12px}
+</style>
+</head>
+<body>
+<header><h1>ROOK'S <span>FIELD COMPANION</span></h1><p>VIKING TECH // v0.1 // MOBILE COMMAND DECK</p></header>
+<div class="warn">⚠ LOCAL STORAGE ONLY - Not encrypted, not a secure vault. If you clear your browser data, tasks and notes will be lost.</div>
+<div class="tabs">
+<button id="t-deck" class="active" onclick="show('deck')">DECK</button>
+<button id="t-tasks" onclick="show('tasks')">TASKS</button>
+<button id="t-notes" onclick="show('notes')">NOTES</button>
+<button id="t-log" onclick="show('log')">LOG</button>
+</div>
+
+<div id="deck" class="panel active">
+<div class="card"><h2 class="o">STATUS</h2><div class="stat"><span>System</span><b style="color:#2ecc71">ONLINE</b></div><div class="stat"><span>Tasks Open</span><b id="statTasks">0</b></div><div class="stat"><span>Notes</span><b id="statNotes">0</b></div><div class="stat"><span>Log Entries</span><b id="statLog">0</b></div></div>
+<div class="card"><h2>QUICK ACTIONS</h2><button class="btn" onclick="show('tasks')">+ NEW TASK</button><button class="btn blue" onclick="show('notes')">+ NEW NOTE</button><button class="btn" style="background:#2a2f36;color:#fff;border:1px solid #ff6a00" onclick="show('log')">+ LOG ENTRY</button></div>
+<div class="card"><h2>FIELD BRIEF</h2><p style="font-size:14px;line-height:1.5">Practical deck, not a bloated dashboard. Tasks, notes and log all in one place. Works without internet, without an account, without any AI connection in v0.1.</p></div>
+</div>
+
+<div id="tasks" class="panel">
+<div class="card"><h2>ADD TASK</h2><input id="taskText" placeholder="What needs doing?"><select id="taskPri"><option value="high">🔴 HIGH PRIORITY</option><option value="med" selected>🟠 MEDIUM</option><option value="low">🔵 LOW</option></select><button class="btn" onclick="addTask()">ADD TASK</button></div>
+<div id="taskList"></div>
+</div>
+
+<div id="notes" class="panel">
+<div class="card"><h2>ADD NOTE</h2><input id="noteTitle" placeholder="Title"><textarea id="noteBody" rows="3" placeholder="Write note..."></textarea><button class="btn blue" onclick="addNote()">SAVE NOTE</button></div>
+<div class="card"><h2>SEARCH NOTES</h2><input id="noteSearch" placeholder="Search notes..." oninput="renderNotes()"></div>
+<div id="noteList"></div>
+</div>
+
+<div id="log" class="panel">
+<div class="card"><h2>NEW LOG ENTRY</h2><select id="logType"><option>Job</option><option>Plan</option><option>Incident</option><option>Idea</option><option>Outcome</option></select><input id="logText" placeholder="What happened?"><button class="btn" onclick="addLog()">LOG IT</button></div>
+<div id="logList"></div>
+</div>
+
+<footer>ROOK'S FIELD COMPANION v0.1 - Built for Viking Matt - No keys, no cloud, local only</footer>
+
+<script>
+let tasks=JSON.parse(localStorage.getItem('rooks_tasks')||'[]');
+let notes=JSON.parse(localStorage.getItem('rooks_notes')||'[]');
+let logs=JSON.parse(localStorage.getItem('rooks_log')||'[]');
+function save(){localStorage.setItem('rooks_tasks',JSON.stringify(tasks));localStorage.setItem('rooks_notes',JSON.stringify(notes));localStorage.setItem('rooks_log',JSON.stringify(logs));renderAll();}
+function show(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById('t-'+id).classList.add('active');}
+function addTask(){let t=document.getElementById('taskText').value.trim();if(!t)return;tasks.unshift({text:t,pri:document.getElementById('taskPri').value,done:false});document.getElementById('taskText').value='';save();}
+function addNote(){let ti=document.getElementById('noteTitle').value.trim();let b=document.getElementById('noteBody').value.trim();if(!ti&&!b)return;notes.unshift({title:ti||'Untitled',body:b});document.getElementById('noteTitle').value='';document.getElementById('noteBody').value='';save();}
+function addLog(){let t=document.getElementById('logText').value.trim();if(!t)return;logs.unshift({type:document.getElementById('logType').value,text:t,date:new Date().toLocaleString()});document.getElementById('logText').value='';save();}
+function renderAll(){
+document.getElementById('statTasks').textContent=tasks.filter(x=>!x.done).length;
+document.getElementById('statNotes').textContent=notes.length;
+document.getElementById('statLog').textContent=logs.length;
+document.getElementById('taskList').innerHTML=tasks.map((t,i)=>`<div class="item ${t.pri} ${t.done?'done':''}"><div><b>${t.text}</b><small>${t.pri.toUpperCase()}</small></div><div class="row"><button class="small" style="background:#2ecc71" onclick="tasks[${i}].done=!tasks[${i}].done;save()">✓</button><button class="small" style="background:#ff3b30;color:#fff" onclick="tasks.splice(${i},1);save()">✕</button></div></div>`).join('')||'<p>No tasks yet.</p>';
+renderNotes();
+document.getElementById('logList').innerHTML=logs.map((l,i)=>`<div class="item"><div><b>[${l.type}] ${l.text}</b><small>${l.date}</small></div><button class="small" style="background:#ff3b30;color:#fff" onclick="logs.splice(${i},1);save()">✕</button></div>`).join('')||'<p>No log entries yet.</p>';
+}
+function renderNotes(){let q=(document.getElementById('noteSearch')?.value||'').toLowerCase();let f=notes.filter(n=>(n.title+n.body).toLowerCase().includes(q));document.getElementById('noteList').innerHTML=f.map((n,i)=>{let idx=notes.indexOf(n);return `<div class="item"><div><b>${n.title}</b><small>${n.body}</small></div><button class="small" style="background:#ff3b30;color:#fff" onclick="notes.splice(${idx},1);save()">✕</button></div>`}).join('')||'<p>No notes yet.</p>';}
+renderAll();
+</script>
+</body>
+</html>
