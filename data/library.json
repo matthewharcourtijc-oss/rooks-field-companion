@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "app": "harcom-industries",
+  "updated": "2026-10-26",
+  "entries": [
+    {
+      "id": "welcome",
+      "title": "Welcome to Harcom Industries Library",
+      "body": "Placeholder - library content coming in Stage 2"
+    }
+  ]
+}
