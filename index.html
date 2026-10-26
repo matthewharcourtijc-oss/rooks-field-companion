@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="manifest" href="manifest.json">
 <title>Rook's Field Companion</title>
 <style>
 *{box-sizing:border-box}
@@ -38,8 +40,8 @@ footer{padding:14px;text-align:center;color:#6b7684;font-size:12px}
 </style>
 </head>
 <body>
-<header><h1>ROOK'S <span>FIELD COMPANION</span></h1><p>VIKING TECH // v0.1 // MOBILE COMMAND DECK</p></header>
-<div class="warn">⚠ LOCAL STORAGE ONLY - Not encrypted, not a secure vault. If you clear your browser data, tasks and notes will be lost.</div>
+<header><h1>ROOK'S <span>FIELD COMPANION</span></h1><p>VIKING TECH // v0.2 // MOBILE COMMAND DECK</p></header>
+<div class="warn">⚠ LOCAL STORAGE ONLY - Not encrypted, not a secure vault. Use BACKUP below to save a copy. If you clear browser data without a backup, tasks and notes will be lost.</div>
 <div class="tabs">
 <button id="t-deck" class="active" onclick="show('deck')">DECK</button>
 <button id="t-tasks" onclick="show('tasks')">TASKS</button>
@@ -50,7 +52,8 @@ footer{padding:14px;text-align:center;color:#6b7684;font-size:12px}
 <div id="deck" class="panel active">
 <div class="card"><h2 class="o">STATUS</h2><div class="stat"><span>System</span><b style="color:#2ecc71">ONLINE</b></div><div class="stat"><span>Tasks Open</span><b id="statTasks">0</b></div><div class="stat"><span>Notes</span><b id="statNotes">0</b></div><div class="stat"><span>Log Entries</span><b id="statLog">0</b></div></div>
 <div class="card"><h2>QUICK ACTIONS</h2><button class="btn" onclick="show('tasks')">+ NEW TASK</button><button class="btn blue" onclick="show('notes')">+ NEW NOTE</button><button class="btn" style="background:#2a2f36;color:#fff;border:1px solid #ff6a00" onclick="show('log')">+ LOG ENTRY</button></div>
-<div class="card"><h2>FIELD BRIEF</h2><p style="font-size:14px;line-height:1.5">Practical deck, not a bloated dashboard. Tasks, notes and log all in one place. Works without internet, without an account, without any AI connection in v0.1.</p></div>
+<div class="card"><h2 style="color:#ff6a00">BACKUP</h2><p style="font-size:13px;line-height:1.4;color:#9aa5b1">Download everything to a file you keep. You can restore it later on this or another phone.</p><button class="btn" onclick="exportData()">⬇ DOWNLOAD BACKUP</button><button class="btn blue" onclick="document.getElementById('importFile').click()">⬆ RESTORE BACKUP</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)"></div>
+<div class="card"><h2>FIELD BRIEF</h2><p style="font-size:14px;line-height:1.5">Practical deck, not a bloated dashboard. Tasks, notes and log all in one place. Works without internet, without an account, without any AI connection in v0.2.</p></div>
 </div>
 
 <div id="tasks" class="panel">
@@ -69,7 +72,7 @@ footer{padding:14px;text-align:center;color:#6b7684;font-size:12px}
 <div id="logList"></div>
 </div>
 
-<footer>ROOK'S FIELD COMPANION v0.1 - Built for Viking Matt - No keys, no cloud, local only</footer>
+<footer>ROOK'S FIELD COMPANION v0.2 - Built for Viking Matt - No keys, no cloud, local only</footer>
 
 <script>
 let tasks=JSON.parse(localStorage.getItem('rooks_tasks')||'[]');
@@ -80,6 +83,8 @@ function show(id){document.querySelectorAll('.panel').forEach(p=>p.classList.rem
 function addTask(){let t=document.getElementById('taskText').value.trim();if(!t)return;tasks.unshift({text:t,pri:document.getElementById('taskPri').value,done:false});document.getElementById('taskText').value='';save();}
 function addNote(){let ti=document.getElementById('noteTitle').value.trim();let b=document.getElementById('noteBody').value.trim();if(!ti&&!b)return;notes.unshift({title:ti||'Untitled',body:b});document.getElementById('noteTitle').value='';document.getElementById('noteBody').value='';save();}
 function addLog(){let t=document.getElementById('logText').value.trim();if(!t)return;logs.unshift({type:document.getElementById('logType').value,text:t,date:new Date().toLocaleString()});document.getElementById('logText').value='';save();}
+function exportData(){let data={tasks,notes,logs,exported:new Date().toISOString(),app:"rooks-field-companion",version:"0.2"};let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rooks-field-companion-backup.json';a.click();}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=function(){try{let d=JSON.parse(r.result);if(d.tasks)tasks=d.tasks;if(d.notes)notes=d.notes;if(d.logs)logs=d.logs;save();alert('Backup restored!')}catch(err){alert('That file does not look like a Field Companion backup.')}};r.readAsText(f);}
 function renderAll(){
 document.getElementById('statTasks').textContent=tasks.filter(x=>!x.done).length;
 document.getElementById('statNotes').textContent=notes.length;
