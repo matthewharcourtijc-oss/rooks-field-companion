@@ -12,7 +12,7 @@
 - GitHub Actions validation and GitHub Pages deployment both passed on 3 November 2026 (run 83, commit `af478acc7696bb8c2201fd8a9054e88233d389e7`).
 - The app release marker was corrected from 0.9.5 to 0.9.9.
 - The validation suite now explicitly checks that the HTML release marker and service-worker cache version both match v0.9.9.
-- A new GitHub Actions run is required to verify these latest changes before treating this commit as CI-passed.
+- GitHub Actions run **#86** completed successfully on 3 November 2026 after these changes: both `Validate offline app` and `Deploy GitHub Pages` jobs passed.
 
 ## Security and data-handling boundaries
 
