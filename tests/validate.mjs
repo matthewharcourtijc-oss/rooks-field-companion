@@ -6,8 +6,10 @@ const html = fs.readFileSync("index.html", "utf8");
 const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 
-assert.ok(html.includes("Rook's Field Companion — v0.6.1 Unified Field Edition"), "app title/version mismatch");
-assert.ok(html.includes("SURVIVAL MANUAL v0.6.1"), "manual version mismatch");
+assert.ok(html.includes("Rook's Field Companion — v0.6.2 Unified Field Edition"), "app title/version mismatch");
+assert.ok(html.includes("SURVIVAL MANUAL v0.6.2"), "manual version mismatch");
+assert.ok(html.includes("Version 0.6.2 • Offline reference."), "manual hero version mismatch");
+assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
 const requiredIds = [
   "tasks", "notes", "log", "guide", "backup",
@@ -48,9 +50,9 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.6\.1/);
+assert.match(worker, /harcom-field-companion-v0\.6\.2/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
 
-console.log("Rook's Field Companion v0.6.1 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("Rook's Field Companion v0.6.2 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
