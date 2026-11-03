@@ -40,8 +40,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
         with:
           # The v3 default requests the retired SDK "tools" package.
           packages: platform-tools
@@ -99,8 +97,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
         with:
           # The v3 default requests the retired SDK "tools" package.
           packages: platform-tools
