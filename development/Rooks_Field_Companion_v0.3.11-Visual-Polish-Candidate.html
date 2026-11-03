@@ -85,6 +85,11 @@ h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:clamp(15px,2.5
 .hero-version{margin-left:auto;color:#f3a35d}
 .tabs{top:0;z-index:15;gap:4px;margin:0 0 16px;padding:5px;border:1px solid #43535e;border-radius:11px;background:#141c23f2;box-shadow:0 8px 20px #0004;backdrop-filter:blur(12px)}
 .tab{flex:1;min-width:66px;padding:11px 8px;color:#aebdc6;font-size:10px;letter-spacing:.11em;transition:background .18s ease,color .18s ease,transform .18s ease}
+button.tab{min-height:44px;border:1px solid transparent;border-radius:8px;background:transparent;color:#aebdc6;box-shadow:none;font:800 10px Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.11em;text-transform:uppercase;cursor:pointer}
+button.tab:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #f08a36;outline-offset:3px}
+button.tab.active{border-color:#9bbdca}
+button.tab:hover{filter:none;transform:none}
+
 .tab:hover{background:#ffffff0c;color:#fff}
 .tab.active{background:linear-gradient(135deg,#d5e5eb,#9db9c7);color:#14212a;box-shadow:inset 0 1px #fff9,0 3px 9px #0005}
 .panel.active{animation:panel-in .2s ease-out}
@@ -147,12 +152,12 @@ a:hover{color:#fff}
     <div class="hero-foot"><span>01 / PLAN</span><span>02 / RECORD</span><span>03 / RECOVER</span><span class="hero-version">HARCOM • V0.3.11</span></div>
   </section>
 
-  <div class="tabs" aria-label="Companion sections">
-    <div class="tab active" data-tab="tasks">Tasks</div>
-    <div class="tab" data-tab="notes">Notes</div>
-    <div class="tab" data-tab="log">Log</div>
-    <div class="tab" data-tab="guide">Field Guide</div>
-    <div class="tab" data-tab="backup">Backup</div>
+  <div class="tabs" role="group" aria-label="Companion sections">
+    <button type="button" class="tab active" data-tab="tasks" aria-controls="tasks" aria-pressed="true">Tasks</button>
+    <button type="button" class="tab" data-tab="notes" aria-controls="notes" aria-pressed="false">Notes</button>
+    <button type="button" class="tab" data-tab="log" aria-controls="log" aria-pressed="false">Log</button>
+    <button type="button" class="tab" data-tab="guide" aria-controls="guide" aria-pressed="false">Field Guide</button>
+    <button type="button" class="tab" data-tab="backup" aria-controls="backup" aria-pressed="false">Backup</button>
   </div>
 
   <div id="tasks" class="panel active">
@@ -949,10 +954,14 @@ const tabEls=document.getElementsByClassName('tab');
 for(let i=0;i<tabEls.length;i++){
   tabEls[i].onclick=()=>{
     const allTabs=document.getElementsByClassName('tab');
-    for(let j=0;j<allTabs.length;j++) allTabs[j].classList.remove('active');
+    for(let j=0;j<allTabs.length;j++){
+      allTabs[j].classList.remove('active');
+      allTabs[j].setAttribute('aria-pressed','false');
+    }
     const allPanels=document.getElementsByClassName('panel');
     for(let j=0;j<allPanels.length;j++) allPanels[j].classList.remove('active');
     tabEls[i].classList.add('active');
+    tabEls[i].setAttribute('aria-pressed','true');
     const targetId=tabEls[i].getAttribute('data-tab');
     const target=document.getElementById(targetId);
     if(target) target.classList.add('active');
