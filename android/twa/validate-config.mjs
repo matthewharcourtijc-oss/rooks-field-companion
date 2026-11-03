@@ -10,6 +10,7 @@ assert.equal(config.startUrl, "/rooks-field-companion/");
 assert.equal(config.packageId, "com.harcomindustries.fieldcompanion");
 assert.equal(config.display, "standalone");
 assert.equal(config.orientation, "portrait");
+assert.equal(config.minSdkVersion, 24, "Current Android Browser Helper requires API 24 or newer.");
 assert.equal(config.enableNotifications, false);
 assert.equal(config.fallbackType, "customtabs");
 assert.equal(config.webManifestUrl, "https://matthewharcourtijc-oss.github.io/rooks-field-companion/manifest.json");
