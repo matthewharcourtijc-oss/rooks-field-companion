@@ -1414,7 +1414,7 @@ document.getElementById('runTxTests').onclick=async()=>{
 </script>
 
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).catch(err=>{const n=document.getElementById('netText');if(n)n.textContent='offline cache unavailable';});});}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).then(()=>navigator.serviceWorker.ready).then(()=>{const n=document.getElementById('netText');if(n&&navigator.onLine)n.textContent='Online — offline cache ready';}).catch(err=>{const n=document.getElementById('netText');if(n)n.textContent='offline cache unavailable';});});}
 </script>
 
 <script>
