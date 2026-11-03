@@ -1,0 +1,29 @@
+ROOK'S FIELD COMPANION — VISUAL POLISH BACKUP
+Date: 2026-11-03
+
+1) ORIGINAL MASTER — LOCKED
+File: Rooks_Field_Companion_v0.3.11-ORIGINAL-MASTER-LOCKED.html
+Bytes: 106638
+SHA-256: 67c796c6ca930db837e804e7a071f5b185cb461557055e6e1c1a6c7774977b57
+
+2) REPAIR 2 — PRE-POLISH BACKUP
+File: Rooks_Field_Companion_v0.3.11-Repair2-pre-polish-BACKUP.html
+Bytes: 106813
+SHA-256: dd1920528eba14666ac83b1f6f498863c5dd0d852f414de375d8aae86a590260
+
+3) VISUAL POLISH — DEVELOPMENT CANDIDATE
+File: Rooks_Field_Companion_v0.3.11-Repair2-candidate.html
+Bytes: 114426
+SHA-256: bbc108ddc12e214d8e8a085f2434c6b29273b27165b85bae0212e71c449100d8
+
+Checks:
+- Original master SHA-256 verified against locked reference.
+- Repair 2 backup hash verified.
+- Visual candidate HTML parse and JavaScript syntax checks passed.
+- Isolated transaction failure harness: 35/35 passed.
+- User-led Samsung checks previously passed core task, backup, import and restore flows on Repair 2.
+- Browser screenshot/navigation was blocked by the test environment; no browser certification claimed.
+
+GitHub branch: dev/v0.3.11-visual-polish-2026-11-03
+Main and GitHub Pages intentionally unchanged.
+Not release certified. Require final Samsung regression, independent review and explicit approval before deployment.
