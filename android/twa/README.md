@@ -40,9 +40,11 @@ Until the matching association is live, Chrome may show browser UI (Custom Tab f
 
 ## Build
 
-Run **Build Field Companion Android TWA** from GitHub Actions with `build_release=false` first. That generates and validates the Android project source without requiring a signing key.
+Run **Build Field Companion Android TWA** from GitHub Actions with `build_release=false`. CI generates the Android project, compiles a debug APK signed with Android's temporary debug key, verifies the APK signature and package ID, and uploads both the source and installable debug APK. This allows a physical launcher smoke test without creating release credentials.
 
-After the three secrets are configured, run it with `build_release=true` to produce a signed APK/AAB and Digital Asset Links candidate. Install and test the APK on the Samsung Galaxy S22 before treating it as a release.
+The debug APK is for testing only. Its signing certificate does not match a future release key; uninstall the debug build before installing a release build. Do not publish the debug certificate in the production Digital Asset Links file.
+
+A signed release still requires the three dedicated repository secrets. After those are configured, run with `build_release=true` to produce a release-signed APK/AAB and a Digital Asset Links candidate. The root-origin hosting requirement above must also be solved before claiming verified full-screen TWA behaviour. Install and test the release APK on the Samsung Galaxy S22 before treating it as a release.
 
 ## Safety boundaries
 
