@@ -1,6 +1,16 @@
-# Rook's Field Companion — Connected Field Edition
+# Rook's Field Companion — Visual Field Edition
 
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
+
+## v0.9.2 — Visual Field Edition
+
+A presentation and readability refinement. The offline-first app structure, local storage and recovery logic remain unchanged.
+
+- Replaced the cramped terminal-style body typography with a clear, locally available Roboto / Noto Sans system font stack. No hosted font or network request is required.
+- Strengthened the visual hierarchy, spacing, contrast and mobile reading scale across the app and embedded manual.
+- Enlarged and reframed the existing 21 inline SVG diagrams so procedures are easier to inspect on a phone.
+- Improved the field-manual topic cards, diagrams, related-topic navigation and hero illustration presentation.
+- Bumped the service-worker cache so installed copies can receive the new shell.
 
 ## v0.9.1 — Connected Field Edition: every topic linked
 
