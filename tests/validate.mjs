@@ -119,6 +119,14 @@ for (const icon of [
 assert.match(html, /serviceWorker\.register/);
 assert.match(worker, /harcom-field-companion-v0.9.13/, "service-worker cache revision must be v0.9.13");
 assert.match(worker, /await cache\.addAll/);
+assert.equal(manifest.display, "standalone", "installed Field Companion must retain its standalone app display mode");
+const shellMatch = worker.match(/const APP_SHELL = \[([\s\S]*?)\]/);
+assert.ok(shellMatch, "service-worker offline app shell list missing");
+const shellPaths = [...shellMatch[1].matchAll(/["'](\.\/[^"']+)["']/g)].map(match => match[1]);
+assert.ok(shellPaths.length > 0, "service-worker offline app shell must not be empty");
+for (const path of shellPaths) {
+  assert.ok(fs.existsSync(path), "offline app shell asset is missing: " + path);
+}
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
 
