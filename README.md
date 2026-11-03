@@ -2,38 +2,39 @@
 
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
-## v0.5.1 — Offline reliability and consistency pass
+## v0.5.2 — Self-reliance and editorial cleanup
 
-- One Android-friendly app for Tasks, Notes, Mission Log, Backup and the embedded Survival Field Manual.
-- The survival manual is part of the main page; it is not a separate app or a second data store.
-- UK countryside guidance includes emergency priorities, major trauma and penetrating injuries, first aid, shelter, fire, water, food and foraging awareness, navigation, weather, rescue and kit.
-- Manual diagrams are embedded in the page, so they are available with the cached app shell.
-- Gunmetal interface with restrained ice-blue and hazard-orange accents; system font stack only.
-- No frameworks, external scripts, hosted fonts, API keys or subscription.
-- Service-worker cache version is tied to the release. Cache writes are awaited before fetch events complete, and a new release replaces the previous app-shell cache after activation.
+One offline-first Android field tool combining Tasks, Notes, Mission Log, local backups and the embedded UK Survival Field Manual.
 
-## Offline setup and test
+### Manual improvements
+- Practical decision cycle for lost, delayed or isolated situations: stop, assess, plan, act and reassess.
+- No-signal procedures, safe signalling, battery conservation and route discipline.
+- Remote casualty monitoring, field stabilisation and evacuation planning.
+- Clear limits for gunshot/penetrating injuries, catastrophic bleeding, chest and abdominal wounds.
+- Practical self-care for minor cuts, blisters, sprains, chafing and foot problems.
+- Hygiene, sanitation, food safety, wound cleanliness and illness prevention.
+- Existing shelter, fire, water, navigation, weather, kit and UK first-aid material retained.
+- Shorter headings, clearer priorities and less repetitive emergency-service wording.
 
-1. Open the live app while connected to the internet.
-2. Leave it open until the status line reports that the offline cache is ready.
-3. In Chrome, use **Add to Home screen** (or **Install app**, if offered).
-4. Open the installed app once while online.
-5. Turn on airplane mode and fully close/reopen the app.
-6. Check each tab: Tasks, Notes, Log, Field Manual and Backup. Create a harmless test entry, close/reopen, and confirm it remains.
-7. Turn airplane mode off and export a JSON backup.
+### Safety boundary
+Self-reliance means prevention, preparation, sound decisions and competent first aid. It does not make internal bleeding, gunshot wounds, stroke, heart attack, severe breathing problems, anaphylaxis, major burns or serious hypothermia safe to manage alone. The guide gives stabilisation actions while urgent care or evacuation is arranged; it does not teach surgery, invasive procedures or improvised medical treatment.
 
-The first visit must be online so the service worker can install and cache the app shell. External reference links in the manual still need an internet connection.
+### Offline use
+1. Open the app while online and wait for **offline cache ready**.
+2. Add it to the Android home screen / install it.
+3. Open it once, then test in airplane mode.
+4. Check Tasks, Notes, Log, Field Manual and Backup.
+5. Export JSON backups regularly.
 
-## Data and safety
+The first visit must be online for the service worker to install. External source links need internet access; the manual text and diagrams are embedded locally.
 
-- Tasks, notes and logs are stored locally in this browser on this device; they are not synced between devices.
-- Browser storage is not encrypted and is not a secure vault. Anyone with access to the unlocked device/browser may be able to view it.
-- Clearing site data can erase records and recovery copies. Export JSON backups regularly and keep a separate copy outside the browser.
-- The manual is a learning aid, not a substitute for hands-on training, current professional guidance or emergency services.
-- In an emergency in the UK, call **999 or 112**. Follow the call handler's instructions.
+### Data protection
+- Tasks, notes and logs are stored in this browser on this device; they do not sync.
+- Browser storage is not encrypted and is not a secure vault.
+- Clearing site data can erase records and recovery copies. Export backups regularly and keep a separate copy.
+- The manual is an educational reference, not a substitute for hands-on first-aid, navigation, fire, water-treatment or outdoor training.
 
 ## Release safeguards
-
-- The exact pre-v0.5 live index is preserved at `backups/index-before-v0.5-unified-offline.html`.
-- Previous v0.3.11 release backup remains at `backups/index-v0.3.11-before-survival-library.html`.
-- The Viking AI Council remains a separate project.
+- The pre-v0.5 live index remains at `backups/index-before-v0.5-unified-offline.html`.
+- The v0.3.11 backup remains at `backups/index-v0.3.11-before-survival-library.html`.
+- The Viking AI Council remains separate.
