@@ -1,12 +1,19 @@
 {
-  "name": "Rook's Field Companion",
-  "short_name": "Rook Companion",
-  "description": "Mobile-first personal command deck with tactical cyberpunk look. Tasks, notes and mission log.",
+  "name": "Rook's Field Companion — Unified Field Edition",
+  "short_name": "Rook Field",
+  "description": "Offline field companion with tasks, notes, mission log, first aid and UK countryside survival reference.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0a0a0c",
-  "theme_color": "#0a0a0c",
-  "icons": []
+  "background_color": "#101820",
+  "theme_color": "#101820",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
