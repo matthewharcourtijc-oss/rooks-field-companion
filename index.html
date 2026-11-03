@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-product="HARCOM Field Companion" data-owner="HARCOM Industries" data-release="0.9.5">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Field Companion | HARCOM Industries</title>
 <meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
+<meta name="author" content="HARCOM Industries">
+<meta name="application-name" content="HARCOM Industries — Field Companion">
+<meta name="copyright" content="Copyright 2026 HARCOM Industries. All rights reserved.">
+<meta name="owner" content="HARCOM Industries">
+<meta property="og:site_name" content="HARCOM Industries">
+<!-- Original HARCOM Field Companion source, interface and embedded artwork: Copyright © 2026 HARCOM Industries. All rights reserved. -->
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -285,6 +291,11 @@ button,.manual-link{border-radius:6px}
  h1{font-size:18px;letter-spacing:.1em}.tag{font-size:8px;letter-spacing:.08em}
  .mission-hero{min-height:0}.hero-art{opacity:.9}
 }
+</style>
+
+<style id="harcom-ownership-v095">
+.ownership-mark{margin-top:10px;padding-top:10px;border-top:1px solid #526673;color:#c3d0d7;font:800 9px/1.6 ui-monospace,monospace;letter-spacing:.09em}
+.ownership-mark span{display:block;color:#91a8b5;font-weight:600;letter-spacing:.13em}
 </style>
 </head>
 <body>
@@ -571,7 +582,8 @@ button,.manual-link{border-radius:6px}
   </div>
 
   <div class="footer">
-    <div class="small">HARCOM INDUSTRIES • FIELD EDITION</div>
+    <div class="small">HARCOM INDUSTRIES™ • FIELD COMPANION</div>
+    <div class="ownership-mark">© 2026 HARCOM INDUSTRIES. ALL RIGHTS RESERVED. <span>ORIGINAL PRODUCT • BRAND • INTERFACE</span></div>
     <div style="margin-top:10px" id="counts"></div>
     <div style="margin-top:6px;display:none" id="lastTest"></div>
     <div style="margin-top:12px;display:none" class="row"><button class="secondary" id="runTxTests">Run Transaction Failure Tests</button><button class="secondary" id="runPersistTest">Test Persistence</button></div>
