@@ -1,5 +1,16 @@
 # Rook's Field Companion — HARCOM Field Edition
 
+## v0.9.4 — HARCOM Industrial Identity
+
+A focused presentation refinement for the consumer-facing app.
+
+- Simplified the product title to **FIELD COMPANION**, with HARCOM Industries as the primary brand.
+- Added a stronger compass insignia treatment, industrial graphite/steel surfaces and restrained icy-blue/hazard-orange detailing.
+- Added subtle topographic texture and depth to the main field-system hero.
+- Updated the Android install label to **Field Companion**.
+- Bumped the offline app-shell cache to v0.9.4 so installed copies can receive the new presentation.
+- No task, notes, mission-log, backup, recovery, manual-search or offline application logic was intentionally changed.
+
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
 ## v0.9.3 — HARCOM Field Edition
