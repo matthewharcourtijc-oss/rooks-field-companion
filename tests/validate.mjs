@@ -24,6 +24,13 @@ assert.ok(manifest.name.includes("HARCOM Industries"), "install identity missing
 assert.equal(manifest.short_name, "HARCOM Field");
 assert.ok(readme.includes("Ownership and permissions"), "README ownership section missing");
 assert.ok(html.includes("FIELD READY"), "consumer-facing field-ready label missing");
+assert.ok(html.includes("DEVICE DATA NOTICE"), "consumer-facing local-data privacy notice missing");
+assert.ok(html.includes("Field Companion does not encrypt your records"), "unencrypted local storage warning missing");
+assert.ok(html.includes("Clearing this site’s data can permanently erase records"), "site-data loss warning missing");
+assert.match(html, /textContent\s*=\s*item\.text/, "task content must be rendered as text, not executable markup");
+assert.match(html, /textContent\s*=\s*n\.text/, "note content must be rendered as text, not executable markup");
+assert.match(html, /textContent\s*=\s*`\[\$\{time\}\] \$\{l\.text\}`/, "log content must be rendered as text, not executable markup");
+assert.doesNotMatch(html, /innerHTML\s*=\s*`[^`]*\$\{(?:item|n|l)\./, "untrusted record data must never be interpolated into HTML");
 assert.ok(!html.includes("single atomic key harcom_data"), "developer storage diagnostics leaked into consumer counts");
 assert.ok(!html.includes("Backup manually verified:"), "developer-style backup status leaked into consumer UI");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
@@ -147,4 +154,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("HARCOM Field Companion v0.9.5 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("HARCOM Field Companion v0.9.7 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
