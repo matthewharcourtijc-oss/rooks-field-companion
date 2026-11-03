@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rook's Field Companion — v0.9.2 Visual Field Edition</title>
+<title>Rook's Field Companion | HARCOM Industries</title>
 <meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
@@ -180,7 +180,7 @@ a:hover{color:#fff}
 </style>
 
 <style>
-/* v0.9.2 — offline typography and visual hierarchy refinement */
+/* Offline typography and visual hierarchy refinement */
 :root{--font-ui:"Roboto","Noto Sans","Segoe UI",Arial,sans-serif}
 html,body,button,input,textarea,select{font-family:var(--font-ui)}
 body{font-size:15px;line-height:1.65;letter-spacing:.005em}
@@ -237,10 +237,26 @@ button{font-family:var(--font-ui);font-size:11px}
  #guide .manual-content section{padding:15px}
 }
 </style>
+<style>
+/* v0.9.3 — stronger HARCOM identity; consumer-first presentation. */
+header{padding:17px clamp(14px,3vw,30px);background:linear-gradient(115deg,#0d151c 0%,#182630 62%,#101820 100%);border-bottom:2px solid #f08a36}
+.brand{gap:15px;min-height:64px}
+.helm{width:62px;height:62px;flex:0 0 62px;border:1px solid #587181;border-radius:12px;background:linear-gradient(145deg,#263946,#111a21);box-shadow:inset 0 1px #ffffff20,0 5px 18px #0006;padding:7px}
+.helm svg{display:block;width:100%;height:100%;filter:drop-shadow(0 2px 4px #0008)}
+.brand-overline{font-size:clamp(14px,2.5vw,19px);font-weight:950;letter-spacing:.2em;line-height:1.05;color:#f3f8fa;text-shadow:0 2px 12px #9edcf233}
+.brand-overline span{color:#f08a36;font-weight:900}
+.brand-copy h1{font-size:clamp(10px,1.7vw,13px);letter-spacing:.17em;color:#c7d6de;margin-top:6px}
+.brand-copy .tag{font:700 9px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.11em;color:#9eb4c0;margin-top:6px}
+.release-chip{border-color:#a6d9ea;color:#d7f3fc;background:#1b3441;padding:7px 10px;font-size:9px;letter-spacing:.14em}
+.hero-kicker{color:#c5edfb}
+.hero-kicker-line{background:#f08a36}
+.hero-foot .hero-version{color:#f4a260}
+@media(max-width:560px){header{padding:12px 13px}.brand{gap:10px;min-height:54px}.helm{width:50px;height:50px;flex-basis:50px;padding:5px}.brand-overline{font-size:12px;letter-spacing:.16em}.brand-copy h1{font-size:9px;letter-spacing:.11em}.brand-copy .tag{font-size:8px;letter-spacing:.07em;max-width:205px;line-height:1.35}.release-chip{font-size:7px;padding:5px 6px;white-space:normal;text-align:center;max-width:72px}}
+</style>
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.9.2 • VISUAL FIELD EDITION</div></div><span class="release-chip">FIELD EDITION</span></div>
+  <div class="brand"><div class="helm" role="img" aria-label="HARCOM Industries compass shield"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 3 55 11v17c0 15-9 25-23 33C18 53 9 43 9 28V11L32 3Z" fill="#18242d" stroke="#9edcf2" stroke-width="2"/><path d="M32 10 49 16v12c0 11-6 19-17 26-11-7-17-15-17-26V16l17-6Z" fill="none" stroke="#607e8e"/><path d="m32 15 7 19-7-4-7 4 7-19Z" fill="#f08a36"/><path d="M32 34v14" stroke="#bcecff" stroke-width="2"/><circle cx="32" cy="34" r="3" fill="#edf7fb" stroke="#f08a36"/></svg></div><div class="brand-copy"><div class="brand-overline">HARCOM <span>INDUSTRIES</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">FIELD KNOWLEDGE • PRACTICAL TOOLS • OFFLINE READY</div></div><span class="release-chip">FIELD READY</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
@@ -263,7 +279,7 @@ button{font-family:var(--font-ui);font-size:11px}
       </svg>
       <div class="art-coordinate">53° 23' N <span>•</span> FIELD SYSTEMS</div>
     </div>
-    <div class="hero-foot"><span>KNOWLEDGE</span><span>FIELDCRAFT</span><span>PERSONAL RECORD</span><span class="hero-version">HARCOM • V0.9.2</span></div>
+    <div class="hero-foot"><span>KNOWLEDGE</span><span>FIELDCRAFT</span><span>PERSONAL RECORD</span><span class="hero-version">HARCOM INDUSTRIES</span></div>
   </section>
 
 <section class="field-loop" aria-label="Field response cycle"><div class="loop-heading"><span>HARCOM / FIELD METHOD</span><b>THE RESPONSE LOOP</b></div><div class="loop-steps"><div><i>01</i><b>PREPARE</b><small>Know your kit</small></div><span class="loop-arrow">›</span><div><i>02</i><b>RESPOND</b><small>Act on priorities</small></div><span class="loop-arrow">›</span><div><i>03</i><b>STABILISE</b><small>Protect life</small></div><span class="loop-arrow">›</span><div><i>04</i><b>REASSESS</b><small>Adapt and move</small></div></div></section>
@@ -503,7 +519,7 @@ button{font-family:var(--font-ui);font-size:11px}
 <li><a href="https://www.woodlandtrust.org.uk/blog/types-of-mushroom/" target="_blank" rel="noopener">Woodland Trust — common UK fungi</a></li>
 <li><a href="https://www.woodlandtrust.org.uk/visiting-woods/things-to-do/foraging/foraging-guidelines" target="_blank" rel="noopener">Woodland Trust — responsible foraging</a></li>
 </ul></section>
-<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.9.2<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
+<footer>HARCOM INDUSTRIES • FIELD MANUAL<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
     </div>
   </div>
 
@@ -1086,7 +1102,7 @@ async function loadAll(){
 
 function updateCounts(){
   const countsEl=document.getElementById('counts');
-  if(countsEl) countsEl.textContent = `${tasks.length} tasks · ${notes.length} notes · ${logs.length} logs · ${storageAvailable.ok&&!corruptDetected?'Saved via single atomic key harcom_data validated + read-back':'In-memory or corrupted — see warnings — save blocked to protect recoverable data'}`;
+  if(countsEl) countsEl.textContent = `${tasks.length} tasks · ${notes.length} logs · ${logs.length} logs · ${storageAvailable.ok&&!corruptDetected?'Saved on this device':'Saving paused to protect your existing information'}`;
   const d=document.getElementById('netDot'), t=document.getElementById('netText'), origin=document.getElementById('originText');
   if(origin) origin.textContent = location.origin + ' (' + location.protocol + ')';
   if(location.protocol==='file:'){
@@ -1097,11 +1113,11 @@ function updateCounts(){
   let last=null; try{last=localStorage.getItem(LS_B);}catch{}
   const bs=document.getElementById('backupStatus');
   if(bs){
-    let lastText='never — you must manually check exported JSON before confirming';
+    let lastText='Not yet confirmed';
     if(last){
       try{ const parsed=JSON.parse(last); lastText=new Date(parsed).toLocaleDateString(); }catch{ try{ lastText=new Date(parseInt(last)).toLocaleDateString(); }catch{ lastText='unknown'; } }
     }
-    bs.textContent=' • Backup manually verified: '+lastText;
+    bs.textContent=' • Backup last confirmed: '+lastText;
   }
   const warnEl=document.getElementById('backupWarn');
   if(warnEl){
@@ -1109,7 +1125,7 @@ function updateCounts(){
     if(last){
       try{ const lastMs=parseInt(JSON.parse(last)); if(Date.now()-lastMs <= 7*24*60*60*1000) needsWarn=false; }catch{ const lastMs=parseInt(last); if(!isNaN(lastMs) && Date.now()-lastMs <= 7*24*60*60*1000) needsWarn=false; }
     }
-    if(needsWarn){warnEl.style.display='block'; warnEl.textContent='Backup reminder: No manually verified backup in last 7 days. localStorage not indestructible — clearing browser data wipes everything including safety backups. Export, manually open file, verify, then confirm.';} else warnEl.style.display='none';
+    if(needsWarn){warnEl.style.display='block'; warnEl.textContent='Backup reminder: No backup has been confirmed in the last 7 days. Export a copy, check that it opens, then confirm it here.';} else warnEl.style.display='none';
   }
   renderSafetyList();
 }
