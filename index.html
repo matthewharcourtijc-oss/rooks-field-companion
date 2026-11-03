@@ -574,10 +574,10 @@ button,.manual-link{border-radius:6px}
   <div id="backup" class="panel">
     <div class="card"><h2>Backup</h2>
       <p class="small">Keep a separate copy of your tasks, notes and field log. Restoring a backup replaces the information currently on this device.</p>
-      <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Download backup</button><button class="secondary" id="copyJsonBtn">Copy backup</button></div>
-      <div class="row" style="margin-top:8px"><button class="secondary" id="confirmBackupBtn">I've saved a copy — confirm backup</button></div>
+      <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Download standard backup</button><button class="secondary" id="copyJsonBtn">Copy standard backup</button></div>
+      <div style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:10px"><strong>ENCRYPTED BACKUP</strong><p class="small">Protect an exported copy with a password using AES-256-GCM encryption. The password is never stored. If you lose it, the backup cannot be recovered.</p><label class="small" for="backupPassword">Backup password (12+ characters recommended)</label><input id="backupPassword" type="password" autocomplete="new-password" minlength="12" placeholder="Create or enter backup password"><div class="row" style="margin-top:8px"><button id="exportEncryptedBtn">Download encrypted backup</button><button class="secondary" id="confirmBackupBtn">I've saved a copy — confirm backup</button></div></div>
       <div id="exportStatus" class="small" style="margin-top:8px"></div>
-      <div style="margin-top:12px"><label class="small">Restore from backup</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Restore backup</button><button class="secondary" id="validateBtn">Check backup</button></div></div>
+      <div style="margin-top:12px"><label class="small">Restore from standard or encrypted backup</label><textarea id="importArea" placeholder="Paste backup JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Restore backup</button><button class="secondary" id="validateBtn">Check backup</button></div><p class="small">For encrypted backups, enter the same password above. A failed password or invalid file will not replace your current records.</p></div>
       <div id="importStatus" class="small" style="margin-top:8px"></div>
       <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Automatic recovery points</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">A recovery point is created automatically before a restore, helping protect the information already on this device.</p></div>
       
@@ -1308,6 +1308,66 @@ async function atomicSetCombined(newTasks, newNotes, newLogs){
   return commitCombined(newTasks,newNotes,newLogs);
 }
 
+const ENCRYPTED_BACKUP_FORMAT='harcom-encrypted-backup-v1';
+const BACKUP_KDF_ITERATIONS=310000;
+function bytesToBase64(bytes){let binary='';for(let i=0;i<bytes.length;i++)binary+=String.fromCharCode(bytes[i]);return btoa(binary);}
+function base64ToBytes(value){
+  if(typeof value!=='string'||value.length>4*1024*1024||!/^[A-Za-z0-9+/]*={0,2}$/.test(value))throw new Error('Invalid encrypted backup encoding');
+  const binary=atob(value);const bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+  return bytes;
+}
+function getBackupPassword(){
+  const field=document.getElementById('backupPassword');
+  const password=field?field.value:'';
+  if(typeof password!=='string'||password.length<12||password.length>256)throw new Error('Use a backup password between 12 and 256 characters. A long unique passphrase is best.');
+  return password;
+}
+async function deriveBackupKey(password,salt){
+  if(!globalThis.crypto||!crypto.subtle)throw new Error('Secure encryption is unavailable in this browser. Use the standard backup option instead.');
+  const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:BACKUP_KDF_ITERATIONS,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function makeEncryptedBackup(data,password){
+  const salt=crypto.getRandomValues(new Uint8Array(16));
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await deriveBackupKey(password,salt);
+  const plain=new TextEncoder().encode(JSON.stringify(data));
+  const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv:iv,additionalData:new TextEncoder().encode(ENCRYPTED_BACKUP_FORMAT)},key,plain);
+  return {format:ENCRYPTED_BACKUP_FORMAT,kdf:'PBKDF2-SHA-256',iterations:BACKUP_KDF_ITERATIONS,cipher:'AES-256-GCM',salt:bytesToBase64(salt),iv:bytesToBase64(iv),data:bytesToBase64(new Uint8Array(cipher))};
+}
+async function readBackupText(raw){
+  if(typeof raw!=='string'||raw.length===0||raw.length>3*1024*1024)throw new Error('Backup is empty or exceeds the 3 MB file limit');
+  let parsed;try{parsed=JSON.parse(raw);}catch(e){throw new Error('Backup is not valid JSON');}
+  if(parsed&&parsed.format===ENCRYPTED_BACKUP_FORMAT){
+    if(parsed.kdf!=='PBKDF2-SHA-256'||parsed.cipher!=='AES-256-GCM'||parsed.iterations!==BACKUP_KDF_ITERATIONS)throw new Error('Unsupported encrypted backup settings');
+    const password=getBackupPassword();
+    const salt=base64ToBytes(parsed.salt),iv=base64ToBytes(parsed.iv),cipher=base64ToBytes(parsed.data);
+    if(salt.length!==16||iv.length!==12||cipher.length<16)throw new Error('Encrypted backup is incomplete or damaged');
+    const key=await deriveBackupKey(password,salt);
+    let plain;try{plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:iv,additionalData:new TextEncoder().encode(ENCRYPTED_BACKUP_FORMAT)},key,cipher);}catch(e){throw new Error('Decryption failed. Check the password or backup file; current records are unchanged.');}
+    try{parsed=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(plain));}catch(e){throw new Error('Decrypted backup is damaged or invalid');}
+  }
+  validateImport(parsed);
+  return parsed;
+}
+async function downloadEncryptedBackup(){
+  const password=getBackupPassword();
+  if(!confirm('Create an encrypted backup? Keep the password separately. If it is lost, this backup cannot be decrypted.'))return;
+  const encrypted=await makeEncryptedBackup(getExport(),password);
+  const json=JSON.stringify(encrypted,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='harcom-encrypted-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  const es=document.getElementById('exportStatus');
+  if(es)es.textContent='Encrypted backup download triggered. Open the file and verify it exists. Store the password separately; HARCOM cannot recover it.';
+  setTimeout(()=>{try{URL.revokeObjectURL(url);}catch{}},2000);
+}
+document.getElementById('exportEncryptedBtn').onclick=async()=>{
+  const es=document.getElementById('exportStatus');
+  try{await downloadEncryptedBackup();}catch(e){if(es)es.textContent='Encrypted backup not created: '+e.message;}
+};
 document.getElementById('exportJsonBtn').onclick=()=>{
   try{
     const data=getExport(); const jsonStr=JSON.stringify(data,null,2);
@@ -1336,13 +1396,11 @@ document.getElementById('confirmBackupBtn').onclick=async()=>{
     const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup confirmed at '+new Date().toLocaleString()+'. Keep the exported copy somewhere safe.';
   }catch(e){alert('The backup could not be confirmed. Try again.');}
 };
-document.getElementById('validateBtn').onclick=()=>{
+document.getElementById('validateBtn').onclick=async()=>{
   const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
   try{
-    const j=JSON.parse(txt);
-    validateImport(j);
-    const byteSize=getByteSize(j);
-    st.textContent=`Backup looks good: ${j.tasks.length} tasks, ${j.notes.length} notes and ${j.logs.length} logs.`;
+    const j=await readBackupText(txt);
+    st.textContent=`Backup looks good: ${j.tasks.length} tasks, ${j.notes.length} notes and ${j.logs.length} logs. No records have been changed.`;
     st.style.color='green';
   }
   catch(e){st.textContent='Invalid: '+e.message; st.style.color='var(--alert)';}
@@ -1350,7 +1408,7 @@ document.getElementById('validateBtn').onclick=()=>{
 document.getElementById('importBtn').onclick=async()=>{
   const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
   try{
-    const j=JSON.parse(txt); validateImport(j);
+    const j=await readBackupText(txt);
     const byteSize=getByteSize(j);
     if(!confirm(`Import ${j.tasks.length} tasks, ${j.notes.length} notes and ${j.logs.length} logs? This replaces your current information. A safety copy will be made first. Continue?`)) return;
     const keyResult=generateUniqueSafetyKey();
