@@ -5,6 +5,7 @@ const configPath = new URL("./twa-manifest.json", import.meta.url);
 const config = JSON.parse(readFileSync(configPath, "utf8"));
 
 assert.equal(config.host, "matthewharcourtijc-oss.github.io");
+assert.ok(config.startUrl.startsWith("/"), "TWA start URL must be a path on the configured host.");
 assert.equal(config.startUrl, "/rooks-field-companion/");
 assert.equal(config.packageId, "com.harcomindustries.fieldcompanion");
 assert.equal(config.display, "standalone");
