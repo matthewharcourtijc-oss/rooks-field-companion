@@ -69,7 +69,7 @@ jobs:
           test -f android/twa/app/build.gradle
           test -f android/twa/app/src/main/AndroidManifest.xml
           grep -q 'com.harcomindustries.fieldcompanion' android/twa/app/build.gradle
-          grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/src/main/AndroidManifest.xml
+          grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/build.gradle
 
       - name: Upload generated Android project
         uses: actions/upload-artifact@v4
