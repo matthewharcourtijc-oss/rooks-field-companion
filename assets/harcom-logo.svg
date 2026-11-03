@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="100%" role="img" aria-label="Harcom Industries Logo">
+  <!-- COLORS: black #000, Harcom Orange #FF7518, Eye Orange #FF8C1A -->
+  <style>
+    .harcom-text { font-family: Impact, Anton, 'Arial Black', sans-serif; font-weight: 900; letter-spacing: 0.02em; }
+  </style>
+  <g id="viking-head" transform="translate(0,0)">
+    <path d="M 145 35 C 95 75 55 135 85 195 L 115 185 C 115 145 125 105 145 75 Z" fill="#000" stroke="#000" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 255 35 C 305 75 345 135 315 195 L 285 185 C 285 145 275 105 255 75 Z" fill="#000" stroke="#000" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 125 110 Q 200 60 275 110 L 285 190 Q 275 220 200 230 Q 125 220 115 190 Z" fill="#000"/>
+    <rect x="175" y="85" width="50" height="25" fill="#000"/>
+    <g id="eyes" fill="#FF7518">
+      <ellipse cx="160" cy="195" rx="12" ry="5" transform="rotate(-15 160 195)"/>
+      <ellipse cx="240" cy="195" rx="12" ry="5" transform="rotate(15 240 195)"/>
+    </g>
+    <path id="beard" d="M 115 190 Q 110 230 95 250 L 110 260 Q 95 280 110 300 L 130 285 Q 140 320 155 335 L 175 310 Q 200 350 225 310 L 245 335 Q 260 320 270 285 L 290 300 Q 305 280 290 260 L 305 250 Q 290 230 285 190 Q 200 235 115 190 Z" fill="#FF7518" stroke="#000" stroke-width="10" stroke-linejoin="round" stroke-miterlimit="2"/>
+    <path d="M 185 215 Q 200 235 215 215 Q 200 228 185 215 Z" fill="#000"/>
+  </g>
+  <g id="text" transform="translate(0, 360)">
+    <text x="200" y="50" text-anchor="middle" class="harcom-text" font-size="52" fill="#FF7518" stroke="#000" stroke-width="7" stroke-linejoin="round" paint-order="stroke" style="font-stretch: condensed;">HARCOM</text>
+    <text x="200" y="95" text-anchor="middle" class="harcom-text" font-size="42" fill="#FF7518" stroke="#000" stroke-width="6.5" stroke-linejoin="round" paint-order="stroke" style="font-stretch: condensed;">INDUSTRIES</text>
+    <g id="knot" transform="translate(200, 120)" stroke="#FF7518" fill="none" stroke-linecap="round">
+      <g stroke="#000" stroke-width="7" stroke-linejoin="round"><path d="M -55 0 Q -35 -12 0 0 T 55 0"/><path d="M -35 -8 Q 0 12 35 -8"/><path d="M -35 8 Q 0 -12 35 8"/><path d="M -20 0 Q 0 10 20 0 Q 0 -10 -20 0 Z"/></g>
+      <g stroke="#FF7518" stroke-width="3.5" stroke-linecap="round"><path d="M -55 0 Q -35 -12 0 0 T 55 0"/><path d="M -35 -8 Q 0 12 35 -8"/><path d="M -35 8 Q 0 -12 35 8"/><path d="M -20 0 Q 0 10 20 0 Q 0 -10 -20 0 Z"/><path d="M -95 0 L -58 0" stroke-width="3.5"/><path d="M 58 0 L 95 0" stroke-width="3.5"/><circle cx="-58" cy="0" r="3" fill="#FF7518" stroke="none"/><circle cx="58" cy="0" r="3" fill="#FF7518" stroke="none"/></g>
+    </g>
+  </g>
+</svg>
