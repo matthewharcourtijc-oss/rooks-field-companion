@@ -8,11 +8,11 @@ const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Rook's Field Companion — v0.8.0 Field Edition"), "app title/version mismatch");
-assert.ok(readme.includes("v0.8.0 — Clean offline field system"), "README release version is stale");
+assert.ok(readme.includes("v0.8.0 — Field Edition"), "README release version is stale");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
 assert.ok(manifest.name.includes("Field Edition"), "manifest app name is stale");
 assert.ok(html.includes("SURVIVAL MANUAL v0.8.0"), "manual version mismatch");
-assert.ok(html.includes("Version 0.7.0 • Offline reference."), "manual hero version mismatch");
+assert.ok(html.includes("V0.8.0 • OFFLINE FIELD COMPANION"), "visible release label mismatch");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
 assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
@@ -59,7 +59,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.7\.0/);
+assert.match(worker, /harcom-field-companion-v0\.8\.0/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
@@ -74,9 +74,12 @@ const searchInput = {
   blur() { this.blurred = true; }
 };
 const searchCount = { textContent: "" };
+const searchResults = { children: [], hidden: true, replaceChildren() { this.children = []; }, appendChild(node) { this.children.push(node); } };
+const searchClear = { addEventListener(type, callback) { this[type] = callback; } };
+const created = [];
 const searchSections = [
-  { id: "water", textContent: "Water purification and safe storage", hidden: false },
-  { id: "shelter", textContent: "Shelter site selection and insulation", hidden: false }
+  { id: "water", textContent: "Water purification and safe storage", hidden: false, querySelector() { return { textContent: "Water purification" }; }, scrollIntoView() {} },
+  { id: "shelter", textContent: "Shelter site selection and insulation", hidden: false, querySelector() { return { textContent: "Shelter" }; }, scrollIntoView() {} }
 ];
 const searchLinks = [
   { getAttribute() { return "#water"; }, hidden: false },
@@ -93,29 +96,34 @@ const searchDocument = {
   getElementById(id) {
     if (id === "manualSearch") return searchInput;
     if (id === "manualSearchCount") return searchCount;
+    if (id === "manualSearchResults") return searchResults;
+    if (id === "clearManualSearch") return searchClear;
     return null;
   },
   querySelector(selector) {
     return selector === "#guide .manual-content" ? searchManual : null;
-  }
+  },
+  createElement(tag) { const node = { tag, children: [], append(...items) { this.children.push(...items); }, addEventListener(type, callback) { this[type] = callback; } }; created.push(node); return node; }
 };
-const searchScript = scripts.find(match => match[1].includes("Offline manual search: local text only"));
+const searchScript = scripts.find(match => match[1].includes("Offline field-manual search: local index"));
 assert.ok(searchScript, "offline manual search script missing");
-vm.runInNewContext(searchScript[1], { document: searchDocument });
-assert.equal(searchCount.textContent, "2 topics", "search initial topic count incorrect");
+vm.runInNewContext(searchScript[1], { document: searchDocument, history: { replaceState() {} }, setTimeout() {} });
+assert.equal(searchCount.textContent, "Search 2 field topics", "search initial topic count incorrect");
 searchInput.value = "water";
 searchInput.listeners.input();
 assert.equal(searchSections[0].hidden, false, "matching section was hidden");
 assert.equal(searchSections[1].hidden, true, "non-matching section remained visible");
 assert.equal(searchLinks[0].hidden, false, "matching TOC link was hidden");
 assert.equal(searchLinks[1].hidden, true, "non-matching TOC link remained visible");
-assert.equal(searchCount.textContent, "1 of 2 topics", "matching result count incorrect");
+assert.equal(searchCount.textContent, "1 matching topic", "matching result count incorrect");
+assert.equal(searchResults.children.length, 1, "matching search result not rendered");
 searchInput.value = "no-such-topic";
 searchInput.listeners.input();
-assert.equal(searchCount.textContent, "0 of 2 topics", "zero-result count incorrect");
+assert.equal(searchCount.textContent, "0 matching topics", "zero-result count incorrect");
 searchInput.listeners.keydown({ key: "Escape" });
 assert.equal(searchInput.value, "", "Escape did not clear the search");
 assert.equal(searchSections.every(section => !section.hidden), true, "Escape did not restore all sections");
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
+assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
 console.log("Rook's Field Companion v0.8.0 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
