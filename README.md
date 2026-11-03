@@ -1,5 +1,15 @@
 # Rook's Field Companion — HARCOM Field Edition
 
+## v0.9.5 — HARCOM Ownership & Provenance
+
+- Added visible © 2026 HARCOM Industries ownership identification to the application footer.
+- Added author, owner, application-name, copyright and site identity metadata to the HTML document.
+- Added product/owner/release attributes to the document root as machine-readable provenance markers.
+- Updated the install manifest to identify **HARCOM Industries — Field Companion**.
+- Added a proprietary rights notice and repository NOTICE.
+- Bumped the offline app-shell cache to v0.9.5.
+- No task, notes, mission-log, backup, restore, recovery or survival-manual content was intentionally changed.
+
 ## v0.9.4 — HARCOM Industrial Identity
 
 A focused presentation refinement for the consumer-facing app.
@@ -63,3 +73,7 @@ The service worker precaches the app shell. External source links need internet 
 - The pre-v0.5 live index remains at `backups/index-before-v0.5-unified-offline.html`.
 - The v0.3.11 backup remains at `backups/index-v0.3.11-before-survival-library.html`.
 - The Viking AI Council remains separate.
+
+## Ownership and permissions
+
+The HARCOM Industries name and branding, and the original Field Companion application source, interface design, documentation and original diagrams are claimed as proprietary works by HARCOM Industries, © 2026. All rights reserved, except where a separate notice says otherwise. See [LICENSE](LICENSE) and [NOTICE](NOTICE.md). Public visibility on GitHub does not grant permission to copy, rebrand, redistribute or commercially exploit these works. No patent, trademark registration or technical anti-copying protection is claimed by this notice. Third-party names and materials, if any, remain the property of their respective owners.
