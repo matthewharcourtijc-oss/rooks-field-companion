@@ -9,7 +9,7 @@ const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
 assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
-assert.match(worker, /harcom-field-companion-v0\.9\.12/, "service-worker cache revision must be v0.9.12");
+assert.match(worker, /harcom-field-companion-v0\.9\.13/, "service-worker cache revision must be v0.9.13");
 assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
@@ -192,6 +192,10 @@ assert.ok(html.includes('id="installPanel"'), "Android install panel missing");
 assert.ok(html.includes('aria-controls="installSteps"'), "install help control must be associated with its instructions");
 assert.ok(html.includes('id="openChromeBtn"'), "Android install panel must offer a direct Chrome hand-off");
 assert.ok(html.includes('package=com.android.chrome'), "Chrome hand-off must target Android Chrome");
+assert.ok(html.includes("intent://www.google.com/#Intent;scheme=https;package=com.android.chrome;"), "Chrome hand-off must launch outside the installed PWA scope");
+assert.ok(!html.includes("intent://matthewharcourtijc-oss.github.io/rooks-field-companion/#Intent"), "Chrome hand-off must not relaunch the installed PWA URL");
+assert.ok(html.includes("paste the Field Companion address into Chrome’s address bar"), "Chrome hand-off must explain the address-bar step");
+assert.ok(html.includes("If it is already installed, that menu option may not appear"), "install guidance must explain why Chrome may hide the install menu for an installed PWA");
 assert.ok(html.includes("Add to Home screen"), "manual Android installation fallback missing");
 const installElements = new Map();
 for (const id of ["installPanel","installAppBtn","installStepsBtn","installSteps","installState"]) {
