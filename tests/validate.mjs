@@ -8,6 +8,8 @@ const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
+assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
+assert.match(worker, /harcom-field-companion-v0\.9\.9/, "offline cache version must match the v0.9.9 app release");
 assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
