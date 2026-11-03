@@ -1,0 +1,29 @@
+{
+  "host": "matthewharcourtijc-oss.github.io",
+  "startUrl": "/rooks-field-companion/",
+  "name": "HARCOM Industries — Field Companion",
+  "launcherName": "Field Companion",
+  "packageId": "com.harcomindustries.fieldcompanion",
+  "appVersionName": "0.1.0",
+  "appVersionCode": 1,
+  "display": "standalone",
+  "orientation": "portrait",
+  "themeColor": "#101820",
+  "themeColorDark": "#101820",
+  "navigationColor": "#101820",
+  "navigationColorDark": "#101820",
+  "backgroundColor": "#101820",
+  "iconUrl": "https://matthewharcourtijc-oss.github.io/rooks-field-companion/icon-512.png",
+  "maskableIconUrl": "https://matthewharcourtijc-oss.github.io/rooks-field-companion/icon-512.png",
+  "enableNotifications": false,
+  "enableSiteSettingsShortcut": true,
+  "fallbackType": "customtabs",
+  "splashScreenFadeOutDuration": 300,
+  "minSdkVersion": 23,
+  "webManifestUrl": "https://matthewharcourtijc-oss.github.io/rooks-field-companion/manifest.json",
+  "signingKey": {
+    "path": "./field-companion-release.keystore",
+    "alias": "harcom-field-companion"
+  },
+  "fingerprints": []
+}
