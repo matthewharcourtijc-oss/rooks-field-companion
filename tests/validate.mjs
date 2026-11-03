@@ -8,7 +8,15 @@ const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
-assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README release version is stale");
+assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
+assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
+assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
+assert.ok(html.includes("14 illustrated species cards"), "species guide card count notice missing");
+assert.ok(html.includes("Never eat any wild mushroom or berry"), "species safety disclaimer missing");
+assert.ok(html.includes("Do not induce vomiting"), "poisoning response must prohibit induced vomiting");
+assert.ok(html.includes("NHS — Poisoning and emergency advice"), "NHS poisoning reference missing");
+assert.equal((html.match(/class="species-card"/g)||[]).length,14,"expected 14 dangerous species illustrated cards");
+assert.equal((html.match(/class="species-plate"/g)||[]).length,14,"every species card must have an offline illustration");
 assert.ok(html.includes('id="harcom-identity-v094"'), "HARCOM visual identity layer missing");
 assert.ok(html.includes("<h1>FIELD COMPANION</h1>"), "clean product title missing");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
@@ -54,7 +62,7 @@ assert.ok(html.includes('id="manualSearchCount"'), "manual search result status 
 const requiredIds = [
   "tasks", "notes", "log", "guide", "backup",
   "priorities", "fieldcraft", "trauma", "remote-care", "firstaid",
-  "shelter", "fire", "water", "sanitation", "food", "fungi",
+  "shelter", "fire", "water", "sanitation", "food", "fungi", "toxic-plants",
   "navigation", "weather", "rescue", "kit",
   "campcraft", "knots", "firecraft", "watercraft",
   "navigation-practice", "field-tools", "camp-systems", "signalling"
@@ -94,7 +102,7 @@ assert.ok(icon.includes("viewBox=\"0 0 512 512\"") && icon.includes("#f08a36") &
 assert.ok(html.includes('<link rel="icon" type="image/svg+xml" href="./icon.svg">'), "browser favicon missing");
 assert.ok(manifest.icons.some(item => item.src === "./icon.svg" && item.type === "image/svg+xml"), "installed app icon missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.8/);
+assert.match(worker, /harcom-field-companion-v0.9.9/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
@@ -161,4 +169,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("HARCOM Field Companion v0.9.8 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("HARCOM Field Companion v0.9.9 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
