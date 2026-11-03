@@ -27,10 +27,12 @@ Do not merge or deploy until the remaining checks pass and Viking approves relea
 
 ## Harcom logo integration
 
-- The candidate now has a dedicated logo slot at `../assets/harcom-logo.png` (repository path: `assets/harcom-logo.png`).
-- Until the approved Harcom logo artwork is supplied, the header shows a simple `H` fallback; no substitute logo has been invented.
-- Add the supplied transparent PNG at `assets/harcom-logo.png`. The existing fallback will disappear automatically when the image loads.
-- A pre-logo candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Visual-Polish-pre-logo-BACKUP.html`.
+- Viking supplied the original Harcom Industries SVG artwork; it is stored unchanged as `assets/harcom-logo.svg`.
+- The development candidate header loads it from `../assets/harcom-logo.svg` (relative to the candidate in `development/`).
+- The full logo is displayed in a taller responsive header slot to preserve the Viking mark, wordmark and Celtic-knot divider; mobile sizing is reduced without cropping.
+- A simple `H` fallback remains if the SVG cannot load.
+- A pre-integration candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Harcom-logo-pre-integration-BACKUP.html`.
+
 
 ## Navigation and accessibility pass
 
