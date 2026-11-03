@@ -6,7 +6,7 @@ const html = fs.readFileSync("index.html", "utf8");
 const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 
-assert.match(html, /Rook's Field Companion — v0\.5\.1 Unified Field Edition/);
+assert.match(html, /Rook's Field Companion — v0\.5\.2 Unified Field Edition/);
 for (const id of ["tasks", "notes", "log", "guide", "backup", "priorities", "trauma", "firstaid", "shelter", "fire", "water", "navigation", "rescue", "fieldcraft", "remote-care", "sanitation"]) {
   assert.match(html, new RegExp('\\bid="' + id + '"'), "missing required panel or manual section: " + id);
 }
@@ -29,9 +29,9 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(html, /SURVIVAL MANUAL v0\.5\.1/);
+assert.match(html, /SURVIVAL MANUAL v0\.5\.2/);
 assert.match(worker, /await cache\.put/);
-assert.match(worker, /harcom-field-companion-v0\.5\.1/);
+assert.match(worker, /harcom-field-companion-v0\.5\.2/);
 assert.doesNotMatch(html, /<script[^>]+src=["']https?:/i, "remote scripts break offline-first operation");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/i, "hosted fonts break offline-first operation");
 
