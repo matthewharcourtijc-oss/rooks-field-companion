@@ -16,6 +16,7 @@ assert.equal(config.fallbackType, "customtabs");
 assert.equal(config.webManifestUrl, "https://matthewharcourtijc-oss.github.io/rooks-field-companion/manifest.json");
 assert.match(config.iconUrl, /icon-512\.png$/);
 assert.equal(config.signingKey.alias, "harcom-field-companion");
+assert.ok(!("password" in config.signingKey), "Signing credentials must never be stored in the checked-in TWA manifest.");
 assert.ok(Array.isArray(config.fingerprints));
 assert.equal(config.fingerprints.length, 0, "Do not invent a signing fingerprint before the dedicated key exists.");
 assert.equal(existsSync(new URL("./field-companion-release.keystore", import.meta.url)), false,
