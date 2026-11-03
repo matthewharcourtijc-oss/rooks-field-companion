@@ -117,7 +117,7 @@ for (const icon of [
   assert.ok(worker.includes('"./' + icon.path + '"'), icon.path + " is not precached");
 }
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.10/);
+assert.match(worker, /harcom-field-companion-v0.9.11/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
