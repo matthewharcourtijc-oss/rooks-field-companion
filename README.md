@@ -17,7 +17,7 @@ Eventually connects to the Viking AI Council, but v0.1 works on its own.
 4. Notes - Simple notes that can be searched and edited.
 5. Cyberpunk UI - Matte black, gunmetal, hazard orange and icy blue.
 
-Live site: https://matthewharcourtjc-oss.github.io/rooks-field-companion/
+Live site: https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
 Tested on Android: Tasks, Notes and Log all saving and counting correctly in local storage.
 
