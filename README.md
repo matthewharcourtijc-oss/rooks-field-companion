@@ -1,5 +1,17 @@
 # Rook's Field Companion — HARCOM Field Edition
 
+## v0.9.9 — Dangerous fungi & berries guide
+
+Expanded the UK field manual with a dedicated **Dangerous fungi & poisonous berries** section.
+
+- Added 14 original, embedded SVG field plates: seven high-risk mushrooms and seven poisonous berry-bearing plants.
+- Added plain-English appearance, habitat and hazard notes, including delayed-onset toxin warnings and dangerous lookalike cautions.
+- Added an explicit no-foraging / no-identification disclaimer: the illustrations are orientation sketches, not a field key and cannot confirm a species is safe.
+- Added an emergency response procedure based on NHS poisoning guidance, including when to call 999 or NHS 111 and what not to do while help is arranged.
+- Added links to NHS, RHS and Woodland Trust reference material. External photo references require internet; the illustrations and safety guidance remain embedded and available offline.
+- Bumped the offline app-shell cache to v0.9.9.
+- No task, notes, mission-log, backup, restore, encrypted-backup or local-storage logic was intentionally changed.
+
 ## v0.9.5 — HARCOM Ownership & Provenance
 
 - Added visible © 2026 HARCOM Industries ownership identification to the application footer.
