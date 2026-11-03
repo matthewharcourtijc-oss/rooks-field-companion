@@ -40,6 +40,8 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
         with:
           # The v3 default requests the retired SDK "tools" package.
           packages: platform-tools
@@ -68,6 +70,7 @@ jobs:
           test -f android/twa/app/src/main/AndroidManifest.xml
           grep -q 'com.harcomindustries.fieldcompanion' android/twa/app/build.gradle
           grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/build.gradle
+          grep -q '@string/hostName' android/twa/app/src/main/AndroidManifest.xml
 
       - name: Upload generated Android project
         uses: actions/upload-artifact@v4
@@ -97,6 +100,8 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
         with:
           # The v3 default requests the retired SDK "tools" package.
           packages: platform-tools
