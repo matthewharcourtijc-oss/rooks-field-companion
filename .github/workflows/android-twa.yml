@@ -110,6 +110,9 @@ jobs:
       - name: Install pinned Bubblewrap CLI
         run: npm install --global @bubblewrap/cli@1.27.0
 
+      - name: Point Bubblewrap at the runner JDK and Android SDK
+        run: bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
+
       - name: Generate Android project
         run: bubblewrap update --skipVersionUpgrade --directory android/twa --manifest android/twa/twa-manifest.json
 
