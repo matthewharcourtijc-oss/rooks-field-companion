@@ -44,6 +44,8 @@ Run **Build Field Companion Android TWA** from GitHub Actions with `build_releas
 
 The debug APK is for testing only. Its signing certificate does not match a future release key; uninstall the debug build before installing a release build. Do not publish the debug certificate in the production Digital Asset Links file.
 
+CI checks the live app shell, manifest, service worker and required PNG icons directly. Bubblewrap's separate `validate` command calls Google's PageSpeed Insights API; that shared API currently returns HTTP 429 for unauthenticated runs. To keep builds deterministic, the release workflow uses Bubblewrap's documented `--skipPwaValidation` flag after the direct endpoint/manifest checks. This does **not** claim a Lighthouse/PageSpeed score or replace a separate performance audit.
+
 A signed release still requires the three dedicated repository secrets. After those are configured, run with `build_release=true` to produce a release-signed APK/AAB and a Digital Asset Links candidate. The root-origin hosting requirement above must also be solved before claiming verified full-screen TWA behaviour. Install and test the release APK on the Samsung Galaxy S22 before treating it as a release.
 
 ## Safety boundaries
