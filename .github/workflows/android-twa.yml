@@ -72,10 +72,6 @@ jobs:
           grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/build.gradle
           grep -q '@string/hostName' android/twa/app/src/main/AndroidManifest.xml
 
-      - name: Compile Android debug variant
-        working-directory: android/twa
-        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
-
       - name: Build debug APK for physical-device smoke test
         working-directory: android/twa
         run: |
