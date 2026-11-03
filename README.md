@@ -1,9 +1,10 @@
 
-## HARCOM Industries logo branch
+## Current release state
 
 - The official HARCOM Industries Viking-head SVG is included as `assets/harcom-logo.svg` and precached by the offline app shell.
-- The service-worker cache version is `v0.9.10`; the published product release metadata remains v0.9.9 until a separately approved release.
-- This branding change is isolated in a pull request and is not live until validation and deployment complete.
+- Product metadata remains v0.9.9; the service-worker cache is v0.9.10 so installed copies refresh the updated Android installation interface.
+- Android users receive a guided PWA installation panel on secure origins. Installation remains user-confirmed by the browser; this is a homescreen app, not a native Android widget.
+- The installation-flow update does not change task, notes, mission-log, backup, restore or local-storage logic.
 
 # Rook's Field Companion — HARCOM Field Edition
 
@@ -16,7 +17,10 @@ Expanded the UK field manual with a dedicated **Dangerous fungi & poisonous berr
 - Added an explicit no-foraging / no-identification disclaimer: the illustrations are orientation sketches, not a field key and cannot confirm a species is safe.
 - Added an emergency response procedure based on NHS poisoning guidance, including when to call 999 or NHS 111 and what not to do while help is arranged.
 - Added links to NHS, RHS and Woodland Trust reference material. External photo references require internet; the illustrations and safety guidance remain embedded and available offline.
-- Bumped the offline app-shell cache to v0.9.9.
+- Added an Android-only PWA installation panel with a user-confirmed browser prompt, installed-state detection and Chrome menu fallback guidance.
+- Improved wide-screen layout and accessible installation-help controls.
+- Added automated regression coverage for the Android install prompt and installed-state UI.
+- Bumped the offline app-shell cache to v0.9.10 so installed copies refresh the updated shell.
 - No task, notes, mission-log, backup, restore, encrypted-backup or local-storage logic was intentionally changed.
 
 ## v0.9.5 — HARCOM Ownership & Provenance
