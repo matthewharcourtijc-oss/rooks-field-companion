@@ -1,10 +1,10 @@
-# Rook's Field Companion — Visual Field Edition
+# Rook's Field Companion — HARCOM Field Edition
 
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
-## v0.9.2 — Visual Field Edition
+## v0.9.3 — HARCOM Field Edition
 
-A presentation and readability refinement. The offline-first app structure, local storage and recovery logic remain unchanged.
+A brand and consumer-interface refinement. HARCOM Industries is now the dominant product identity; technical storage diagnostics and build identifiers are kept out of the everyday interface. The offline-first app structure, local storage and recovery logic remain unchanged.
 
 - Replaced the cramped terminal-style body typography with a clear, locally available Roboto / Noto Sans system font stack. No hosted font or network request is required.
 - Strengthened the visual hierarchy, spacing, contrast and mobile reading scale across the app and embedded manual.
