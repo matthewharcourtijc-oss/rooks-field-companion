@@ -1,52 +1,38 @@
 # Rook's Field Companion
 
-A mobile-first personal command deck with a tactical cyberpunk look.
-Built for Android, in the browser, for everyday use.
+A mobile-first, offline-first field companion for Android and modern browsers.
 
-## Vision
+**Live app:** https://matthewharcourtjc-oss.github.io/rooks-field-companion/
 
-A practical field terminal, not a bloated dashboard.
-Status, tasks, notes and mission log in one place.
-Eventually connects to the Viking AI Council, but v0.1 works on its own.
+## v0.3.11 — live release
 
-## What is in v0.1 - LIVE AND WORKING
+- Command deck with quick status and navigation.
+- Tasks with priorities and completion.
+- Searchable notes.
+- Mission log for jobs, plans, incidents, ideas and outcomes.
+- Practical UK countryside quick-reference guide with simple shelter and navigation diagrams.
+- Local JSON export, validation, import and safety-backup restore.
+- Gunmetal, icy-blue and hazard-orange interface.
+- Single-file HTML/CSS/JavaScript app. No framework, external script, AI key or subscription.
 
-1. Command Deck - Status panel, quick actions and navigation.
-2. Mission Log - Record jobs, plans, incidents, ideas and outcomes.
-3. Tasks - Create, complete and remove tasks, with priorities.
-4. Notes - Simple notes that can be searched and edited.
-5. Cyberpunk UI - Matte black, gunmetal, hazard orange and icy blue.
+## Important data and safety notes
 
-Live site: https://matthewharcourtjc-oss.github.io/rooks-field-companion/
+- Your records are stored in this browser on this device. They are not automatically synced.
+- Browser storage is not encrypted and is not a secure vault.
+- Clearing browser/site data can erase records and recovery copies. Export a JSON backup regularly and keep a copy somewhere separate.
+- The field guide is a quick-reference aide-memoire, not a substitute for training or professional advice. In an emergency in the UK, call 999 or 112.
+- The app has no service-worker install/cache layer yet. Load it online before relying on it offline; browser storage and offline behavior vary by device.
 
-Tested on Android: Tasks, Notes and Log all saving and counting correctly in local storage.
+## Project safeguards
 
-## How it works
+- The previous v0.1 live index is preserved at backups/index-v0.1-live-before-v0.3.11-release.html.
+- The original development master and repair snapshots remain on the development branch.
+- No API keys, passwords or private Council credentials belong in this repository.
+- The Viking AI Council remains a separate project.
 
-- Plain HTML, CSS and JavaScript. No frameworks, no build steps.
-- Runs as a static web app on GitHub Pages.
-- Data is saved in your browser local storage.
-- No AI API, no account, no subscription in v0.1.
-- Single file app: index.html contains all UI and logic.
+## Build
 
-## Important warning about data
-
-Data is stored in your browser only. It is NOT encrypted and it is NOT a secure vault.
-If you clear browser storage, your tasks and notes will be lost.
-Export and backup will come in v0.2.
-
-## Rules - these are non-negotiable
-
-1. No API keys, passwords or secrets in any file, ever. Especially not in JavaScript.
-2. This project does NOT modify the Viking AI Council repo.
-3. No private Council credentials are ever exposed to the browser.
-4. Human approval required for any consequential action. No auto posting, spending or execution.
-5. Keep it free. Minimal dependencies.
-
-## Current status
-
-- Repo: rooks-field-companion
-- Status: v0.1 LIVE and working on GitHub Pages
-- Files: README.md, index.html
-- Next up: v0.2 - Add to Home Screen and Export/Backup
-- Future: Read-only Council report viewer, PWA, voice input
+- Release: v0.3.11
+- Entry point: index.html
+- Hosting: GitHub Pages
+- Source and repair history: dev/v0.3.11-visual-polish-2026-11-03
