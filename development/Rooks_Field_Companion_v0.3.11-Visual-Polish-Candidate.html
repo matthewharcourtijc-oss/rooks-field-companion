@@ -998,3 +998,384 @@ document.getElementById('exportJsonBtn').onclick=()=>{
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     const es=document.getElementById('exportStatus');
     if(es) es.textContent='Download triggered — size '+byteSize+' bytes measured via TextEncoder — app cannot verify file saved. Please manually open file in Downloads, verify it contains your tasks, notes, logs, check file size above zero, then click confirm button below to mark backup verified. URL revoked in 2s.';
+    setTimeout(()=>{try{URL.revokeObjectURL(url);}catch{}},2000);
+  }catch(e){alert('Export failed: '+e.message); const es=document.getElementById('exportStatus'); if(es) es.textContent='Export failed: '+e.message;}
+};
+document.getElementById('copyJsonBtn').onclick=async()=>{
+  try{
+    const text=JSON.stringify(getExport(),null,2);
+    await navigator.clipboard.writeText(text);
+    const es=document.getElementById('exportStatus'); if(es) es.textContent='Copied to clipboard — size '+getByteSize(getExport())+' bytes via TextEncoder — paste into file, manually verify contents, then confirm backup verified. App cannot verify clipboard content.';
+  }catch(e){prompt('Copy this JSON — manually save and verify:', JSON.stringify(getExport(),null,2));}
+};
+document.getElementById('confirmBackupBtn').onclick=async()=>{
+  try{
+    const r=await safeSet(LS_B,Date.now());
+    if(!r.ok){alert('Failed to mark backup verified: '+r.reason); return;}
+    updateCounts();
+    const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup marked as manually verified at '+new Date().toLocaleString()+' — you confirmed you opened and checked file — byte size '+getExportByteSize()+' bytes.';
+  }catch(e){alert('Failed to mark backup: '+e.message);}
+};
+document.getElementById('validateBtn').onclick=()=>{
+  const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
+  try{
+    const j=JSON.parse(txt);
+    validateImport(j);
+    const byteSize=getByteSize(j);
+    st.textContent=`Valid: ${j.tasks.length} tasks, ${j.notes.length} notes, ${j.logs.length} logs, version ${j.version||'unknown'} — size ${byteSize} bytes measured via TextEncoder within 2MB limit`;
+    st.style.color='green';
+  }
+  catch(e){st.textContent='Invalid: '+e.message; st.style.color='var(--alert)';}
+};
+document.getElementById('importBtn').onclick=async()=>{
+  const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
+  try{
+    const j=JSON.parse(txt); validateImport(j);
+    const byteSize=getByteSize(j);
+    if(!confirm(`Import ${j.tasks.length} tasks, ${j.notes.length} notes, ${j.logs.length} logs? Size ${byteSize} bytes via TextEncoder. This will REPLACE current data. A safety backup of current data will be created first — but ONLY if that backup succeeds will import proceed. Confirm?`)) return;
+    const keyResult=generateUniqueSafetyKey();
+    if(!keyResult.ok){
+      st.textContent='Safety backup key generation FAILED ('+keyResult.reason+') — import ABORTED to avoid overwrite. No backup claimed as created.';
+      st.style.color='var(--alert)';
+      return;
+    }
+    const safetyKey=keyResult.key;
+    try{
+      const backupData={tasks:tasks,notes:notes,logs:logs,at:new Date().toISOString()};
+      const backupResult=await safeSet(safetyKey,backupData,{mustNotExist:true,backup:false});
+      if(!backupResult.ok){
+        st.textContent='Safety backup FAILED ('+backupResult.reason+') — import ABORTED to protect current data. Free space or export manually first. No backup claimed as created.';
+        st.style.color='var(--alert)';
+        return;
+      }
+    }catch(e){
+      st.textContent='Safety backup FAILED: '+e.message+' — import ABORTED. No backup claimed.';
+      st.style.color='var(--alert)';
+      return;
+    }
+    const result=await atomicSetCombined(j.tasks,j.notes,j.logs);
+    if(!result.ok){
+      st.textContent='Import failed during write/read-back ('+result.reason+') — previous data preserved unchanged per atomic single-key. Safety backup retained as '+safetyKey;
+      st.style.color='var(--alert)';
+      return;
+    }
+    tasks=j.tasks; notes=j.notes; logs=j.logs;
+    clearCorruptionState();
+    renderTasks(); renderNotes(); renderLogs(); updateCounts();
+    st.textContent='Imported successfully — byte size '+byteSize+' bytes — safety backup saved as '+safetyKey+' (verified write + read-back success) — corruption state cleared.';
+    st.style.color='green';
+    document.getElementById('importArea').value='';
+    renderSafetyList();
+  }catch(e){st.textContent='Import failed: '+e.message; st.style.color='var(--alert)';}
+};
+
+function renderSafetyList(){
+  const el=document.getElementById('safetyList'); if(!el) return;
+  el.textContent='';
+  let safes=[];
+  try{ for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith(LS_SAFETY_PREFIX)) safes.push(k);} }catch(e){ el.textContent='Failed to list safety backups: '+e.message; return; }
+  safes.sort().reverse();
+  if(safes.length===0){ el.textContent='No safety backups yet — they are created automatically AFTER you confirm import or restore and only if backup write succeeds. Keys checked for uniqueness, abort if cannot establish unused key.'; return; }
+  for(let s=0;s<safes.length;s++){
+    const key=safes[s];
+    let info=''; try{const d=JSON.parse(localStorage.getItem(key)); info=`${d.tasks?.length||0} tasks, ${d.notes?.length||0} notes, ${d.logs?.length||0} logs — ${new Date(d.at).toLocaleString()}`;}catch{info='unreadable';}
+    const div=document.createElement('div'); div.className='safety-item';
+    const flexDiv=document.createElement('div'); flexDiv.style.flex='1';
+    const keyDiv=document.createElement('div'); keyDiv.className='txt'; keyDiv.style.fontSize='11px'; keyDiv.textContent=key;
+    const metaDiv=document.createElement('div'); metaDiv.className='meta'; metaDiv.textContent=info;
+    flexDiv.appendChild(keyDiv); flexDiv.appendChild(metaDiv);
+    const restoreBtn=document.createElement('button'); restoreBtn.className='secondary'; restoreBtn.textContent='Restore';
+    const deleteBtn=document.createElement('button'); deleteBtn.className='danger'; deleteBtn.textContent='Delete';
+    restoreBtn.onclick=async()=>{
+      try{
+        const raw=localStorage.getItem(key);
+        if(!raw) throw new Error('Backup not found');
+        const data=JSON.parse(raw);
+        if(!data.tasks) throw new Error('Invalid safety backup');
+        validateImport(data);
+        if(!confirm(`Restore safety backup ${key}? This will replace current data. A new safety backup of current data will be created first — only if that succeeds will restore proceed.`)) return;
+        const keyResult=generateUniqueSafetyKey();
+        if(!keyResult.ok){alert('Safety backup key generation FAILED ('+keyResult.reason+') — restore ABORTED.'); return;}
+        const newSafetyKey=keyResult.key;
+        try{
+          const backupResult=await safeSet(newSafetyKey,{tasks:tasks,notes:notes,logs:logs,at:new Date().toISOString()},{mustNotExist:true,backup:false});
+          if(!backupResult.ok){alert('Safety backup of current data FAILED ('+backupResult.reason+') — restore ABORTED to protect data.'); return;}
+        }catch(e){alert('Safety backup failed: '+e.message+' — restore aborted.'); return;}
+        const result=await atomicSetCombined(data.tasks,data.notes,data.logs);
+        if(!result.ok){alert('Restore failed ('+result.reason+') — previous data preserved unchanged.'); return;}
+        tasks=data.tasks; notes=data.notes; logs=data.logs;
+        clearCorruptionState();
+        renderTasks(); renderNotes(); renderLogs(); updateCounts();
+        alert('Restored from '+key+' — new safety backup '+newSafetyKey+' created — corruption cleared if present.');
+      }catch(e){alert('Restore failed: '+e.message);}
+    };
+    deleteBtn.onclick=async()=>{
+      if(confirm('Delete safety backup '+key+'?')){
+        const deleted=await transactionDelete(key);
+        if(!deleted.ok){alert('Delete failed: '+deleted.reason); return;}
+        renderSafetyList(); updateCounts();
+      }
+    };
+    div.appendChild(flexDiv); div.appendChild(restoreBtn); div.appendChild(deleteBtn);
+    el.appendChild(div);
+  }
+}
+
+function computeHash(obj){return simpleHash(JSON.stringify(obj));}
+
+document.getElementById('runPersistTest').onclick=async()=>{
+  try{
+    const canaryValue='harcom-canary-'+Date.now()+'-'+uid();
+    const canaryId=uid();
+    const dataHashes={tasks:computeHash(tasks), notes:computeHash(notes), logs:computeHash(logs), combined:computeHash({tasks:tasks,notes:notes,logs:logs})};
+    const payload={at:Date.now(), expectedCounts:{tasks:tasks.length, notes:notes.length, logs:logs.length}, dataHashes:dataHashes, canaryId:canaryId, canaryValue:canaryValue, note:'Hash is simple non-cryptographic for accidental-change detection, not cryptographic integrity protection'};
+    const rCanary=await safeSet(LS_CANARY,{id:canaryId, value:canaryValue, at:Date.now()});
+    if(!rCanary.ok){document.getElementById('lastTest').textContent='Persistence test failed to save canary: '+rCanary.reason; return;}
+    const rTest=await safeSet(LS_PT,payload);
+    if(!rTest.ok){document.getElementById('lastTest').textContent='Persistence test failed to save test record: '+rTest.reason; return;}
+    document.getElementById('lastTest').textContent=`Persistence test written at ${new Date(payload.at).toLocaleTimeString()} — canary ${canaryId} value ${canaryValue.slice(0,12)}..., combined hash ${dataHashes.combined.slice(0,8)} tasks:${dataHashes.tasks.slice(0,6)} notes:${dataHashes.notes.slice(0,6)} logs:${dataHashes.logs.slice(0,6)} — NOTE: hash is simple non-crypto for accidental-change detection only, not cryptographic protection. Now close tab completely and reopen file — verification will compare stored combined hash plus individual hashes and independently verify canary.`;
+  }catch(e){document.getElementById('lastTest').textContent='Persistence test failed: '+e.message;}
+};
+
+function checkPersistenceOnLoad(){
+  try{
+    const rawTest=localStorage.getItem(LS_PT);
+    const rawCanary=localStorage.getItem(LS_CANARY);
+    const el=document.getElementById('lastTest');
+    if(!el) return;
+    if(!rawTest||!rawCanary){ el.textContent='Persistence test: not yet run — click Test Persistence (combined hash plus individual hashes plus canary — accidental-change check only, not crypto), close tab, reopen to verify.'; return; }
+    const p=JSON.parse(rawTest);
+    const canaryStored=JSON.parse(rawCanary);
+    const currentHashes={tasks:computeHash(tasks), notes:computeHash(notes), logs:computeHash(logs), combined:computeHash({tasks:tasks,notes:notes,logs:logs})};
+    const canaryMatch = canaryStored && canaryStored.id===p.canaryId && canaryStored.value===p.canaryValue;
+    const combinedMatch = currentHashes.combined===p.dataHashes.combined;
+    const individualMatch = currentHashes.tasks===p.dataHashes.tasks && currentHashes.notes===p.dataHashes.notes && currentHashes.logs===p.dataHashes.logs;
+    el.textContent='';
+    if(canaryMatch && combinedMatch && individualMatch){
+      const statusSpan=document.createElement('span'); statusSpan.style.color='var(--ok)'; statusSpan.textContent='Verified (combined hash plus individual hashes plus canary — accidental-change check, not cryptographic)';
+      const detail=document.createElement('span');
+      detail.textContent=`: test ${new Date(p.at).toLocaleString()} — canary ${p.canaryId} verified independently, combined hash ${currentHashes.combined.slice(0,8)} matches, individual tasks:${currentHashes.tasks.slice(0,6)} notes:${currentHashes.notes.slice(0,6)} logs:${currentHashes.logs.slice(0,6)} — ${tasks.length}/${notes.length}/${logs.length} tasks, notes, logs survived close and reopen.`;
+      el.appendChild(statusSpan); el.appendChild(detail);
+    } else {
+      const statusSpan=document.createElement('span'); statusSpan.style.color='var(--alert)'; statusSpan.textContent='Persistence issue (accidental-change check)';
+      const detail=document.createElement('div');
+      let msg=`: test ${new Date(p.at).toLocaleString()} — `;
+      if(!canaryMatch) msg+=`Canary mismatch (expected id ${p.canaryId} value ${String(p.canaryValue).slice(0,8)}... but found ${canaryStored?.id} ${String(canaryStored?.value).slice(0,8)}...). Storage may have been cleared. `;
+      if(!combinedMatch) msg+=`Combined hash mismatch — expected ${p.dataHashes.combined.slice(0,8)} but found ${currentHashes.combined.slice(0,8)}. `;
+      if(!individualMatch) msg+=`Individual hashes — expected tasks ${p.dataHashes.tasks.slice(0,6)} notes ${p.dataHashes.notes.slice(0,6)} logs ${p.dataHashes.logs.slice(0,6)} but found ${currentHashes.tasks.slice(0,6)}/${currentHashes.notes.slice(0,6)}/${currentHashes.logs.slice(0,6)}. Expected counts ${p.expectedCounts.tasks}/${p.expectedCounts.notes}/${p.expectedCounts.logs} found ${tasks.length}/${notes.length}/${logs.length}. If you added or deleted since test, this is expected; if not, data may have been lost. Hash is simple non-crypto for accidental change detection only. `;
+      detail.textContent=msg;
+      el.appendChild(statusSpan); el.appendChild(detail);
+    }
+  }catch(e){const el=document.getElementById('lastTest'); if(el) el.textContent='Persistence test: could not read previous test — '+e.message;}
+}
+
+document.getElementById('wipeBtn').onclick=async()=>{
+  const confirm1=confirm('Clear ALL existing Harcom keys? A verified recovery snapshot will be retained automatically. Export and manually verify a separate backup first!');
+  if(!confirm1) return;
+  const confirm2=prompt('Type DELETE to confirm clearing all existing Harcom keys:');
+  if(confirm2!=='DELETE'){alert('Cancelled — you must type DELETE exactly.'); return;}
+  let keysToRemove=[];
+  const wipeResult=await withStorageLock(async()=>{
+    let snapshot={};
+    try{
+      // Enumerate only after acquiring the exclusive lock; no cooperating writer can add a key mid-wipe.
+      for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith('harcom_')) keysToRemove.push(k);}
+      for(const k of keysToRemove) snapshot[k]=localStorage.getItem(k);
+    }catch(e){return {ok:false,failed:['locked snapshot/list read: '+e.message]};}
+    let recoveryKey;
+    try{recoveryKey=writeRecoveryRaw('__ALL_HARCOM_KEYS__',JSON.stringify(snapshot));}catch(e){return {ok:false,failed:['durable full-wipe recovery backup failed: '+e.message]};}
+    let failed=[];
+    for(const k of keysToRemove){try{localStorage.removeItem(k);if(localStorage.getItem(k)!==null)failed.push(k+': still exists');}catch(e){failed.push(k+': '+e.message);}}
+    if(failed.length){
+      // Conditional rollback: restore only keys still absent; never overwrite an intervening value.
+      for(const k of keysToRemove){try{if(snapshot[k]!==null && localStorage.getItem(k)===null){localStorage.setItem(k,snapshot[k]);if(localStorage.getItem(k)!==snapshot[k])failed.push(k+': rollback verification failed');}}catch(e){failed.push(k+': rollback failed '+e.message);}}
+      return {ok:false,failed,recoveryKey};
+    }
+    lastKnownRaw=null; return {ok:true,recoveryKey};
+  },true);
+  let failed=wipeResult.ok?[]:(wipeResult.failed||[wipeResult.reason||'wipe transaction failed']);
+  if(failed.length>0){
+    alert('Clear ALL attempted but some keys FAILED to delete: '+failed.join(', ')+'. Not all data cleared — try again, free space, or clear via browser settings. In-memory data NOT cleared to protect you.');
+    const lt=document.getElementById('lastTest'); if(lt) lt.textContent='Clear ALL partially failed: '+failed.join(', ');
+    return;
+  }
+  tasks=[]; notes=[]; logs=[]; clearCorruptionState(); renderTasks(); renderNotes(); renderLogs(); updateCounts();
+  const lt=document.getElementById('lastTest'); if(lt) lt.textContent='All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.';
+  alert('All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.');
+};
+
+
+// Executable transaction failure harness. Runs against isolated in-memory storage; never touches user data.
+async function runTransactionFailureTests(){
+  const results=[];
+  function assert(name,condition,detail){results.push({name,pass:!!condition,detail:detail||''});}
+  const originalStorage=window.localStorage;
+  const originalLocks=navigator.locks;
+  const originalKnownRaw=lastKnownRaw;
+  function fakeStorage(seed={}){
+    const m=new Map(Object.entries(seed)); let mode=''; let original=''; let readCount=0; let journalWrites=0;
+    return {getItem(k){if(mode==='readthrow')throw new Error('simulated read exception');if(mode==='readbackthrow'&&k===LS_DATA&&++readCount===2)throw new Error('simulated read-back exception');return m.has(k)?m.get(k):null;},
+      setItem(k,v){
+        if(mode==='quota'||(mode==='backupfail'&&k.startsWith('harcom_recovery_'))||(mode==='corruptbackupfail'&&k.startsWith('harcom_corrupt_'))||(mode==='primaryquota'&&k===LS_DATA)||(mode==='migrationbackupfail'&&k.startsWith('harcom_recovery_'))||(mode==='journalcreatefail'&&k===LS_MIGRATION_JOURNAL)||(mode==='journalupdatefail'&&k===LS_MIGRATION_JOURNAL&&++journalWrites>=2))throw Object.assign(new Error('quota / injected write failure'),{name:'QuotaExceededError'});
+        if(mode==='mismatch'&&k===LS_DATA&&String(v)==='mismatch-target'){m.set(k,String(v)+'!');return;}
+        if(mode==='rollbackfail'&&k===LS_DATA&&String(v)===original)throw new Error('simulated rollback failure');
+        if(mode==='rollbackfail'&&k===LS_DATA&&String(v)!==original){m.set(k,String(v)+'!');return;}
+        m.set(k,String(v));
+      },
+      removeItem(k){if(mode==='deletefail'&&k===LS_LEGACY_T)throw new Error('simulated delete failure');if(mode==='deletefail2'&&k===LS_LEGACY_N)throw new Error('simulated second-key delete failure');m.delete(k);},
+      key(i){return [...m.keys()][i]??null;},get length(){return m.size;},_map:m,_mode(v){mode=v;journalWrites=0;}};
+  }
+  try{
+    const mem=fakeStorage({harcom_data:'{"tasks":[],"notes":[],"logs":[]}'});
+    Object.defineProperty(window,'localStorage',{configurable:true,value:mem});
+    Object.defineProperty(navigator,'locks',{configurable:true,value:{request:async(n,o,fn)=>fn()}});
+    lastKnownRaw=mem.getItem(LS_DATA);
+    let r=await transactionWrite(LS_DATA,'{"tasks":[],"notes":[],"logs":[],"savedAt":1}');
+    assert('verified write + durable backup',r.ok&&!!r.recoveryKey&&JSON.parse(mem.getItem(r.recoveryKey)).raw==='{"tasks":[],"notes":[],"logs":[]}',r.reason||'');
+    const before=mem.getItem(LS_DATA); mem._mode('primaryquota'); r=await transactionWrite(LS_DATA,'quota-target');
+    assert('primary write quota error aborts and preserves original',!r.ok&&mem.getItem(LS_DATA)===before,r.reason||''); mem._mode('');
+    mem._mode('mismatch'); r=await transactionWrite(LS_DATA,'mismatch-target');
+    assert('read-back mismatch triggers conditional rollback',!r.ok&&mem.getItem(LS_DATA)===before&&r.rollback==='verified-restore',r.rollback||''); mem._mode('');
+    mem._map.set(LS_DATA,'intervening-tab-value'); const skippedRollback=await conditionalRollback(LS_DATA,'our-attempted-value',before);
+    assert('conditional rollback never overwrites intervening change',!skippedRollback.ok&&mem.getItem(LS_DATA)==='intervening-tab-value'&&skippedRollback.reason==='rollback-skipped-intervening-change');
+    mem._map.set(LS_DATA,before); lastKnownRaw=before;
+    mem._mode('backupfail'); r=await transactionWrite(LS_DATA,'backup-fail-target');
+    assert('backup failure aborts before overwrite',!r.ok&&r.backupFailed===true&&mem.getItem(LS_DATA)===before,r.reason||''); mem._mode('');
+    mem._mode('rollbackfail'); original=before; r=await transactionWrite(LS_DATA,'rollback-fail-target');
+    assert('rollback failure is surfaced',!r.ok&&r.rollbackFailed===true,r.rollback||''); mem._mode(''); mem._map.set(LS_DATA,before); lastKnownRaw=before;
+    const malformed=''; mem._map.set(LS_LEGACY_T,malformed); mem._mode('corruptbackupfail'); const preserveFailure=await preserveRawCorrupt(LS_LEGACY_T,malformed);
+    assert('corrupt preservation failure aborts without changing original',!preserveFailure.ok&&mem.getItem(LS_LEGACY_T)===malformed); mem._mode('');
+    const emptyPreserve=await preserveRawCorrupt(LS_LEGACY_T,malformed);
+    assert('empty malformed legacy raw preserved before recovery',emptyPreserve.ok&&mem.getItem(emptyPreserve.corruptKey)==='');
+    const collisionBefore=mem.getItem(emptyPreserve.corruptKey); r=await transactionWrite(emptyPreserve.corruptKey,'must-not-overwrite',{mustNotExist:true,backup:false});
+    assert('recovery-key collision fails closed',!r.ok&&mem.getItem(emptyPreserve.corruptKey)===collisionBefore);
+    const badJson='{not-json'; const malformedPreserve=await preserveRawCorrupt(LS_LEGACY_N,badJson);
+    let parseFailed=false; try{JSON.parse(mem.getItem(malformedPreserve.corruptKey));}catch(e){parseFailed=true;}
+    assert('malformed legacy JSON preserved before parse failure',malformedPreserve.ok&&mem.getItem(malformedPreserve.corruptKey)===badJson&&parseFailed);
+    mem._mode('readthrow'); r=await transactionWrite(LS_DATA,'read-target');
+    assert('read-before-write exception aborts safely',!r.ok,r.reason||''); mem._mode(''); mem._map.set(LS_DATA,before); lastKnownRaw=before;
+    mem._mode('readbackthrow'); r=await transactionWrite(LS_DATA,'readback-target');
+    assert('transient read-back exception conditionally rolls back',!r.ok&&r.rollback==='verified-restore'&&mem.getItem(LS_DATA)===before,r.rollback||''); mem._mode('');
+    lastKnownRaw='stale-value'; r=await transactionWrite(LS_DATA,'stale-target');
+    assert('stale tab rejected',!r.ok&&r.stale===true,r.reason||'');
+    lastKnownRaw=mem.getItem(LS_DATA);
+    let lockTail=Promise.resolve(); Object.defineProperty(navigator,'locks',{configurable:true,value:{request:async(n,o,fn)=>{const prior=lockTail;let release;lockTail=new Promise(res=>release=res);await prior;try{return await fn();}finally{release();}}}});
+    const firstRaw=mem.getItem(LS_DATA); lastKnownRaw=firstRaw;
+    const firstTab=await transactionWrite(LS_DATA,'tab-one');
+    lastKnownRaw=firstRaw; // second tab retains the snapshot it loaded before tab one's commit
+    const secondTab=await transactionWrite(LS_DATA,'tab-two');
+    assert('competing-tab stale snapshot rejected after serialized commit',firstTab.ok&&!secondTab.ok&&secondTab.stale===true,'first='+firstTab.ok+' second='+secondTab.reason);
+    lastKnownRaw=mem.getItem(LS_DATA);
+    const ordinary=await commitCombined([{id:'t1',text:'ordinary save',completed:false,createdAt:Date.now()}],[],[]);
+    assert('ordinary save commits through complete verified transaction',ordinary.ok&&ordinary.verifyRaw===mem.getItem(LS_DATA)&&lastKnownRaw===ordinary.verifyRaw);
+    const deleted=await transactionDelete(malformedPreserve.corruptKey);
+    assert('destructive delete creates recovery copy before verified removal',deleted.ok&&!!deleted.recoveryKey&&mem.getItem(malformedPreserve.corruptKey)===null&&JSON.parse(mem.getItem(deleted.recoveryKey)).raw==='{not-json');
+    mem._mode('backupfail'); const importAttempt=await atomicSetCombined([],[],[]);
+    assert('import replacement aborts when durable backup fails',!importAttempt.ok&&importAttempt.reason.includes('durable-recovery-backup-failed')); mem._mode('');
+    lastKnownRaw='older-restore-snapshot'; const restoreAttempt=await atomicSetCombined([],[],[]);
+    assert('restore replacement aborts on stale state',!restoreAttempt.ok&&restoreAttempt.reason.includes('stale-state'));
+    const beforeMigration=mem.getItem(LS_DATA); lastKnownRaw=beforeMigration; mem._map.set(LS_LEGACY_T,'[]');
+    const migratedRaw=JSON.stringify({tasks:[],notes:[],logs:[],version:'migration-test'});
+    const migrationWrite=await transactionWrite(LS_DATA,migratedRaw,{deferKnownRaw:true});
+    mem._mode('deletefail'); const failedCleanup=await transactionDelete(LS_LEGACY_T); mem._mode('');
+    const migrationRollback=await conditionalRollback(LS_DATA,migratedRaw,beforeMigration);
+    assert('migration cleanup failure rolls back primary and retains legacy original',migrationWrite.ok&&!failedCleanup.ok&&migrationRollback.ok&&mem.getItem(LS_DATA)===beforeMigration&&mem.getItem(LS_LEGACY_T)==='[]');
+    // Journalled migration tests: complete commit, interrupted recovery, idempotence and conflict refusal.
+    const legacySeed={}; legacySeed[LS_LEGACY_T]='[]'; legacySeed[LS_LEGACY_N]='[]'; legacySeed[LS_LEGACY_L]='[]';
+    const migrationMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:migrationMem});
+    lastKnownRaw=null;
+    const migrationResult=migrateLegacyLocked();
+    assert('journalled migration completes with exact primary and verified legacy cleanup',migrationResult.ok===true&&migrationMem.getItem(LS_DATA)===migrationResult.raw&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>migrationMem.getItem(k)===null)&&migrationMem.getItem(LS_MIGRATION_JOURNAL)===null);
+    assert('journalled migration commits lastKnownRaw only after journal close',lastKnownRaw===migrationMem.getItem(LS_DATA));
+    assert('journal phase updates do not create unreferenced recovery copies',[...migrationMem._map.keys()].filter(k=>k.startsWith('harcom_recovery_')).length===3);
+
+    const interruptedMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:interruptedMem});
+    const interruptedRefs={};
+    for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+      const raw=interruptedMem.getItem(k), ref=writeRecoveryRaw(k,raw);
+      interruptedRefs[k]={backupKey:ref,rawLength:raw.length,rawHash:simpleHash(raw)};
+    }
+    const interruptedSavedAt=Date.now();
+    const interruptedExpected=JSON.stringify({tasks:[],notes:[],logs:[],version:'v0.3.11-migrated',savedAt:interruptedSavedAt});
+    const interruptedJournal={kind:'harcom-migration-journal-v1',version:1,id:'simulated-crash',createdAt:new Date().toISOString(),phase:'legacy-delete-pending',snapshots:interruptedRefs,expected:{version:'v0.3.11-migrated',savedAt:interruptedSavedAt,rawLength:interruptedExpected.length,rawHash:simpleHash(interruptedExpected)},deletingKey:LS_LEGACY_N};
+    updateMigrationJournalLocked(interruptedJournal,true);
+    interruptedMem.setItem(LS_DATA,interruptedExpected);
+    interruptedMem.removeItem(LS_LEGACY_T); // process stopped after one legacy deletion
+    const interruptedRecovery=recoverMigrationJournalLocked();
+    assert('restart recovery restores missing original and conditionally removes its primary',interruptedRecovery.rolledBack===true&&interruptedMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>interruptedMem.getItem(k)==='[]'));
+    const repeatedRecovery=recoverMigrationJournalLocked();
+    assert('migration recovery is idempotent when repeated',repeatedRecovery.ok===true&&repeatedRecovery.found===false);
+
+    const conflictMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:conflictMem});
+    const conflictRefs={};
+    for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){const raw=conflictMem.getItem(k),ref=writeRecoveryRaw(k,raw);conflictRefs[k]={backupKey:ref,rawLength:raw.length,rawHash:simpleHash(raw)};}
+    const conflictSavedAt=Date.now(), conflictExpected=JSON.stringify({tasks:[],notes:[],logs:[],version:'v0.3.11-migrated',savedAt:conflictSavedAt});
+    updateMigrationJournalLocked({kind:'harcom-migration-journal-v1',version:1,id:'conflict',createdAt:new Date().toISOString(),phase:'primary-write-pending',snapshots:conflictRefs,expected:{version:'v0.3.11-migrated',savedAt:conflictSavedAt,rawLength:conflictExpected.length,rawHash:simpleHash(conflictExpected)},deletingKey:null},true);
+    conflictMem.setItem(LS_DATA,'unexpected-intervening-value');
+    let conflictStopped=false;try{recoverMigrationJournalLocked();}catch(e){conflictStopped=true;}
+    assert('recovery refuses to overwrite unexpected primary and retains journal',conflictStopped&&conflictMem.getItem(LS_DATA)==='unexpected-intervening-value'&&conflictMem.getItem(LS_MIGRATION_JOURNAL)!==null);
+
+    const cleanupFailMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:cleanupFailMem});
+    cleanupFailMem._mode('deletefail');
+    let cleanupFailed=false;try{migrateLegacyLocked();}catch(e){cleanupFailed=true;}
+    cleanupFailMem._mode('');
+    assert('injected migration cleanup failure rolls back primary and retains all legacy originals',cleanupFailed&&cleanupFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>cleanupFailMem.getItem(k)==='[]')&&cleanupFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+    cleanupFailMem._mode('');
+    const cleanupRetry=migrateLegacyLocked();
+    assert('migration can be retried successfully after verified rollback',cleanupRetry.ok===true&&cleanupFailMem.getItem(LS_DATA)===cleanupRetry.raw&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>cleanupFailMem.getItem(k)===null));
+
+    const backupFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:backupFailMem});
+    backupFailMem._mode('migrationbackupfail'); let migrationBackupFailed=false; try{migrateLegacyLocked();}catch(e){migrationBackupFailed=true;}
+    assert('migration recovery-copy failure aborts before primary write or legacy deletion',migrationBackupFailed&&backupFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>backupFailMem.getItem(k)==='[]')&&backupFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const journalCreateFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:journalCreateFailMem});
+    journalCreateFailMem._mode('journalcreatefail'); let journalCreateFailed=false; try{migrateLegacyLocked();}catch(e){journalCreateFailed=true;}
+    assert('journal creation failure leaves all legacy originals untouched',journalCreateFailed&&journalCreateFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>journalCreateFailMem.getItem(k)==='[]')&&journalCreateFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const journalUpdateFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:journalUpdateFailMem});
+    journalUpdateFailMem._mode('journalupdatefail'); let journalUpdateFailed=false; try{migrateLegacyLocked();}catch(e){journalUpdateFailed=true;}
+    journalUpdateFailMem._mode('');
+    assert('journal phase-update failure recovers using the last verified journal',journalUpdateFailed&&journalUpdateFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>journalUpdateFailMem.getItem(k)==='[]')&&journalUpdateFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const primaryFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:primaryFailMem});
+    primaryFailMem._mode('primaryquota'); let migrationPrimaryFailed=false; try{migrateLegacyLocked();}catch(e){migrationPrimaryFailed=true;}
+    primaryFailMem._mode('');
+    assert('primary write quota failure restores clean legacy state',migrationPrimaryFailed&&primaryFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>primaryFailMem.getItem(k)==='[]')&&primaryFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const secondDeleteFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:secondDeleteFailMem});
+    secondDeleteFailMem._mode('deletefail2'); let secondDeleteFailed=false; try{migrateLegacyLocked();}catch(e){secondDeleteFailed=true;}
+    secondDeleteFailMem._mode('');
+    assert('failure on second legacy deletion restores the first deleted key',secondDeleteFailed&&secondDeleteFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>secondDeleteFailMem.getItem(k)==='[]')&&secondDeleteFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    // After a simulated process interruption has been recovered, migration must be safely retryable.
+    Object.defineProperty(window,'localStorage',{configurable:true,value:interruptedMem});
+    const interruptedRetry=migrateLegacyLocked();
+    assert('interrupted migration recovery can be followed by a successful retry',interruptedRetry.ok===true&&interruptedMem.getItem(LS_DATA)===interruptedRetry.raw&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>interruptedMem.getItem(k)===null));
+
+    Object.defineProperty(navigator,'locks',{configurable:true,value:null}); r=await transactionWrite(LS_DATA,'no-lock-target');
+    assert('missing Web Locks fails closed for writes',!r.ok&&r.reason.includes('web-locks-unavailable'),r.reason||'');
+    const noLockDelete=await transactionDelete(LS_LEGACY_T);
+    assert('missing Web Locks fails closed for destructive deletes',!noLockDelete.ok&&noLockDelete.reason.includes('web-locks-unavailable')); 
+  }catch(e){assert('harness execution',false,e.message);}
+  finally{try{Object.defineProperty(window,'localStorage',{configurable:true,value:originalStorage});}catch(e){};try{Object.defineProperty(navigator,'locks',{configurable:true,value:originalLocks});}catch(e){};lastKnownRaw=originalKnownRaw;}
+  return results;
+}
+
+document.getElementById('runTxTests').onclick=async()=>{
+  const out=await runTransactionFailureTests();
+  const passed=out.filter(x=>x.pass).length, failed=out.length-passed;
+  const el=document.getElementById('lastTest');
+  el.textContent='SIMULATED transaction tests: '+passed+'/'+out.length+' passed; '+failed+' failed. '+out.map(x=>(x.pass?'PASS ':'FAIL ')+x.name+(x.detail?' ['+x.detail+']':'')).join(' | ');
+};
+
+(async function init(){
+  await loadAll(); renderTasks(); renderNotes(); renderLogs(); updateCounts(); checkPersistenceOnLoad();
+  window.addEventListener('online',updateCounts); window.addEventListener('offline',updateCounts);
+})();
+</script>
+</body>
+</html>
