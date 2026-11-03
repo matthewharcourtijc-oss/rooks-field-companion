@@ -1078,8 +1078,8 @@ async function loadAll(){
     const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='localStorage available — persistent (no existing data) — validated';
     clearCorruptionState();
   }catch(e){
-    if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='Load/recovery failed safely: '+e.message+' — no new data should be entered until recovery is resolved.';}
-    if(corruptEl){corruptEl.style.display='block'; corruptEl.textContent='Storage recovery is incomplete or conflicted. Existing raw records, journal and recovery copies have been retained where possible. Do not add or edit data until reviewed.';}
+    if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='We could not safely load your saved information. Your existing data has been protected. Do not add new records until the issue is resolved.';}
+    if(corruptEl){corruptEl.style.display='block'; corruptEl.textContent='Your saved information needs attention. Editing has been paused to protect it. Keep this device data intact and resolve the issue before continuing.';}
     tasks=[]; notes=[]; logs=[]; corruptDetected=true;
   }
 }
@@ -1091,7 +1091,7 @@ function updateCounts(){
   if(origin) origin.textContent = location.origin + ' (' + location.protocol + ')';
   if(location.protocol==='file:'){
     const w=document.getElementById('storageWarn');
-    if(w && w.style.display==='none'){w.style.display='block'; w.textContent='Opened via file origin — localStorage varies per browser. For Android stable origin, test via GitHub Pages https origin.';}
+    if(w && w.style.display==='none'){w.style.display='block'; w.textContent='This copy was opened directly as a file. For reliable saving and offline use, open the installed Field Companion instead.';}
   }
   if(navigator.onLine){if(d) d.className='dot'; if(t) t.textContent='Online — offline cache prepares automatically';} else {if(d) d.className='dot off'; if(t) t.textContent=(navigator.serviceWorker&&navigator.serviceWorker.controller)?'Offline — cached app available':'Offline — open online once to prepare app';}
   let last=null; try{last=localStorage.getItem(LS_B);}catch{}
