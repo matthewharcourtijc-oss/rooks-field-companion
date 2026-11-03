@@ -28,9 +28,8 @@ Do not merge or deploy until the remaining checks pass and Viking approves relea
 ## Harcom logo integration
 
 - Viking supplied the original Harcom Industries SVG artwork; it is stored unchanged as `assets/harcom-logo.svg`.
-- The development candidate header loads it from `../assets/harcom-logo.svg` (relative to the candidate in `development/`).
-- The full logo is displayed in a taller responsive header slot to preserve the Viking mark, wordmark and Celtic-knot divider; mobile sizing is reduced without cropping.
-- A simple `H` fallback remains if the SVG cannot load.
+- The supplied SVG is retained in `assets/harcom-logo.svg` as the source artwork.
+- The logo is temporarily disabled in the candidate header following visual review; a compact `H` mark is used instead. The SVG is not deleted and can be reconsidered later.
 - A pre-integration candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Harcom-logo-pre-integration-BACKUP.html`.
 
 
@@ -41,3 +40,13 @@ Do not merge or deploy until the remaining checks pass and Viking approves relea
 - Touch targets are at least 44px high and visible keyboard-focus rings use the Harcom hazard-orange accent.
 - A pre-accessibility-pass candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Harcom-visual-before-accessibility-pass.html`.
 - The change to JavaScript is limited to the tab-navigation handler, which now synchronizes the selected state for assistive technology. Storage, backup, recovery and transaction routines were not intentionally changed. Final Android interaction testing is still required.
+
+
+## Simplification pass — 3 November 2026
+
+- Removed the logo from the candidate interface for now; retained the original SVG asset separately.
+- Replaced the long Field Guide text with short practical sections: emergency, shelter, navigation, water, wild plants/fungi, weather/ground and knots.
+- Added lightweight inline SVG example diagrams for two tarp shelter shapes and compass points. These are schematic references, not certified instructions.
+- Reduced NHS-heavy first-aid material to concise emergency actions and 999/112 guidance; detailed medical explanations and repeated disclaimers removed.
+- Simplified the Backup introduction and moved technical architecture/change-log material behind expandable details. Export/import/validate/restore controls and storage code were preserved in this pass.
+- This is a content/UI refinement only. It has not yet had final Android regression testing; do not deploy or merge.
