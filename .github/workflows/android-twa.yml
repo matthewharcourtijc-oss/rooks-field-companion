@@ -1,6 +1,11 @@
 name: Build Field Companion Android TWA
 
 on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/android-twa.yml"
+      - "android/twa/**"
   pull_request:
     branches: ["main"]
     paths:
@@ -15,7 +20,7 @@ on:
         default: false
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: companion-android-twa
@@ -96,6 +101,33 @@ jobs:
           grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/build.gradle
           grep -q '@string/hostName' android/twa/app/src/main/AndroidManifest.xml
 
+      - name: Isolate diagnostic package and set valid version metadata
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from "node:fs";
+          const path = "android/twa/app/build.gradle";
+          const config = JSON.parse(readFileSync("android/twa/twa-manifest.json", "utf8"));
+          const run = Number(process.env.BUILD_NUMBER);
+          if (!Number.isSafeInteger(run) || run < 1) throw new Error("Invalid workflow run number");
+          const base = "com.harcomindustries.fieldcompanion";
+          const diagnostic = `${base}.diagnostic${run}`;
+          let gradle = readFileSync(path, "utf8");
+          gradle = gradle.replace("applicationId: '" + base + "'", "applicationId: '" + diagnostic + "'");
+          gradle = gradle.replace('applicationId "' + base + '"', 'applicationId "' + diagnostic + '"');
+          gradle = gradle.replace(/versionCode 1\b/, `versionCode ${100000 + run}`);
+          gradle = gradle.replace(/versionName ""/, `versionName "${config.appVersionName}-diagnostic.${run}"`);
+          if (!gradle.includes("applicationId: '" + diagnostic + "'") ||
+              !gradle.includes('applicationId "' + diagnostic + '"') ||
+              !gradle.includes(`versionCode ${100000 + run}`) ||
+              !gradle.includes(`versionName "${config.appVersionName}-diagnostic.${run}"`)) {
+            throw new Error("Could not safely patch diagnostic Android metadata");
+          }
+          writeFileSync(path, gradle);
+          console.log(`Diagnostic package: ${diagnostic}`);
+          NODE
+
       - name: Build debug APK for physical-device smoke test
         working-directory: android/twa
         run: |
@@ -103,12 +135,52 @@ jobs:
           ./gradlew --no-daemon --stacktrace assembleDebug
 
       - name: Verify installable debug APK
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
         run: |
+          set -euo pipefail
           APK="android/twa/app/build/outputs/apk/debug/app-debug.apk"
+          APP_ID="com.harcomindustries.fieldcompanion.diagnostic${BUILD_NUMBER}"
           test -s "$APK"
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$APK"
-          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$APK" | grep -q "package: name='com.harcomindustries.fieldcompanion'"
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$APK" | grep -q "package: name='$APP_ID'"
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$APK" | grep -q "launchable-activity:"
           sha256sum "$APK"
+
+      - name: Install and launch on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          script: |
+            set -euo pipefail
+            APK="android/twa/app/build/outputs/apk/debug/app-debug.apk"
+            APP_ID="com.harcomindustries.fieldcompanion.diagnostic${{ github.run_number }}"
+            adb install "$APK"
+            ACTIVITY="$(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "$APP_ID" | tr -d '\\r' | tail -n 1)"
+            test -n "$ACTIVITY"
+            adb shell am start -W -n "$ACTIVITY"
+            sleep 8
+            if adb logcat -d -t 1200 | grep -E "FATAL EXCEPTION.*$APP_ID|Process: $APP_ID"; then
+              echo "Android launcher crashed during smoke test."
+              exit 1
+            fi
+            echo "Fresh install and launcher start passed for $APP_ID."
+
+      - name: Publish direct APK download
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: companion-diagnostic-${{ github.run_number }}
+          name: Field Companion Android diagnostic ${{ github.run_number }}
+          prerelease: true
+          make_latest: false
+          generate_release_notes: false
+          body: |
+            Automated diagnostic build only. The package ID is unique to this run to avoid collisions with earlier debug builds signed by ephemeral CI keys.
+            This is not the permanent signed release. It opens the existing Field Companion PWA and does not alter its stored data.
+          files: android/twa/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload installable debug APK
         uses: actions/upload-artifact@v7
