@@ -1,4 +1,4 @@
-# Rook's Field Companion — Field Edition
+# Rook's Field Companion — Connected Field Edition
 
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
