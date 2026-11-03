@@ -171,4 +171,57 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
+
+/* Exercise the Android install prompt and installed-state UI without a real browser. */
+const installScript = scripts.find(match => match[1].includes("Android PWA install guidance"));
+assert.ok(installScript, "Android install-flow script missing");
+assert.ok(html.includes('id="installPanel"'), "Android install panel missing");
+assert.ok(html.includes('aria-controls="installSteps"'), "install help control must be associated with its instructions");
+const installElements = new Map();
+for (const id of ["installPanel","installAppBtn","installStepsBtn","installSteps","installState"]) {
+  installElements.set(id, {
+    id, hidden: id === "installPanel" || id === "installSteps",
+    disabled: false, textContent: "", listeners: {}, attributes: {},
+    addEventListener(type, callback) { this.listeners[type] = callback; },
+    setAttribute(name, value) { this.attributes[name] = value; }
+  });
+}
+const installWindowEvents = {};
+const installWindow = {
+  navigator: { standalone: false },
+  matchMedia() { return { matches: false }; },
+  addEventListener(type, callback) { installWindowEvents[type] = callback; }
+};
+const installDocument = { getElementById(id) { return installElements.get(id) || null; } };
+vm.runInNewContext(installScript[1], {
+  document: installDocument,
+  window: installWindow,
+  navigator: { userAgent: "Mozilla/5.0 (Linux; Android 15) Chrome/130.0 Mobile" },
+  location: { protocol: "https:", hostname: "example.test" }
+});
+const installPanel = installElements.get("installPanel");
+const installButton = installElements.get("installAppBtn");
+const installStepsButton = installElements.get("installStepsBtn");
+const installSteps = installElements.get("installSteps");
+const installState = installElements.get("installState");
+assert.equal(installPanel.hidden, false, "Android install panel should be visible on secure Android origins");
+let promptCalled = false;
+const promptEvent = {
+  prevented: false,
+  preventDefault() { this.prevented = true; },
+  prompt() { promptCalled = true; return Promise.resolve(); },
+  userChoice: Promise.resolve({ outcome: "accepted" })
+};
+installWindowEvents.beforeinstallprompt(promptEvent);
+assert.equal(promptEvent.prevented, true, "browser install prompt must be deferred until the user taps");
+assert.equal(installState.textContent, "Ready to install on this Android device.");
+await installButton.listeners.click();
+assert.equal(promptCalled, true, "install button must invoke the browser prompt");
+assert.match(installState.textContent, /Installation accepted/, "accepted install choice should be reported");
+installWindowEvents.appinstalled();
+assert.equal(installButton.disabled, true, "installed state must prevent repeat install attempts");
+assert.equal(installButton.textContent, "APP INSTALLED");
+assert.equal(installSteps.hidden, true, "installed state should close installation instructions");
+assert.equal(installStepsButton.hidden, true, "installed state should hide redundant installation help");
+
 console.log("HARCOM Field Companion v0.9.9 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
