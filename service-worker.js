@@ -1,7 +1,7 @@
 /* Rook's Field Companion — offline app shell.
    Bump CACHE_NAME whenever the shell or embedded manual changes. */
-const CACHE_NAME = "harcom-field-companion-v0.9.9";
-const APP_SHELL = ["./", "./index.html", "./manifest.json", "./icon.svg", "./assets/harcom-logo.svg"]
+const CACHE_NAME = "harcom-field-companion-v0.9.10";
+const APP_SHELL = ["./", "./index.html", "./manifest.json", "./icon.svg", "./icon-192.png", "./icon-512.png", "./assets/harcom-logo.svg"]
   .map(path => new URL(path, self.registration.scope).href);
 
 self.addEventListener("install", event => {

@@ -9,7 +9,7 @@ const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
 assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
-assert.match(worker, /harcom-field-companion-v0\.9\.9/, "offline cache version must match the v0.9.9 app release");
+assert.match(worker, /harcom-field-companion-v0\.9\.10/, "service-worker cache revision must be v0.9.10");
 assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
@@ -103,8 +103,21 @@ const icon = fs.readFileSync("icon.svg", "utf8");
 assert.ok(icon.includes("viewBox=\"0 0 512 512\"") && icon.includes("#FF7518") && icon.includes("#000000") && icon.includes("Viking-head"), "official HARCOM Viking-head icon palette or dimensions missing");
 assert.ok(html.includes('<link rel="icon" type="image/svg+xml" href="./icon.svg">'), "browser favicon missing");
 assert.ok(manifest.icons.some(item => item.src === "./icon.svg" && item.type === "image/svg+xml"), "installed app icon missing");
+
+for (const icon of [
+  {path:"icon-192.png", size:192},
+  {path:"icon-512.png", size:512}
+]) {
+  assert.ok(fs.existsSync(icon.path), icon.path + " is missing");
+  const png = fs.readFileSync(icon.path);
+  assert.equal(png.subarray(0,8).toString("hex"), "89504e470d0a1a0a", icon.path + " is not a PNG");
+  assert.equal(png.readUInt32BE(16), icon.size, icon.path + " has the wrong width");
+  assert.equal(png.readUInt32BE(20), icon.size, icon.path + " has the wrong height");
+  assert.ok(manifest.icons.some(item => item.src === "./" + icon.path && item.type === "image/png" && item.sizes === icon.size + "x" + icon.size), icon.path + " is missing from the manifest");
+  assert.ok(worker.includes('"./' + icon.path + '"'), icon.path + " is not precached");
+}
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.9/);
+assert.match(worker, /harcom-field-companion-v0.9.10/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
