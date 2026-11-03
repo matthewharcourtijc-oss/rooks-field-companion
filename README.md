@@ -1,4 +1,13 @@
 
+## v0.9.11 — Chrome browser hand-off
+
+- Fixed the Android **OPEN CHROME BROWSER** action so it launches Chrome on a separate, out-of-scope page instead of sending the installed PWA straight back to its own URL.
+- Added clear instructions to paste the Field Companion address into Chrome’s address bar.
+- Clarified that Chrome may hide **Install app** / **Add to Home screen** when the PWA is already installed; this is expected and does not mean the app is broken.
+- Bumped the service-worker cache to `v0.9.13` so installed copies refresh the corrected hand-off and guidance.
+- Added regression assertions for the external Chrome launch target and the installed-app menu explanation.
+- No task, notes, mission-log, backup, restore, encryption or local-storage logic was changed.
+
 ## v0.9.10 — Android install compatibility
 
 - Added 192×192 and 512×512 HARCOM Viking-head PNG icons to the web app manifest, retaining the scalable SVG icon.
