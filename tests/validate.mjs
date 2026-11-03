@@ -188,6 +188,7 @@ for (const id of ["installPanel","installAppBtn","installStepsBtn","installSteps
 }
 const installWindowEvents = {};
 const installWindow = {
+  navigator: { standalone: false },
   matchMedia() { return { matches: false }; },
   addEventListener(type, callback) { installWindowEvents[type] = callback; }
 };
