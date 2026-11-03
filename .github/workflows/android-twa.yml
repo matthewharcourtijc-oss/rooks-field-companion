@@ -93,9 +93,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Require dedicated Companion signing secrets
         env:
           COMPANION_KEYSTORE_BASE64: ${{ secrets.COMPANION_KEYSTORE_BASE64 }}
