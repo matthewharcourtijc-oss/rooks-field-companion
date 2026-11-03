@@ -9,7 +9,7 @@ const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
 assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
-assert.match(worker, /harcom-field-companion-v0\.9\.11/, "service-worker cache revision must be v0.9.11");
+assert.match(worker, /harcom-field-companion-v0\.9\.12/, "service-worker cache revision must be v0.9.11");
 assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
@@ -117,7 +117,7 @@ for (const icon of [
   assert.ok(worker.includes('"./' + icon.path + '"'), icon.path + " is not precached");
 }
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.11/);
+assert.match(worker, /harcom-field-companion-v0.9.12/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
@@ -190,6 +190,9 @@ const installScript = scripts.find(match => match[1].includes("Android PWA insta
 assert.ok(installScript, "Android install-flow script missing");
 assert.ok(html.includes('id="installPanel"'), "Android install panel missing");
 assert.ok(html.includes('aria-controls="installSteps"'), "install help control must be associated with its instructions");
+assert.ok(html.includes('id="openChromeBtn"'), "Android install panel must offer a direct Chrome hand-off");
+assert.ok(html.includes('package=com.android.chrome'), "Chrome hand-off must target Android Chrome");
+assert.ok(html.includes("Add to Home screen"), "manual Android installation fallback missing");
 const installElements = new Map();
 for (const id of ["installPanel","installAppBtn","installStepsBtn","installSteps","installState"]) {
   installElements.set(id, {
