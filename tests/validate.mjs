@@ -100,7 +100,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 const icon = fs.readFileSync("icon.svg", "utf8");
-assert.ok(icon.includes("viewBox=\"0 0 512 512\"") && icon.includes("#f08a36") && icon.includes("#bcecff"), "HARCOM shield/compass icon palette or dimensions missing");
+assert.ok(icon.includes("viewBox=\"0 0 512 512\"") && icon.includes("#FF7518") && icon.includes("#000000") && icon.includes("Viking-head"), "official HARCOM Viking-head icon palette or dimensions missing");
 assert.ok(html.includes('<link rel="icon" type="image/svg+xml" href="./icon.svg">'), "browser favicon missing");
 assert.ok(manifest.icons.some(item => item.src === "./icon.svg" && item.type === "image/svg+xml"), "installed app icon missing");
 assert.match(html, /serviceWorker\.register/);

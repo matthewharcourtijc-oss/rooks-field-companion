@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="HARCOM field shield and compass insignia"><rect width="512" height="512" rx="104" fill="#101820"/><path d="M256 38 426 105v132c0 112-67 190-170 237C153 427 86 349 86 237V105Z" fill="#1c2933" stroke="#bcecff" stroke-width="16" stroke-linejoin="round"/><circle cx="256" cy="239" r="105" fill="#101820" stroke="#bcecff" stroke-width="10"/><path d="M256 145 282 224 361 239 282 254 256 333 230 254 151 239 230 224Z" fill="#f08a36" stroke="#f8f3e8" stroke-width="5" stroke-linejoin="round"/><path d="M256 175v-24M256 327v-24M192 239h-24M344 239h-24" stroke="#bcecff" stroke-width="8" stroke-linecap="round"/><path d="M145 380h222" stroke="#bcecff" stroke-width="12" stroke-linecap="round"/><path d="M177 405h158" stroke="#f08a36" stroke-width="8" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="HARCOM Industries Viking-head mark">
+  <rect width="512" height="512" rx="92" fill="#ffffff"/>
+  <rect x="7" y="7" width="498" height="498" rx="86" fill="none" stroke="#FF7518" stroke-width="10"/>
+  <g transform="translate(56,45)">
+    <path d="M 145 35 C 95 75 55 135 85 195 L 115 185 C 115 145 125 105 145 75 Z" fill="#000000" stroke="#000000" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 255 35 C 305 75 345 135 315 195 L 285 185 C 285 145 275 105 255 75 Z" fill="#000000" stroke="#000000" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 125 110 Q 200 60 275 110 L 285 190 Q 275 220 200 230 Q 125 220 115 190 Z" fill="#000000"/>
+    <rect x="175" y="85" width="50" height="25" fill="#000000"/>
+    <g fill="#FF7518">
+      <ellipse cx="160" cy="195" rx="12" ry="5" transform="rotate(-15 160 195)"/>
+      <ellipse cx="240" cy="195" rx="12" ry="5" transform="rotate(15 240 195)"/>
+    </g>
+    <path d="M 115 190 Q 110 230 95 250 L 110 260 Q 95 280 110 300 L 130 285 Q 140 320 155 335 L 175 310 Q 200 350 225 310 L 245 335 Q 260 320 270 285 L 290 300 Q 305 280 290 260 L 305 250 Q 290 230 285 190 Q 200 235 115 190 Z" fill="#FF7518" stroke="#000000" stroke-width="10" stroke-linejoin="round" stroke-miterlimit="2"/>
+    <path d="M 185 215 Q 200 235 215 215 Q 200 228 185 215 Z" fill="#000000"/>
+  </g>
+</svg>
