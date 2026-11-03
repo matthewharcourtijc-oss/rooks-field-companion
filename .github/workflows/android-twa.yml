@@ -42,9 +42,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-        with:
-          # The v3 default requests the retired SDK "tools" package.
-          packages: platform-tools
 
       - name: Validate checked-in TWA configuration
         run: node android/twa/validate-config.mjs
@@ -100,9 +97,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-        with:
-          # The v3 default requests the retired SDK "tools" package.
-          packages: platform-tools
 
       - name: Require dedicated Companion signing secrets
         env:
