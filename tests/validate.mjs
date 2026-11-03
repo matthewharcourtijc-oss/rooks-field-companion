@@ -8,7 +8,7 @@ const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
-assert.ok(readme.includes("v0.9.5 — HARCOM Industrial Identity"), "README release version is stale");
+assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README release version is stale");
 assert.ok(html.includes('id="harcom-identity-v094"'), "HARCOM visual identity layer missing");
 assert.ok(html.includes("<h1>FIELD COMPANION</h1>"), "clean product title missing");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
@@ -73,7 +73,7 @@ new vm.Script(worker, { filename: "service-worker.js" });
 
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.ok(manifest.name.includes("Rook's Field Companion"));
+assert.ok(manifest.name.includes("Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
 assert.match(worker, /harcom-field-companion-v0\.9\.5/);
