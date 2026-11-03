@@ -10,7 +10,7 @@ const readme = fs.readFileSync("README.md", "utf8");
 assert.ok(html.includes("Rook's Field Companion — v0.9.2 Visual Field Edition"), "app title/version mismatch");
 assert.ok(readme.includes("v0.9.2 — Visual Field Edition"), "README release version is stale");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
-assert.ok(manifest.name.includes("Field Edition"), "manifest app name is stale");
+assert.ok(manifest.name.includes("HARCOM Industries"), "manifest brand name is stale");
 assert.ok(html.includes("SURVIVAL MANUAL v0.9.2"), "manual version mismatch");
 assert.ok(html.includes("V0.9.2 • VISUAL FIELD EDITION"), "visible release label mismatch");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
@@ -130,4 +130,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("Rook's Field Companion v0.9.1 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("Rook's Field Companion v0.9.3 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
