@@ -3,8 +3,8 @@
 This branch contains a development-only visual polish candidate and preserved source backups.
 
 - Branch: `dev/v0.3.11-visual-polish-2026-11-03`
-- Live `main` branch: intentionally unchanged.
-- GitHub Pages: not redeployed from this branch.
+- Live `main` branch: v0.3.11 promoted on 3 November 2026.
+- GitHub Pages: deployment triggered by the release commit; publication verification pending.
 - Candidate: `development/Rooks_Field_Companion_v0.3.11-Visual-Polish-Candidate.html`
 - Pre-polish Repair 2 backup: `backups/Rooks_Field_Companion_v0.3.11-Repair2-pre-polish-BACKUP.html`
 - Locked original master: `backups/Rooks_Field_Companion_v0.3.11-ORIGINAL-MASTER-LOCKED.html`
@@ -23,7 +23,7 @@ This branch contains a development-only visual polish candidate and preserved so
 - Automated browser navigation was blocked by the test environment, so no screenshot/browser certification is claimed.
 - Isolated transaction failure tests, independent review, final Samsung regression and explicit release approval remain outstanding.
 
-Do not merge or deploy until the remaining checks pass and Viking approves release.
+Release was explicitly approved by Viking on 3 November 2026. Static HTML/JavaScript checks passed before promotion. Final on-device Samsung regression remains required; do not claim Android certification.
 
 ## Harcom logo integration
 
@@ -50,3 +50,12 @@ Do not merge or deploy until the remaining checks pass and Viking approves relea
 - Reduced NHS-heavy first-aid material to concise emergency actions and 999/112 guidance; detailed medical explanations and repeated disclaimers removed.
 - Simplified the Backup introduction and moved technical architecture/change-log material behind expandable details. Export/import/validate/restore controls and storage code were preserved in this pass.
 - This is a content/UI refinement only. It has not yet had final Android regression testing; do not deploy or merge.
+
+
+## Release record — 3 November 2026
+
+- Live release source: `index.html` copied from the cleaned v0.3.11 candidate.
+- Previous v0.1 live entry point preserved on `main` at `backups/index-v0.1-live-before-v0.3.11-release.html`.
+- Developer-only architecture/change-log/known-limitations panels were removed from the user-facing app; backup/import/validate/restore controls were retained.
+- Candidate JavaScript syntax checked before promotion. External script and stylesheet references: none.
+- GitHub Pages deployment and final Samsung Chrome regression checks still need confirmation.
