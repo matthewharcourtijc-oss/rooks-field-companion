@@ -40,9 +40,6 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Validate checked-in TWA configuration
         run: node android/twa/validate-config.mjs
 
