@@ -30,6 +30,7 @@ jobs:
   generate-and-validate:
     name: Generate and validate Android project
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Check out source
         uses: actions/checkout@v7
@@ -148,12 +149,16 @@ jobs:
           sha256sum "$APK"
 
       - name: Install and launch on Android emulator
+        timeout-minutes: 12
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
           target: google_apis
           arch: x86_64
           profile: pixel_2
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-boot-timeout: 300
+          disable-animations: true
           script: |
             set -euo pipefail
             APK="android/twa/app/build/outputs/apk/debug/app-debug.apk"
