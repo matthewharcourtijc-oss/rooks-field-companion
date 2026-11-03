@@ -1,6 +1,8 @@
 name: Build Field Companion Android TWA
 
 on:
+  push:
+    branches: ["feat/companion-android-twa"]
   pull_request:
     branches: ["main"]
     paths:
