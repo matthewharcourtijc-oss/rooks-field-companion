@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rook's Field Companion v0.3.11 — Transaction Repair Candidate — Not Release Certified</title>
+<meta name="description" content="v0.3.11 repair — integrated loadAll() — full 7-step migration — no loose screws before legacy delete, collision-safe corrupt backups, safe DOM, full validation, byte-size fixed, no wrappers, prediction removed.">
+<style>
+:root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;background:var(--stone);color:var(--ink);line-height:1.55}
+header{background:var(--olive);color:var(--paper);padding:16px 20px;position:sticky;top:0;z-index:20;border-bottom:4px solid var(--rust)}
+.brand{display:flex;gap:12px;align-items:center}
+.helm{width:40px;height:40px;background:var(--paper);color:var(--olive);display:grid;place-items:center;border-radius:6px;font-weight:900;font-size:20px}
+h1{font-size:14px;letter-spacing:0.05em;text-transform:uppercase;line-height:1.3}
+.tag{font-size:10px;opacity:0.85;letter-spacing:0.06em;margin-top:3px}
+.status{display:flex;gap:10px;align-items:center;font-size:10.5px;margin-top:10px;flex-wrap:wrap;opacity:0.92}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.dot.off{background:#d66}
+.wrap{max-width:880px;margin:0 auto;padding:16px}
+.tabs{display:flex;gap:5px;margin:14px 0;background:var(--paper);padding:6px;border:1px solid var(--line);border-radius:12px;position:sticky;top:92px;z-index:10;overflow-x:auto}
+.tab{flex:1;min-width:68px;padding:10px 5px;text-align:center;border-radius:8px;cursor:pointer;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;white-space:nowrap}
+.tab.active{background:var(--olive);color:var(--paper)}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text],textarea{flex:1;min-width:180px;padding:11px;border:1px solid var(--line);border-radius:8px;background:#fff;font-family:inherit;font-size:13px}
+textarea{min-height:80px;resize:vertical}
+button{padding:11px 13px;border-radius:8px;border:0;background:var(--olive);color:var(--paper);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer}
+button.secondary{background:transparent;color:var(--olive);border:1px solid var(--line)}
+button.danger{background:transparent;color:var(--alert);border:1px solid #e0b7ae}
+.list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.item{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.item.done{opacity:0.55}
+.item.done .txt{text-decoration:line-through}
+.txt{flex:1;font-size:13px;white-space:pre-wrap;word-break:break-word}
+.meta{font-size:10px;color:#6b6a60;margin-top:3px}
+.small{font-size:11px;color:#6b6a60;line-height:1.5}
+.guide details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.guide summary{cursor:pointer;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--olive);list-style:none}
+.guide summary::-webkit-details-marker{display:none}
+.guide ul{margin:8px 0 0 18px;font-size:12.5px}
+.guide li{margin:6px 0}
+.knot-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+@media(min-width:640px){.knot-grid{grid-template-columns:1fr 1fr}}
+.knot{border:1px dashed var(--line);border-radius:8px;padding:10px;background:#fff}
+.diagram{font-family:monospace;font-size:11px;background:#f5f1e6;padding:8px;border-radius:6px;margin-top:6px;line-height:1.25;white-space:pre}
+.alert{background:#fff3ef;border:1px solid #e0b7ae;border-radius:8px;padding:10px;font-size:11px;margin-top:10px}
+.warn{background:#fffbe6;border:1px solid #e8d98a;border-radius:8px;padding:10px;font-size:11px;margin-top:10px}
+.pill{display:inline-block;padding:2px 7px;border-radius:999px;background:var(--olive);color:var(--paper);font-size:9px;letter-spacing:0.06em;margin-right:4px;margin-bottom:4px}
+.footer{margin-top:26px;padding:16px;background:var(--paper);border:1px dashed var(--line);border-radius:12px;font-size:11px;color:#6b6a60}
+.safety-item{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-top:8px}
+a{color:var(--moss);text-decoration:underline}
+a:hover{color:var(--olive)}
+
+
+/* HARCOM visual pass — presentation only; app logic and storage paths unchanged. */
+:root{
+  --olive:#171d23;--stone:#10151b;--paper:#202a33;--moss:#9edcf2;--ink:#edf4f7;
+  --rust:#f08a36;--line:#3b4b57;--alert:#ff806e;--ok:#8fd6a5;
+  --steel:#aab8c2;--ice:#bcecff;--muted:#a2b1bb;
+}
+html{scroll-behavior:smooth;background:var(--stone)}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 50% -15%,#314453 0%,#151d25 48%,#0d1217 100%);color:var(--ink);line-height:1.55;min-height:100vh}
+header{padding:15px clamp(14px,3vw,28px);background:rgba(15,21,27,.96);border-bottom:1px solid #526673;box-shadow:0 8px 30px #0005;backdrop-filter:blur(14px)}
+.brand{gap:13px;max-width:1160px;margin:0 auto;position:relative}
+.helm{width:46px;height:46px;flex:0 0 46px;border:1px solid #9bc8d8;border-radius:11px;background:linear-gradient(145deg,#d7e3e9,#6d8795);color:#14212a;font-size:22px;letter-spacing:-.08em;box-shadow:inset 0 1px #fff9,0 4px 14px #0006}
+.helm .harcom-logo{width:31px;height:31px;object-fit:contain;display:block}.helm [hidden]{display:none!important}
+.brand-overline{font-size:9px;font-weight:900;letter-spacing:.2em;color:var(--ice)}
+.brand-overline span{color:#8d9ca7;font-weight:600}
+h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:clamp(15px,2.5vw,20px);letter-spacing:.11em;color:#f3f8fa;line-height:1.2;margin:3px 0}
+.tag{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.1em;color:#aab9c2;margin-top:5px}
+.release-chip{margin-left:auto;align-self:center;border:1px solid #d17b3c;color:#ffb36e;background:#4b2c1b66;border-radius:5px;padding:5px 8px;font:800 9px ui-monospace,monospace;letter-spacing:.12em;white-space:nowrap}
+.status{max-width:1160px;margin:12px auto 0;color:#bdcbd3;font:10px ui-monospace,monospace;gap:12px}
+.dot{box-shadow:0 0 0 4px #8fd6a51a,0 0 12px #8fd6a577}
+.wrap{max-width:1160px;padding:20px clamp(12px,2.8vw,28px) 36px}
+.mission-hero{position:relative;overflow:hidden;margin:8px 0 18px;padding:23px clamp(17px,3vw,30px) 17px;border:1px solid #4c6573;border-radius:15px;background:linear-gradient(112deg,#263642 0%,#1b2731 58%,#26333b 100%);box-shadow:0 12px 28px #0004}
+.mission-hero:after{content:"";position:absolute;right:-65px;top:-105px;width:260px;height:260px;border:1px solid #9edcf21b;border-radius:50%;box-shadow:0 0 0 22px #9edcf20a,0 0 0 48px #9edcf207;pointer-events:none}
+.hero-kicker{font:800 9px ui-monospace,monospace;letter-spacing:.19em;color:#a9dff1;display:flex;align-items:center;gap:9px}
+.hero-pulse{width:7px;height:7px;border-radius:50%;background:#9edcf2;box-shadow:0 0 12px #9edcf2}
+.mission-hero h2{font-size:clamp(22px,4vw,34px);font-weight:750;letter-spacing:-.04em;line-height:1.12;margin:12px 0 8px;color:#f2f8fa}
+.mission-hero p{max-width:620px;color:#bdcbd3;font-size:13px;line-height:1.6}
+.hero-foot{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;padding-top:12px;border-top:1px solid #ffffff20;color:#9fb4c0;font:800 9px ui-monospace,monospace;letter-spacing:.1em}
+.hero-version{margin-left:auto;color:#f3a35d}
+.tabs{top:0;z-index:15;gap:4px;margin:0 0 16px;padding:5px;border:1px solid #43535e;border-radius:11px;background:#141c23f2;box-shadow:0 8px 20px #0004;backdrop-filter:blur(12px)}
+.tab{flex:1;min-width:66px;padding:11px 8px;color:#aebdc6;font-size:10px;letter-spacing:.11em;transition:background .18s ease,color .18s ease,transform .18s ease}
+button.tab{min-height:44px;border:1px solid transparent;border-radius:8px;background:transparent;color:#aebdc6;box-shadow:none;font:800 10px Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.11em;text-transform:uppercase;cursor:pointer}
+button.tab:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #f08a36;outline-offset:3px}
+button.tab.active{border-color:#9bbdca}
+button.tab:hover{filter:none;transform:none}
+
+.tab:hover{background:#ffffff0c;color:#fff}
+.tab.active{background:linear-gradient(135deg,#d5e5eb,#9db9c7);color:#14212a;box-shadow:inset 0 1px #fff9,0 3px 9px #0005}
+.panel.active{animation:panel-in .2s ease-out}
+@keyframes panel-in{from{opacity:.65;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:linear-gradient(145deg,#26323c,#202a33);border:1px solid #43535e;border-radius:13px;padding:clamp(14px,2.2vw,21px);margin-bottom:13px;box-shadow:0 7px 20px #0002}
+h2{font-size:15px;letter-spacing:.015em;color:#eff7fa;margin-bottom:12px}
+.small,.meta{color:#aebdc6}
+input[type=text],textarea{min-width:0;padding:12px 13px;border:1px solid #526572;border-radius:8px;background:#121a21;color:#f2f7f9;font:13px Inter,ui-sans-serif,system-ui,sans-serif;outline:none;transition:border-color .16s,box-shadow .16s}
+input[type=text]::placeholder,textarea::placeholder{color:#82939e}
+input[type=text]:focus,textarea:focus{border-color:#9edcf2;box-shadow:0 0 0 3px #9edcf222}
+button{padding:11px 15px;border:1px solid #b4d9e6;border-radius:8px;background:linear-gradient(145deg,#c9e2eb,#8eafbd);color:#14212a;font-size:10px;font-weight:900;letter-spacing:.1em;box-shadow:inset 0 1px #fff9,0 3px 9px #0003;transition:transform .15s,filter .15s}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+button.secondary{background:#25333d;color:#d5e4ea;border:1px solid #526572;box-shadow:none}
+button.danger{background:#392522;color:#ffb0a3;border:1px solid #8e5148;box-shadow:none}
+.item,.safety-item{background:#172129;border:1px solid #3c4e5a;border-radius:9px;color:#eaf2f5}
+.item{padding:12px 13px}
+.item.done{opacity:.48}
+.item input{accent-color:#9edcf2}
+.list{gap:9px}
+.guide details{background:#1a252e;border:1px solid #40515d;border-radius:10px;padding:13px 15px;margin-bottom:9px;color:#e6eff3}
+.guide summary{color:#c7eafa;font-size:11px;letter-spacing:.1em}
+.guide summary::after{content:"＋";float:right;color:#f2a05b;font-size:14px}
+.guide details[open] summary::after{content:"−"}
+.knot{background:#172129;border:1px dashed #536875;color:#e8f0f3}
+.diagram{background:#10171d;color:#bde8f6;border:1px solid #344752}
+.alert{background:#382522;border:1px solid #91574d;color:#ffd5ce;border-radius:9px}
+.warn{background:#3b301e;border:1px solid #8a713d;color:#ffe1a8;border-radius:9px}
+.pill{background:#344956;color:#d8f2fb;border:1px solid #55717f;padding:4px 8px;font-size:9px}
+.footer{background:#172129;border:1px solid #3e505c;border-radius:12px;color:#aebdc6}
+.footer .pill{background:#263b47}
+a{color:#a9dff1}
+a:hover{color:#fff}
+@media(min-width:760px){.tabs{top:0}.panel .card{padding:22px}.mission-hero{padding-top:27px;padding-bottom:19px}}
+@media(max-width:560px){
+ header{padding:12px 13px}.helm{width:40px;height:40px;flex-basis:40px}.brand{gap:10px}.brand-overline{font-size:8px}.tag{font-size:8px;max-width:235px;line-height:1.4}.release-chip{font-size:8px;padding:4px 6px;align-self:flex-start;margin-top:3px}
+ .status{font-size:9px;gap:8px}.wrap{padding-top:13px}.mission-hero{padding:18px 16px 14px}.mission-hero p{font-size:12px}.hero-foot{gap:7px 12px;font-size:8px}.hero-version{margin-left:0;width:100%}
+ .tabs{overflow-x:auto;justify-content:flex-start}.tab{flex:0 0 auto;min-width:66px;padding:10px 9px;font-size:9px}
+ .row{gap:7px}.row button{flex:0 0 auto}input[type=text],textarea{font-size:16px}
+ .item{gap:8px;padding:10px}.txt{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="helm" aria-label="Harcom Industries logo"><img class="harcom-logo" src="../assets/harcom-logo.png" alt="Harcom Industries" onerror="this.nextElementSibling.hidden=false;this.remove()"><span hidden>H</span></div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.3.11 • TRANSACTION REPAIR • OFFLINE-FIRST FIELD TOOL</div></div><span class="release-chip">DEV BUILD</span></div>
+  <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
+</header>
+<div class="wrap">
+  <div id="storageWarn" class="warn" style="display:none"></div>
+  <div id="corruptWarn" class="alert" style="display:none"></div>
+  <div id="backupWarn" class="warn" style="display:none"></div>
+
+  <section class="mission-hero" aria-label="Field Companion introduction">
+    <div class="hero-kicker"><span class="hero-pulse"></span> FIELD OPERATIONS / LOCAL SYSTEM</div>
+    <h2>Stay sharp. Stay self-reliant.</h2>
+    <p>Your tasks, observations, mission records and field reference — kept on this device, ready when the signal isn't.</p>
+    <div class="hero-foot"><span>01 / PLAN</span><span>02 / RECORD</span><span>03 / RECOVER</span><span class="hero-version">HARCOM • V0.3.11</span></div>
+  </section>
+
+  <div class="tabs" role="group" aria-label="Companion sections">
+    <button type="button" class="tab active" data-tab="tasks" aria-controls="tasks" aria-pressed="true">Tasks</button>
+    <button type="button" class="tab" data-tab="notes" aria-controls="notes" aria-pressed="false">Notes</button>
+    <button type="button" class="tab" data-tab="log" aria-controls="log" aria-pressed="false">Log</button>
+    <button type="button" class="tab" data-tab="guide" aria-controls="guide" aria-pressed="false">Field Guide</button>
+    <button type="button" class="tab" data-tab="backup" aria-controls="backup" aria-pressed="false">Backup</button>
+  </div>
+
+  <div id="tasks" class="panel active">
+    <div class="card"><h2>Tasks — what needs doing</h2><div class="row"><input id="taskInput" type="text" placeholder="e.g. Check north trap line"><button id="addTask">Add</button></div><div id="taskList" class="list"></div></div>
+  </div>
+  <div id="notes" class="panel">
+    <div class="card"><h2>Notes — what you see and decide</h2><div class="row" style="flex-direction:column"><input id="noteTitle" type="text" placeholder="Title optional"><textarea id="noteText" placeholder="Write what you see, find and decide…"></textarea><div class="row"><button id="addNote">Save Note</button><button class="secondary" id="clearNote">Clear</button></div></div><div id="noteList" class="list"></div></div>
+  </div>
+  <div id="log" class="panel">
+    <div class="card"><h2>Mission Log — running record in order</h2><div class="row"><input id="logInput" type="text" placeholder="Log event e.g. 02:15 Fox tracks at edge"><button id="addLog">Log</button></div><div id="logList" class="list"></div></div>
+  </div>
+
+  <div id="guide" class="panel guide">
+    <div class="card"><h2>Field Guide — offline aide-memoire — reviewed v0.3.7 — stripped to substantiable info</h2><p class="small">Not a replacement for training. If in doubt, leave it out. Call 999 or 112. No rescue or climbing instruction here — seek qualified training. All guidance below is aide-memoire only, not certified. Check official sources before field use.</p><p class="small"><span class="pill">Trees</span><span class="pill">Fungi SAFEST</span><span class="pill">Knots BASIC ONLY</span><span class="pill">Weather NOT DEPENDABLE ALONE</span><span class="pill">Navigation CHECK MAP + BGS</span><span class="pill">First Aid NHS SOURCES ONLY</span></p></div>
+
+    <details open><summary>Trees — ID — multiple features required</summary>
+      <ul><li>Use leaf, bark, buds, fruit, habitat, season — single feature never enough. Log measurements. Paper tree guide primary. Note disease like ash dieback alters appearance.</li></ul>
+    </details>
+
+    <details><summary>Fungi — safest approach — NOT identification</summary>
+      <div class="alert"><b>Harcom safest rule:</b> Do not eat any wild mushroom unless an appropriately qualified expert has positively identified it in person. This is NOT a foraging guide.</div>
+      <ul><li>Log location, trees, time, photos of cap, gills, stem, base, habitat — do not pick for consumption unless expert present. Keep sample, note time eaten, call 111, do not induce vomiting. 999 with grid + What3Words if needed. No visual test proves safe.</li></ul>
+    </details>
+
+    <details><summary>Knots — basic examples — NOT rescue or climbing instruction</summary>
+      <div class="alert"><b>Disclaimer:</b> Basic illustrations only. Not rescue, climbing, or load-bearing instruction. Actual performance depends on rope, load, dressing, and training. Seek qualified instruction for safety-critical use.</div>
+      <div class="knot-grid">
+        <div class="knot"><b>Bowline — example loop</b><div class="diagram">1. Loop up
+2. Up through loop
+3. Around line
+4. Back down loop
+Dress and check</div><small>Example — needs training</small></div>
+        <div class="knot"><b>Clove Hitch — example attach</b><div class="diagram">1. Wrap post
+2. Cross over
+3. Wrap again
+4. Tuck under
+Tension both</div><small>Example temporary lashing — can slip</small></div>
+        <div class="knot"><b>Taut-line — example adjustable</b><div class="diagram">1. 2 wraps inside
+2. 1 wrap outside
+3. Slide adjust
+Check</div><small>Example tarp line — not for climbing</small></div>
+        <div class="knot"><b>Figure-8 — example stopper</b><div class="diagram">1. Loop
+2. Tail behind
+3. Up through loop
+4. Tighten</div><small>Example stopper only</small></div>
+      </div>
+    </details>
+
+    <details><summary>Weather — not dependable alone</summary>
+      <div class="alert"><b>Disclaimer:</b> Single observations are NOT dependable standalone warnings. Use multiple sources and official forecasts before trip. Log actual conditions.</div>
+      <ul><li>Cloud types are indicators not forecasts. Local topography alters wind. Best practice: check Met Office before departure.</li></ul>
+    </details>
+
+    <details><summary>Navigation — OS symbols, bearings — check current map + BGS tool — no prediction</summary>
+      <ul>
+        <li><b>OS symbols UK:</b> Brown contours, blue water, green woodland, black manmade. Close contours steep. V points uphill along streams. Paper OS map primary.</li>
+        <li><b>Bearings:</b> Map to ground align north. Edge from you to target, rotate bezel north, red in shed. Handrail, catching, aiming off, attack points at night. Seek qualified training for night navigation.</li>
+        <li><b>Magnetic declination — substantiable only:</b> Magnetic north differs from true north and grid north and changes over time. The amount varies across UK. Check your current Ordnance Survey map for the declination information printed on it. Use British Geological Survey tool which calculates angle between grid north and magnetic north for your location. Do not rely on this aide-memoire for declination value — check map + BGS at time of use.</li>
+        <li>Removed in v0.3.7: Previous versions included specific prediction about triple alignment leaving England at triple-alignment location</li>
+      </ul>
+    </details>
+
+    <details><summary>First Aid — NHS sources only — aide-memoire only — stripped to substantiable</summary>
+      <div class="alert"><b>Call 999 or 112. Police then Mountain Rescue if hills. Grid + What3Words + what happened + casualties. Not training. Check NHS and MREW sources listed below.</b></div>
+      <ul>
+        <li><b>Hypothermia — NHS:</b> Dangerous drop below 35C, medical emergency, Go to A&E or call 999. See NHS page for full guidance. Shelter, insulation from ground, dry clothes, gentle handling. Warm non-alcoholic drink + sugary food ONLY if fully awake and can swallow safely. Usually treated in hospital.</li>
+        <li><b>Heat exhaustion vs Heatstroke — NHS 30-min rule:</b> Heat exhaustion does NOT usually need emergency help IF you can cool down within 30 minutes. If it turns into heatstroke, treat as emergency. See NHS page for signs. If still hot after 30min cooling or temp above 40C or confusion, call 999.</li>
+        <li><b>Anaphylaxis — NHS positioning:</b> Lie flat legs raised if possible. If breathing difficult allow to raise shoulders or sit up slowly. If pregnant lie on left side. Do NOT allow to stand or walk at any time even if feeling better due to cardiac arrest risk. Avoid sudden posture change. If vomiting or unconscious breathing recovery position. Adrenaline pen if prescribed — auto-injection pen — stay till ambulance, second dose after 5min if no improvement. See NHS pages.</li>
+        <li><b>Distress — MREW:</b> Both torch and whistle can be used to signal for help: Six good long blasts in a minute. Stop for one minute. Repeat. Continue until someone reaches you and do not stop because you hear a reply. International: six blasts or six flashes in one minute then minute pause then repeat. Full guidance on Mountain Rescue England and Wales site.</li>
+      </ul>
+      <div class="card" style="background:#fff;margin-top:12px"><h2>Sources — individually dated — clickable — aide-memoire only — not certified — stripped to substantiable</h2><p class="small">
+        NHS Hypothermia — <a href="https://www.nhs.uk/conditions/hypothermia/" target="_blank" rel="noopener">nhs.uk hypothermia</a> — Page last reviewed 9 June 2023 — dangerous drop below 35C, medical emergency, Go to A&E or call 999<br><br>
+        NHS Heat exhaustion and heatstroke — <a href="https://www.nhs.uk/conditions/heat-exhaustion-heatstroke/" target="_blank" rel="noopener">nhs.uk heat</a> — Page last reviewed 28 May 2026 Next review due 28 May 2029 — does NOT usually need emergency help if cool down within 30 minutes, if turns into heatstroke emergency<br><br>
+        NHS Allergies and Anaphylaxis — <a href="https://www.nhs.uk/conditions/anaphylaxis/" target="_blank" rel="noopener">nhs.uk anaphylaxis</a> and <a href="https://www.nhs.uk/conditions/allergies/" target="_blank" rel="noopener">nhs.uk allergies</a> — Allergies page last reviewed 5 March 2026 Next review due 5 March 2029 — lie down legs raised, if breathing difficult raise shoulders or sit up slowly, if pregnant left side, do not stand or walk — avoid sudden change<br><br>
+        Mountain Rescue England and Wales — Fact File 6: How to stay safe — <a href="https://www.mountain.rescue.org.uk/" target="_blank" rel="noopener">mountain rescue</a> — Both torch and whistle can be used to signal for help: Six good long blasts in a minute. Stop for one minute. Repeat. Continue until someone reaches you and do not stop because you hear a reply — International six blasts or six flashes in one minute then minute pause then repeat<br><br>
+        Ordnance Survey and BGS — Magnetic declination — <a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">ordnance survey</a> and <a href="https://www.bgs.ac.uk/" target="_blank" rel="noopener">bgs</a> — Magnetic data shown on OS maps supplied by BGS. BGS site includes tool which calculates angle between grid north and magnetic north — Check current map + BGS tool at time of use — Unsupported date and location prediction for triple alignment removed in v0.3.7<br><br>
+        Reviewed for v0.3.7: 2026-11-02 — Field Guide stripped to substantiable info only, no confident guesswork, no triple-alignment location</p></div>
+    </details>
+  </div>
+
+  <div id="backup" class="panel">
+    <div class="card"><h2>Backup and Recovery — v0.3.7 — read-back validated before delete, collision-safe, safe DOM, byte-size fixed</h2>
+      <p class="small">Fixes v0.3.6 to v0.3.7: migration now reads back harcom_data and validates before deleting legacy keys, triple-alignment location</p>
+      <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Export JSON File (download)</button><button class="secondary" id="copyJsonBtn">Copy JSON to Clipboard</button></div>
+      <div class="row" style="margin-top:8px"><button class="secondary" id="confirmBackupBtn">I have manually opened and checked downloaded JSON — Mark Backup as Verified</button></div>
+      <div id="exportStatus" class="small" style="margin-top:8px"></div>
+      <div style="margin-top:12px"><label class="small">Import and Restore — validated, atomic preserved, read-back checked, safety backup collision-resistant:</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Import (atomic preserved + safety backup after confirm)</button><button class="secondary" id="validateBtn">Validate Only</button></div></div>
+      <div id="importStatus" class="small" style="margin-top:8px"></div>
+      <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Safety Backups — restoreable — collision-resistant</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">Created ONLY after you confirm import or restore and only if backup write succeeds. Key uniqueness checked, aborts if cannot establish unused key.</p></div>
+      <div class="card" style="margin-top:16px;background:#fff"><h2>Transaction architecture &amp; write-path inventory</h2><p class="small">All cooperating writes require navigator.locks exclusive lock "harcom-storage-transaction-v1". If Web Locks are unavailable, writes and destructive operations fail closed. transactionWrite: exact raw set/read-back; durable harcom_recovery_* copy before overwrite; conditional rollback only when current raw still equals the observed attempted-write value; primary-key stale check against lastKnownRaw. transactionDelete: durable raw copy, verified deletion and conditional rollback. Legacy migration holds one exclusive Web Lock across snapshot, verified recovery copies, durable journal, primary write, snapshot-checked cleanup, final verification and journal close; startup recovery is idempotent and refuses to overwrite unexpected values. lastKnownRaw and arrays commit only after complete success.</p><p class="small"><b>Write-path inventory:</b> task create/complete/delete; note create/delete; log create/delete; import; safety restore; legacy migration and legacy-key cleanup; corrupt/malformed raw preservation; manual-backup marker; persistence canary/test records; safety-backup deletion; Clear All snapshot and deletion/rollback. All primary-record mutations use commitCombined (transactionWrite + validation + deferred lastKnownRaw commit); other mutations use transactionWrite/transactionDelete/conditionalRollback or the lock-held Clear All transaction. Export and clipboard are read-only. Validation-only actions are read-only.</p><p class="small">Executable simulated failure harness: runTransactionFailureTests() — isolated in-memory storage only; it does not touch saved user data. Simulations are not browser or Android certification.</p><p class="small">Single file, no external deps, no AI keys. Primary key: harcom_data (single atomic record). Legacy migration uses a durable harcom_migration_journal_v1 with exact raw snapshots and recovery references; interrupted migration is recovered under one exclusive lock before normal loading. Keys: harcom_data, harcom_backup_last, harcom_persist_test_v3, harcom_persist_canary, harcom_safety_*, harcom_corrupt_*. Audit safeSet, atomicSetCombined with read-back, generateUniqueSafetyKey and generateUniqueCorruptKey abort on collision, clearCorruptionState, getByteSize via TextEncoder.</p><p class="small">Origin: <span id="originText"></span> — file origin varies per browser — GitHub Pages https origin is recommended for stable Android storage. User-led Samsung checks have passed for core task, backup, import and restore flows; isolated failure-injection and final release checks remain.</p><p class="small">Build: v0.3.11 Transaction Repair Candidate — No Loose Screws — Not Release Certified — Recovery • Rollback • Web Locks • Stale-State • v0.1-safe untouched on main • dev only</p></div>
+      <div class="card" style="background:#fff;margin-top:12px"><h2>Change Log v0.3.7 to v0.3.11 — Rook approved spec — exact raw + cleanup warning — repair, not redesign — only changes actually made</h2><p class="small">
+        1. Added final legacy cleanup verification per user snippet: const remainingLegacy = [LS_LEGACY_T, LS_LEGACY_N, LS_LEGACY_L].filter(key => localStorage.getItem(key) !== null); if (remainingLegacy.length > 0) { console.warn('Migration verified, but legacy cleanup is incomplete:', remainingLegacy); } — keeps verified combined record and reports incomplete cleanup, never silently declares success.<br>
+        2. Implemented exact raw equality verification before any legacy delete per user-provided safeguard: Preserve exact expected contents as JSON.stringify(combined), write via safeSet, if result not ok throw 'Migration write failed. Original records retained.', read back via getItem, if null or !== expectedRaw throw 'Migration verification failed. Original records retained.', parse and validate via validateImport, if fails throw 'Saved migration failed validation. Original records retained.', only then remove original records in try/catch, log error, keep verified combined record, never report cleanup as successful. This is byte-exact, not count-based, preventing silent corruption.<br>
+        2. Fixed legacy migration to prove persistence before delete: After preserving raw legacy values and checking every result, after safeSet of harcom_data, now reads back harcom_data via getItem, parses, validates via validateImport, checks counts match — only if read-back validation succeeds are legacy keys deleted. If read-back fails, legacy keys NOT deleted, error reported, original keys kept. This prevents loss where write appears to succeed but cannot be read back.<br>
+        2. Verified removal of wrapper scripts and font declarations: File contains zero matches for wrapper scripts, interception and messaging handlers, opening interception and font path refs — scanned for 6 strings — 0 matches. No external wrappers present in raw file.<br>
+        3. Removed unsupported magnetic triple-alignment date and location prediction entirely: Deleted sentence that gave specific dates and locations for triple alignment. That sentence has been removed from navigation guide and sources as unsupported confident guesswork. Field guide is no place for confident guesswork.<br>
+        4. Stripped questionable navigation and first-aid claims back to substantiable info: Navigation now states only that magnetic north differs from true/grid north and changes over time, check current OS map and BGS tool at time of use — no specific 5-degree variation or 0.2 deg per year numbers claimed as fact in guide text — sources note BGS supplies data and tool. First-aid stripped to NHS sources only — each item says See NHS page for full guidance, with disclaimer aide-memoire only not training, call 999.<br>
+        5. Kept v0.3.6 hardening: collision-safe corrupt backup keys via generateUniqueCorruptKey with existence check and abort, legacy raw preservation checked before migration, safe DOM via textContent and element creation for all localStorage-derived content, full validation on load/migration/import via same schema, byte-size via TextEncoder and Blob fallback.<br>
+        6. Kept design and functionality: Tasks, Notes, Mission Log, Field Guide, Backup unchanged structure — no AI, no external deps, no cloud services, accounts, subscriptions or new features — repair not redesign.<br>
+        7. Preserved project boundaries: dev only build, did not modify live v0.1 version or main branch — v0.1-safe untouched.
+      </p></div>
+      <div class="card" style="background:#fff;margin-top:12px"><h2>Remaining Known Limitations — static review only — needs real browser/Android testing</h2><p class="small">
+        - No browser or Android testing claimed for v0.3.7 — static review only — needs testing: Chrome, Firefox, Safari, Android WebView via GitHub Pages https origin, file origin behavior, quota exceeded handling, persistence after close/reopen, export download, clipboard, import, safety backup restore, wipe, persistence test canary.<br>
+        - Storage depends on browser quota and origin — file origin varies, GitHub Pages https origin recommended for stable Android — test both origins.<br>
+        - Safety and corrupt backups stored in same origin — clearing browser data wipes everything including recovery copies — verified external backup required — test clear behavior.<br>
+        - Simple djb2 hash is non-cryptographic — detects accidental changes only, not malicious tampering — persistence test is accidental-change check only.<br>
+        - Clear All iterates harcom_ keys — if storage blocked during iteration some keys may remain — failure reported but manual browser clear may be needed — needs testing with full storage.<br>
+        - Export download success cannot be verified by app — user must manually open JSON and check — needs testing on Android Downloads.<br>
+        - Field Guide aide-memoire only — not replacement for qualified training, not certified, check official NHS, MREW, OS, BGS sources before field use — unsupported magnetic prediction removed in v0.3.7 — navigation stripped to check map + BGS tool.<br>
+        - No service worker or PWA offline caching yet — single file works offline once loaded but no installable cache — needs PWA testing if added later.<br>
+        - v0.1-safe remains untouched on main — this is dev build only — do not deploy to main until Rook approves.<br>
+        - Corrupt and safety backup key generation abort if uniqueness cannot be established after 50 attempts — user must retry or free space — prevents silent overwrite — needs quota-full testing.<br>
+        - Migration read-back validation added in v0.3.7 — writes harcom_data then reads back and re-validates before deleting legacy keys — if read-back fails legacy keys NOT deleted — needs testing with corrupt data, full quota, blocked storage.
+      </p></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div><span class="pill">Reliability first</span><span class="pill">Survival second</span><span class="pill">Polish third</span><span class="pill">AI last</span><span class="pill">v0.1-safe untouched</span><span class="pill">v0.3.8 repair — exact raw verification</span><span class="pill">No wrappers</span><span class="pill">Prediction removed</span></div>
+    <div style="margin-top:10px" id="counts"></div>
+    <div style="margin-top:6px" id="lastTest"></div>
+    <div style="margin-top:12px" class="row"><button class="secondary" id="runTxTests">Run Transaction Failure Tests</button><button class="secondary" id="runPersistTest">Test Persistence — combined hash plus canary — accidental-change check</button><button class="danger" id="wipeBtn">Clear ALL Harcom Data (incl. backups and tests) — requires DELETE</button></div>
+    <div style="margin-top:10px" class="small">Built for anyone who works where signal does not — field teams, rangers, volunteers, woodland workers, and first testers like Viking. Field Companion must remain useful when absolutely everything else stops working. No internet. No AI. No subscriptions. No dependency on somebody else server.</div>
+    <div style="margin-top:6px" class="small">Visual polish candidate built on the Repair 2 transaction fix. User-led Samsung checks passed for core task, backup, import and restore flows. Isolated failure-injection, independent review and final release checks remain outstanding. Not release certified.</div>
+  </div>
+</div>
+
+<script>
+function isStorageAvailable(){
+  try{void localStorage.length; return {ok:true};}
+  catch(e){return {ok:false, error:e.name+': '+e.message};}
+}
+function simpleHash(str){
+  let h=0; for(let i=0;i<str.length;i++){h=((h<<5)-h)+str.charCodeAt(i); h|=0;} return h.toString(36);
+}
+const TX_LOCK='harcom-storage-transaction-v1';
+let lastKnownRaw=null;
+let transactionBusy=false;
+function storageRead(key){ return localStorage.getItem(key); }
+function exactWrite(key, raw){
+  if(localStorage.getItem(key)!==null) throw new Error('recovery key collision — refusing to overwrite existing backup');
+  localStorage.setItem(key,raw);
+  const got=localStorage.getItem(key);
+  if(got===null) throw Object.assign(new Error('read-back-missing'),{code:'read-back-missing'});
+  if(got!==raw) throw Object.assign(new Error('read-back-mismatch'),{code:'read-back-mismatch'});
+  return got;
+}
+function uniqueRecoveryKey(){
+  for(let i=0;i<100;i++){
+    const k='harcom_recovery_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2)+'_'+i;
+    if(localStorage.getItem(k)===null) return k;
+  }
+  throw new Error('cannot establish unique recovery key');
+}
+function writeRecoveryRaw(originalKey, raw){
+  if(raw===null) return null;
+  const key=uniqueRecoveryKey();
+  const record=JSON.stringify({kind:'raw-recovery-v1',originalKey,raw,at:new Date().toISOString()});
+  exactWrite(key,record);
+  return key;
+}
+
+// Conservative recovery retention: five ordinary backups is a target, never a hard cap.
+const MAX_ORDINARY_RECOVERY_BACKUPS=5;
+function recoveryLog(action,key,reason){
+  const message='[Harcom recovery retention] '+action+' '+key+' — '+reason;
+  try{(action==='DELETE OK'?console.info:console.warn)(message);}catch(e){}
+}
+function getActiveJournalReferences(){
+  const refs=new Set();
+  let keys=[];
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k)keys.push(k);}}
+  catch(e){return {ok:false,refs,reason:'cannot enumerate storage: '+e.message};}
+  const journalKeys=keys.filter(k=>k==='harcom_migration_journal'||k==='harcom_journal'||k==='harcom_migration_journal_v1'||k.startsWith('harcom_migration_journal_'));
+  for(const key of journalKeys){
+    let raw;
+    try{raw=localStorage.getItem(key);}catch(e){return {ok:false,refs,reason:'cannot read journal '+key+': '+e.message};}
+    if(typeof raw!=='string'||raw.length===0)return {ok:false,refs,reason:'journal '+key+' is empty or unavailable'};
+    let parsed;
+    try{parsed=JSON.parse(raw);}catch(e){return {ok:false,refs,reason:'journal '+key+' is malformed'};}
+    const visit=(value,depth=0)=>{
+      if(depth>12||value===null||typeof value!=='object')return;
+      if(Array.isArray(value)){for(const item of value)visit(item,depth+1);return;}
+      for(const [field,v] of Object.entries(value)){
+        if(typeof v==='string' && (field==='backupKey'||field==='recoveryKey'||field==='recoveryRef'||field==='recovery_key'||field==='backup_key') && v.startsWith('harcom_recovery_'))refs.add(v);
+        if(typeof v==='string'){
+          const matches=v.match(/harcom_recovery_[a-z0-9_-]+/gi)||[];
+          for(const match of matches)refs.add(match);
+        }
+        visit(v,depth+1);
+      }
+    };
+    visit(parsed);
+  }
+  return {ok:true,refs};
+}
+function recoveryKeyAge(key){
+  const match=/^harcom_recovery_([a-z0-9]+)_/i.exec(key);
+  return match?parseInt(match[1],36):NaN;
+}
+function isUncertainOrMalformedRecovery(key){
+  let raw;
+  try{raw=localStorage.getItem(key);}catch(e){return {uncertain:true,reason:'read failed: '+e.message};}
+  if(raw===null)return {uncertain:true,reason:'listed key disappeared'};
+  if(raw==='')return {uncertain:true,reason:'empty-string record'};
+  let record;
+  try{record=JSON.parse(raw);}catch(e){return {uncertain:true,reason:'unparsable JSON'};}
+  if(!record||typeof record!=='object'||Array.isArray(record)||record.kind!=='raw-recovery-v1'||typeof record.originalKey!=='string'||typeof record.raw!=='string'||typeof record.at!=='string')return {uncertain:true,reason:'malformed recovery record'};
+  if(record.uncertain===true||record.preserveUncertain===true||record.malformed===true)return {uncertain:true,reason:'record explicitly flagged uncertain'};
+  return {uncertain:false,record};
+}
+function safePruneRecoveryBackups(target=MAX_ORDINARY_RECOVERY_BACKUPS, protectedKey=null){
+  let keys=[];
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('harcom_recovery_'))keys.push(k);}}
+  catch(e){recoveryLog('SKIP','<storage>','cannot enumerate recovery records: '+e.message);return {ok:false,deleted:0,remaining:null};}
+  if(keys.length<=target)return {ok:true,deleted:0,remaining:keys.length};
+  const journal=getActiveJournalReferences();
+  if(!journal.ok){for(const key of keys)recoveryLog('SKIP',key,'journal safety cannot be established: '+journal.reason);return {ok:false,deleted:0,remaining:keys.length};}
+  keys.sort((a,b)=>{const aa=recoveryKeyAge(a),bb=recoveryKeyAge(b);if(Number.isFinite(aa)&&Number.isFinite(bb))return aa-bb;return a.localeCompare(b);});
+  let deleted=0;
+  for(const key of keys){
+    if(keys.length-deleted<=target)break;
+    if(protectedKey && key===protectedKey){recoveryLog('SKIP',key,'protected backup created by the current transaction');continue;}
+    if(key.startsWith('harcom_corrupt_')){recoveryLog('SKIP',key,'corrupt data — separate policy');continue;}
+    if(journal.refs.has(key)){recoveryLog('SKIP',key,'active journal reference');continue;}
+    const check=isUncertainOrMalformedRecovery(key);
+    if(check.uncertain){recoveryLog('SKIP',key,check.reason);continue;}
+    // Recheck immediately before deletion; any uncertainty means retain.
+    try{
+      const current=localStorage.getItem(key);
+      if(current===null||current===''){recoveryLog('SKIP',key,'record changed or became empty before deletion');continue;}
+      const again=JSON.parse(current);
+      if(!again||again.kind!=='raw-recovery-v1'||typeof again.raw!=='string'||again.originalKey!==check.record.originalKey||again.raw!==check.record.raw){recoveryLog('SKIP',key,'record changed; safe removal not established');continue;}
+      localStorage.removeItem(key);
+      if(localStorage.getItem(key)!==null){recoveryLog('SKIP',key,'deletion read-back failed');continue;}
+      deleted++;recoveryLog('DELETE OK',key,'ordinary verified recovery backup; retention target '+target);
+    }catch(e){recoveryLog('SKIP',key,'delete/read-back failed: '+e.message);}
+  }
+  let remaining=null;try{remaining=keys.filter(k=>localStorage.getItem(k)!==null).length;}catch(e){}
+  return {ok:true,deleted,remaining};
+}
+async function withStorageLock(work, destructive=true){
+  if(!navigator.locks || typeof navigator.locks.request!=='function'){
+    return {ok:false,reason:destructive?'web-locks-unavailable-destructive-operation-blocked':'web-locks-unavailable-write-blocked'};
+  }
+  try{return await navigator.locks.request(TX_LOCK,{mode:'exclusive'},work);}
+  catch(e){return {ok:false,reason:'lock-failed: '+e.message,error:e};}
+}
+async function transactionWrite(key, rawValue, options={}){
+  if(typeof rawValue!=='string') return {ok:false,reason:'rawValue-must-be-string'};
+  return withStorageLock(async()=>{
+    let oldRaw;
+    try{oldRaw=storageRead(key);}catch(e){return {ok:false,reason:'read-before-write-failed: '+e.message};}
+    if(options.mustNotExist===true && oldRaw!==null) return {ok:false,reason:'key-collision: refusing to overwrite existing recovery record'};
+    if(key===LS_DATA && options.checkStale!==false && oldRaw!==lastKnownRaw){
+      return {ok:false,reason:'stale-state: stored data changed in another tab; reload before writing',stale:true};
+    }
+    // Unique backup names are rechecked while holding the same cross-tab lock.
+    let recoveryKey=null;
+    if(oldRaw!==null && options.backup!==false){
+      try{recoveryKey=writeRecoveryRaw(key,oldRaw); safePruneRecoveryBackups(MAX_ORDINARY_RECOVERY_BACKUPS,recoveryKey);}
+      catch(e){return {ok:false,reason:'durable-recovery-backup-failed; write aborted: '+e.message,backupFailed:true};}
+    }
+    let attempted=false, observedAfterWrite=undefined;
+    try{
+      localStorage.setItem(key,rawValue); attempted=true;
+      const verifyRaw=localStorage.getItem(key); observedAfterWrite=verifyRaw;
+      if(verifyRaw===null || verifyRaw!==rawValue) throw Object.assign(new Error(verifyRaw===null?'read-back-missing':'read-back-mismatch'),{code:verifyRaw===null?'read-back-missing':'read-back-mismatch'});
+      if(key===LS_DATA && options.deferKnownRaw!==true) lastKnownRaw=verifyRaw;
+      return {ok:true,verifyRaw,recoveryKey,previousRaw:oldRaw};
+    }catch(writeError){
+      let rollback='not-needed';
+      try{
+        const current=localStorage.getItem(key);
+        if(attempted && (current===rawValue || (observedAfterWrite!==undefined && current===observedAfterWrite && current!==oldRaw))){
+          if(oldRaw===null){localStorage.removeItem(key); rollback=localStorage.getItem(key)===null?'verified-remove':'remove-verification-failed';}
+          else {localStorage.setItem(key,oldRaw); rollback=localStorage.getItem(key)===oldRaw?'verified-restore':'restore-verification-failed';}
+        }else if(current!==oldRaw){rollback='skipped-intervening-change';}
+        else rollback='already-original';
+      }catch(rollbackError){rollback='failed: '+rollbackError.message;}
+      if(key===LS_DATA){
+        try{const now=localStorage.getItem(LS_DATA); if(now===oldRaw) lastKnownRaw=oldRaw; else lastKnownRaw=null;}catch(e){lastKnownRaw=null;}
+      }
+      return {ok:false,reason:(writeError.code||'write-or-read-failed')+': '+writeError.message,rollback,recoveryKey,rollbackFailed:rollback.startsWith('failed')||rollback.includes('verification-failed')};
+    }
+  },true);
+}
+async function conditionalRollback(key, expectedCurrentRaw, originalRaw){
+  return withStorageLock(async()=>{
+    try{
+      const current=localStorage.getItem(key);
+      if(current!==expectedCurrentRaw) return {ok:false,reason:'rollback-skipped-intervening-change'};
+      if(originalRaw===null){localStorage.removeItem(key);if(localStorage.getItem(key)!==null)throw new Error('rollback remove verification failed');}
+      else {localStorage.setItem(key,originalRaw);if(localStorage.getItem(key)!==originalRaw)throw new Error('rollback restore verification failed');}
+      if(key===LS_DATA) lastKnownRaw=originalRaw;
+      return {ok:true};
+    }catch(e){if(key===LS_DATA)lastKnownRaw=null;return {ok:false,reason:'rollback-failed: '+e.message};}
+  },true);
+}
+async function transactionDelete(key, options={}){
+  return withStorageLock(async()=>{
+    let oldRaw;
+    try{oldRaw=storageRead(key);}catch(e){return {ok:false,reason:'read-before-delete-failed: '+e.message};}
+    if(oldRaw===null) return {ok:true,alreadyAbsent:true};
+    if(key===LS_DATA && options.checkStale!==false && oldRaw!==lastKnownRaw) return {ok:false,reason:'stale-state: stored data changed in another tab; reload before deleting',stale:true};
+    let recoveryKey=null;
+    try{if(options.backup!==false){recoveryKey=writeRecoveryRaw(key,oldRaw);safePruneRecoveryBackups(MAX_ORDINARY_RECOVERY_BACKUPS,recoveryKey);}}catch(e){return {ok:false,reason:'durable-recovery-backup-failed; delete aborted: '+e.message,backupFailed:true};}
+    try{
+      localStorage.removeItem(key);
+      if(localStorage.getItem(key)!==null) throw new Error('delete read-back still present');
+      if(key===LS_DATA) lastKnownRaw=null;
+      return {ok:true,recoveryKey};
+    }catch(e){
+      let rollback='not-needed';
+      try{const current=localStorage.getItem(key); if(current===null){localStorage.setItem(key,oldRaw); rollback=localStorage.getItem(key)===oldRaw?'verified-restore':'restore-verification-failed';} else if(current!==oldRaw) rollback='skipped-intervening-change'; else rollback='already-original';}catch(re){rollback='failed: '+re.message;}
+      if(key===LS_DATA){try{lastKnownRaw=localStorage.getItem(key);}catch(re){lastKnownRaw=null;}}
+      return {ok:false,reason:'delete-failed: '+e.message,rollback,recoveryKey,rollbackFailed:rollback.startsWith('failed')||rollback.includes('verification-failed')};
+    }
+  },true);
+}
+async function safeSetRawVerified(key, rawValue, options={}){return transactionWrite(key,rawValue,options);}
+async function safeSetVerified(key, value, options={}){
+  try{const raw=JSON.stringify(value); if(typeof raw!=='string') throw new TypeError('value cannot be represented as JSON'); return await transactionWrite(key,raw,options);}
+  catch(e){return {ok:false,reason:'serialization-failed: '+e.message,error:e};}
+}
+async function safeSet(key,value,options={}){return safeSetVerified(key,value,options);}
+function getByteSize(obj){
+  const str = JSON.stringify(obj);
+  try{
+    if(typeof TextEncoder!=='undefined'){
+      const enc = new TextEncoder();
+      return enc.encode(str).length;
+    }
+  }catch(e){}
+  try{ return new Blob([str]).size; }catch(e){}
+  return str.length;
+}
+function generateUniqueSafetyKey(){
+  try{
+    const maxAttempts=50;
+    for(let attempt=0; attempt<maxAttempts; attempt++){
+      const rand=Math.random().toString(36).slice(2,8);
+      const base='harcom_safety_'+new Date().toISOString().replace(/[:.]/g,'-')+'_'+rand+'_'+attempt;
+      let existing=null;
+      try{ existing=localStorage.getItem(base); }catch(e){ return {ok:false, reason:'cannot check uniqueness: '+e.message}; }
+      if(existing===null){ return {ok:true, key:base}; }
+    }
+    return {ok:false, reason:'could not establish unused safety backup key after '+50+' attempts — aborting to avoid overwrite'};
+  }catch(e){ return {ok:false, reason:'uniqueness check failed: '+e.message}; }
+}
+function generateUniqueCorruptKey(originalKey){
+  try{
+    const maxAttempts=50;
+    for(let attempt=0; attempt<maxAttempts; attempt++){
+      const rand=Math.random().toString(36).slice(2,6);
+      const base='harcom_corrupt_'+originalKey+'_'+new Date().toISOString().replace(/[:.]/g,'-')+'_'+rand+'_'+attempt;
+      let existing=null;
+      try{ existing=localStorage.getItem(base); }catch(e){ return {ok:false, reason:'cannot check uniqueness for corrupt key: '+e.message}; }
+      if(existing===null){ return {ok:true, key:base}; }
+    }
+    return {ok:false, reason:'could not establish unused corrupt backup key after 50 attempts — aborting to avoid overwrite'};
+  }catch(e){ return {ok:false, reason:'corrupt key uniqueness check failed: '+e.message}; }
+}
+const LS_DATA='harcom_data';
+const LS_LEGACY_T='harcom_tasks', LS_LEGACY_N='harcom_notes', LS_LEGACY_L='harcom_log';
+const LS_B='harcom_backup_last', LS_PT='harcom_persist_test_v3', LS_CANARY='harcom_persist_canary', LS_SAFETY_PREFIX='harcom_safety_', LS_CORRUPT_PREFIX='harcom_corrupt_';
+let tasks=[], notes=[], logs=[];
+let storageAvailable = isStorageAvailable();
+let corruptDetected=false;
+
+function clearCorruptionState(){
+  corruptDetected=false;
+  const el=document.getElementById('corruptWarn');
+  if(el){el.style.display='none'; el.textContent='';}
+}
+
+async function preserveRawCorrupt(originalKey, rawValue){
+  try{
+    if(rawValue===null) return {ok:true, skipped:true};
+    const keyResult = generateUniqueCorruptKey(originalKey);
+    if(!keyResult.ok) return {ok:false, reason:keyResult.reason};
+    const corruptKey = keyResult.key;
+    const writeResult = await safeSetRawVerified(corruptKey, rawValue, {mustNotExist:true,backup:false});
+    if(!writeResult.ok){
+      const detail=writeResult.error&&writeResult.error.message ? writeResult.error.message : writeResult.reason;
+      return {ok:false, reason:'failed to write/verify corrupt backup '+corruptKey+': '+detail};
+    }
+    // Empty strings are preserved byte-for-byte too; parsing them remains a separate validation step.
+    return {ok:true, corruptKey:corruptKey, verifyRaw:writeResult.verifyRaw};
+  }catch(e){ return {ok:false, reason:e.message}; }
+}
+
+function validateImport(j){
+  if(typeof j!=='object'||j===null) throw new Error('Not an object — migrated schema must be object with tasks, notes, logs');
+  // Explicitly accept migrated schema including version metadata — version, savedAt, exported are optional and allowed
+  // This is the agreed migrated schema: {tasks:[], notes:[], logs:[], version?:string, savedAt?:number, exported?:string}
+  if(j.version!==undefined && typeof j.version!=='string') throw new Error('Invalid version metadata — must be string if present');
+  if(j.savedAt!==undefined && (typeof j.savedAt!=='number'||!isFinite(j.savedAt))) throw new Error('Invalid savedAt metadata — must be number if present');
+  if(j.exported!==undefined && typeof j.exported!=='string') throw new Error('Invalid exported metadata — must be string if present');
+  const byteSize = getByteSize(j);
+  if(byteSize>2*1024*1024) throw new Error('Import too large: '+byteSize+' bytes above 2MB limit (measured via TextEncoder, not string length)');
+  if(!Array.isArray(j.tasks)||!Array.isArray(j.notes)||!Array.isArray(j.logs)) throw new Error('Missing tasks, notes, logs arrays — required in migrated schema');
+  if(j.tasks.length>2000) throw new Error('Too many tasks: '+j.tasks.length+' above 2000 limit');
+  if(j.notes.length>2000) throw new Error('Too many notes: '+j.notes.length+' above 2000 limit');
+  if(j.logs.length>5000) throw new Error('Too many logs: '+j.logs.length+' above 5000 limit');
+  for(let i=0;i<j.tasks.length;i++){
+    const it=j.tasks[i];
+    if(typeof it!=='object'||it===null) throw new Error('Invalid task at '+i+': not object');
+    if(typeof it.id!=='string'||it.id.length===0||it.id.length>100) throw new Error('Invalid task id at '+i);
+    if(typeof it.text!=='string'||it.text.length===0||it.text.length>5000) throw new Error('Invalid task text at '+i+' length '+it.text.length);
+    if(typeof it.completed!=='boolean') throw new Error('Invalid task completed at '+i);
+    if(typeof it.createdAt!=='number'||!isFinite(it.createdAt)||it.createdAt<=0||it.createdAt>Date.now()+365*24*60*60*1000) throw new Error('Invalid task createdAt at '+i);
+  }
+  for(let i=0;i<j.notes.length;i++){
+    const it=j.notes[i];
+    if(typeof it!=='object'||it===null) throw new Error('Invalid note at '+i);
+    if(typeof it.id!=='string'||it.id.length===0||it.id.length>100) throw new Error('Invalid note id at '+i);
+    if(typeof it.text!=='string'||it.text.length===0||it.text.length>10000) throw new Error('Invalid note text at '+i+' length '+it.text.length);
+    if(it.title!==undefined && (typeof it.title!=='string'||it.title.length>500)) throw new Error('Invalid note title at '+i);
+    if(typeof it.createdAt!=='number'||!isFinite(it.createdAt)||it.createdAt<=0||it.createdAt>Date.now()+365*24*60*60*1000) throw new Error('Invalid note createdAt at '+i);
+  }
+  for(let i=0;i<j.logs.length;i++){
+    const it=j.logs[i];
+    if(typeof it!=='object'||it===null) throw new Error('Invalid log at '+i);
+    if(typeof it.id!=='string'||it.id.length===0||it.id.length>100) throw new Error('Invalid log id at '+i);
+    if(typeof it.text!=='string'||it.text.length===0||it.text.length>5000) throw new Error('Invalid log text at '+i);
+    if(typeof it.timestamp!=='number'||!isFinite(it.timestamp)||it.timestamp<=0||it.timestamp>Date.now()+365*24*60*60*1000) throw new Error('Invalid log timestamp at '+i);
+  }
+  return true;
+}
+
+const LS_MIGRATION_JOURNAL='harcom_migration_journal_v1';
+
+function writeExactLocked(key, raw, mustNotExist=false){
+  if(typeof raw!=='string') throw new TypeError('raw value must be a string');
+  const before=localStorage.getItem(key);
+  if(mustNotExist && before!==null) throw new Error('key collision — refusing to overwrite '+key);
+  localStorage.setItem(key,raw);
+  const after=localStorage.getItem(key);
+  if(after===null || after!==raw) throw new Error('exact read-back verification failed for '+key);
+  return after;
+}
+
+function updateMigrationJournalLocked(journal, create=false){
+  const key=LS_MIGRATION_JOURNAL;
+  const previous=localStorage.getItem(key);
+  if(create && previous!==null) throw new Error('an unfinished migration journal already exists; recovery required');
+  if(!create && previous===null) throw new Error('migration journal disappeared during transaction');
+  const raw=JSON.stringify(journal);
+  // localStorage replaces one key atomically on a successful setItem. Keep the
+  // journal itself as the single recovery authority; backing up every phase
+  // creates unreferenced harcom_recovery_* records and needlessly burns quota.
+  localStorage.setItem(key,raw);
+  const verified=localStorage.getItem(key);
+  if(verified===null || verified!==raw) throw new Error('migration journal exact read-back verification failed');
+  return verified;
+}
+
+function parseMigrationJournal(raw){
+  const j=JSON.parse(raw);
+  if(!j || j.kind!=='harcom-migration-journal-v1' || j.version!==1 || !j.snapshots || !j.expected || typeof j.expected.savedAt!=='number' || j.expected.version!=='v0.3.11-migrated') throw new Error('migration journal is malformed or unsupported; originals and journal retained');
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+    if(!(k in j.snapshots)) throw new Error('migration journal is missing a legacy snapshot');
+    const snap=j.snapshots[k];
+    if(snap!==null && (!snap || typeof snap.backupKey!=='string' || typeof snap.rawLength!=='number' || typeof snap.rawHash!=='string')) throw new Error('migration journal contains an invalid raw snapshot reference');
+  }
+  return j;
+}
+
+function readMigrationSnapshotsLocked(j){
+  const snapshots={};
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+    const ref=j.snapshots[k];
+    if(ref===null){snapshots[k]=null;continue;}
+    const backupRaw=localStorage.getItem(ref.backupKey);
+    if(backupRaw===null) throw new Error('migration recovery backup is missing: '+ref.backupKey);
+    const record=JSON.parse(backupRaw);
+    if(!record || record.kind!=='raw-recovery-v1' || record.originalKey!==k || typeof record.raw!=='string') throw new Error('migration recovery backup is malformed: '+ref.backupKey);
+    if(record.raw.length!==ref.rawLength || simpleHash(record.raw)!==ref.rawHash) throw new Error('migration recovery backup does not match journal snapshot: '+k);
+    snapshots[k]=record.raw;
+  }
+  return snapshots;
+}
+
+function migrationExpectedRaw(j,snapshots){
+  const t=snapshots[LS_LEGACY_T]===null?[]:JSON.parse(snapshots[LS_LEGACY_T]);
+  const n=snapshots[LS_LEGACY_N]===null?[]:JSON.parse(snapshots[LS_LEGACY_N]);
+  const l=snapshots[LS_LEGACY_L]===null?[]:JSON.parse(snapshots[LS_LEGACY_L]);
+  const proposed={tasks:t,notes:n,logs:l};
+  validateImport(proposed);
+  const raw=JSON.stringify({tasks:t,notes:n,logs:l,version:j.expected.version,savedAt:j.expected.savedAt});
+  if(raw.length!==j.expected.rawLength || simpleHash(raw)!==j.expected.rawHash) throw new Error('reconstructed expected migration record does not match journal descriptor');
+  return raw;
+}
+
+function removeJournalVerifiedLocked(){
+  localStorage.removeItem(LS_MIGRATION_JOURNAL);
+  if(localStorage.getItem(LS_MIGRATION_JOURNAL)!==null) throw new Error('migration journal removal could not be verified');
+}
+
+// Idempotent restart recovery. Never overwrites an unexpected value.
+function recoverMigrationJournalLocked(){
+  const journalRaw=localStorage.getItem(LS_MIGRATION_JOURNAL);
+  if(journalRaw===null) return {ok:true,found:false};
+  const j=parseMigrationJournal(journalRaw);
+  const snapshots=readMigrationSnapshotsLocked(j);
+  const expectedRaw=migrationExpectedRaw(j,snapshots);
+  const primary=localStorage.getItem(LS_DATA);
+  const current={};
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]) current[k]=localStorage.getItem(k);
+  let allLegacyAbsent=true;
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]) if(current[k]!==null) allLegacyAbsent=false;
+
+  if(primary===expectedRaw && allLegacyAbsent){
+    const parsed=JSON.parse(primary);
+    validateImport(parsed);
+    j.phase='complete'; j.deletingKey=null; j.completedAt=new Date().toISOString();
+    updateMigrationJournalLocked(j,false);
+    removeJournalVerifiedLocked();
+    lastKnownRaw=primary;
+    return {ok:true,found:true,completed:true,raw:primary};
+  }
+
+  // Roll back only values still matching this transaction. Missing originals are restored;
+  // values that differ from both the snapshot and our expected primary are never overwritten.
+  if(primary!==null && primary!==expectedRaw) throw new Error('migration recovery conflict: harcom_data contains an unexpected value; preserved without overwrite');
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+    const expected=snapshots[k], actual=current[k];
+    if(expected===null){
+      if(actual!==null) throw new Error('migration recovery conflict: unexpected new legacy value at '+k+'; preserved without overwrite');
+    }else if(actual!==null && actual!==expected){
+      throw new Error('migration recovery conflict: legacy value changed at '+k+'; preserved without overwrite');
+    }
+  }
+  if(primary===expectedRaw){
+    localStorage.removeItem(LS_DATA);
+    if(localStorage.getItem(LS_DATA)!==null) throw new Error('migration recovery could not remove its exact primary record');
+  }
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+    const expected=snapshots[k];
+    if(expected!==null && localStorage.getItem(k)===null) writeExactLocked(k,expected,true);
+  }
+  for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+    if(localStorage.getItem(k)!==snapshots[k]) throw new Error('migration recovery final snapshot verification failed for '+k);
+  }
+  if(localStorage.getItem(LS_DATA)!==null) throw new Error('migration recovery left an unexpected primary value');
+  removeJournalVerifiedLocked();
+  lastKnownRaw=null;
+  return {ok:true,found:true,rolledBack:true};
+}
+
+async function recoverMigrationJournal(){
+  return withStorageLock(async()=>recoverMigrationJournalLocked(),true);
+}
+
+// The caller holds the one exclusive Web Lock for this entire sequence.
+function migrateLegacyLocked(){
+  const existingPrimary=localStorage.getItem(LS_DATA);
+  if(existingPrimary!==null) return {ok:true,alreadyPresent:true,raw:existingPrimary};
+  const keys=[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L];
+  const rawSnapshots={};
+  for(const k of keys) rawSnapshots[k]=localStorage.getItem(k);
+  if(keys.every(k=>rawSnapshots[k]===null)) return {ok:true,empty:true,raw:null};
+  if(localStorage.getItem(LS_MIGRATION_JOURNAL)!==null) throw new Error('unfinished migration journal exists; recover before starting a new migration');
+
+  const snapshotRefs={};
+  // Durable raw copies are created and read-back verified before parsing or overwriting.
+  for(const k of keys){
+    if(rawSnapshots[k]===null){snapshotRefs[k]=null;continue;}
+    const ref=writeRecoveryRaw(k,rawSnapshots[k]);
+    if(!ref) throw new Error('recovery backup missing for '+k);
+    const backupRaw=localStorage.getItem(ref);
+    const record=JSON.parse(backupRaw);
+    if(!record || record.kind!=='raw-recovery-v1' || record.originalKey!==k || record.raw!==rawSnapshots[k]) throw new Error('recovery backup read-back mismatch for '+k);
+    snapshotRefs[k]={backupKey:ref,rawLength:rawSnapshots[k].length,rawHash:simpleHash(rawSnapshots[k])};
+  }
+  // Recheck snapshots after backup creation while still holding the same lock.
+  for(const k of keys) if(localStorage.getItem(k)!==rawSnapshots[k]) throw new Error('legacy snapshot changed during preservation at '+k+'; migration aborted');
+
+  const t=rawSnapshots[LS_LEGACY_T]===null?[]:JSON.parse(rawSnapshots[LS_LEGACY_T]);
+  const n=rawSnapshots[LS_LEGACY_N]===null?[]:JSON.parse(rawSnapshots[LS_LEGACY_N]);
+  const l=rawSnapshots[LS_LEGACY_L]===null?[]:JSON.parse(rawSnapshots[LS_LEGACY_L]);
+  const proposed={tasks:t,notes:n,logs:l};
+  validateImport(proposed);
+  const savedAt=Date.now();
+  const combined={tasks:t,notes:n,logs:l,version:'v0.3.11-migrated',savedAt};
+  const expectedRaw=JSON.stringify(combined);
+  const journal={kind:'harcom-migration-journal-v1',version:1,id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),createdAt:new Date().toISOString(),phase:'prepared',snapshots:snapshotRefs,expected:{version:'v0.3.11-migrated',savedAt,rawLength:expectedRaw.length,rawHash:simpleHash(expectedRaw)},deletingKey:null};
+  updateMigrationJournalLocked(journal,true);
+
+  try{
+    // Journal is durable before primary write.
+    journal.phase='primary-write-pending'; updateMigrationJournalLocked(journal,false);
+    if(localStorage.getItem(LS_DATA)!==null) throw new Error('primary record appeared before migration write; aborting without overwrite');
+    writeExactLocked(LS_DATA,expectedRaw,true);
+    const primaryRead=localStorage.getItem(LS_DATA);
+    if(primaryRead!==expectedRaw) throw new Error('combined primary exact read-back mismatch');
+    validateImport(JSON.parse(primaryRead));
+
+    for(const k of keys){
+      journal.phase='legacy-delete-pending'; journal.deletingKey=k; updateMigrationJournalLocked(journal,false);
+      if(localStorage.getItem(k)!==rawSnapshots[k]) throw new Error('legacy raw changed immediately before deletion: '+k);
+      if(rawSnapshots[k]!==null){
+        localStorage.removeItem(k);
+        if(localStorage.getItem(k)!==null) throw new Error('legacy deletion read-back failed: '+k);
+      }else if(localStorage.getItem(k)!==null){
+        throw new Error('unexpected legacy value appeared at '+k);
+      }
+    }
+    if(localStorage.getItem(LS_DATA)!==expectedRaw) throw new Error('final combined primary verification failed');
+    validateImport(JSON.parse(localStorage.getItem(LS_DATA)));
+    for(const k of keys) if(localStorage.getItem(k)!==null) throw new Error('final legacy cleanup verification failed: '+k);
+    journal.phase='complete'; journal.deletingKey=null; journal.completedAt=new Date().toISOString();
+    updateMigrationJournalLocked(journal,false);
+    removeJournalVerifiedLocked();
+    // Commit the app's in-memory baseline only after every storage check and journal close.
+    lastKnownRaw=expectedRaw;
+    return {ok:true,raw:expectedRaw,parsed:combined,snapshots:snapshotRefs};
+  }catch(e){
+    // Best-effort recovery occurs under the same lock. If it cannot prove safety, keep journal and backups.
+    let recovery;
+    try{recovery=recoverMigrationJournalLocked();}
+    catch(re){throw new Error(e.message+'; automatic migration recovery stopped safely: '+re.message+'; journal and recovery copies retained');}
+    throw new Error(e.message+'; migration was rolled back and original snapshots verified'+(recovery&&recovery.rolledBack?'':'; recovery completed'));
+  }
+}
+
+async function loadAll(){
+  const corruptEl=document.getElementById('corruptWarn');
+  const storageWarnEl=document.getElementById('storageWarn');
+  if(!storageAvailable.ok){
+    if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='Storage unavailable: '+storageAvailable.error+' — running in-memory only. Data will NOT survive close or reopen. Use GitHub Pages origin for stable Android storage.';}
+    const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='Storage blocked';
+    tasks=[]; notes=[]; logs=[]; return;
+  }
+  try{
+    const recovery=await recoverMigrationJournal();
+    if(!recovery || !recovery.ok) throw new Error(recovery&&recovery.reason?recovery.reason:'migration recovery could not acquire storage lock');
+    let raw=localStorage.getItem(LS_DATA);
+    if(raw===null){
+      const migration=await withStorageLock(async()=>migrateLegacyLocked(),true);
+      if(!migration || migration.ok!==true) throw new Error(migration&&migration.reason?migration.reason:'migration lock unavailable or migration failed');
+      if(migration.raw!==undefined) raw=migration.raw;
+    }
+    if(raw!==null){
+      try{
+        const parsed=JSON.parse(raw);
+        if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.tasks)||!Array.isArray(parsed.notes)||!Array.isArray(parsed.logs)) throw new Error('Invalid harcom_data structure — missing arrays');
+        validateImport(parsed);
+        // Confirm the record did not change between the initial read and validation.
+        if(localStorage.getItem(LS_DATA)!==raw) throw new Error('Saved data changed during load; reload before editing.');
+        lastKnownRaw=raw;
+        tasks=parsed.tasks||[]; notes=parsed.notes||[]; logs=parsed.logs||[];
+        const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='localStorage available — atomic single-key persistent — validated';
+        clearCorruptionState();
+        return;
+      }catch(e){
+        corruptDetected=true;
+        const preserve=await preserveRawCorrupt(LS_DATA, raw);
+        if(corruptEl){
+          corruptEl.style.display='block';
+          let msg='Corrupt saved data detected in '+LS_DATA+': '+e.message+'. ';
+          if(preserve.ok) msg+='Raw preserved as '+(preserve.corruptKey||'unknown')+'. ';
+          else msg+='Raw preservation FAILED: '+(preserve.reason||'unknown')+' — original raw still present, not deleted. ';
+          msg+='Running empty to avoid overwriting recoverable info until restore. Do NOT add tasks yet — restore first. Byte size '+getByteSize({raw:raw})+' bytes.';
+          corruptEl.textContent=msg;
+        }
+        tasks=[]; notes=[]; logs=[];
+        return;
+      }
+    }
+    tasks=[]; notes=[]; logs=[];
+    const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='localStorage available — persistent (no existing data) — validated';
+    clearCorruptionState();
+  }catch(e){
+    if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='Load/recovery failed safely: '+e.message+' — no new data should be entered until recovery is resolved.';}
+    if(corruptEl){corruptEl.style.display='block'; corruptEl.textContent='Storage recovery is incomplete or conflicted. Existing raw records, journal and recovery copies have been retained where possible. Do not add or edit data until reviewed.';}
+    tasks=[]; notes=[]; logs=[]; corruptDetected=true;
+  }
+}
+
+function updateCounts(){
+  const countsEl=document.getElementById('counts');
+  if(countsEl) countsEl.textContent = `${tasks.length} tasks · ${notes.length} notes · ${logs.length} logs · ${storageAvailable.ok&&!corruptDetected?'Saved via single atomic key harcom_data validated + read-back':'In-memory or corrupted — see warnings — save blocked to protect recoverable data'}`;
+  const d=document.getElementById('netDot'), t=document.getElementById('netText'), origin=document.getElementById('originText');
+  if(origin) origin.textContent = location.origin + ' (' + location.protocol + ')';
+  if(location.protocol==='file:'){
+    const w=document.getElementById('storageWarn');
+    if(w && w.style.display==='none'){w.style.display='block'; w.textContent='Opened via file origin — localStorage varies per browser. For Android stable origin, test via GitHub Pages https origin.';}
+  }
+  if(navigator.onLine){if(d) d.className='dot'; if(t) t.textContent='Online — but app does not need it';} else {if(d) d.className='dot off'; if(t) t.textContent='Offline — fully working';}
+  let last=null; try{last=localStorage.getItem(LS_B);}catch{}
+  const bs=document.getElementById('backupStatus');
+  if(bs){
+    let lastText='never — you must manually check exported JSON before confirming';
+    if(last){
+      try{ const parsed=JSON.parse(last); lastText=new Date(parsed).toLocaleDateString(); }catch{ try{ lastText=new Date(parseInt(last)).toLocaleDateString(); }catch{ lastText='unknown'; } }
+    }
+    bs.textContent=' • Backup manually verified: '+lastText;
+  }
+  const warnEl=document.getElementById('backupWarn');
+  if(warnEl){
+    let needsWarn=true;
+    if(last){
+      try{ const lastMs=parseInt(JSON.parse(last)); if(Date.now()-lastMs <= 7*24*60*60*1000) needsWarn=false; }catch{ const lastMs=parseInt(last); if(!isNaN(lastMs) && Date.now()-lastMs <= 7*24*60*60*1000) needsWarn=false; }
+    }
+    if(needsWarn){warnEl.style.display='block'; warnEl.textContent='Backup reminder: No manually verified backup in last 7 days. localStorage not indestructible — clearing browser data wipes everything including safety backups. Export, manually open file, verify, then confirm.';} else warnEl.style.display='none';
+  }
+  renderSafetyList();
+}
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+
+function renderTasks(){
+  const el=document.getElementById('taskList'); if(!el) return; el.innerHTML='';
+  const rev=tasks.slice().reverse();
+  for(let idx=0; idx<rev.length; idx++){
+    const item=rev[idx];
+    const div=document.createElement('div'); div.className='item'+(item.completed?' done':'');
+    div.innerHTML=`<input type="checkbox"><div style="flex:1"><div class="txt"></div><div class="meta"></div></div><button class="secondary">Delete</button>`;
+    const txtEls=div.getElementsByClassName('txt'); if(txtEls.length>0) txtEls[0].textContent=item.text;
+    const metaEls=div.getElementsByClassName('meta'); if(metaEls.length>0) metaEls[0].textContent=new Date(item.createdAt).toLocaleString();
+    const inputs=div.getElementsByTagName('input'); const cb=inputs.length>0?inputs[0]:null;
+    if(cb){ cb.checked=!!item.completed; cb.onchange=async()=>{ const nextTasks=tasks.map(x=>x.id===item.id?{...x,completed:cb.checked}:x); const r=await commitCombined(nextTasks,notes,logs); if(!r.ok){cb.checked=!!item.completed; alert('Save failed ('+r.reason+') — completion not saved.'); return;} tasks=nextTasks; renderTasks(); updateCounts(); }; }
+    const btns=div.getElementsByTagName('button'); const delBtn=btns.length>0?btns[btns.length-1]:null;
+    if(delBtn){ delBtn.onclick=async()=>{ const newTasks=tasks.filter(x=>x.id!==item.id); const r=await commitCombined(newTasks,notes,logs); if(!r.ok){alert('Delete failed ('+r.reason+') — not deleted. Export and free space.'); return;} tasks=newTasks; renderTasks(); updateCounts(); }; }
+    el.appendChild(div);
+  }
+}
+function renderNotes(){
+  const el=document.getElementById('noteList'); if(!el) return; el.innerHTML='';
+  const rev=notes.slice().reverse();
+  for(let idx=0; idx<rev.length; idx++){
+    const n=rev[idx];
+    const div=document.createElement('div'); div.className='item';
+    div.innerHTML=`<div style="flex:1"><div class="txt"><b></b><div></div></div><div class="meta"></div></div><button class="secondary">Delete</button>`;
+    const bEls=div.getElementsByTagName('b'); if(bEls.length>0) bEls[0].textContent=n.title||'Note';
+    const txtDivs=div.getElementsByClassName('txt');
+    if(txtDivs.length>0){
+      const innerDivs=txtDivs[0].getElementsByTagName('div');
+      if(innerDivs.length>0) innerDivs[0].textContent=n.text;
+    }
+    const metaEls=div.getElementsByClassName('meta'); if(metaEls.length>0) metaEls[0].textContent=new Date(n.createdAt).toLocaleString();
+    const btns=div.getElementsByTagName('button'); const delBtn=btns.length>0?btns[0]:null;
+    if(delBtn){ delBtn.onclick=async()=>{ const newNotes=notes.filter(x=>x.id!==n.id); const r=await commitCombined(tasks,newNotes,logs); if(!r.ok){alert('Delete failed ('+r.reason+') — not deleted.'); return;} notes=newNotes; renderNotes(); updateCounts(); }; }
+    el.appendChild(div);
+  }
+}
+function renderLogs(){
+  const el=document.getElementById('logList'); if(!el) return; el.innerHTML='';
+  for(let idx=0; idx<logs.length; idx++){
+    const l=logs[idx];
+    const div=document.createElement('div'); div.className='item';
+    const time=new Date(l.timestamp).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    div.innerHTML=`<div style="flex:1"><div class="txt"></div></div><button class="secondary">Delete</button>`;
+    const txtEls=div.getElementsByClassName('txt'); if(txtEls.length>0) txtEls[0].textContent=`[${time}] ${l.text}`;
+    const btns=div.getElementsByTagName('button'); const delBtn=btns.length>0?btns[0]:null;
+    if(delBtn){ delBtn.onclick=async()=>{ const newLogs=logs.filter(x=>x.id!==l.id); const r=await commitCombined(tasks,notes,newLogs); if(!r.ok){alert('Delete failed ('+r.reason+') — not deleted.'); return;} logs=newLogs; renderLogs(); updateCounts(); }; }
+    el.appendChild(div);
+  }
+}
+
+document.getElementById('addTask').onclick=async()=>{
+  if(corruptDetected){alert('Corrupt data detected — restore from safety backup before adding new tasks to avoid overwriting recoverable info preserved in corrupt key.'); return;}
+  const inputEl=document.getElementById('taskInput'); const v=inputEl.value.trim(); if(!v) return;
+  const rec={id:uid(),text:v,completed:false,createdAt:Date.now()};
+  const nextTasks=[...tasks,rec];
+  const r=await commitCombined(nextTasks,notes,logs);
+  if(!r.ok){alert('Storage failed ('+r.reason+'): task not saved. Export now.'); return;}
+  tasks=nextTasks; inputEl.value=''; renderTasks(); updateCounts();
+};
+document.getElementById('taskInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('addTask').click()});
+document.getElementById('addNote').onclick=async()=>{
+  if(corruptDetected){alert('Corrupt data — restore first to protect recoverable info.'); return;}
+  const t=document.getElementById('noteTitle'), b=document.getElementById('noteText'); if(!b.value.trim()) return;
+  const rec={id:uid(),title:t.value.trim(),text:b.value.trim(),createdAt:Date.now()};
+  const nextNotes=[...notes,rec];
+  const r=await commitCombined(tasks,nextNotes,logs);
+  if(!r.ok){alert('Storage failed ('+r.reason+')'); return;}
+  notes=nextNotes; t.value=''; b.value=''; renderNotes(); updateCounts();
+};
+document.getElementById('clearNote').onclick=()=>{document.getElementById('noteTitle').value=''; document.getElementById('noteText').value='';};
+document.getElementById('addLog').onclick=async()=>{
+  if(corruptDetected){alert('Corrupt data — restore first.'); return;}
+  const i=document.getElementById('logInput'); const v=i.value.trim(); if(!v) return;
+  const rec={id:uid(),text:v,timestamp:Date.now()};
+  const nextLogs=[...logs,rec];
+  const r=await commitCombined(tasks,notes,nextLogs);
+  if(!r.ok){alert('Storage failed ('+r.reason+')'); return;}
+  logs=nextLogs; i.value=''; renderLogs(); updateCounts();
+};
+document.getElementById('logInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('addLog').click()});
+const tabEls=document.getElementsByClassName('tab');
+for(let i=0;i<tabEls.length;i++){
+  tabEls[i].onclick=()=>{
+    const allTabs=document.getElementsByClassName('tab');
+    for(let j=0;j<allTabs.length;j++){
+      allTabs[j].classList.remove('active');
+      allTabs[j].setAttribute('aria-pressed','false');
+    }
+    const allPanels=document.getElementsByClassName('panel');
+    for(let j=0;j<allPanels.length;j++) allPanels[j].classList.remove('active');
+    tabEls[i].classList.add('active');
+    tabEls[i].setAttribute('aria-pressed','true');
+    const targetId=tabEls[i].getAttribute('data-tab');
+    const target=document.getElementById(targetId);
+    if(target) target.classList.add('active');
+  };
+}
+
+function getExport(){return {exported:new Date().toISOString(), version:'v0.3.7-Rook-Hardened-Repair', tasks:tasks, notes:notes, logs:logs};}
+function getExportByteSize(){
+  try{ return getByteSize(getExport()); }catch(e){ return 0; }
+}
+
+async function commitCombined(newTasks, newNotes, newLogs){
+  const combined={tasks:newTasks,notes:newNotes,logs:newLogs,version:'v0.3.11',savedAt:Date.now()};
+  let expectedRaw;
+  try{validateImport(combined); expectedRaw=JSON.stringify(combined);}
+  catch(e){return {ok:false,reason:'proposed data validation failed before write: '+e.message};}
+  const writeResult=await transactionWrite(LS_DATA,expectedRaw,{deferKnownRaw:true});
+  if(!writeResult.ok){
+    return {ok:false,reason:'transaction write failed ('+writeResult.reason+')'+(writeResult.rollback?' — rollback '+writeResult.rollback:'')+(writeResult.recoveryKey?' — recovery '+writeResult.recoveryKey:'')};
+  }
+  try{
+    const verifyRaw=writeResult.verifyRaw;
+    if(verifyRaw!==expectedRaw) throw new Error('verified raw differs from expected serialization');
+    const verifyParsed=JSON.parse(verifyRaw);
+    validateImport(verifyParsed);
+    lastKnownRaw=verifyRaw;
+    return {ok:true,verifyRaw,recoveryKey:writeResult.recoveryKey};
+  }catch(e){
+    const rollback=await conditionalRollback(LS_DATA,writeResult.verifyRaw,writeResult.previousRaw);
+    return {ok:false,reason:'post-write transaction validation failed: '+e.message+'; conditional rollback '+(rollback.ok?'verified':rollback.reason)};
+  }
+}
+async function atomicSetCombined(newTasks, newNotes, newLogs){
+  return commitCombined(newTasks,newNotes,newLogs);
+}
+
+document.getElementById('exportJsonBtn').onclick=()=>{
+  try{
+    const data=getExport(); const jsonStr=JSON.stringify(data,null,2);
+    const byteSize=getByteSize(data);
+    const blob=new Blob([jsonStr],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='harcom-field-report-'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    const es=document.getElementById('exportStatus');
+    if(es) es.textContent='Download triggered — size '+byteSize+' bytes measured via TextEncoder — app cannot verify file saved. Please manually open file in Downloads, verify it contains your tasks, notes, logs, check file size above zero, then click confirm button below to mark backup verified. URL revoked in 2s.';
+    setTimeout(()=>{try{URL.revokeObjectURL(url);}catch{}},2000);
+  }catch(e){alert('Export failed: '+e.message); const es=document.getElementById('exportStatus'); if(es) es.textContent='Export failed: '+e.message;}
+};
+document.getElementById('copyJsonBtn').onclick=async()=>{
+  try{
+    const text=JSON.stringify(getExport(),null,2);
+    await navigator.clipboard.writeText(text);
+    const es=document.getElementById('exportStatus'); if(es) es.textContent='Copied to clipboard — size '+getByteSize(getExport())+' bytes via TextEncoder — paste into file, manually verify contents, then confirm backup verified. App cannot verify clipboard content.';
+  }catch(e){prompt('Copy this JSON — manually save and verify:', JSON.stringify(getExport(),null,2));}
+};
+document.getElementById('confirmBackupBtn').onclick=async()=>{
+  try{
+    const r=await safeSet(LS_B,Date.now());
+    if(!r.ok){alert('Failed to mark backup verified: '+r.reason); return;}
+    updateCounts();
+    const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup marked as manually verified at '+new Date().toLocaleString()+' — you confirmed you opened and checked file — byte size '+getExportByteSize()+' bytes.';
+  }catch(e){alert('Failed to mark backup: '+e.message);}
+};
+document.getElementById('validateBtn').onclick=()=>{
+  const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
+  try{
+    const j=JSON.parse(txt);
+    validateImport(j);
+    const byteSize=getByteSize(j);
+    st.textContent=`Valid: ${j.tasks.length} tasks, ${j.notes.length} notes, ${j.logs.length} logs, version ${j.version||'unknown'} — size ${byteSize} bytes measured via TextEncoder within 2MB limit`;
+    st.style.color='green';
+  }
+  catch(e){st.textContent='Invalid: '+e.message; st.style.color='var(--alert)';}
+};
+document.getElementById('importBtn').onclick=async()=>{
+  const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
+  try{
+    const j=JSON.parse(txt); validateImport(j);
+    const byteSize=getByteSize(j);
+    if(!confirm(`Import ${j.tasks.length} tasks, ${j.notes.length} notes, ${j.logs.length} logs? Size ${byteSize} bytes via TextEncoder. This will REPLACE current data. A safety backup of current data will be created first — but ONLY if that backup succeeds will import proceed. Confirm?`)) return;
+    const keyResult=generateUniqueSafetyKey();
+    if(!keyResult.ok){
+      st.textContent='Safety backup key generation FAILED ('+keyResult.reason+') — import ABORTED to avoid overwrite. No backup claimed as created.';
+      st.style.color='var(--alert)';
+      return;
+    }
+    const safetyKey=keyResult.key;
+    try{
+      const backupData={tasks:tasks,notes:notes,logs:logs,at:new Date().toISOString()};
+      const backupResult=await safeSet(safetyKey,backupData,{mustNotExist:true,backup:false});
+      if(!backupResult.ok){
+        st.textContent='Safety backup FAILED ('+backupResult.reason+') — import ABORTED to protect current data. Free space or export manually first. No backup claimed as created.';
+        st.style.color='var(--alert)';
+        return;
+      }
+    }catch(e){
+      st.textContent='Safety backup FAILED: '+e.message+' — import ABORTED. No backup claimed.';
+      st.style.color='var(--alert)';
+      return;
+    }
+    const result=await atomicSetCombined(j.tasks,j.notes,j.logs);
+    if(!result.ok){
+      st.textContent='Import failed during write/read-back ('+result.reason+') — previous data preserved unchanged per atomic single-key. Safety backup retained as '+safetyKey;
+      st.style.color='var(--alert)';
+      return;
+    }
+    tasks=j.tasks; notes=j.notes; logs=j.logs;
+    clearCorruptionState();
+    renderTasks(); renderNotes(); renderLogs(); updateCounts();
+    st.textContent='Imported successfully — byte size '+byteSize+' bytes — safety backup saved as '+safetyKey+' (verified write + read-back success) — corruption state cleared.';
+    st.style.color='green';
+    document.getElementById('importArea').value='';
+    renderSafetyList();
+  }catch(e){st.textContent='Import failed: '+e.message; st.style.color='var(--alert)';}
+};
+
+function renderSafetyList(){
+  const el=document.getElementById('safetyList'); if(!el) return;
+  el.textContent='';
+  let safes=[];
+  try{ for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith(LS_SAFETY_PREFIX)) safes.push(k);} }catch(e){ el.textContent='Failed to list safety backups: '+e.message; return; }
+  safes.sort().reverse();
+  if(safes.length===0){ el.textContent='No safety backups yet — they are created automatically AFTER you confirm import or restore and only if backup write succeeds. Keys checked for uniqueness, abort if cannot establish unused key.'; return; }
+  for(let s=0;s<safes.length;s++){
+    const key=safes[s];
+    let info=''; try{const d=JSON.parse(localStorage.getItem(key)); info=`${d.tasks?.length||0} tasks, ${d.notes?.length||0} notes, ${d.logs?.length||0} logs — ${new Date(d.at).toLocaleString()}`;}catch{info='unreadable';}
+    const div=document.createElement('div'); div.className='safety-item';
+    const flexDiv=document.createElement('div'); flexDiv.style.flex='1';
+    const keyDiv=document.createElement('div'); keyDiv.className='txt'; keyDiv.style.fontSize='11px'; keyDiv.textContent=key;
+    const metaDiv=document.createElement('div'); metaDiv.className='meta'; metaDiv.textContent=info;
+    flexDiv.appendChild(keyDiv); flexDiv.appendChild(metaDiv);
+    const restoreBtn=document.createElement('button'); restoreBtn.className='secondary'; restoreBtn.textContent='Restore';
+    const deleteBtn=document.createElement('button'); deleteBtn.className='danger'; deleteBtn.textContent='Delete';
+    restoreBtn.onclick=async()=>{
+      try{
+        const raw=localStorage.getItem(key);
+        if(!raw) throw new Error('Backup not found');
+        const data=JSON.parse(raw);
+        if(!data.tasks) throw new Error('Invalid safety backup');
+        validateImport(data);
+        if(!confirm(`Restore safety backup ${key}? This will replace current data. A new safety backup of current data will be created first — only if that succeeds will restore proceed.`)) return;
+        const keyResult=generateUniqueSafetyKey();
+        if(!keyResult.ok){alert('Safety backup key generation FAILED ('+keyResult.reason+') — restore ABORTED.'); return;}
+        const newSafetyKey=keyResult.key;
+        try{
+          const backupResult=await safeSet(newSafetyKey,{tasks:tasks,notes:notes,logs:logs,at:new Date().toISOString()},{mustNotExist:true,backup:false});
+          if(!backupResult.ok){alert('Safety backup of current data FAILED ('+backupResult.reason+') — restore ABORTED to protect data.'); return;}
+        }catch(e){alert('Safety backup failed: '+e.message+' — restore aborted.'); return;}
+        const result=await atomicSetCombined(data.tasks,data.notes,data.logs);
+        if(!result.ok){alert('Restore failed ('+result.reason+') — previous data preserved unchanged.'); return;}
+        tasks=data.tasks; notes=data.notes; logs=data.logs;
+        clearCorruptionState();
+        renderTasks(); renderNotes(); renderLogs(); updateCounts();
+        alert('Restored from '+key+' — new safety backup '+newSafetyKey+' created — corruption cleared if present.');
+      }catch(e){alert('Restore failed: '+e.message);}
+    };
+    deleteBtn.onclick=async()=>{
+      if(confirm('Delete safety backup '+key+'?')){
+        const deleted=await transactionDelete(key);
+        if(!deleted.ok){alert('Delete failed: '+deleted.reason); return;}
+        renderSafetyList(); updateCounts();
+      }
+    };
+    div.appendChild(flexDiv); div.appendChild(restoreBtn); div.appendChild(deleteBtn);
+    el.appendChild(div);
+  }
+}
+
+function computeHash(obj){return simpleHash(JSON.stringify(obj));}
+
+document.getElementById('runPersistTest').onclick=async()=>{
+  try{
+    const canaryValue='harcom-canary-'+Date.now()+'-'+uid();
+    const canaryId=uid();
+    const dataHashes={tasks:computeHash(tasks), notes:computeHash(notes), logs:computeHash(logs), combined:computeHash({tasks:tasks,notes:notes,logs:logs})};
+    const payload={at:Date.now(), expectedCounts:{tasks:tasks.length, notes:notes.length, logs:logs.length}, dataHashes:dataHashes, canaryId:canaryId, canaryValue:canaryValue, note:'Hash is simple non-cryptographic for accidental-change detection, not cryptographic integrity protection'};
+    const rCanary=await safeSet(LS_CANARY,{id:canaryId, value:canaryValue, at:Date.now()});
+    if(!rCanary.ok){document.getElementById('lastTest').textContent='Persistence test failed to save canary: '+rCanary.reason; return;}
+    const rTest=await safeSet(LS_PT,payload);
+    if(!rTest.ok){document.getElementById('lastTest').textContent='Persistence test failed to save test record: '+rTest.reason; return;}
+    document.getElementById('lastTest').textContent=`Persistence test written at ${new Date(payload.at).toLocaleTimeString()} — canary ${canaryId} value ${canaryValue.slice(0,12)}..., combined hash ${dataHashes.combined.slice(0,8)} tasks:${dataHashes.tasks.slice(0,6)} notes:${dataHashes.notes.slice(0,6)} logs:${dataHashes.logs.slice(0,6)} — NOTE: hash is simple non-crypto for accidental-change detection only, not cryptographic protection. Now close tab completely and reopen file — verification will compare stored combined hash plus individual hashes and independently verify canary.`;
+  }catch(e){document.getElementById('lastTest').textContent='Persistence test failed: '+e.message;}
+};
+
+function checkPersistenceOnLoad(){
+  try{
+    const rawTest=localStorage.getItem(LS_PT);
+    const rawCanary=localStorage.getItem(LS_CANARY);
+    const el=document.getElementById('lastTest');
+    if(!el) return;
+    if(!rawTest||!rawCanary){ el.textContent='Persistence test: not yet run — click Test Persistence (combined hash plus individual hashes plus canary — accidental-change check only, not crypto), close tab, reopen to verify.'; return; }
+    const p=JSON.parse(rawTest);
+    const canaryStored=JSON.parse(rawCanary);
+    const currentHashes={tasks:computeHash(tasks), notes:computeHash(notes), logs:computeHash(logs), combined:computeHash({tasks:tasks,notes:notes,logs:logs})};
+    const canaryMatch = canaryStored && canaryStored.id===p.canaryId && canaryStored.value===p.canaryValue;
+    const combinedMatch = currentHashes.combined===p.dataHashes.combined;
+    const individualMatch = currentHashes.tasks===p.dataHashes.tasks && currentHashes.notes===p.dataHashes.notes && currentHashes.logs===p.dataHashes.logs;
+    el.textContent='';
+    if(canaryMatch && combinedMatch && individualMatch){
+      const statusSpan=document.createElement('span'); statusSpan.style.color='var(--ok)'; statusSpan.textContent='Verified (combined hash plus individual hashes plus canary — accidental-change check, not cryptographic)';
+      const detail=document.createElement('span');
+      detail.textContent=`: test ${new Date(p.at).toLocaleString()} — canary ${p.canaryId} verified independently, combined hash ${currentHashes.combined.slice(0,8)} matches, individual tasks:${currentHashes.tasks.slice(0,6)} notes:${currentHashes.notes.slice(0,6)} logs:${currentHashes.logs.slice(0,6)} — ${tasks.length}/${notes.length}/${logs.length} tasks, notes, logs survived close and reopen.`;
+      el.appendChild(statusSpan); el.appendChild(detail);
+    } else {
+      const statusSpan=document.createElement('span'); statusSpan.style.color='var(--alert)'; statusSpan.textContent='Persistence issue (accidental-change check)';
+      const detail=document.createElement('div');
+      let msg=`: test ${new Date(p.at).toLocaleString()} — `;
+      if(!canaryMatch) msg+=`Canary mismatch (expected id ${p.canaryId} value ${String(p.canaryValue).slice(0,8)}... but found ${canaryStored?.id} ${String(canaryStored?.value).slice(0,8)}...). Storage may have been cleared. `;
+      if(!combinedMatch) msg+=`Combined hash mismatch — expected ${p.dataHashes.combined.slice(0,8)} but found ${currentHashes.combined.slice(0,8)}. `;
+      if(!individualMatch) msg+=`Individual hashes — expected tasks ${p.dataHashes.tasks.slice(0,6)} notes ${p.dataHashes.notes.slice(0,6)} logs ${p.dataHashes.logs.slice(0,6)} but found ${currentHashes.tasks.slice(0,6)}/${currentHashes.notes.slice(0,6)}/${currentHashes.logs.slice(0,6)}. Expected counts ${p.expectedCounts.tasks}/${p.expectedCounts.notes}/${p.expectedCounts.logs} found ${tasks.length}/${notes.length}/${logs.length}. If you added or deleted since test, this is expected; if not, data may have been lost. Hash is simple non-crypto for accidental change detection only. `;
+      detail.textContent=msg;
+      el.appendChild(statusSpan); el.appendChild(detail);
+    }
+  }catch(e){const el=document.getElementById('lastTest'); if(el) el.textContent='Persistence test: could not read previous test — '+e.message;}
+}
+
+document.getElementById('wipeBtn').onclick=async()=>{
+  const confirm1=confirm('Clear ALL existing Harcom keys? A verified recovery snapshot will be retained automatically. Export and manually verify a separate backup first!');
+  if(!confirm1) return;
+  const confirm2=prompt('Type DELETE to confirm clearing all existing Harcom keys:');
+  if(confirm2!=='DELETE'){alert('Cancelled — you must type DELETE exactly.'); return;}
+  let keysToRemove=[];
+  const wipeResult=await withStorageLock(async()=>{
+    let snapshot={};
+    try{
+      // Enumerate only after acquiring the exclusive lock; no cooperating writer can add a key mid-wipe.
+      for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith('harcom_')) keysToRemove.push(k);}
+      for(const k of keysToRemove) snapshot[k]=localStorage.getItem(k);
+    }catch(e){return {ok:false,failed:['locked snapshot/list read: '+e.message]};}
+    let recoveryKey;
+    try{recoveryKey=writeRecoveryRaw('__ALL_HARCOM_KEYS__',JSON.stringify(snapshot));}catch(e){return {ok:false,failed:['durable full-wipe recovery backup failed: '+e.message]};}
+    let failed=[];
+    for(const k of keysToRemove){try{localStorage.removeItem(k);if(localStorage.getItem(k)!==null)failed.push(k+': still exists');}catch(e){failed.push(k+': '+e.message);}}
+    if(failed.length){
+      // Conditional rollback: restore only keys still absent; never overwrite an intervening value.
+      for(const k of keysToRemove){try{if(snapshot[k]!==null && localStorage.getItem(k)===null){localStorage.setItem(k,snapshot[k]);if(localStorage.getItem(k)!==snapshot[k])failed.push(k+': rollback verification failed');}}catch(e){failed.push(k+': rollback failed '+e.message);}}
+      return {ok:false,failed,recoveryKey};
+    }
+    lastKnownRaw=null; return {ok:true,recoveryKey};
+  },true);
+  let failed=wipeResult.ok?[]:(wipeResult.failed||[wipeResult.reason||'wipe transaction failed']);
+  if(failed.length>0){
+    alert('Clear ALL attempted but some keys FAILED to delete: '+failed.join(', ')+'. Not all data cleared — try again, free space, or clear via browser settings. In-memory data NOT cleared to protect you.');
+    const lt=document.getElementById('lastTest'); if(lt) lt.textContent='Clear ALL partially failed: '+failed.join(', ');
+    return;
+  }
+  tasks=[]; notes=[]; logs=[]; clearCorruptionState(); renderTasks(); renderNotes(); renderLogs(); updateCounts();
+  const lt=document.getElementById('lastTest'); if(lt) lt.textContent='All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.';
+  alert('All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.');
+};
+
+
+// Executable transaction failure harness. Runs against isolated in-memory storage; never touches user data.
+async function runTransactionFailureTests(){
+  const results=[];
+  function assert(name,condition,detail){results.push({name,pass:!!condition,detail:detail||''});}
+  const originalStorage=window.localStorage;
+  const originalLocks=navigator.locks;
+  const originalKnownRaw=lastKnownRaw;
+  function fakeStorage(seed={}){
+    const m=new Map(Object.entries(seed)); let mode=''; let original=''; let readCount=0; let journalWrites=0;
+    return {getItem(k){if(mode==='readthrow')throw new Error('simulated read exception');if(mode==='readbackthrow'&&k===LS_DATA&&++readCount===2)throw new Error('simulated read-back exception');return m.has(k)?m.get(k):null;},
+      setItem(k,v){
+        if(mode==='quota'||(mode==='backupfail'&&k.startsWith('harcom_recovery_'))||(mode==='corruptbackupfail'&&k.startsWith('harcom_corrupt_'))||(mode==='primaryquota'&&k===LS_DATA)||(mode==='migrationbackupfail'&&k.startsWith('harcom_recovery_'))||(mode==='journalcreatefail'&&k===LS_MIGRATION_JOURNAL)||(mode==='journalupdatefail'&&k===LS_MIGRATION_JOURNAL&&++journalWrites>=2))throw Object.assign(new Error('quota / injected write failure'),{name:'QuotaExceededError'});
+        if(mode==='mismatch'&&k===LS_DATA&&String(v)==='mismatch-target'){m.set(k,String(v)+'!');return;}
+        if(mode==='rollbackfail'&&k===LS_DATA&&String(v)===original)throw new Error('simulated rollback failure');
+        if(mode==='rollbackfail'&&k===LS_DATA&&String(v)!==original){m.set(k,String(v)+'!');return;}
+        m.set(k,String(v));
+      },
+      removeItem(k){if(mode==='deletefail'&&k===LS_LEGACY_T)throw new Error('simulated delete failure');if(mode==='deletefail2'&&k===LS_LEGACY_N)throw new Error('simulated second-key delete failure');m.delete(k);},
+      key(i){return [...m.keys()][i]??null;},get length(){return m.size;},_map:m,_mode(v){mode=v;journalWrites=0;}};
+  }
+  try{
+    const mem=fakeStorage({harcom_data:'{"tasks":[],"notes":[],"logs":[]}'});
+    Object.defineProperty(window,'localStorage',{configurable:true,value:mem});
+    Object.defineProperty(navigator,'locks',{configurable:true,value:{request:async(n,o,fn)=>fn()}});
+    lastKnownRaw=mem.getItem(LS_DATA);
+    let r=await transactionWrite(LS_DATA,'{"tasks":[],"notes":[],"logs":[],"savedAt":1}');
+    assert('verified write + durable backup',r.ok&&!!r.recoveryKey&&JSON.parse(mem.getItem(r.recoveryKey)).raw==='{"tasks":[],"notes":[],"logs":[]}',r.reason||'');
+    const before=mem.getItem(LS_DATA); mem._mode('primaryquota'); r=await transactionWrite(LS_DATA,'quota-target');
+    assert('primary write quota error aborts and preserves original',!r.ok&&mem.getItem(LS_DATA)===before,r.reason||''); mem._mode('');
+    mem._mode('mismatch'); r=await transactionWrite(LS_DATA,'mismatch-target');
+    assert('read-back mismatch triggers conditional rollback',!r.ok&&mem.getItem(LS_DATA)===before&&r.rollback==='verified-restore',r.rollback||''); mem._mode('');
+    mem._map.set(LS_DATA,'intervening-tab-value'); const skippedRollback=await conditionalRollback(LS_DATA,'our-attempted-value',before);
+    assert('conditional rollback never overwrites intervening change',!skippedRollback.ok&&mem.getItem(LS_DATA)==='intervening-tab-value'&&skippedRollback.reason==='rollback-skipped-intervening-change');
+    mem._map.set(LS_DATA,before); lastKnownRaw=before;
+    mem._mode('backupfail'); r=await transactionWrite(LS_DATA,'backup-fail-target');
+    assert('backup failure aborts before overwrite',!r.ok&&r.backupFailed===true&&mem.getItem(LS_DATA)===before,r.reason||''); mem._mode('');
+    mem._mode('rollbackfail'); original=before; r=await transactionWrite(LS_DATA,'rollback-fail-target');
+    assert('rollback failure is surfaced',!r.ok&&r.rollbackFailed===true,r.rollback||''); mem._mode(''); mem._map.set(LS_DATA,before); lastKnownRaw=before;
+    const malformed=''; mem._map.set(LS_LEGACY_T,malformed); mem._mode('corruptbackupfail'); const preserveFailure=await preserveRawCorrupt(LS_LEGACY_T,malformed);
+    assert('corrupt preservation failure aborts without changing original',!preserveFailure.ok&&mem.getItem(LS_LEGACY_T)===malformed); mem._mode('');
+    const emptyPreserve=await preserveRawCorrupt(LS_LEGACY_T,malformed);
+    assert('empty malformed legacy raw preserved before recovery',emptyPreserve.ok&&mem.getItem(emptyPreserve.corruptKey)==='');
+    const collisionBefore=mem.getItem(emptyPreserve.corruptKey); r=await transactionWrite(emptyPreserve.corruptKey,'must-not-overwrite',{mustNotExist:true,backup:false});
+    assert('recovery-key collision fails closed',!r.ok&&mem.getItem(emptyPreserve.corruptKey)===collisionBefore);
+    const badJson='{not-json'; const malformedPreserve=await preserveRawCorrupt(LS_LEGACY_N,badJson);
+    let parseFailed=false; try{JSON.parse(mem.getItem(malformedPreserve.corruptKey));}catch(e){parseFailed=true;}
+    assert('malformed legacy JSON preserved before parse failure',malformedPreserve.ok&&mem.getItem(malformedPreserve.corruptKey)===badJson&&parseFailed);
+    mem._mode('readthrow'); r=await transactionWrite(LS_DATA,'read-target');
+    assert('read-before-write exception aborts safely',!r.ok,r.reason||''); mem._mode(''); mem._map.set(LS_DATA,before); lastKnownRaw=before;
+    mem._mode('readbackthrow'); r=await transactionWrite(LS_DATA,'readback-target');
+    assert('transient read-back exception conditionally rolls back',!r.ok&&r.rollback==='verified-restore'&&mem.getItem(LS_DATA)===before,r.rollback||''); mem._mode('');
+    lastKnownRaw='stale-value'; r=await transactionWrite(LS_DATA,'stale-target');
+    assert('stale tab rejected',!r.ok&&r.stale===true,r.reason||'');
+    lastKnownRaw=mem.getItem(LS_DATA);
+    let lockTail=Promise.resolve(); Object.defineProperty(navigator,'locks',{configurable:true,value:{request:async(n,o,fn)=>{const prior=lockTail;let release;lockTail=new Promise(res=>release=res);await prior;try{return await fn();}finally{release();}}}});
+    const firstRaw=mem.getItem(LS_DATA); lastKnownRaw=firstRaw;
+    const firstTab=await transactionWrite(LS_DATA,'tab-one');
+    lastKnownRaw=firstRaw; // second tab retains the snapshot it loaded before tab one's commit
+    const secondTab=await transactionWrite(LS_DATA,'tab-two');
+    assert('competing-tab stale snapshot rejected after serialized commit',firstTab.ok&&!secondTab.ok&&secondTab.stale===true,'first='+firstTab.ok+' second='+secondTab.reason);
+    lastKnownRaw=mem.getItem(LS_DATA);
+    const ordinary=await commitCombined([{id:'t1',text:'ordinary save',completed:false,createdAt:Date.now()}],[],[]);
+    assert('ordinary save commits through complete verified transaction',ordinary.ok&&ordinary.verifyRaw===mem.getItem(LS_DATA)&&lastKnownRaw===ordinary.verifyRaw);
+    const deleted=await transactionDelete(malformedPreserve.corruptKey);
+    assert('destructive delete creates recovery copy before verified removal',deleted.ok&&!!deleted.recoveryKey&&mem.getItem(malformedPreserve.corruptKey)===null&&JSON.parse(mem.getItem(deleted.recoveryKey)).raw==='{not-json');
+    mem._mode('backupfail'); const importAttempt=await atomicSetCombined([],[],[]);
+    assert('import replacement aborts when durable backup fails',!importAttempt.ok&&importAttempt.reason.includes('durable-recovery-backup-failed')); mem._mode('');
+    lastKnownRaw='older-restore-snapshot'; const restoreAttempt=await atomicSetCombined([],[],[]);
+    assert('restore replacement aborts on stale state',!restoreAttempt.ok&&restoreAttempt.reason.includes('stale-state'));
+    const beforeMigration=mem.getItem(LS_DATA); lastKnownRaw=beforeMigration; mem._map.set(LS_LEGACY_T,'[]');
+    const migratedRaw=JSON.stringify({tasks:[],notes:[],logs:[],version:'migration-test'});
+    const migrationWrite=await transactionWrite(LS_DATA,migratedRaw,{deferKnownRaw:true});
+    mem._mode('deletefail'); const failedCleanup=await transactionDelete(LS_LEGACY_T); mem._mode('');
+    const migrationRollback=await conditionalRollback(LS_DATA,migratedRaw,beforeMigration);
+    assert('migration cleanup failure rolls back primary and retains legacy original',migrationWrite.ok&&!failedCleanup.ok&&migrationRollback.ok&&mem.getItem(LS_DATA)===beforeMigration&&mem.getItem(LS_LEGACY_T)==='[]');
+    // Journalled migration tests: complete commit, interrupted recovery, idempotence and conflict refusal.
+    const legacySeed={}; legacySeed[LS_LEGACY_T]='[]'; legacySeed[LS_LEGACY_N]='[]'; legacySeed[LS_LEGACY_L]='[]';
+    const migrationMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:migrationMem});
+    lastKnownRaw=null;
+    const migrationResult=migrateLegacyLocked();
+    assert('journalled migration completes with exact primary and verified legacy cleanup',migrationResult.ok===true&&migrationMem.getItem(LS_DATA)===migrationResult.raw&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>migrationMem.getItem(k)===null)&&migrationMem.getItem(LS_MIGRATION_JOURNAL)===null);
+    assert('journalled migration commits lastKnownRaw only after journal close',lastKnownRaw===migrationMem.getItem(LS_DATA));
+    assert('journal phase updates do not create unreferenced recovery copies',[...migrationMem._map.keys()].filter(k=>k.startsWith('harcom_recovery_')).length===3);
+
+    const interruptedMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:interruptedMem});
+    const interruptedRefs={};
+    for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){
+      const raw=interruptedMem.getItem(k), ref=writeRecoveryRaw(k,raw);
+      interruptedRefs[k]={backupKey:ref,rawLength:raw.length,rawHash:simpleHash(raw)};
+    }
+    const interruptedSavedAt=Date.now();
+    const interruptedExpected=JSON.stringify({tasks:[],notes:[],logs:[],version:'v0.3.11-migrated',savedAt:interruptedSavedAt});
+    const interruptedJournal={kind:'harcom-migration-journal-v1',version:1,id:'simulated-crash',createdAt:new Date().toISOString(),phase:'legacy-delete-pending',snapshots:interruptedRefs,expected:{version:'v0.3.11-migrated',savedAt:interruptedSavedAt,rawLength:interruptedExpected.length,rawHash:simpleHash(interruptedExpected)},deletingKey:LS_LEGACY_N};
+    updateMigrationJournalLocked(interruptedJournal,true);
+    interruptedMem.setItem(LS_DATA,interruptedExpected);
+    interruptedMem.removeItem(LS_LEGACY_T); // process stopped after one legacy deletion
+    const interruptedRecovery=recoverMigrationJournalLocked();
+    assert('restart recovery restores missing original and conditionally removes its primary',interruptedRecovery.rolledBack===true&&interruptedMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>interruptedMem.getItem(k)==='[]'));
+    const repeatedRecovery=recoverMigrationJournalLocked();
+    assert('migration recovery is idempotent when repeated',repeatedRecovery.ok===true&&repeatedRecovery.found===false);
+
+    const conflictMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:conflictMem});
+    const conflictRefs={};
+    for(const k of [LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L]){const raw=conflictMem.getItem(k),ref=writeRecoveryRaw(k,raw);conflictRefs[k]={backupKey:ref,rawLength:raw.length,rawHash:simpleHash(raw)};}
+    const conflictSavedAt=Date.now(), conflictExpected=JSON.stringify({tasks:[],notes:[],logs:[],version:'v0.3.11-migrated',savedAt:conflictSavedAt});
+    updateMigrationJournalLocked({kind:'harcom-migration-journal-v1',version:1,id:'conflict',createdAt:new Date().toISOString(),phase:'primary-write-pending',snapshots:conflictRefs,expected:{version:'v0.3.11-migrated',savedAt:conflictSavedAt,rawLength:conflictExpected.length,rawHash:simpleHash(conflictExpected)},deletingKey:null},true);
+    conflictMem.setItem(LS_DATA,'unexpected-intervening-value');
+    let conflictStopped=false;try{recoverMigrationJournalLocked();}catch(e){conflictStopped=true;}
+    assert('recovery refuses to overwrite unexpected primary and retains journal',conflictStopped&&conflictMem.getItem(LS_DATA)==='unexpected-intervening-value'&&conflictMem.getItem(LS_MIGRATION_JOURNAL)!==null);
+
+    const cleanupFailMem=fakeStorage(legacySeed);
+    Object.defineProperty(window,'localStorage',{configurable:true,value:cleanupFailMem});
+    cleanupFailMem._mode('deletefail');
+    let cleanupFailed=false;try{migrateLegacyLocked();}catch(e){cleanupFailed=true;}
+    cleanupFailMem._mode('');
+    assert('injected migration cleanup failure rolls back primary and retains all legacy originals',cleanupFailed&&cleanupFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>cleanupFailMem.getItem(k)==='[]')&&cleanupFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+    cleanupFailMem._mode('');
+    const cleanupRetry=migrateLegacyLocked();
+    assert('migration can be retried successfully after verified rollback',cleanupRetry.ok===true&&cleanupFailMem.getItem(LS_DATA)===cleanupRetry.raw&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>cleanupFailMem.getItem(k)===null));
+
+    const backupFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:backupFailMem});
+    backupFailMem._mode('migrationbackupfail'); let migrationBackupFailed=false; try{migrateLegacyLocked();}catch(e){migrationBackupFailed=true;}
+    assert('migration recovery-copy failure aborts before primary write or legacy deletion',migrationBackupFailed&&backupFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>backupFailMem.getItem(k)==='[]')&&backupFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const journalCreateFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:journalCreateFailMem});
+    journalCreateFailMem._mode('journalcreatefail'); let journalCreateFailed=false; try{migrateLegacyLocked();}catch(e){journalCreateFailed=true;}
+    assert('journal creation failure leaves all legacy originals untouched',journalCreateFailed&&journalCreateFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>journalCreateFailMem.getItem(k)==='[]')&&journalCreateFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const journalUpdateFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:journalUpdateFailMem});
+    journalUpdateFailMem._mode('journalupdatefail'); let journalUpdateFailed=false; try{migrateLegacyLocked();}catch(e){journalUpdateFailed=true;}
+    journalUpdateFailMem._mode('');
+    assert('journal phase-update failure recovers using the last verified journal',journalUpdateFailed&&journalUpdateFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>journalUpdateFailMem.getItem(k)==='[]')&&journalUpdateFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const primaryFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:primaryFailMem});
+    primaryFailMem._mode('primaryquota'); let migrationPrimaryFailed=false; try{migrateLegacyLocked();}catch(e){migrationPrimaryFailed=true;}
+    primaryFailMem._mode('');
+    assert('primary write quota failure restores clean legacy state',migrationPrimaryFailed&&primaryFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>primaryFailMem.getItem(k)==='[]')&&primaryFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    const secondDeleteFailMem=fakeStorage(legacySeed); Object.defineProperty(window,'localStorage',{configurable:true,value:secondDeleteFailMem});
+    secondDeleteFailMem._mode('deletefail2'); let secondDeleteFailed=false; try{migrateLegacyLocked();}catch(e){secondDeleteFailed=true;}
+    secondDeleteFailMem._mode('');
+    assert('failure on second legacy deletion restores the first deleted key',secondDeleteFailed&&secondDeleteFailMem.getItem(LS_DATA)===null&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>secondDeleteFailMem.getItem(k)==='[]')&&secondDeleteFailMem.getItem(LS_MIGRATION_JOURNAL)===null);
+
+    // After a simulated process interruption has been recovered, migration must be safely retryable.
+    Object.defineProperty(window,'localStorage',{configurable:true,value:interruptedMem});
+    const interruptedRetry=migrateLegacyLocked();
+    assert('interrupted migration recovery can be followed by a successful retry',interruptedRetry.ok===true&&interruptedMem.getItem(LS_DATA)===interruptedRetry.raw&&[LS_LEGACY_T,LS_LEGACY_N,LS_LEGACY_L].every(k=>interruptedMem.getItem(k)===null));
+
+    Object.defineProperty(navigator,'locks',{configurable:true,value:null}); r=await transactionWrite(LS_DATA,'no-lock-target');
+    assert('missing Web Locks fails closed for writes',!r.ok&&r.reason.includes('web-locks-unavailable'),r.reason||'');
+    const noLockDelete=await transactionDelete(LS_LEGACY_T);
+    assert('missing Web Locks fails closed for destructive deletes',!noLockDelete.ok&&noLockDelete.reason.includes('web-locks-unavailable')); 
+  }catch(e){assert('harness execution',false,e.message);}
+  finally{try{Object.defineProperty(window,'localStorage',{configurable:true,value:originalStorage});}catch(e){};try{Object.defineProperty(navigator,'locks',{configurable:true,value:originalLocks});}catch(e){};lastKnownRaw=originalKnownRaw;}
+  return results;
+}
+
+document.getElementById('runTxTests').onclick=async()=>{
+  const out=await runTransactionFailureTests();
+  const passed=out.filter(x=>x.pass).length, failed=out.length-passed;
+  const el=document.getElementById('lastTest');
+  el.textContent='SIMULATED transaction tests: '+passed+'/'+out.length+' passed; '+failed+' failed. '+out.map(x=>(x.pass?'PASS ':'FAIL ')+x.name+(x.detail?' ['+x.detail+']':'')).join(' | ');
+};
+
+(async function init(){
+  await loadAll(); renderTasks(); renderNotes(); renderLogs(); updateCounts(); checkPersistenceOnLoad();
+  window.addEventListener('online',updateCounts); window.addEventListener('offline',updateCounts);
+})();
+</script>
+</body>
+</html>
