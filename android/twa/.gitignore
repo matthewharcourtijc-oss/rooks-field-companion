@@ -1,0 +1,15 @@
+# Never commit private Android signing material.
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.pem
+
+# Local/generated Android build output.
+.gradle/
+build/
+app/build/
+
+# Generated verification candidates/reports stay in CI artifacts until reviewed.
+assetlinks.json
+signing-certificate.txt
