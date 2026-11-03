@@ -31,3 +31,11 @@ Do not merge or deploy until the remaining checks pass and Viking approves relea
 - Until the approved Harcom logo artwork is supplied, the header shows a simple `H` fallback; no substitute logo has been invented.
 - Add the supplied transparent PNG at `assets/harcom-logo.png`. The existing fallback will disappear automatically when the image loads.
 - A pre-logo candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Visual-Polish-pre-logo-BACKUP.html`.
+
+## Navigation and accessibility pass
+
+- Navigation controls are now native buttons rather than clickable generic divs, improving keyboard access and mobile interaction semantics.
+- Each navigation control exposes `aria-pressed`, updated with the active panel.
+- Touch targets are at least 44px high and visible keyboard-focus rings use the Harcom hazard-orange accent.
+- A pre-accessibility-pass candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Harcom-visual-before-accessibility-pass.html`.
+- The transaction/storage core from `const TX_LOCK` onward is byte-for-byte unchanged in this pass. Final Android interaction testing is still required.
