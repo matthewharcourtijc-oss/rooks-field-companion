@@ -1,7 +1,7 @@
 {
-  "name": "Rook's Field Companion — Visual Field Edition",
+  "name": "HARCOM Industries — Rook's Field Companion",
   "short_name": "Rook Field",
-  "description": "Offline-first field companion with a refined visual interface, illustrated UK survival manual, tasks, notes and mission log.",
+  "description": "A practical UK field companion with an illustrated survival manual, personal notes and tools that work offline.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -7,12 +7,16 @@ const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
-assert.ok(html.includes("Rook's Field Companion — v0.9.2 Visual Field Edition"), "app title/version mismatch");
-assert.ok(readme.includes("v0.9.2 — Visual Field Edition"), "README release version is stale");
+assert.ok(html.includes("Rook's Field Companion | HARCOM Industries"), "app title/brand mismatch");
+assert.ok(readme.includes("v0.9.3 — HARCOM Field Edition"), "README release version is stale");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
-assert.ok(manifest.name.includes("Field Edition"), "manifest app name is stale");
-assert.ok(html.includes("SURVIVAL MANUAL v0.9.2"), "manual version mismatch");
-assert.ok(html.includes("V0.9.2 • VISUAL FIELD EDITION"), "visible release label mismatch");
+assert.ok(manifest.name.includes("HARCOM Industries"), "manifest brand name is stale");
+assert.ok(html.includes("FIELD MANUAL"), "manual brand footer missing");
+assert.ok(html.includes("FIELD KNOWLEDGE • PRACTICAL TOOLS • OFFLINE READY"), "consumer-facing product descriptor missing");
+assert.ok(html.includes("HARCOM INDUSTRIES"), "prominent consumer brand missing");
+assert.ok(html.includes("FIELD READY"), "consumer-facing field-ready label missing");
+assert.ok(!html.includes("single atomic key harcom_data"), "developer storage diagnostics leaked into consumer counts");
+assert.ok(!html.includes("Backup manually verified:"), "developer-style backup status leaked into consumer UI");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
 assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
@@ -63,7 +67,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.9\.2/);
+assert.match(worker, /harcom-field-companion-v0\.9\.3/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
@@ -130,4 +134,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("Rook's Field Companion v0.9.1 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("Rook's Field Companion v0.9.3 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
