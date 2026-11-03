@@ -7,7 +7,7 @@ const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
-assert.ok(html.includes("Rook's Field Companion — v0.9.0 Field Edition"), "app title/version mismatch");
+assert.ok(html.includes("Rook's Field Companion — v0.9.0 Connected Field Edition"), "app title/version mismatch");
 assert.ok(readme.includes("v0.9.0 — Field Edition"), "README release version is stale");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
 assert.ok(manifest.name.includes("Field Edition"), "manifest app name is stale");
