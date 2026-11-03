@@ -2,7 +2,7 @@
 
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
-## v0.9.0 — Connected Field Edition: linked skills and visual field guides
+## v0.9.1 — Connected Field Edition: every topic linked
 
 One offline-first Android field tool combining Tasks, Notes, Mission Log, local backups and an expanded UK countryside / woodland field manual.
 
@@ -17,7 +17,7 @@ One offline-first Android field tool combining Tasks, Notes, Mission Log, local 
 - Signalling, visibility, rendezvous planning and missing-person search discipline.
 - Added responsive inline SVG diagrams. All manual text and diagrams are embedded in `index.html`; no remote image or font dependency is required.
 - Added a fully offline manual search with instant matching results, useful text previews, direct section jumps and one-tap clear.
-- Added contextual links between related topics, connecting procedures, equipment and next actions.
+- Added contextual links across every manual topic, connecting procedures, equipment and next actions.
 - Added illustrated gravity pre-filter construction, treatment limits and commercial tourniquet placement guidance.
 - Added a four-stage field response loop: prepare, respond, stabilise and reassess.
 
