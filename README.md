@@ -2,7 +2,7 @@
 
 **Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
-## v0.6.0 — Expanded offline field manual
+## v0.6.1 — Validation and offline release hardening
 
 One offline-first Android field tool combining Tasks, Notes, Mission Log, local backups and an expanded UK countryside / woodland field manual.
 
