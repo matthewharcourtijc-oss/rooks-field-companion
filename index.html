@@ -1050,8 +1050,8 @@ async function loadAll(){
   const corruptEl=document.getElementById('corruptWarn');
   const storageWarnEl=document.getElementById('storageWarn');
   if(!storageAvailable.ok){
-    if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='Storage unavailable: '+storageAvailable.error+' — running in-memory only. Data will NOT survive close or reopen. Use GitHub Pages origin for stable Android storage.';}
-    const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='Storage blocked';
+    if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='Saving is unavailable in this browser. Changes may not be kept when you close the app. Reopen the installed Field Companion and try again.';}
+    const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='Saving unavailable';
     tasks=[]; notes=[]; logs=[]; return;
   }
   try{
@@ -1072,7 +1072,7 @@ async function loadAll(){
         if(localStorage.getItem(LS_DATA)!==raw) throw new Error('Saved data changed during load; reload before editing.');
         lastKnownRaw=raw;
         tasks=parsed.tasks||[]; notes=parsed.notes||[]; logs=parsed.logs||[];
-        const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='localStorage available — atomic single-key persistent — validated';
+        const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='Your information is saved on this device';
         clearCorruptionState();
         return;
       }catch(e){
@@ -1080,10 +1080,10 @@ async function loadAll(){
         const preserve=await preserveRawCorrupt(LS_DATA, raw);
         if(corruptEl){
           corruptEl.style.display='block';
-          let msg='Corrupt saved data detected in '+LS_DATA+': '+e.message+'. ';
-          if(preserve.ok) msg+='Raw preserved as '+(preserve.corruptKey||'unknown')+'. ';
-          else msg+='Raw preservation FAILED: '+(preserve.reason||'unknown')+' — original raw still present, not deleted. ';
-          msg+='Running empty to avoid overwriting recoverable info until restore. Do NOT add tasks yet — restore first. Byte size '+getByteSize({raw:raw})+' bytes.';
+          let msg='Your saved information could not be read safely. It has been kept intact. ';
+          if(preserve.ok) msg+='A protected copy has been retained. ';
+          else msg+='The original information has not been deleted. ';
+          msg+='Editing is paused to prevent accidental loss. Restore from a safety copy before continuing.';
           corruptEl.textContent=msg;
         }
         tasks=[]; notes=[]; logs=[];
@@ -1091,7 +1091,7 @@ async function loadAll(){
       }
     }
     tasks=[]; notes=[]; logs=[];
-    const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='localStorage available — persistent (no existing data) — validated';
+    const stEl=document.getElementById('storageText'); if(stEl) stEl.textContent='Ready to save on this device';
     clearCorruptionState();
   }catch(e){
     if(storageWarnEl){storageWarnEl.style.display='block'; storageWarnEl.textContent='We could not safely load your saved information. Your existing data has been protected. Do not add new records until the issue is resolved.';}
@@ -1163,7 +1163,7 @@ function renderNotes(){
     }
     const metaEls=div.getElementsByClassName('meta'); if(metaEls.length>0) metaEls[0].textContent=new Date(n.createdAt).toLocaleString();
     const btns=div.getElementsByTagName('button'); const delBtn=btns.length>0?btns[0]:null;
-    if(delBtn){ delBtn.onclick=async()=>{ const newNotes=notes.filter(x=>x.id!==n.id); const r=await commitCombined(tasks,newNotes,logs); if(!r.ok){alert('Delete failed ('+r.reason+') — not deleted.'); return;} notes=newNotes; renderNotes(); updateCounts(); }; }
+    if(delBtn){ delBtn.onclick=async()=>{ const newNotes=notes.filter(x=>x.id!==n.id); const r=await commitCombined(tasks,newNotes,logs); if(!r.ok){alert('This item could not be deleted. Your saved information has not been changed.'); return;} notes=newNotes; renderNotes(); updateCounts(); }; }
     el.appendChild(div);
   }
 }
@@ -1182,22 +1182,22 @@ function renderLogs(){
 }
 
 document.getElementById('addTask').onclick=async()=>{
-  if(corruptDetected){alert('Corrupt data detected — restore from safety backup before adding new tasks to avoid overwriting recoverable info preserved in corrupt key.'); return;}
+  if(corruptDetected){alert('Your saved information needs attention. Editing is paused to protect it. Restore from a safety copy before continuing.'); return;}
   const inputEl=document.getElementById('taskInput'); const v=inputEl.value.trim(); if(!v) return;
   const rec={id:uid(),text:v,completed:false,createdAt:Date.now()};
   const nextTasks=[...tasks,rec];
   const r=await commitCombined(nextTasks,notes,logs);
-  if(!r.ok){alert('Storage failed ('+r.reason+'): task not saved. Export now.'); return;}
+  if(!r.ok){alert('Your task could not be saved. Your existing information has been kept. Export a backup and try again.'); return;}
   tasks=nextTasks; inputEl.value=''; renderTasks(); updateCounts();
 };
 document.getElementById('taskInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('addTask').click()});
 document.getElementById('addNote').onclick=async()=>{
-  if(corruptDetected){alert('Corrupt data — restore first to protect recoverable info.'); return;}
+  if(corruptDetected){alert('Your saved information needs attention. Restore from a safety copy before continuing.'); return;}
   const t=document.getElementById('noteTitle'), b=document.getElementById('noteText'); if(!b.value.trim()) return;
   const rec={id:uid(),title:t.value.trim(),text:b.value.trim(),createdAt:Date.now()};
   const nextNotes=[...notes,rec];
   const r=await commitCombined(tasks,nextNotes,logs);
-  if(!r.ok){alert('Storage failed ('+r.reason+')'); return;}
+  if(!r.ok){alert('Your information could not be saved. Your existing information has been kept. Try again.'); return;}
   notes=nextNotes; t.value=''; b.value=''; renderNotes(); updateCounts();
 };
 document.getElementById('clearNote').onclick=()=>{document.getElementById('noteTitle').value=''; document.getElementById('noteText').value='';};
@@ -1276,7 +1276,7 @@ document.getElementById('copyJsonBtn').onclick=async()=>{
   try{
     const text=JSON.stringify(getExport(),null,2);
     await navigator.clipboard.writeText(text);
-    const es=document.getElementById('exportStatus'); if(es) es.textContent='Copied to clipboard — size '+getByteSize(getExport())+' bytes via TextEncoder — paste into file, manually verify contents, then confirm backup verified. App cannot verify clipboard content.';
+    const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup copied. Paste it into a file and keep it somewhere safe; the app cannot check clipboard contents.';
   }catch(e){prompt('Copy this JSON — manually save and verify:', JSON.stringify(getExport(),null,2));}
 };
 document.getElementById('confirmBackupBtn').onclick=async()=>{
@@ -1284,7 +1284,7 @@ document.getElementById('confirmBackupBtn').onclick=async()=>{
     const r=await safeSet(LS_B,Date.now());
     if(!r.ok){alert('Failed to mark backup verified: '+r.reason); return;}
     updateCounts();
-    const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup marked as manually verified at '+new Date().toLocaleString()+' — you confirmed you opened and checked file — byte size '+getExportByteSize()+' bytes.';
+    const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup confirmed at '+new Date().toLocaleString()+'. Keep the exported copy somewhere safe.';
   }catch(e){alert('Failed to mark backup: '+e.message);}
 };
 document.getElementById('validateBtn').onclick=()=>{
@@ -1293,7 +1293,7 @@ document.getElementById('validateBtn').onclick=()=>{
     const j=JSON.parse(txt);
     validateImport(j);
     const byteSize=getByteSize(j);
-    st.textContent=`Valid: ${j.tasks.length} tasks, ${j.notes.length} notes, ${j.logs.length} logs, version ${j.version||'unknown'} — size ${byteSize} bytes measured via TextEncoder within 2MB limit`;
+    st.textContent=`Backup looks good: ${j.tasks.length} tasks, ${j.notes.length} notes and ${j.logs.length} logs.`;
     st.style.color='green';
   }
   catch(e){st.textContent='Invalid: '+e.message; st.style.color='var(--alert)';}
@@ -1303,10 +1303,10 @@ document.getElementById('importBtn').onclick=async()=>{
   try{
     const j=JSON.parse(txt); validateImport(j);
     const byteSize=getByteSize(j);
-    if(!confirm(`Import ${j.tasks.length} tasks, ${j.notes.length} notes, ${j.logs.length} logs? Size ${byteSize} bytes via TextEncoder. This will REPLACE current data. A safety backup of current data will be created first — but ONLY if that backup succeeds will import proceed. Confirm?`)) return;
+    if(!confirm(`Import ${j.tasks.length} tasks, ${j.notes.length} notes and ${j.logs.length} logs? This replaces your current information. A safety copy will be made first. Continue?`)) return;
     const keyResult=generateUniqueSafetyKey();
     if(!keyResult.ok){
-      st.textContent='Safety backup key generation FAILED ('+keyResult.reason+') — import ABORTED to avoid overwrite. No backup claimed as created.';
+      st.textContent='A safety copy could not be created, so the import was cancelled. Your current information has not been changed.';
       st.style.color='var(--alert)';
       return;
     }
@@ -1315,44 +1315,44 @@ document.getElementById('importBtn').onclick=async()=>{
       const backupData={tasks:tasks,notes:notes,logs:logs,at:new Date().toISOString()};
       const backupResult=await safeSet(safetyKey,backupData,{mustNotExist:true,backup:false});
       if(!backupResult.ok){
-        st.textContent='Safety backup FAILED ('+backupResult.reason+') — import ABORTED to protect current data. Free space or export manually first. No backup claimed as created.';
+        st.textContent='The safety copy could not be saved, so the import was cancelled. Your current information is unchanged. Export a separate copy and try again.';
         st.style.color='var(--alert)';
         return;
       }
     }catch(e){
-      st.textContent='Safety backup FAILED: '+e.message+' — import ABORTED. No backup claimed.';
+      st.textContent='The safety copy could not be saved, so the import was cancelled. Your current information is unchanged.';
       st.style.color='var(--alert)';
       return;
     }
     const result=await atomicSetCombined(j.tasks,j.notes,j.logs);
     if(!result.ok){
-      st.textContent='Import failed during write/read-back ('+result.reason+') — previous data preserved unchanged per atomic single-key. Safety backup retained as '+safetyKey;
+      st.textContent='Import could not be completed. Your previous information has been kept, and a safety copy is available below.';
       st.style.color='var(--alert)';
       return;
     }
     tasks=j.tasks; notes=j.notes; logs=j.logs;
     clearCorruptionState();
     renderTasks(); renderNotes(); renderLogs(); updateCounts();
-    st.textContent='Imported successfully — byte size '+byteSize+' bytes — safety backup saved as '+safetyKey+' (verified write + read-back success) — corruption state cleared.';
+    st.textContent='Import complete. Your previous information is available as a safety copy below.';
     st.style.color='green';
     document.getElementById('importArea').value='';
     renderSafetyList();
-  }catch(e){st.textContent='Import failed: '+e.message; st.style.color='var(--alert)';}
+  }catch(e){st.textContent='Import could not be completed. Check the backup file and try again.'; st.style.color='var(--alert)';}
 };
 
 function renderSafetyList(){
   const el=document.getElementById('safetyList'); if(!el) return;
   el.textContent='';
   let safes=[];
-  try{ for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith(LS_SAFETY_PREFIX)) safes.push(k);} }catch(e){ el.textContent='Failed to list safety backups: '+e.message; return; }
+  try{ for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.startsWith(LS_SAFETY_PREFIX)) safes.push(k);} }catch(e){ el.textContent='Safety copies could not be displayed right now.'; return; }
   safes.sort().reverse();
-  if(safes.length===0){ el.textContent='No safety backups yet — they are created automatically AFTER you confirm import or restore and only if backup write succeeds. Keys checked for uniqueness, abort if cannot establish unused key.'; return; }
+  if(safes.length===0){ el.textContent='No safety copies yet. The app creates one automatically before replacing your information during an import or restore.'; return; }
   for(let s=0;s<safes.length;s++){
     const key=safes[s];
-    let info=''; try{const d=JSON.parse(localStorage.getItem(key)); info=`${d.tasks?.length||0} tasks, ${d.notes?.length||0} notes, ${d.logs?.length||0} logs — ${new Date(d.at).toLocaleString()}`;}catch{info='unreadable';}
+    let info=''; try{const d=JSON.parse(localStorage.getItem(key)); info=`${d.tasks?.length||0} tasks, ${d.notes?.length||0} notes, ${d.logs?.length||0} logs — ${new Date(d.at).toLocaleString()}`;}catch{info='This copy could not be read';}
     const div=document.createElement('div'); div.className='safety-item';
     const flexDiv=document.createElement('div'); flexDiv.style.flex='1';
-    const keyDiv=document.createElement('div'); keyDiv.className='txt'; keyDiv.style.fontSize='11px'; keyDiv.textContent=key;
+    const keyDiv=document.createElement('div'); keyDiv.className='txt'; keyDiv.style.fontSize='11px'; keyDiv.textContent='Automatic safety copy';
     const metaDiv=document.createElement('div'); metaDiv.className='meta'; metaDiv.textContent=info;
     flexDiv.appendChild(keyDiv); flexDiv.appendChild(metaDiv);
     const restoreBtn=document.createElement('button'); restoreBtn.className='secondary'; restoreBtn.textContent='Restore';
@@ -1364,26 +1364,26 @@ function renderSafetyList(){
         const data=JSON.parse(raw);
         if(!data.tasks) throw new Error('Invalid safety backup');
         validateImport(data);
-        if(!confirm(`Restore safety backup ${key}? This will replace current data. A new safety backup of current data will be created first — only if that succeeds will restore proceed.`)) return;
+        if(!confirm(`Restore this safety copy? It will replace your current information. A new safety copy will be made first. Continue?`)) return;
         const keyResult=generateUniqueSafetyKey();
-        if(!keyResult.ok){alert('Safety backup key generation FAILED ('+keyResult.reason+') — restore ABORTED.'); return;}
+        if(!keyResult.ok){alert('A safety copy could not be created, so the restore was cancelled. Your current information is unchanged.'); return;}
         const newSafetyKey=keyResult.key;
         try{
           const backupResult=await safeSet(newSafetyKey,{tasks:tasks,notes:notes,logs:logs,at:new Date().toISOString()},{mustNotExist:true,backup:false});
-          if(!backupResult.ok){alert('Safety backup of current data FAILED ('+backupResult.reason+') — restore ABORTED to protect data.'); return;}
-        }catch(e){alert('Safety backup failed: '+e.message+' — restore aborted.'); return;}
+          if(!backupResult.ok){alert('The safety copy could not be saved, so the restore was cancelled. Your current information is unchanged.'); return;}
+        }catch(e){alert('The safety copy could not be saved, so the restore was cancelled. Your current information is unchanged.'); return;}
         const result=await atomicSetCombined(data.tasks,data.notes,data.logs);
-        if(!result.ok){alert('Restore failed ('+result.reason+') — previous data preserved unchanged.'); return;}
+        if(!result.ok){alert('Restore could not be completed. Your previous information has been kept.'); return;}
         tasks=data.tasks; notes=data.notes; logs=data.logs;
         clearCorruptionState();
         renderTasks(); renderNotes(); renderLogs(); updateCounts();
-        alert('Restored from '+key+' — new safety backup '+newSafetyKey+' created — corruption cleared if present.');
-      }catch(e){alert('Restore failed: '+e.message);}
+        alert('Restore complete. A safety copy of your previous information has been kept.');
+      }catch(e){alert('Restore could not be completed. Check the safety copy and try again.');}
     };
     deleteBtn.onclick=async()=>{
-      if(confirm('Delete safety backup '+key+'?')){
+      if(confirm('Delete this safety copy? This cannot be undone.')){
         const deleted=await transactionDelete(key);
-        if(!deleted.ok){alert('Delete failed: '+deleted.reason); return;}
+        if(!deleted.ok){alert('This safety copy could not be deleted. Your information has not been changed.'); return;}
         renderSafetyList(); updateCounts();
       }
     };
@@ -1466,12 +1466,12 @@ document.getElementById('wipeBtn').onclick=async()=>{
   },true);
   let failed=wipeResult.ok?[]:(wipeResult.failed||[wipeResult.reason||'wipe transaction failed']);
   if(failed.length>0){
-    alert('Clear ALL attempted but some keys FAILED to delete: '+failed.join(', ')+'. Not all data cleared — try again, free space, or clear via browser settings. In-memory data NOT cleared to protect you.');
+    alert('Some information could not be cleared. Your remaining information has been kept safe. Try again after freeing space, or use your browser settings.');
     const lt=document.getElementById('lastTest'); if(lt) lt.textContent='Clear ALL partially failed: '+failed.join(', ');
     return;
   }
   tasks=[]; notes=[]; logs=[]; clearCorruptionState(); renderTasks(); renderNotes(); renderLogs(); updateCounts();
-  const lt=document.getElementById('lastTest'); if(lt) lt.textContent='All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.';
+  const lt=document.getElementById('lastTest'); if(lt) lt.textContent='All saved information has been cleared. A safety copy was retained.';
   alert('All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.');
 };
 
