@@ -8,7 +8,7 @@ const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
-assert.ok(readme.includes("v0.9.4 — HARCOM Industrial Identity"), "README release version is stale");
+assert.ok(readme.includes("v0.9.5 — HARCOM Industrial Identity"), "README release version is stale");
 assert.ok(html.includes('id="harcom-identity-v094"'), "HARCOM visual identity layer missing");
 assert.ok(html.includes("<h1>FIELD COMPANION</h1>"), "clean product title missing");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
@@ -16,6 +16,13 @@ assert.ok(manifest.name.includes("HARCOM Industries"), "manifest brand name is s
 assert.ok(html.includes("FIELD MANUAL"), "manual brand footer missing");
 assert.ok(html.includes("INDEPENDENCE THROUGH KNOWLEDGE • OFFLINE READY"), "consumer-facing product descriptor missing");
 assert.ok(html.includes("HARCOM INDUSTRIES"), "prominent consumer brand missing");
+assert.ok(html.includes('data-owner="HARCOM Industries"'), "machine-readable owner identity missing");
+assert.ok(html.includes('name="author" content="HARCOM Industries"'), "author metadata missing");
+assert.ok(html.includes("© 2026 HARCOM INDUSTRIES. ALL RIGHTS RESERVED."), "visible ownership notice missing");
+assert.ok(html.includes('id="harcom-ownership-v095"'), "ownership styling missing");
+assert.ok(manifest.name.includes("HARCOM Industries"), "install identity missing");
+assert.equal(manifest.short_name, "HARCOM Field");
+assert.ok(readme.includes("Ownership and permissions"), "README ownership section missing");
 assert.ok(html.includes("FIELD READY"), "consumer-facing field-ready label missing");
 assert.ok(!html.includes("single atomic key harcom_data"), "developer storage diagnostics leaked into consumer counts");
 assert.ok(!html.includes("Backup manually verified:"), "developer-style backup status leaked into consumer UI");
@@ -69,7 +76,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.9\.4/);
+assert.match(worker, /harcom-field-companion-v0\.9\.5/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
@@ -136,4 +143,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("HARCOM Field Companion v0.9.4 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("HARCOM Field Companion v0.9.5 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
