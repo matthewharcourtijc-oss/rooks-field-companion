@@ -122,7 +122,7 @@ jobs:
           keytool -list -v -keystore field-companion-release.keystore -storepass "$COMPANION_KEYSTORE_PASSWORD" -alias harcom-field-companion > signing-certificate.txt
           FINGERPRINT="$(keytool -list -v -keystore field-companion-release.keystore -storepass "$COMPANION_KEYSTORE_PASSWORD" -alias harcom-field-companion | awk -F': ' '/SHA256:/{print $2; exit}')"
           test -n "$FINGERPRINT"
-          node -e 'const fs=require("fs"); const fp=process.argv[1]; const data=[{relation:["delegate_permission/common.handle_all_urls"],target:{namespace:"android_app",package_name:"com.harcomindustries.fieldcompanion",sha256_cert_fingerprints:[fp]}}]; fs.writeFileSync("assetlinks.json", JSON.stringify(data,null,2)+"\\n");' "$FINGERPRINT"
+          node -e 'const fs=require("fs"); const fp=process.argv[1]; const data=[{relation:["delegate_permission/common.handle_all_urls"],target:{namespace:"android_app",package_name:"com.harcomindustries.fieldcompanion",sha256_cert_fingerprints:[fp]}}]; fs.writeFileSync("assetlinks.json", JSON.stringify(data,null,2));' "$FINGERPRINT"
 
       - name: Upload signed release and verification materials
         uses: actions/upload-artifact@v4
