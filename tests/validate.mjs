@@ -87,7 +87,7 @@ assert.ok(icon.includes("viewBox=\"0 0 512 512\"") && icon.includes("#f08a36") &
 assert.ok(html.includes('<link rel="icon" type="image/svg+xml" href="./icon.svg">'), "browser favicon missing");
 assert.ok(manifest.icons.some(item => item.src === "./icon.svg" && item.type === "image/svg+xml"), "installed app icon missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.9\.6/);
+assert.match(worker, /harcom-field-companion-v0\.9\.7/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
