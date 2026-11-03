@@ -60,6 +60,9 @@ jobs:
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
           cat "$HOME/.bubblewrap/config.json"
 
+      - name: Validate live PWA against TWA quality criteria
+        run: bubblewrap validate --url=https://matthewharcourtijc-oss.github.io/rooks-field-companion/
+
       - name: Generate Android project from reviewed manifest
         run: bubblewrap update --skipVersionUpgrade --directory android/twa --manifest android/twa/twa-manifest.json
 
