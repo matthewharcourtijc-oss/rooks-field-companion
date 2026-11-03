@@ -2,7 +2,7 @@
 
 A mobile-first, offline-first field companion for Android and modern browsers.
 
-**Live app:** https://matthewharcourtjc-oss.github.io/rooks-field-companion/
+**Live app:** https://matthewharcourtijc-oss.github.io/rooks-field-companion/
 
 ## v0.3.11 — live release
 
