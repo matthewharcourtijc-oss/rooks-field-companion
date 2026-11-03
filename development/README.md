@@ -24,3 +24,10 @@ This branch contains a development-only visual polish candidate and preserved so
 - Isolated transaction failure tests, independent review, final Samsung regression and explicit release approval remain outstanding.
 
 Do not merge or deploy until the remaining checks pass and Viking approves release.
+
+## Harcom logo integration
+
+- The candidate now has a dedicated logo slot at `../assets/harcom-logo.png` (repository path: `assets/harcom-logo.png`).
+- Until the approved Harcom logo artwork is supplied, the header shows a simple `H` fallback; no substitute logo has been invented.
+- Add the supplied transparent PNG at `assets/harcom-logo.png`. The existing fallback will disappear automatically when the image loads.
+- A pre-logo candidate snapshot is preserved at `backups/Rooks_Field_Companion_v0.3.11-Visual-Polish-pre-logo-BACKUP.html`.
