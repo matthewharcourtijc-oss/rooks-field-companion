@@ -1,9 +1,11 @@
 
-## HARCOM Industries logo branch
+## v0.9.10 — Android install compatibility
 
-- The official HARCOM Industries Viking-head SVG is included as `assets/harcom-logo.svg` and precached by the offline app shell.
-- The service-worker cache version is `v0.9.10`; the published product release metadata remains v0.9.9 until a separately approved release.
-- This branding change is isolated in a pull request and is not live until validation and deployment complete.
+- Added 192×192 and 512×512 HARCOM Viking-head PNG icons to the web app manifest, retaining the scalable SVG icon.
+- Added both raster icons to the service-worker app-shell precache so install assets are available offline.
+- Bumped the cache revision to `v0.9.10` so existing installations refresh the updated app shell and icon assets.
+- Extended validation to check PNG signatures, dimensions, manifest declarations and offline precache entries.
+- The consumer-facing product release label remains v0.9.9; this is an install-asset/cache compatibility revision.
 
 # Rook's Field Companion — HARCOM Field Edition
 
