@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rook's Field Companion — v0.7.0 Clean Field Edition</title>
+<title>Rook's Field Companion — v0.8.0 Field Edition</title>
 <meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
@@ -150,10 +150,35 @@ a:hover{color:#fff}
 #guide .manual-content figure svg{max-height:260px}
 @media(max-width:560px){#guide .manual-content{font-size:14px}}
 </style>
+<style>
+/* v0.8.0 — visual identity and field-manual search results */
+:root{--orange:#f08a36;--ice:#bcecff}
+.mission-hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(220px,.75fr);align-items:center;gap:8px 20px;min-height:260px;padding:clamp(20px,4vw,38px);background:linear-gradient(118deg,#1d2d38 0%,#182630 55%,#233945 100%);border-color:#617b89;box-shadow:0 18px 42px #0006,inset 0 1px #ffffff12}
+.mission-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 58%,#bcecff08 100%),repeating-linear-gradient(135deg,transparent 0 19px,#ffffff05 20px,transparent 21px 40px);pointer-events:none}
+.hero-copy,.hero-art,.hero-foot{position:relative;z-index:1}
+.hero-kicker{letter-spacing:.2em;font-size:9px}.hero-kicker-line{width:28px;height:1px;background:#f08a36;display:inline-block}
+.mission-hero h2{font-size:clamp(27px,5vw,48px);letter-spacing:-.055em;line-height:.98;margin:17px 0 13px;font-weight:850}.mission-hero h2 em{font-style:normal;color:#bcecff}
+.mission-hero p{font-size:13px;max-width:470px;color:#c1d0d8}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:23px}.hero-actions button{padding:13px 17px;background:linear-gradient(145deg,#f5a35c,#df762b);border-color:#ffc28d;color:#1a2228;font-size:10px}.hero-actions button span{font-size:15px;margin-left:12px}
+.hero-note{font:800 9px ui-monospace,monospace;letter-spacing:.1em;color:#aebdc6}.hero-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#91d7a9;margin-right:7px;box-shadow:0 0 10px #91d7a9}
+.hero-art{max-width:320px;width:100%;justify-self:end;position:relative}.hero-art svg{width:100%;height:auto;filter:drop-shadow(0 12px 22px #0008);animation:compass-float 7s ease-in-out infinite}
+.art-coordinate{position:absolute;right:0;bottom:0;color:#8ea8b6;font:8px ui-monospace,monospace;letter-spacing:.14em}.art-coordinate span{color:#f08a36;padding:0 5px}
+.hero-foot{grid-column:1/-1;margin-top:9px;padding-top:14px;font-size:9px;letter-spacing:.14em}.hero-version{color:#ffad69}
+.manual-search{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;padding:15px;margin:16px 0;border:1px solid #526b79;border-radius:12px;background:linear-gradient(145deg,#1b2b35,#14212a);box-shadow:0 8px 22px #0003}
+.manual-search>label{grid-column:1/-1;color:#bcecff;font:900 10px ui-monospace,monospace;letter-spacing:.17em}
+.manual-search-row{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-width:0;border:1px solid #607b89;border-radius:9px;background:#0e171e;padding:0 10px}.manual-search-row:focus-within{border-color:#bcecff;box-shadow:0 0 0 3px #9edcf222}
+.manual-search-row .search-mark{font-size:25px;color:#f08a36;line-height:1}.manual-search .manual-search-row input{flex:1;width:100%;min-width:0;border:0;background:transparent;box-shadow:none;padding:14px 3px;font-size:15px}.manual-search .manual-search-row input:focus-visible{outline:0}
+.manual-search .search-clear{padding:8px 10px;border:1px solid #526572;background:#24343e;color:#cce4ed;font-size:8px;box-shadow:none}.manual-search>.muted{font-size:10px;color:#a9c0cc}
+.manual-results{grid-column:1/-1;display:grid;gap:7px}.manual-results[hidden]{display:none}.search-result{display:grid;gap:3px;padding:11px 13px;border:1px solid #405866;border-radius:8px;background:#22323d;text-decoration:none!important;transition:border-color .15s,background .15s,transform .15s}
+.search-result:hover{background:#2b414e;border-color:#9edcf2;transform:translateY(-1px)}.search-result strong{font-size:12px;color:#d8f2fb}.search-result span{font-size:11px;line-height:1.45;color:#afc0c9}.search-empty{padding:12px;border:1px dashed #526572;border-radius:8px;color:#c1d0d8;font-size:12px}
+@keyframes compass-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(max-width:650px){.mission-hero{grid-template-columns:1fr;min-height:0;gap:0}.hero-art{position:absolute;right:-32px;top:12px;width:46%;opacity:.24;z-index:0}.mission-hero h2{font-size:clamp(28px,8vw,42px)}.mission-hero p{max-width:310px}.hero-foot{gap:8px 15px}.hero-version{margin-left:auto}.manual-search{padding:12px}.manual-search .manual-search-row input{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.hero-art svg{animation:none}}
+</style>
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.7.0 • CLEAN OFFLINE FIELD SYSTEM</div></div><span class="release-chip">FIELD EDITION</span></div>
+  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.8.0 • OFFLINE FIELD COMPANION</div></div><span class="release-chip">FIELD EDITION</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
@@ -162,10 +187,21 @@ a:hover{color:#fff}
   <div id="backupWarn" class="warn" style="display:none"></div>
 
   <section class="mission-hero" aria-label="Field Companion introduction">
-    <div class="hero-kicker"><span class="hero-pulse"></span> HARCOM FIELD SYSTEMS</div>
-    <h2>Field tools. No fuss.</h2>
-    <p>Plan. Record. Prepare. Keep your field notes and survival reference in one place.</p>
-    <div class="hero-foot"><span>FIELD COMPANION</span><span class="hero-version">HARCOM • V0.7.0</span></div>
+    <div class="hero-copy">
+      <div class="hero-kicker"><span class="hero-pulse"></span> HARCOM FIELD SYSTEMS <span class="hero-kicker-line"></span> UK EDITION</div>
+      <h2>READY FOR<br><em>THE UNEXPECTED.</em></h2>
+      <p>Your field companion for practical knowledge, clear decisions and keeping your own record — online or off-grid.</p>
+      <div class="hero-actions"><button type="button" id="heroManualBtn">OPEN FIELD MANUAL <span aria-hidden="true">↗</span></button><span class="hero-note"><span class="hero-live-dot"></span> BUILT TO WORK OFFLINE</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 320 270">
+        <defs><linearGradient id="compassMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2f7ff"/><stop offset=".45" stop-color="#7297a9"/><stop offset="1" stop-color="#273d4a"/></linearGradient><radialGradient id="compassGlow"><stop offset="0" stop-color="#9edcf2" stop-opacity=".2"/><stop offset="1" stop-color="#9edcf2" stop-opacity="0"/></radialGradient></defs>
+        <circle cx="168" cy="132" r="124" fill="url(#compassGlow)"/><circle cx="168" cy="132" r="103" fill="none" stroke="#8eb7c8" stroke-opacity=".5"/><circle cx="168" cy="132" r="88" fill="none" stroke="#8eb7c8" stroke-opacity=".3" stroke-dasharray="2 7"/><circle cx="168" cy="132" r="65" fill="#14212a" stroke="url(#compassMetal)" stroke-width="2"/><circle cx="168" cy="132" r="52" fill="none" stroke="#9edcf2" stroke-opacity=".45"/>
+        <path d="M168 49V72M168 192V215M85 132h23M228 132h23M109 73l16 16M211 175l16 16M227 73l-16 16M125 175l-16 16" stroke="#bcecff" stroke-opacity=".7" stroke-width="2"/><path d="M168 79 185 140 168 128 151 140Z" fill="#f08a36"/><path d="M168 185 151 124 168 136 185 124Z" fill="#bcecff"/><circle cx="168" cy="132" r="6" fill="#f5fbff" stroke="#f08a36" stroke-width="3"/><path d="M168 22v-10M168 252v-10M58 132H46M290 132h-12" stroke="#f08a36" stroke-width="2"/><text x="168" y="15" text-anchor="middle" fill="#bcecff" font-size="10" font-weight="800" letter-spacing="3">NORTH</text><text x="168" y="265" text-anchor="middle" fill="#a6bac5" font-size="8" letter-spacing="2">FIELD / READY / ADAPT</text>
+      </svg>
+      <div class="art-coordinate">53° 23' N <span>•</span> FIELD SYSTEMS</div>
+    </div>
+    <div class="hero-foot"><span>KNOWLEDGE</span><span>FIELDCRAFT</span><span>PERSONAL RECORD</span><span class="hero-version">HARCOM • V0.8.0</span></div>
   </section>
 
   <div class="tabs" role="group" aria-label="Companion sections">
@@ -188,10 +224,10 @@ a:hover{color:#fff}
 
   <div id="guide" class="panel guide">
     <div class="manual-content">
-      <div class="hero"><div class="eyebrow">FIELD SYSTEMS / UK EDITION</div><h1>Stay capable.<br>Think clearly. Adapt.</h1><p>A practical UK field manual for preventing trouble, managing the essentials and caring for yourself or a companion when help is delayed or unavailable.</p><div class="muted">Version 0.7.0 • Offline reference. Practise skills before relying on them.</div></div>
+      <div class="hero"><div class="eyebrow">FIELD SYSTEMS / UK EDITION</div><h1>Stay capable.<br>Think clearly. Adapt.</h1><p>A practical UK field manual for preventing trouble, managing the essentials and caring for yourself or a companion when help is delayed or unavailable.</p><div class="muted">Offline reference • Practise skills before relying on them.</div></div>
 <div class="good"><b>Operating principle:</b> prevent, protect, stabilise, reassess. Use the skills and equipment you have; conserve energy, warmth, water and battery. Do not create a second casualty trying to be a hero.</div>
 <div class="call"><b>Know the red lines.</b> Severe bleeding, penetrating wounds, chest pain, stroke signs, major breathing difficulty, unconsciousness, anaphylaxis, serious burns, suspected hypothermia or major trauma need urgent professional care. In the UK call 999/112 when life is at risk. Self-reliance means doing the right things immediately—not delaying care that may be lifesaving.</div>
-<div class="manual-search" role="search"><label for="manualSearch">Find in field manual</label><input id="manualSearch" type="search" autocomplete="off" placeholder="Search water, shelter, bleeding, knots…"><span id="manualSearchCount" class="muted" aria-live="polite">28 topics</span></div>
+<div class="manual-search" role="search"><label for="manualSearch">SEARCH THE FIELD MANUAL</label><div class="manual-search-row"><span class="search-mark" aria-hidden="true">⌕</span><input id="manualSearch" type="search" autocomplete="off" placeholder="Try: clean water, hypothermia, shelter, bleeding…"><button type="button" id="clearManualSearch" class="search-clear" aria-label="Clear search">CLEAR</button></div><span id="manualSearchCount" class="muted" aria-live="polite">Search field topics</span><div id="manualSearchResults" class="manual-results" aria-live="polite"></div></div>
 <nav class="toc" aria-label="Manual sections">
 <a href="#priorities">First priorities</a><a href="#fieldcraft">Remote fieldcraft</a><a href="#trauma">Trauma & gunshots</a><a href="#remote-care">Remote casualty care</a><a href="#firstaid">First aid</a><a href="#shelter">Shelter</a><a href="#fire">Fire</a><a href="#water">Water</a><a href="#sanitation">Hygiene</a><a href="#food">Food & foraging</a><a href="#fungi">Mushrooms</a><a href="#navigation">Navigation</a><a href="#weather">Weather</a><a href="#rescue">Rescue</a><a href="#kit">Kit</a><a href="#campcraft">Campcraft</a><a href="#knots">Knots</a><a href="#firecraft">Firecraft</a><a href="#watercraft">Watercraft</a><a href="#navigation-practice">Navigation practice</a><a href="#field-tools">Tools & repairs</a><a href="#camp-systems">Longer stays</a><a href="#signalling">Signalling</a>
 </nav>
@@ -404,19 +440,19 @@ a:hover{color:#fff}
 <li><a href="https://www.woodlandtrust.org.uk/blog/types-of-mushroom/" target="_blank" rel="noopener">Woodland Trust — common UK fungi</a></li>
 <li><a href="https://www.woodlandtrust.org.uk/visiting-woods/things-to-do/foraging/foraging-guidelines" target="_blank" rel="noopener">Woodland Trust — responsible foraging</a></li>
 </ul></section>
-<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.7.0<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
+<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.8.0<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
     </div>
   </div>
 
   <div id="backup" class="panel">
     <div class="card"><h2>Backup</h2>
-      <p class="small">Save a copy of your data. Check it before relying on it. Restoring replaces the data currently on this device.</p>
-      <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Export JSON File (download)</button><button class="secondary" id="copyJsonBtn">Copy JSON to Clipboard</button></div>
-      <div class="row" style="margin-top:8px"><button class="secondary" id="confirmBackupBtn">I have manually opened and checked downloaded JSON — Mark Backup as Verified</button></div>
+      <p class="small">Keep a separate copy of your tasks, notes and field log. Restoring a backup replaces the information currently on this device.</p>
+      <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Download backup</button><button class="secondary" id="copyJsonBtn">Copy backup</button></div>
+      <div class="row" style="margin-top:8px"><button class="secondary" id="confirmBackupBtn">I've saved a copy — confirm backup</button></div>
       <div id="exportStatus" class="small" style="margin-top:8px"></div>
-      <div style="margin-top:12px"><label class="small">Import and Restore — validated, protected and verified:</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Import (confirm + verified safety backup)</button><button class="secondary" id="validateBtn">Validate Only</button></div></div>
+      <div style="margin-top:12px"><label class="small">Restore from backup</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Restore backup</button><button class="secondary" id="validateBtn">Check backup</button></div></div>
       <div id="importStatus" class="small" style="margin-top:8px"></div>
-      <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Safety Backups — restorable — collision-resistant</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">Created ONLY after you confirm import or restore and only if backup write succeeds. Key uniqueness checked, aborts if cannot establish unused key.</p></div>
+      <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Automatic recovery points</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">A recovery point is created automatically before a restore, helping protect the information already on this device.</p></div>
       
       
       
@@ -1552,32 +1588,40 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.s
 })();
 </script>
 <script>
-/* Offline manual search: local text only; no network, storage or external dependency. */
+/* Offline field-manual search: local index, instant results, no network or storage. */
 (function(){
-  const input=document.getElementById('manualSearch');
-  const count=document.getElementById('manualSearchCount');
+  const input=document.getElementById('manualSearch'),count=document.getElementById('manualSearchCount');
+  const results=document.getElementById('manualSearchResults'),clear=document.getElementById('clearManualSearch');
   const manual=document.querySelector('#guide .manual-content');
-  if(!input||!count||!manual)return;
-  const sections=[...manual.querySelectorAll('section[id]')];
-  const links=[...manual.querySelectorAll('.toc a[href^="#"]')];
+  if(!input||!count||!results||!manual)return;
+  const sections=[...manual.querySelectorAll('section[id]')],links=[...manual.querySelectorAll('.toc a[href^="#"]')];
+  const normalise=value=>value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,' ').replace(/\s+/g,' ').trim();
+  const index=sections.map(section=>({section,id:section.id,title:(section.querySelector('h2')||section).textContent.trim(),text:normalise(section.textContent)}));
+  function snippet(text,terms){const first=terms.map(term=>text.indexOf(term)).filter(pos=>pos>=0).sort((a,b)=>a-b)[0]||0;const start=Math.max(0,first-55),end=Math.min(text.length,start+190);return (start?'…':'')+text.slice(start,end).trim()+(end<text.length?'…':'');}
   function update(){
-    const query=input.value.trim().toLocaleLowerCase();
-    let shown=0;
-    for(const section of sections){
-      const match=!query||section.textContent.toLocaleLowerCase().includes(query);
-      section.hidden=!match;
-      if(match)shown++;
+    const query=normalise(input.value.trim()),terms=query.split(' ').filter(Boolean);
+    const matches=terms.length?index.filter(item=>terms.every(term=>item.text.includes(term))):[];
+    for(const item of index)item.section.hidden=!!terms.length&&!matches.some(match=>match.id===item.id);
+    for(const link of links){const id=decodeURIComponent(link.getAttribute('href').slice(1));link.hidden=!!terms.length&&!matches.some(item=>item.id===id);}
+    results.replaceChildren();
+    if(!terms.length){count.textContent='Search '+sections.length+' field topics';results.hidden=true;return;}
+    results.hidden=false;count.textContent=matches.length+' matching '+(matches.length===1?'topic':'topics');
+    if(!matches.length){const empty=document.createElement('p');empty.className='search-empty';empty.textContent='No matches. Try a broader term such as water, fire, shelter or first aid.';results.appendChild(empty);return;}
+    for(const item of matches){
+      const link=document.createElement('a');link.className='search-result';link.href='#'+item.id;
+      const heading=document.createElement('strong');heading.textContent=item.title;
+      const detail=document.createElement('span');detail.textContent=snippet(item.text,terms);
+      link.append(heading,detail);
+      link.addEventListener('click',event=>{event.preventDefault();item.section.hidden=false;item.section.scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'','#'+item.id);});
+      results.appendChild(link);
     }
-    for(const link of links){
-      const target=sections.find(section=>section.id===decodeURIComponent(link.getAttribute('href').slice(1)));
-      link.hidden=!!query&&(!target||target.hidden);
-    }
-    count.textContent=query?(shown+' of '+sections.length+' topics'):(sections.length+' topics');
   }
+  function reset(){input.value='';update();input.focus();}
   input.addEventListener('input',update);
-  input.addEventListener('keydown',event=>{
-    if(event.key==='Escape'){input.value='';update();input.blur();}
-  });
+  input.addEventListener('keydown',event=>{if(event.key==='Escape'){input.value='';update();input.blur();}});
+  if(clear)clear.addEventListener('click',reset);
+  const heroButton=document.getElementById('heroManualBtn');
+  if(heroButton)heroButton.addEventListener('click',()=>{const tab=document.querySelector('.tab[data-tab="guide"]');if(tab)tab.click();setTimeout(()=>input.focus(),80);});
   update();
 })();
 </script>
