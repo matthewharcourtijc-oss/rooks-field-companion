@@ -27,6 +27,13 @@ assert.ok(html.includes("FIELD READY"), "consumer-facing field-ready label missi
 assert.ok(html.includes("DEVICE DATA NOTICE"), "consumer-facing local-data privacy notice missing");
 assert.ok(html.includes("Field Companion does not encrypt your records"), "unencrypted local storage warning missing");
 assert.ok(html.includes("Clearing this site’s data can permanently erase records"), "site-data loss warning missing");
+assert.ok(html.includes("AES-256-GCM"), "encrypted backup must use AES-256-GCM");
+assert.ok(html.includes("PBKDF2-SHA-256"), "encrypted backup must derive keys with PBKDF2-SHA-256");
+assert.ok(html.includes("BACKUP_KDF_ITERATIONS=310000"), "encrypted backup KDF work factor missing");
+assert.ok(html.includes("async function readBackupText"), "encrypted and standard backup parser missing");
+assert.ok(html.includes("Decryption failed. Check the password or backup file; current records are unchanged."), "failed decryption must preserve existing records");
+assert.ok(html.includes("id=\"exportEncryptedBtn\""), "encrypted backup export control missing");
+assert.ok(html.includes("id=\"backupPassword\""), "encrypted backup password control missing");
 assert.match(html, /textContent\s*=\s*item\.text/, "task content must be rendered as text, not executable markup");
 assert.match(html, /textContent\s*=\s*n\.text/, "note content must be rendered as text, not executable markup");
 assert.match(html, /textContent\s*=\s*`\[\$\{time\}\] \$\{l\.text\}`/, "log content must be rendered as text, not executable markup");
