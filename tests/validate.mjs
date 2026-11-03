@@ -17,7 +17,7 @@ const requiredIds = [
   "campcraft", "knots", "firecraft", "watercraft",
   "navigation-practice", "field-tools", "camp-systems", "signalling"
 ];
-const ids = [...html.matchAll(/\\bid=["']([^"']+)["']/g)].map(match => match[1]);
+const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
 const idSet = new Set(ids);
 for (const id of requiredIds) {
   assert.ok(idSet.has(id), "missing required panel or manual section: " + id);
@@ -32,13 +32,13 @@ for (const id of requiredIds.slice(5)) {
   assert.ok(html.includes('<a href="#' + id + '">'), "manual table of contents missing: #" + id);
 }
 
-const diagrams = [...html.matchAll(/<svg\\b/g)];
+const diagrams = [...html.matchAll(/<svg\b/g)];
 assert.ok(diagrams.length >= 18, "expected at least 18 embedded SVG diagrams; found " + diagrams.length);
 assert.ok(!/<img[^>]+src=["']https?:/i.test(html), "remote images break full offline manual");
 assert.doesNotMatch(html, /<script[^>]+src=["']https?:/i, "remote scripts break offline-first operation");
-assert.doesNotMatch(html, /fonts\\.googleapis\\.com/i, "hosted fonts break offline-first operation");
+assert.doesNotMatch(html, /fonts\.googleapis\.com/i, "hosted fonts break offline-first operation");
 
-const scripts = [...html.matchAll(/<script\\b[^>]*>([\\s\\S]*?)<\\/script>/g)];
+const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)];
 assert.ok(scripts.length >= 2, "expected embedded application scripts");
 scripts.forEach((match, index) => new vm.Script(match[1], { filename: "index-inline-" + index + ".js" }));
 new vm.Script(worker, { filename: "service-worker.js" });
@@ -47,10 +47,10 @@ assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
-assert.match(html, /serviceWorker\\.register/);
-assert.match(worker, /harcom-field-companion-v0\\.6\\.1/);
-assert.match(worker, /await cache\\.addAll/);
-assert.match(worker, /await cache\\.put/);
-assert.match(worker, /self\\.clients\\.claim/);
+assert.match(html, /serviceWorker\.register/);
+assert.match(worker, /harcom-field-companion-v0\.6\.1/);
+assert.match(worker, /await cache\.addAll/);
+assert.match(worker, /await cache\.put/);
+assert.match(worker, /self\.clients\.claim/);
 
 console.log("Rook's Field Companion v0.6.1 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
