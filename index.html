@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rook's Field Companion | HARCOM Industries</title>
+<title>Field Companion | HARCOM Industries</title>
 <meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
@@ -253,10 +253,43 @@ header{padding:17px clamp(14px,3vw,30px);background:linear-gradient(115deg,#0d15
 .hero-foot .hero-version{color:#f4a260}
 @media(max-width:560px){header{padding:12px 13px}.brand{gap:10px;min-height:54px}.helm{width:50px;height:50px;flex-basis:50px;padding:5px}.brand-overline{font-size:12px;letter-spacing:.16em}.brand-copy h1{font-size:9px;letter-spacing:.11em}.brand-copy .tag{font-size:8px;letter-spacing:.07em;max-width:205px;line-height:1.35}.release-chip{font-size:7px;padding:5px 6px;white-space:normal;text-align:center;max-width:72px}}
 </style>
+
+<style id="harcom-identity-v094">
+/* HARCOM v0.9.4 — premium industrial field-equipment identity. Presentation only. */
+:root{--harcom-graphite:#11171d;--harcom-panel:#1b2730;--harcom-steel:#536a78;--harcom-ice:#bcecff;--harcom-orange:#f08a36}
+body{background-color:#10161c;background-image:radial-gradient(ellipse at 50% -12%,#354b5a 0%,#19242d 43%,#0d1319 100%);background-attachment:fixed}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.19;background-image:repeating-radial-gradient(ellipse at 82% 18%,transparent 0 34px,#a9dff10b 35px 36px,transparent 37px 67px),repeating-linear-gradient(135deg,transparent 0 47px,#d8f3ff06 48px 49px,transparent 50px 96px)}
+header{background:linear-gradient(105deg,#0c1218f5,#17232cf5 62%,#101820f5);border-bottom:1px solid #66808e;box-shadow:0 12px 34px #0007,inset 0 -2px #f08a3633}
+.brand{gap:15px}
+.helm{width:58px;height:58px;flex:0 0 58px;border:1px solid #688493;border-radius:11px;background:linear-gradient(145deg,#2b3b46,#121b22);box-shadow:inset 0 1px #ffffff20,0 5px 16px #0006}
+.helm svg{width:48px;height:48px;filter:drop-shadow(0 2px 5px #0008)}
+.brand-overline{font-size:9px;letter-spacing:.24em;color:#bcecff}
+h1{font-size:clamp(19px,3vw,25px);font-weight:850;letter-spacing:.13em;color:#f5f9fb;line-height:1.08;margin:5px 0 4px}
+.tag{font:700 9px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.13em;color:#a9bac4}
+.release-chip{border-color:#a66a3d;color:#ffc18b;background:#3a291e88;letter-spacing:.16em}
+.status{color:#c3d0d7}
+.mission-hero{isolation:isolate;min-height:290px;border:1px solid #66808e;border-radius:10px;background:linear-gradient(112deg,#263944f5 0%,#1a2933f5 54%,#18242df5 100%);box-shadow:0 20px 48px #0007,inset 0 1px #ffffff18,inset 0 -1px #ffffff0a}
+.mission-hero:before{opacity:.75;background:linear-gradient(90deg,transparent 0 55%,#bcecff0c 100%),repeating-radial-gradient(ellipse at 82% 50%,transparent 0 25px,#bcecff12 26px 27px,transparent 28px 52px),repeating-linear-gradient(135deg,transparent 0 29px,#ffffff05 30px 31px,transparent 32px 60px)}
+.mission-hero:after{right:-80px;top:-130px;width:310px;height:310px;border-color:#bcecff22;box-shadow:0 0 0 24px #bcecff0a,0 0 0 52px #bcecff07,0 0 0 82px #bcecff04}
+.mission-hero h2{font-size:clamp(27px,5vw,43px);letter-spacing:-.045em;text-shadow:0 3px 18px #0005}
+.mission-hero p{font-size:14px;max-width:540px}
+.hero-art svg{filter:drop-shadow(0 12px 24px #0007)}
+.tabs{border-radius:8px;border-color:#526875;background:#111a21f5}
+.tab{border-radius:6px}
+.card{border-radius:10px;background:linear-gradient(145deg,#26333d,#1b2730);box-shadow:0 9px 24px #0003,inset 0 1px #ffffff08}
+h2{letter-spacing:.035em}
+button,.manual-link{border-radius:6px}
+.item,.guide details,.footer{border-radius:8px}
+@media(max-width:560px){
+ .brand{gap:10px}.helm{width:46px;height:46px;flex-basis:46px}.helm svg{width:40px;height:40px}
+ h1{font-size:18px;letter-spacing:.1em}.tag{font-size:8px;letter-spacing:.08em}
+ .mission-hero{min-height:0}.hero-art{opacity:.9}
+}
+</style>
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" role="img" aria-label="HARCOM Industries compass shield"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 3 55 11v17c0 15-9 25-23 33C18 53 9 43 9 28V11L32 3Z" fill="#18242d" stroke="#9edcf2" stroke-width="2"/><path d="M32 10 49 16v12c0 11-6 19-17 26-11-7-17-15-17-26V16l17-6Z" fill="none" stroke="#607e8e"/><path d="m32 15 7 19-7-4-7 4 7-19Z" fill="#f08a36"/><path d="M32 34v14" stroke="#bcecff" stroke-width="2"/><circle cx="32" cy="34" r="3" fill="#edf7fb" stroke="#f08a36"/></svg></div><div class="brand-copy"><div class="brand-overline">HARCOM <span>INDUSTRIES</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">FIELD KNOWLEDGE • PRACTICAL TOOLS • OFFLINE READY</div></div><span class="release-chip">FIELD READY</span></div>
+  <div class="brand"><div class="helm" role="img" aria-label="HARCOM Industries compass shield"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 3 55 11v17c0 15-9 25-23 33C18 53 9 43 9 28V11L32 3Z" fill="#18242d" stroke="#9edcf2" stroke-width="2"/><path d="M32 10 49 16v12c0 11-6 19-17 26-11-7-17-15-17-26V16l17-6Z" fill="none" stroke="#607e8e"/><path d="m32 15 7 19-7-4-7 4 7-19Z" fill="#f08a36"/><path d="M32 34v14" stroke="#bcecff" stroke-width="2"/><circle cx="32" cy="34" r="3" fill="#edf7fb" stroke="#f08a36"/></svg></div><div class="brand-copy"><div class="brand-overline">HARCOM <span>INDUSTRIES</span></div><h1>FIELD COMPANION</h1><div class="tag">INDEPENDENCE THROUGH KNOWLEDGE • OFFLINE READY</div></div><span class="release-chip">FIELD READY</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
