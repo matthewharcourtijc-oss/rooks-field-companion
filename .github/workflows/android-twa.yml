@@ -39,12 +39,18 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+ 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Validate checked-in TWA configuration
         run: node android/twa/validate-config.mjs
 
       - name: Install pinned Bubblewrap CLI
         run: npm install --global @bubblewrap/cli@1.27.0
+
+      - name: Point Bubblewrap at the runner JDK and Android SDK
+        run: bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
 
       - name: Generate Android project from reviewed manifest
         run: bubblewrap update --skipVersionUpgrade --directory android/twa --manifest android/twa/twa-manifest.json
