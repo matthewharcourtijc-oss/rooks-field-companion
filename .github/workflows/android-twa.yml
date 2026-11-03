@@ -117,7 +117,7 @@ jobs:
           gradle = gradle.replace("applicationId: '" + base + "'", "applicationId: '" + diagnostic + "'");
           gradle = gradle.replace('applicationId "' + base + '"', 'applicationId "' + diagnostic + '"');
           gradle = gradle.replace(/versionCode 1\b/, `versionCode ${100000 + run}`);
-          gradle = gradle.replace(/versionName ""/, `versionName "${config.appVersionName}-diagnostic.${run}"`);
+          gradle = gradle.replace(/versionName\s+"[^"]*"/, `versionName "${config.appVersionName}-diagnostic.${run}"`);
           if (!gradle.includes("applicationId: '" + diagnostic + "'") ||
               !gradle.includes('applicationId "' + diagnostic + '"') ||
               !gradle.includes(`versionCode ${100000 + run}`) ||
