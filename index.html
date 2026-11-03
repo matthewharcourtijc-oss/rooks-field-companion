@@ -361,9 +361,9 @@ button,.manual-link{border-radius:6px}
   <div class="install-head"><span class="install-mark" aria-hidden="true">↧</span><span><strong id="installTitle">TAKE FIELD COMPANION WITH YOU</strong><small>Install on Android for an app-style launch and offline access.</small></span></div>
   <p class="install-help" id="installHelp">Install once while online. The app shell and field manual are then available offline on this device.</p>
   <div class="install-state" id="installState" role="status" aria-live="polite"></div>
+  <div class="install-help" id="installSteps" hidden><strong>Chrome on Android:</strong><ol><li>Tap INSTALL APP when offered, then confirm Install.</li><li>If no prompt appears, open Chrome's ⋮ menu and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li><li>Open Field Companion once while online and wait for “offline cache ready”.</li><li>Switch to Airplane mode and test it before relying on it in the field.</li></ol></div>
  </div>
- <div class="install-actions"><button type="button" id="installAppBtn">INSTALL APP</button><button type="button" class="install-secondary" id="installStepsBtn">HOW TO INSTALL</button></div>
- <div class="install-help" id="installSteps" hidden><strong>Chrome on Android:</strong><ol><li>Tap INSTALL APP when offered, then confirm Install.</li><li>If no prompt appears, open Chrome's ⋮ menu and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li><li>Open Field Companion once while online and wait for “offline cache ready”.</li><li>Switch to Airplane mode and test it before relying on it in the field.</li></ol></div>
+ <div class="install-actions"><button type="button" id="installAppBtn">INSTALL APP</button><button type="button" class="install-secondary" id="installStepsBtn" aria-controls="installSteps" aria-expanded="false">HOW TO INSTALL</button></div>
 </section>
 <section class="field-loop" aria-label="Field response cycle"><div class="loop-heading"><span>HARCOM / FIELD METHOD</span><b>THE RESPONSE LOOP</b></div><div class="loop-steps"><div><i>01</i><b>PREPARE</b><small>Know your kit</small></div><span class="loop-arrow">›</span><div><i>02</i><b>RESPOND</b><small>Act on priorities</small></div><span class="loop-arrow">›</span><div><i>03</i><b>STABILISE</b><small>Protect life</small></div><span class="loop-arrow">›</span><div><i>04</i><b>REASSESS</b><small>Adapt and move</small></div></div></section>
   <div class="tabs" role="group" aria-label="Companion sections">
@@ -1878,7 +1878,7 @@ document.getElementById('runTxTests').onclick=async()=>{
  const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
  if(!/Android/i.test(navigator.userAgent)||!(location.protocol==='https:'||location.hostname==='localhost'))return;
  panel.hidden=false;
- function showInstalled(){installBtn.disabled=true;installBtn.textContent='APP INSTALLED';state.textContent='Installed on this device — launch it from your home screen.';steps.hidden=true;}
+ function showInstalled(){installBtn.disabled=true;installBtn.textContent='APP INSTALLED';stepsBtn.hidden=true;state.textContent='Installed on this device — launch it from your home screen.';steps.hidden=true;}
  if(isStandalone()){showInstalled();return;}
  window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;installBtn.disabled=false;installBtn.textContent='INSTALL APP';state.textContent='Ready to install on this Android device.';});
  window.addEventListener('appinstalled',()=>{installPrompt=null;showInstalled();});
@@ -1889,7 +1889,7 @@ document.getElementById('runTxTests').onclick=async()=>{
      catch(error){state.textContent='Install prompt unavailable. Use HOW TO INSTALL for Chrome menu steps.';}
    }else{steps.hidden=false;state.textContent='Use Chrome’s ⋮ menu and choose Install app or Add to Home screen.';}
  });
- stepsBtn.addEventListener('click',()=>{steps.hidden=!steps.hidden;stepsBtn.textContent=steps.hidden?'HOW TO INSTALL':'HIDE INSTALL STEPS';});
+ stepsBtn.addEventListener('click',()=>{steps.hidden=!steps.hidden;stepsBtn.textContent=steps.hidden?'HOW TO INSTALL':'HIDE INSTALL STEPS';stepsBtn.setAttribute('aria-expanded',String(!steps.hidden));});
 })();
 </script>
 <script>
