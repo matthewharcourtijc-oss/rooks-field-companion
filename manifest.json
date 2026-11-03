@@ -1,7 +1,7 @@
 {
-  "name": "Rook's Field Companion — Connected Field Edition",
+  "name": "Rook's Field Companion — Visual Field Edition",
   "short_name": "Rook Field",
-  "description": "Offline field companion with connected field skills, illustrated survival manual, tasks, notes and mission log.",
+  "description": "Offline-first field companion with a refined visual interface, illustrated UK survival manual, tasks, notes and mission log.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

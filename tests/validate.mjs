@@ -7,12 +7,12 @@ const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
-assert.ok(html.includes("Rook's Field Companion — v0.9.1 Connected Field Edition"), "app title/version mismatch");
-assert.ok(readme.includes("v0.9.1 — Connected Field Edition"), "README release version is stale");
+assert.ok(html.includes("Rook's Field Companion — v0.9.2 Visual Field Edition"), "app title/version mismatch");
+assert.ok(readme.includes("v0.9.2 — Visual Field Edition"), "README release version is stale");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
 assert.ok(manifest.name.includes("Field Edition"), "manifest app name is stale");
-assert.ok(html.includes("SURVIVAL MANUAL v0.9.1"), "manual version mismatch");
-assert.ok(html.includes("V0.9.0 • CONNECTED FIELD EDITION"), "visible release label mismatch");
+assert.ok(html.includes("SURVIVAL MANUAL v0.9.2"), "manual version mismatch");
+assert.ok(html.includes("V0.9.2 • VISUAL FIELD EDITION"), "visible release label mismatch");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
 assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
@@ -63,7 +63,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.9\.1/);
+assert.match(worker, /harcom-field-companion-v0\.9\.2/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
