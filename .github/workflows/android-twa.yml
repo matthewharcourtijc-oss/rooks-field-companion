@@ -1,8 +1,6 @@
 name: Build Field Companion Android TWA
 
 on:
-  push:
-    branches: ["feat/companion-android-twa"]
   pull_request:
     branches: ["main"]
     paths:
@@ -68,6 +66,10 @@ jobs:
           grep -q 'com.harcomindustries.fieldcompanion' android/twa/app/build.gradle
           grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/build.gradle
           grep -q '@string/hostName' android/twa/app/src/main/AndroidManifest.xml
+
+      - name: Compile Android debug variant
+        working-directory: android/twa
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
 
       - name: Upload generated Android project
         uses: actions/upload-artifact@v4
