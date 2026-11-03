@@ -1,0 +1,209 @@
+name: Build Field Companion Android TWA
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/android-twa.yml"
+      - "android/twa/**"
+  workflow_dispatch:
+    inputs:
+      build_release:
+        description: "Build signed APK/AAB (requires the three COMPANION_* repository secrets)"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: companion-android-twa
+  cancel-in-progress: false
+
+jobs:
+  generate-and-validate:
+    name: Generate and validate Android project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+
+
+      - name: Validate checked-in TWA configuration
+        run: node android/twa/validate-config.mjs
+
+      - name: Install pinned Bubblewrap CLI
+        run: npm install --global @bubblewrap/cli@1.27.0
+
+      - name: Configure Bubblewrap non-interactively
+        run: |
+          test -d "$JAVA_HOME"
+          test -d "$ANDROID_HOME"
+          mkdir -p "$HOME/.bubblewrap"
+          printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
+          cat "$HOME/.bubblewrap/config.json"
+
+      - name: Check live PWA endpoints and manifest
+        run: |
+          set -euo pipefail
+          BASE="https://matthewharcourtijc-oss.github.io/rooks-field-companion"
+          curl --fail --silent --show-error "$BASE/" -o /tmp/companion-index.html
+          curl --fail --silent --show-error "$BASE/manifest.json" -o /tmp/companion-manifest.json
+          curl --fail --silent --show-error "$BASE/service-worker.js" -o /tmp/companion-service-worker.js
+          curl --fail --silent --show-error "$BASE/icon-192.png" -o /dev/null
+          curl --fail --silent --show-error "$BASE/icon-512.png" -o /dev/null
+          node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+          const m = JSON.parse(readFileSync("/tmp/companion-manifest.json", "utf8"));
+          if (m.start_url !== "./") throw new Error("PWA manifest start_url must remain ./");
+          if (m.scope !== "./") throw new Error("PWA manifest scope must remain ./");
+          if (m.display !== "standalone") throw new Error("PWA display mode must be standalone");
+          const icons = m.icons || [];
+          for (const size of ["192x192", "512x512"]) {
+            if (!icons.some(icon => icon.sizes === size && icon.type === "image/png")) {
+              throw new Error(`Missing PNG PWA icon: ${size}`);
+            }
+          }
+          console.log("Live PWA endpoints and manifest checks passed.");
+          NODE
+
+      - name: Generate Android project from reviewed manifest
+        run: bubblewrap update --skipVersionUpgrade --directory android/twa --manifest android/twa/twa-manifest.json
+
+      - name: Verify generated Android project
+        run: |
+          test -f android/twa/gradlew
+          test -f android/twa/app/build.gradle
+          test -f android/twa/app/src/main/AndroidManifest.xml
+          grep -q 'com.harcomindustries.fieldcompanion' android/twa/app/build.gradle
+          grep -q 'matthewharcourtijc-oss.github.io' android/twa/app/build.gradle
+          grep -q '@string/hostName' android/twa/app/src/main/AndroidManifest.xml
+
+      - name: Build debug APK for physical-device smoke test
+        working-directory: android/twa
+        run: |
+          chmod +x ./gradlew
+          ./gradlew --no-daemon --stacktrace assembleDebug
+
+      - name: Verify installable debug APK
+        run: |
+          APK="android/twa/app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$APK"
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$APK"
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$APK" | grep -q "package: name='com.harcomindustries.fieldcompanion'"
+          sha256sum "$APK"
+
+      - name: Upload installable debug APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: field-companion-debug-apk
+          path: android/twa/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload generated Android project
+        uses: actions/upload-artifact@v7
+        with:
+          name: field-companion-android-source
+          path: android/twa/
+          if-no-files-found: error
+          retention-days: 14
+
+  signed-release:
+    name: Build signed APK and asset-link candidate
+    if: inputs.build_release == true
+    needs: generate-and-validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+
+
+      - name: Require dedicated Companion signing secrets
+        env:
+          COMPANION_KEYSTORE_BASE64: ${{ secrets.COMPANION_KEYSTORE_BASE64 }}
+          COMPANION_KEYSTORE_PASSWORD: ${{ secrets.COMPANION_KEYSTORE_PASSWORD }}
+          COMPANION_KEY_PASSWORD: ${{ secrets.COMPANION_KEY_PASSWORD }}
+        run: |
+          test -n "$COMPANION_KEYSTORE_BASE64" || { echo "Missing COMPANION_KEYSTORE_BASE64"; exit 1; }
+          test -n "$COMPANION_KEYSTORE_PASSWORD" || { echo "Missing COMPANION_KEYSTORE_PASSWORD"; exit 1; }
+          test -n "$COMPANION_KEY_PASSWORD" || { echo "Missing COMPANION_KEY_PASSWORD"; exit 1; }
+          mkdir -p android/twa
+          printf '%s' "$COMPANION_KEYSTORE_BASE64" | base64 --decode > android/twa/field-companion-release.keystore
+          test -s android/twa/field-companion-release.keystore
+
+      - name: Install pinned Bubblewrap CLI
+        run: npm install --global @bubblewrap/cli@1.27.0
+
+      - name: Configure Bubblewrap non-interactively
+        run: |
+          test -d "$JAVA_HOME"
+          test -d "$ANDROID_HOME"
+          mkdir -p "$HOME/.bubblewrap"
+          printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
+          cat "$HOME/.bubblewrap/config.json"
+
+      - name: Generate Android project
+        run: bubblewrap update --skipVersionUpgrade --directory android/twa --manifest android/twa/twa-manifest.json
+
+      - name: Build signed APK and App Bundle
+        working-directory: android/twa
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.COMPANION_KEYSTORE_PASSWORD }}
+          BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.COMPANION_KEY_PASSWORD }}
+        run: bubblewrap build --skipPwaValidation --manifest twa-manifest.json --signingKeyPath field-companion-release.keystore --signingKeyAlias harcom-field-companion
+
+      - name: Create Digital Asset Links candidate
+        working-directory: android/twa
+        env:
+          COMPANION_KEYSTORE_PASSWORD: ${{ secrets.COMPANION_KEYSTORE_PASSWORD }}
+        run: |
+          keytool -list -v -keystore field-companion-release.keystore -storepass "$COMPANION_KEYSTORE_PASSWORD" -alias harcom-field-companion > signing-certificate.txt
+          FINGERPRINT="$(keytool -list -v -keystore field-companion-release.keystore -storepass "$COMPANION_KEYSTORE_PASSWORD" -alias harcom-field-companion | awk -F': ' '/SHA256:/{print $2; exit}')"
+          test -n "$FINGERPRINT"
+          node -e 'const fs=require("fs"); const fp=process.argv[1]; const data=[{relation:["delegate_permission/common.handle_all_urls"],target:{namespace:"android_app",package_name:"com.harcomindustries.fieldcompanion",sha256_cert_fingerprints:[fp]}}]; fs.writeFileSync("assetlinks.json", JSON.stringify(data,null,2));' "$FINGERPRINT"
+
+      - name: Upload signed release and verification materials
+        uses: actions/upload-artifact@v7
+        with:
+          name: field-companion-android-release
+          path: |
+            android/twa/app-release-signed.apk
+            android/twa/app-release-bundle.aab
+            android/twa/assetlinks.json
+            android/twa/signing-certificate.txt
+          if-no-files-found: error
+          retention-days: 30
