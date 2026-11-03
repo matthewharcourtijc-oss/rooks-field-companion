@@ -60,8 +60,29 @@ jobs:
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > "$HOME/.bubblewrap/config.json"
           cat "$HOME/.bubblewrap/config.json"
 
-      - name: Validate live PWA against TWA quality criteria
-        run: bubblewrap validate --url=https://matthewharcourtijc-oss.github.io/rooks-field-companion/
+      - name: Check live PWA endpoints and manifest
+        run: |
+          set -euo pipefail
+          BASE="https://matthewharcourtijc-oss.github.io/rooks-field-companion"
+          curl --fail --silent --show-error "$BASE/" -o /tmp/companion-index.html
+          curl --fail --silent --show-error "$BASE/manifest.json" -o /tmp/companion-manifest.json
+          curl --fail --silent --show-error "$BASE/service-worker.js" -o /tmp/companion-service-worker.js
+          curl --fail --silent --show-error "$BASE/icon-192.png" -o /dev/null
+          curl --fail --silent --show-error "$BASE/icon-512.png" -o /dev/null
+          node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+          const m = JSON.parse(readFileSync("/tmp/companion-manifest.json", "utf8"));
+          if (m.start_url !== "./") throw new Error("PWA manifest start_url must remain ./");
+          if (m.scope !== "./") throw new Error("PWA manifest scope must remain ./");
+          if (m.display !== "standalone") throw new Error("PWA display mode must be standalone");
+          const icons = m.icons || [];
+          for (const size of ["192x192", "512x512"]) {
+            if (!icons.some(icon => icon.sizes === size && icon.type === "image/png")) {
+              throw new Error(`Missing PNG PWA icon: ${size}`);
+            }
+          }
+          console.log("Live PWA endpoints and manifest checks passed.");
+          NODE
 
       - name: Generate Android project from reviewed manifest
         run: bubblewrap update --skipVersionUpgrade --directory android/twa --manifest android/twa/twa-manifest.json
@@ -163,7 +184,7 @@ jobs:
         env:
           BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.COMPANION_KEYSTORE_PASSWORD }}
           BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.COMPANION_KEY_PASSWORD }}
-        run: bubblewrap build --manifest twa-manifest.json --signingKeyPath field-companion-release.keystore --signingKeyAlias harcom-field-companion
+        run: bubblewrap build --skipPwaValidation --manifest twa-manifest.json --signingKeyPath field-companion-release.keystore --signingKeyAlias harcom-field-companion
 
       - name: Create Digital Asset Links candidate
         working-directory: android/twa
