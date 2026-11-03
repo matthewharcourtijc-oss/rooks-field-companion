@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rook's Field Companion v0.3.11 — Transaction Repair Candidate — Not Release Certified</title>
-<meta name="description" content="v0.3.11 repair — integrated loadAll() — full 7-step migration — no loose screws before legacy delete, collision-safe corrupt backups, safe DOM, full validation, byte-size fixed, no wrappers, prediction removed.">
+<title>Rook's Field Companion — v0.3.11</title>
+<meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -137,7 +137,7 @@ a:hover{color:#fff}
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.3.11 • TRANSACTION REPAIR • OFFLINE-FIRST FIELD TOOL</div></div><span class="release-chip">DEV BUILD</span></div>
+  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.3.11 • OFFLINE-FIRST FIELD TOOL</div></div><span class="release-chip">FIELD EDITION</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
@@ -192,43 +192,19 @@ a:hover{color:#fff}
       <div style="margin-top:12px"><label class="small">Import and Restore — validated, atomic preserved, read-back checked, safety backup collision-resistant:</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Import (atomic preserved + safety backup after confirm)</button><button class="secondary" id="validateBtn">Validate Only</button></div></div>
       <div id="importStatus" class="small" style="margin-top:8px"></div>
       <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Safety Backups — restoreable — collision-resistant</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">Created ONLY after you confirm import or restore and only if backup write succeeds. Key uniqueness checked, aborts if cannot establish unused key.</p></div>
-      <details style="margin-top:12px"><summary>Technical details</summary><div class="card" style="margin-top:16px;background:#fff"><h2>Transaction architecture &amp; write-path inventory</h2><p class="small">All cooperating writes require navigator.locks exclusive lock "harcom-storage-transaction-v1". If Web Locks are unavailable, writes and destructive operations fail closed. transactionWrite: exact raw set/read-back; durable harcom_recovery_* copy before overwrite; conditional rollback only when current raw still equals the observed attempted-write value; primary-key stale check against lastKnownRaw. transactionDelete: durable raw copy, verified deletion and conditional rollback. Legacy migration holds one exclusive Web Lock across snapshot, verified recovery copies, durable journal, primary write, snapshot-checked cleanup, final verification and journal close; startup recovery is idempotent and refuses to overwrite unexpected values. lastKnownRaw and arrays commit only after complete success.</p><p class="small"><b>Write-path inventory:</b> task create/complete/delete; note create/delete; log create/delete; import; safety restore; legacy migration and legacy-key cleanup; corrupt/malformed raw preservation; manual-backup marker; persistence canary/test records; safety-backup deletion; Clear All snapshot and deletion/rollback. All primary-record mutations use commitCombined (transactionWrite + validation + deferred lastKnownRaw commit); other mutations use transactionWrite/transactionDelete/conditionalRollback or the lock-held Clear All transaction. Export and clipboard are read-only. Validation-only actions are read-only.</p><p class="small">Executable simulated failure harness: runTransactionFailureTests() — isolated in-memory storage only; it does not touch saved user data. Simulations are not browser or Android certification.</p><p class="small">Single file, no external deps, no AI keys. Primary key: harcom_data (single atomic record). Legacy migration uses a durable harcom_migration_journal_v1 with exact raw snapshots and recovery references; interrupted migration is recovered under one exclusive lock before normal loading. Keys: harcom_data, harcom_backup_last, harcom_persist_test_v3, harcom_persist_canary, harcom_safety_*, harcom_corrupt_*. Audit safeSet, atomicSetCombined with read-back, generateUniqueSafetyKey and generateUniqueCorruptKey abort on collision, clearCorruptionState, getByteSize via TextEncoder.</p><p class="small">Origin: <span id="originText"></span> — file origin varies per browser — GitHub Pages https origin is recommended for stable Android storage. User-led Samsung checks have passed for core task, backup, import and restore flows; isolated failure-injection and final release checks remain.</p><p class="small">Build: v0.3.11 Transaction Repair Candidate — No Loose Screws — Not Release Certified — Recovery • Rollback • Web Locks • Stale-State • v0.1-safe untouched on main • dev only</p></div></details>
-      <details style="margin-top:12px"><summary>Development change log</summary><div class="card" style="background:#fff;margin-top:12px"><h2>Change Log v0.3.7 to v0.3.11 — Rook approved spec — exact raw + cleanup warning — repair, not redesign — only changes actually made</h2><p class="small">
-        1. Added final legacy cleanup verification per user snippet: const remainingLegacy = [LS_LEGACY_T, LS_LEGACY_N, LS_LEGACY_L].filter(key => localStorage.getItem(key) !== null); if (remainingLegacy.length > 0) { console.warn('Migration verified, but legacy cleanup is incomplete:', remainingLegacy); } — keeps verified combined record and reports incomplete cleanup, never silently declares success.<br>
-        2. Implemented exact raw equality verification before any legacy delete per user-provided safeguard: Preserve exact expected contents as JSON.stringify(combined), write via safeSet, if result not ok throw 'Migration write failed. Original records retained.', read back via getItem, if null or !== expectedRaw throw 'Migration verification failed. Original records retained.', parse and validate via validateImport, if fails throw 'Saved migration failed validation. Original records retained.', only then remove original records in try/catch, log error, keep verified combined record, never report cleanup as successful. This is byte-exact, not count-based, preventing silent corruption.<br>
-        2. Fixed legacy migration to prove persistence before delete: After preserving raw legacy values and checking every result, after safeSet of harcom_data, now reads back harcom_data via getItem, parses, validates via validateImport, checks counts match — only if read-back validation succeeds are legacy keys deleted. If read-back fails, legacy keys NOT deleted, error reported, original keys kept. This prevents loss where write appears to succeed but cannot be read back.<br>
-        2. Verified removal of wrapper scripts and font declarations: File contains zero matches for wrapper scripts, interception and messaging handlers, opening interception and font path refs — scanned for 6 strings — 0 matches. No external wrappers present in raw file.<br>
-        3. Removed unsupported magnetic triple-alignment date and location prediction entirely: Deleted sentence that gave specific dates and locations for triple alignment. That sentence has been removed from navigation guide and sources as unsupported confident guesswork. Field guide is no place for confident guesswork.<br>
-        4. Stripped questionable navigation and first-aid claims back to substantiable info: Navigation now states only that magnetic north differs from true/grid north and changes over time, check current OS map and BGS tool at time of use — no specific 5-degree variation or 0.2 deg per year numbers claimed as fact in guide text — sources note BGS supplies data and tool. First-aid stripped to NHS sources only — each item says See NHS page for full guidance, with disclaimer aide-memoire only not training, call 999.<br>
-        5. Kept v0.3.6 hardening: collision-safe corrupt backup keys via generateUniqueCorruptKey with existence check and abort, legacy raw preservation checked before migration, safe DOM via textContent and element creation for all localStorage-derived content, full validation on load/migration/import via same schema, byte-size via TextEncoder and Blob fallback.<br>
-        6. Kept design and functionality: Tasks, Notes, Mission Log, Field Guide, Backup unchanged structure — no AI, no external deps, no cloud services, accounts, subscriptions or new features — repair not redesign.<br>
-        7. Preserved project boundaries: dev only build, did not modify live v0.1 version or main branch — v0.1-safe untouched.
-      </p></div></details>
-      <div class="card" style="background:#fff;margin-top:12px"><h2>Remaining Known Limitations — static review only — needs real browser/Android testing</h2><p class="small">
-        - No browser or Android testing claimed for v0.3.7 — static review only — needs testing: Chrome, Firefox, Safari, Android WebView via GitHub Pages https origin, file origin behavior, quota exceeded handling, persistence after close/reopen, export download, clipboard, import, safety backup restore, wipe, persistence test canary.<br>
-        - Storage depends on browser quota and origin — file origin varies, GitHub Pages https origin recommended for stable Android — test both origins.<br>
-        - Safety and corrupt backups stored in same origin — clearing browser data wipes everything including recovery copies — verified external backup required — test clear behavior.<br>
-        - Simple djb2 hash is non-cryptographic — detects accidental changes only, not malicious tampering — persistence test is accidental-change check only.<br>
-        - Clear All iterates harcom_ keys — if storage blocked during iteration some keys may remain — failure reported but manual browser clear may be needed — needs testing with full storage.<br>
-        - Export download success cannot be verified by app — user must manually open JSON and check — needs testing on Android Downloads.<br>
-        - Field Guide aide-memoire only — not replacement for qualified training, not certified, check official NHS, MREW, OS, BGS sources before field use — unsupported magnetic prediction removed in v0.3.7 — navigation stripped to check map + BGS tool.<br>
-        - No service worker or PWA offline caching yet — single file works offline once loaded but no installable cache — needs PWA testing if added later.<br>
-        - v0.1-safe remains untouched on main — this is dev build only — do not deploy to main until Rook approves.<br>
-        - Corrupt and safety backup key generation abort if uniqueness cannot be established after 50 attempts — user must retry or free space — prevents silent overwrite — needs quota-full testing.<br>
-        - Migration read-back validation added in v0.3.7 — writes harcom_data then reads back and re-validates before deleting legacy keys — if read-back fails legacy keys NOT deleted — needs testing with corrupt data, full quota, blocked storage.
-      </p></div>
-    </div>
+      
+      
+      
   </div>
 
   <div class="footer">
-    <div><span class="pill">Reliability first</span><span class="pill">Survival second</span><span class="pill">Polish third</span><span class="pill">AI last</span><span class="pill">v0.1-safe untouched</span><span class="pill">v0.3.8 repair — exact raw verification</span><span class="pill">No wrappers</span><span class="pill">Prediction removed</span></div>
+    <div><span class="pill">Reliability first</span><span class="pill">Survival second</span><span class="pill">Polish third</span><span class="pill">AI last</span></div>
     <div style="margin-top:10px" id="counts"></div>
-    <div style="margin-top:6px" id="lastTest"></div>
-    <div style="margin-top:12px" class="row"><button class="secondary" id="runTxTests">Run Transaction Failure Tests</button><button class="secondary" id="runPersistTest">Test Persistence — combined hash plus canary — accidental-change check</button><button class="danger" id="wipeBtn">Clear ALL Harcom Data (incl. backups and tests) — requires DELETE</button></div>
-    <div style="margin-top:10px" class="small">Built for anyone who works where signal does not — field teams, rangers, volunteers, woodland workers, and first testers like Viking. Field Companion must remain useful when absolutely everything else stops working. No internet. No AI. No subscriptions. No dependency on somebody else server.</div>
-    <div style="margin-top:6px" class="small">Visual polish candidate built on the Repair 2 transaction fix. User-led Samsung checks passed for core task, backup, import and restore flows. Isolated failure-injection, independent review and final release checks remain outstanding. Not release certified.</div>
+    <div style="margin-top:6px;display:none" id="lastTest"></div>
+    <div style="margin-top:12px;display:none" class="row"><button class="secondary" id="runTxTests">Run Transaction Failure Tests</button><button class="secondary" id="runPersistTest">Test Persistence</button></div>
+    <div style="margin-top:12px" class="row"><button class="danger" id="wipeBtn">Clear all data</button></div>
+    <div style="margin-top:8px" class="small">Your data stays in this browser. Export a backup regularly.</div>
   </div>
-</div>
 
 <script>
 function isStorageAvailable(){
