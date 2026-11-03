@@ -12,7 +12,7 @@ assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README o
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
 assert.ok(html.includes("14 illustrated species cards"), "species guide card count notice missing");
-assert.ok(html.includes("Never eat any wild mushroom or berry"), "species safety disclaimer missing");
+assert.ok(html.includes("DO NOT EAT ANY WILD MUSHROOM OR BERRY"), "species safety disclaimer missing");
 assert.ok(html.includes("Do not induce vomiting"), "poisoning response must prohibit induced vomiting");
 assert.ok(html.includes("NHS — Poisoning and emergency advice"), "NHS poisoning reference missing");
 assert.equal((html.match(/class="species-card"/g)||[]).length,14,"expected 14 dangerous species illustrated cards");
