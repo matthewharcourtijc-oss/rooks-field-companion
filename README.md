@@ -1,3 +1,10 @@
+
+## HARCOM Industries logo branch
+
+- The official HARCOM Industries Viking-head SVG is included as `assets/harcom-logo.svg` and precached by the offline app shell.
+- The service-worker cache version is `v0.9.10`; the published product release metadata remains v0.9.9 until a separately approved release.
+- This branding change is isolated in a pull request and is not live until validation and deployment complete.
+
 # Rook's Field Companion — HARCOM Field Edition
 
 ## v0.9.9 — Dangerous fungi & berries guide
