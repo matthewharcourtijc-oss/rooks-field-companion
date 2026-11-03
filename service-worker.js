@@ -1,5 +1,5 @@
 const CACHE_NAME="harcom-field-companion-v0.5";
-const APP_SHELL=["./","./index.html","./manifest.json","./icon.svg"];
+const APP_SHELL=["./","./index.html","./manifest.json","./icon.svg"].map(path=>new URL(path,self.registration.scope).href);
 self.addEventListener("install",event=>{
   event.waitUntil((async()=>{
     const cache=await caches.open(CACHE_NAME);
@@ -26,7 +26,7 @@ self.addEventListener("fetch",event=>{
         if(response&&response.ok){const cache=await caches.open(CACHE_NAME);cache.put(request,response.clone());}
         return response;
       }catch(error){
-        return (await caches.match(request))||(await caches.match("./index.html"))||Response.error();
+        return (await caches.match(request))||(await caches.match(new URL("./index.html",self.registration.scope).href))||Response.error();
       }
     })());
     return;
