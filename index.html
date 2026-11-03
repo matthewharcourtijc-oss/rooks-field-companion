@@ -1102,7 +1102,7 @@ async function loadAll(){
 
 function updateCounts(){
   const countsEl=document.getElementById('counts');
-  if(countsEl) countsEl.textContent = `${tasks.length} tasks · ${notes.length} logs · ${logs.length} logs · ${storageAvailable.ok&&!corruptDetected?'Saved on this device':'Saving paused to protect your existing information'}`;
+  if(countsEl) countsEl.textContent = `${tasks.length} tasks · ${notes.length} notes · ${logs.length} logs · ${storageAvailable.ok&&!corruptDetected?'Saved on this device':'Saving paused to protect your existing information'}`;
   const d=document.getElementById('netDot'), t=document.getElementById('netText'), origin=document.getElementById('originText');
   if(origin) origin.textContent = location.origin + ' (' + location.protocol + ')';
   if(location.protocol==='file:'){
