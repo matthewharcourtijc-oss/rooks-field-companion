@@ -7,7 +7,7 @@ const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 
 assert.match(html, /Rook's Field Companion — v0\.5\.2 Unified Field Edition/);
-for (const id of ["tasks", "notes", "log", "guide", "backup", "priorities", "trauma", "firstaid", "shelter", "fire", "water", "navigation", "rescue", "fieldcraft", "remote-care", "sanitation"]) {
+for (const id of ["tasks", "notes", "log", "guide", "backup", "priorities", "trauma", "firstaid", "shelter", "fire", "water", "navigation", "rescue", "fieldcraft", "remote-care", "sanitation", "campcraft", "knots", "firecraft", "watercraft", "navigation-practice", "field-tools", "camp-systems", "signalling"]) {
   assert.match(html, new RegExp('\\bid="' + id + '"'), "missing required panel or manual section: " + id);
 }
 
@@ -35,4 +35,4 @@ assert.match(worker, /harcom-field-companion-v0\.5\.2/);
 assert.doesNotMatch(html, /<script[^>]+src=["']https?:/i, "remote scripts break offline-first operation");
 assert.doesNotMatch(html, /fonts\.googleapis\.com/i, "hosted fonts break offline-first operation");
 
-console.log("Rook's Field Companion v0.5.2 validation passed.");
+console.log("Rook's Field Companion v0.6.0 validation passed.");
