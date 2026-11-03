@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rook's Field Companion — v0.6.1 Unified Field Edition</title>
+<title>Rook's Field Companion — v0.6.2 Unified Field Edition</title>
 <meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
@@ -152,7 +152,7 @@ a:hover{color:#fff}
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.6.1 • UNIFIED OFFLINE FIELD SYSTEM</div></div><span class="release-chip">FIELD EDITION</span></div>
+  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.6.2 • UNIFIED OFFLINE FIELD SYSTEM</div></div><span class="release-chip">FIELD EDITION</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
@@ -164,7 +164,7 @@ a:hover{color:#fff}
     <div class="hero-kicker"><span class="hero-pulse"></span> HARCOM FIELD SYSTEMS</div>
     <h2>Field tools. No fuss.</h2>
     <p>Plan. Record. Prepare. Keep your field notes and survival reference in one place.</p>
-    <div class="hero-foot"><span>FIELD COMPANION</span><span class="hero-version">HARCOM • V0.6.1</span></div>
+    <div class="hero-foot"><span>FIELD COMPANION</span><span class="hero-version">HARCOM • V0.6.2</span></div>
   </section>
 
   <div class="tabs" role="group" aria-label="Companion sections">
@@ -187,7 +187,7 @@ a:hover{color:#fff}
 
   <div id="guide" class="panel guide">
     <div class="manual-content">
-      <div class="hero"><div class="eyebrow">FIELD SYSTEMS / UK EDITION</div><h1>Stay capable.<br>Think clearly. Adapt.</h1><p>A practical UK field manual for preventing trouble, managing the essentials and caring for yourself or a companion when help is delayed or unavailable.</p><div class="muted">Version 0.6.0 • Offline reference. Practise skills before relying on them.</div></div>
+      <div class="hero"><div class="eyebrow">FIELD SYSTEMS / UK EDITION</div><h1>Stay capable.<br>Think clearly. Adapt.</h1><p>A practical UK field manual for preventing trouble, managing the essentials and caring for yourself or a companion when help is delayed or unavailable.</p><div class="muted">Version 0.6.2 • Offline reference. Practise skills before relying on them.</div></div>
 <div class="good"><b>Operating principle:</b> prevent, protect, stabilise, reassess. Use the skills and equipment you have; conserve energy, warmth, water and battery. Do not create a second casualty trying to be a hero.</div>
 <div class="call"><b>Know the red lines.</b> Severe bleeding, penetrating wounds, chest pain, stroke signs, major breathing difficulty, unconsciousness, anaphylaxis, serious burns, suspected hypothermia or major trauma need urgent professional care. In the UK call 999/112 when life is at risk. Self-reliance means doing the right things immediately—not delaying care that may be lifesaving.</div>
 <nav class="toc" aria-label="Manual sections">
@@ -402,7 +402,7 @@ a:hover{color:#fff}
 <li><a href="https://www.woodlandtrust.org.uk/blog/types-of-mushroom/" target="_blank" rel="noopener">Woodland Trust — common UK fungi</a></li>
 <li><a href="https://www.woodlandtrust.org.uk/visiting-woods/things-to-do/foraging/foraging-guidelines" target="_blank" rel="noopener">Woodland Trust — responsible foraging</a></li>
 </ul></section>
-<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.6.1<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
+<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.6.2<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
     </div>
   </div>
 
@@ -412,9 +412,9 @@ a:hover{color:#fff}
       <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Export JSON File (download)</button><button class="secondary" id="copyJsonBtn">Copy JSON to Clipboard</button></div>
       <div class="row" style="margin-top:8px"><button class="secondary" id="confirmBackupBtn">I have manually opened and checked downloaded JSON — Mark Backup as Verified</button></div>
       <div id="exportStatus" class="small" style="margin-top:8px"></div>
-      <div style="margin-top:12px"><label class="small">Import and Restore — validated, atomic preserved, read-back checked, safety backup collision-resistant:</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Import (atomic preserved + safety backup after confirm)</button><button class="secondary" id="validateBtn">Validate Only</button></div></div>
+      <div style="margin-top:12px"><label class="small">Import and Restore — validated, protected and verified:</label><textarea id="importArea" placeholder="Paste previously exported JSON here"></textarea><div class="row" style="margin-top:8px"><button id="importBtn">Import (confirm + verified safety backup)</button><button class="secondary" id="validateBtn">Validate Only</button></div></div>
       <div id="importStatus" class="small" style="margin-top:8px"></div>
-      <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Safety Backups — restoreable — collision-resistant</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">Created ONLY after you confirm import or restore and only if backup write succeeds. Key uniqueness checked, aborts if cannot establish unused key.</p></div>
+      <div style="margin-top:16px"><h2 style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--moss);margin-bottom:8px">Safety Backups — restorable — collision-resistant</h2><div id="safetyList"></div><p class="small" style="margin-top:8px">Created ONLY after you confirm import or restore and only if backup write succeeds. Key uniqueness checked, aborts if cannot establish unused key.</p></div>
       
       
       
