@@ -6,10 +6,15 @@ const html = fs.readFileSync("index.html", "utf8");
 const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 
-assert.ok(html.includes("Rook's Field Companion — v0.6.2 Unified Field Edition"), "app title/version mismatch");
-assert.ok(html.includes("SURVIVAL MANUAL v0.6.2"), "manual version mismatch");
-assert.ok(html.includes("Version 0.6.2 • Offline reference."), "manual hero version mismatch");
+assert.ok(html.includes("Rook's Field Companion — v0.7.0 Unified Field Edition"), "app title/version mismatch");
+assert.ok(html.includes("SURVIVAL MANUAL v0.7.0"), "manual version mismatch");
+assert.ok(html.includes("Version 0.7.0 • Offline reference."), "manual hero version mismatch");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
+
+assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
+assert.ok(html.includes("Offline manual search: local text only"), "manual search must remain local/offline");
+assert.match(html, /addEventListener\('input',update\)/, "manual search input handler missing");
+assert.ok(html.includes('id="manualSearchCount"'), "manual search result status missing");
 
 const requiredIds = [
   "tasks", "notes", "log", "guide", "backup",
@@ -55,4 +60,4 @@ assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
 
-console.log("Rook's Field Companion v0.6.2 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("Rook's Field Companion v0.7.0 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
