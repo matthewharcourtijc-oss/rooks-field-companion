@@ -24,7 +24,7 @@ permissions:
 
 concurrency:
   group: companion-android-twa
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   generate-and-validate:
@@ -148,6 +148,22 @@ jobs:
           "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging "$APK" | grep -q "launchable-activity:"
           sha256sum "$APK"
 
+      - name: Upload installable debug APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: field-companion-debug-apk
+          path: android/twa/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload generated Android project
+        uses: actions/upload-artifact@v7
+        with:
+          name: field-companion-android-source
+          path: android/twa/
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Install and launch on Android emulator
         timeout-minutes: 12
         uses: reactivecircus/android-emulator-runner@v2
@@ -187,21 +203,6 @@ jobs:
             This is not the permanent signed release. It opens the existing Field Companion PWA and does not alter its stored data.
           files: android/twa/app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Upload installable debug APK
-        uses: actions/upload-artifact@v7
-        with:
-          name: field-companion-debug-apk
-          path: android/twa/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
-          retention-days: 30
-
-      - name: Upload generated Android project
-        uses: actions/upload-artifact@v7
-        with:
-          name: field-companion-android-source
-          path: android/twa/
-          if-no-files-found: error
-          retention-days: 14
 
   signed-release:
     name: Build signed APK and asset-link candidate
