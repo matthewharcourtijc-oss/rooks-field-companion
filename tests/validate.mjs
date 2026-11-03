@@ -7,12 +7,14 @@ const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
-assert.ok(html.includes("Rook's Field Companion | HARCOM Industries"), "app title/brand mismatch");
-assert.ok(readme.includes("v0.9.3 — HARCOM Field Edition"), "README release version is stale");
+assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
+assert.ok(readme.includes("v0.9.4 — HARCOM Industrial Identity"), "README release version is stale");
+assert.ok(html.includes('id="harcom-identity-v094"'), "HARCOM visual identity layer missing");
+assert.ok(html.includes("<h1>FIELD COMPANION</h1>"), "clean product title missing");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
 assert.ok(manifest.name.includes("HARCOM Industries"), "manifest brand name is stale");
 assert.ok(html.includes("FIELD MANUAL"), "manual brand footer missing");
-assert.ok(html.includes("FIELD KNOWLEDGE • PRACTICAL TOOLS • OFFLINE READY"), "consumer-facing product descriptor missing");
+assert.ok(html.includes("INDEPENDENCE THROUGH KNOWLEDGE • OFFLINE READY"), "consumer-facing product descriptor missing");
 assert.ok(html.includes("HARCOM INDUSTRIES"), "prominent consumer brand missing");
 assert.ok(html.includes("FIELD READY"), "consumer-facing field-ready label missing");
 assert.ok(!html.includes("single atomic key harcom_data"), "developer storage diagnostics leaked into consumer counts");
@@ -134,4 +136,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("Rook's Field Companion v0.9.3 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("HARCOM Field Companion v0.9.4 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
