@@ -1142,9 +1142,9 @@ function renderTasks(){
     const txtEls=div.getElementsByClassName('txt'); if(txtEls.length>0) txtEls[0].textContent=item.text;
     const metaEls=div.getElementsByClassName('meta'); if(metaEls.length>0) metaEls[0].textContent=new Date(item.createdAt).toLocaleString();
     const inputs=div.getElementsByTagName('input'); const cb=inputs.length>0?inputs[0]:null;
-    if(cb){ cb.checked=!!item.completed; cb.onchange=async()=>{ const nextTasks=tasks.map(x=>x.id===item.id?{...x,completed:cb.checked}:x); const r=await commitCombined(nextTasks,notes,logs); if(!r.ok){cb.checked=!!item.completed; alert('Save failed ('+r.reason+') — completion not saved.'); return;} tasks=nextTasks; renderTasks(); updateCounts(); }; }
+    if(cb){ cb.checked=!!item.completed; cb.onchange=async()=>{ const nextTasks=tasks.map(x=>x.id===item.id?{...x,completed:cb.checked}:x); const r=await commitCombined(nextTasks,notes,logs); if(!r.ok){cb.checked=!!item.completed; alert('That change could not be saved. Your existing information has been kept.'); return;} tasks=nextTasks; renderTasks(); updateCounts(); }; }
     const btns=div.getElementsByTagName('button'); const delBtn=btns.length>0?btns[btns.length-1]:null;
-    if(delBtn){ delBtn.onclick=async()=>{ const newTasks=tasks.filter(x=>x.id!==item.id); const r=await commitCombined(newTasks,notes,logs); if(!r.ok){alert('Delete failed ('+r.reason+') — not deleted. Export and free space.'); return;} tasks=newTasks; renderTasks(); updateCounts(); }; }
+    if(delBtn){ delBtn.onclick=async()=>{ const newTasks=tasks.filter(x=>x.id!==item.id); const r=await commitCombined(newTasks,notes,logs); if(!r.ok){alert('This item could not be deleted. Your saved information has not been changed.'); return;} tasks=newTasks; renderTasks(); updateCounts(); }; }
     el.appendChild(div);
   }
 }
@@ -1176,7 +1176,7 @@ function renderLogs(){
     div.innerHTML=`<div style="flex:1"><div class="txt"></div></div><button class="secondary">Delete</button>`;
     const txtEls=div.getElementsByClassName('txt'); if(txtEls.length>0) txtEls[0].textContent=`[${time}] ${l.text}`;
     const btns=div.getElementsByTagName('button'); const delBtn=btns.length>0?btns[0]:null;
-    if(delBtn){ delBtn.onclick=async()=>{ const newLogs=logs.filter(x=>x.id!==l.id); const r=await commitCombined(tasks,notes,newLogs); if(!r.ok){alert('Delete failed ('+r.reason+') — not deleted.'); return;} logs=newLogs; renderLogs(); updateCounts(); }; }
+    if(delBtn){ delBtn.onclick=async()=>{ const newLogs=logs.filter(x=>x.id!==l.id); const r=await commitCombined(tasks,notes,newLogs); if(!r.ok){alert('This item could not be deleted. Your saved information has not been changed.'); return;} logs=newLogs; renderLogs(); updateCounts(); }; }
     el.appendChild(div);
   }
 }
@@ -1202,12 +1202,12 @@ document.getElementById('addNote').onclick=async()=>{
 };
 document.getElementById('clearNote').onclick=()=>{document.getElementById('noteTitle').value=''; document.getElementById('noteText').value='';};
 document.getElementById('addLog').onclick=async()=>{
-  if(corruptDetected){alert('Corrupt data — restore first.'); return;}
+  if(corruptDetected){alert('Your saved information needs attention. Restore from a safety copy before continuing.'); return;}
   const i=document.getElementById('logInput'); const v=i.value.trim(); if(!v) return;
   const rec={id:uid(),text:v,timestamp:Date.now()};
   const nextLogs=[...logs,rec];
   const r=await commitCombined(tasks,notes,nextLogs);
-  if(!r.ok){alert('Storage failed ('+r.reason+')'); return;}
+  if(!r.ok){alert('Your information could not be saved. Your existing information has been kept. Try again.'); return;}
   logs=nextLogs; i.value=''; renderLogs(); updateCounts();
 };
 document.getElementById('logInput').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('addLog').click()});
@@ -1270,7 +1270,7 @@ document.getElementById('exportJsonBtn').onclick=()=>{
     const es=document.getElementById('exportStatus');
     if(es) es.textContent='Download triggered — size '+byteSize+' bytes measured via TextEncoder — app cannot verify file saved. Please manually open file in Downloads, verify it contains your tasks, notes, logs, check file size above zero, then click confirm button below to mark backup verified. URL revoked in 2s.';
     setTimeout(()=>{try{URL.revokeObjectURL(url);}catch{}},2000);
-  }catch(e){alert('Export failed: '+e.message); const es=document.getElementById('exportStatus'); if(es) es.textContent='Export failed: '+e.message;}
+  }catch(e){alert('The backup could not be created. Check available space and try again.'); const es=document.getElementById('exportStatus'); if(es) es.textContent='The backup could not be created. Check available space and try again.';}
 };
 document.getElementById('copyJsonBtn').onclick=async()=>{
   try{
@@ -1282,10 +1282,10 @@ document.getElementById('copyJsonBtn').onclick=async()=>{
 document.getElementById('confirmBackupBtn').onclick=async()=>{
   try{
     const r=await safeSet(LS_B,Date.now());
-    if(!r.ok){alert('Failed to mark backup verified: '+r.reason); return;}
+    if(!r.ok){alert('The backup could not be confirmed. Check that you have saved and opened the exported file, then try again.'); return;}
     updateCounts();
     const es=document.getElementById('exportStatus'); if(es) es.textContent='Backup confirmed at '+new Date().toLocaleString()+'. Keep the exported copy somewhere safe.';
-  }catch(e){alert('Failed to mark backup: '+e.message);}
+  }catch(e){alert('The backup could not be confirmed. Try again.');}
 };
 document.getElementById('validateBtn').onclick=()=>{
   const txt=document.getElementById('importArea').value.trim(); const st=document.getElementById('importStatus');
@@ -1441,9 +1441,9 @@ function checkPersistenceOnLoad(){
 }
 
 document.getElementById('wipeBtn').onclick=async()=>{
-  const confirm1=confirm('Clear ALL existing Harcom keys? A verified recovery snapshot will be retained automatically. Export and manually verify a separate backup first!');
+  const confirm1=confirm('Clear all saved tasks, notes and logs? The app will keep a safety copy first. Export a separate backup before continuing.');
   if(!confirm1) return;
-  const confirm2=prompt('Type DELETE to confirm clearing all existing Harcom keys:');
+  const confirm2=prompt('Type DELETE to confirm clearing all saved information:');
   if(confirm2!=='DELETE'){alert('Cancelled — you must type DELETE exactly.'); return;}
   let keysToRemove=[];
   const wipeResult=await withStorageLock(async()=>{
@@ -1472,7 +1472,7 @@ document.getElementById('wipeBtn').onclick=async()=>{
   }
   tasks=[]; notes=[]; logs=[]; clearCorruptionState(); renderTasks(); renderNotes(); renderLogs(); updateCounts();
   const lt=document.getElementById('lastTest'); if(lt) lt.textContent='All saved information has been cleared. A safety copy was retained.';
-  alert('All pre-existing Harcom keys cleared — '+keysToRemove.length+' keys deleted. Verified recovery snapshot retained as '+(wipeResult.recoveryKey||'unknown')+'.');
+  alert('All saved information has been cleared. A safety copy was retained.');
 };
 
 
