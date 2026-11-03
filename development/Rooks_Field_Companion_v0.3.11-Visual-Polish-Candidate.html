@@ -66,7 +66,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-ser
 header{padding:15px clamp(14px,3vw,28px);background:rgba(15,21,27,.96);border-bottom:1px solid #526673;box-shadow:0 8px 30px #0005;backdrop-filter:blur(14px)}
 .brand{gap:13px;max-width:1160px;margin:0 auto;position:relative}
 .helm{width:68px;height:82px;flex:0 0 68px;display:flex;align-items:center;justify-content:center;border:0;border-radius:0;background:transparent;color:#14212a;font-size:22px;letter-spacing:-.08em;box-shadow:none;padding:0}
-.helm .harcom-logo{width:68px;height:82px;object-fit:contain;display:block}.helm [hidden]{display:none!important}
+.helm{font-weight:900;font-size:28px;color:#f08a36;border:1px solid #526572;border-radius:8px;background:#202a33}
 .brand-overline{font-size:9px;font-weight:900;letter-spacing:.2em;color:var(--ice)}
 .brand-overline span{color:#8d9ca7;font-weight:600}
 h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:clamp(15px,2.5vw,20px);letter-spacing:.11em;color:#f3f8fa;line-height:1.2;margin:3px 0}
@@ -125,7 +125,7 @@ a{color:#a9dff1}
 a:hover{color:#fff}
 @media(min-width:760px){.tabs{top:0}.panel .card{padding:22px}.mission-hero{padding-top:27px;padding-bottom:19px}}
 @media(max-width:560px){
- header{padding:12px 13px}.helm{width:58px;height:70px;flex-basis:58px}.helm .harcom-logo{width:58px;height:70px}.brand{gap:10px}.brand-overline{font-size:8px}.tag{font-size:8px;max-width:235px;line-height:1.4}.release-chip{font-size:8px;padding:4px 6px;align-self:flex-start;margin-top:3px}
+ header{padding:12px 13px}.helm{width:58px;height:70px;flex-basis:58px}.brand{gap:10px}.brand-overline{font-size:8px}.tag{font-size:8px;max-width:235px;line-height:1.4}.release-chip{font-size:8px;padding:4px 6px;align-self:flex-start;margin-top:3px}
  .status{font-size:9px;gap:8px}.wrap{padding-top:13px}.mission-hero{padding:18px 16px 14px}.mission-hero p{font-size:12px}.hero-foot{gap:7px 12px;font-size:8px}.hero-version{margin-left:0;width:100%}
  .tabs{overflow-x:auto;justify-content:flex-start}.tab{flex:0 0 auto;min-width:66px;padding:10px 9px;font-size:9px}
  .row{gap:7px}.row button{flex:0 0 auto}input[type=text],textarea{font-size:16px}
@@ -137,7 +137,7 @@ a:hover{color:#fff}
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" aria-label="Harcom Industries logo"><img class="harcom-logo" src="../assets/harcom-logo.svg" alt="Harcom Industries" onerror="this.nextElementSibling.hidden=false;this.remove()"><span hidden>H</span></div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.3.11 • TRANSACTION REPAIR • OFFLINE-FIRST FIELD TOOL</div></div><span class="release-chip">DEV BUILD</span></div>
+  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.3.11 • TRANSACTION REPAIR • OFFLINE-FIRST FIELD TOOL</div></div><span class="release-chip">DEV BUILD</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
@@ -147,8 +147,8 @@ a:hover{color:#fff}
 
   <section class="mission-hero" aria-label="Field Companion introduction">
     <div class="hero-kicker"><span class="hero-pulse"></span> FIELD OPERATIONS / LOCAL SYSTEM</div>
-    <h2>Stay sharp. Stay self-reliant.</h2>
-    <p>Your tasks, observations, mission records and field reference — kept on this device, ready when the signal isn't.</p>
+    <h2>Field tools. No fuss.</h2>
+    <p>Plan tasks. Record what matters. Use the field guide. Back up your data.</p>
     <div class="hero-foot"><span>01 / PLAN</span><span>02 / RECORD</span><span>03 / RECOVER</span><span class="hero-version">HARCOM • V0.3.11</span></div>
   </section>
 
@@ -171,76 +171,21 @@ a:hover{color:#fff}
   </div>
 
   <div id="guide" class="panel guide">
-    <div class="card"><h2>Field Guide — offline aide-memoire — reviewed v0.3.7 — stripped to substantiable info</h2><p class="small">Not a replacement for training. If in doubt, leave it out. Call 999 or 112. No rescue or climbing instruction here — seek qualified training. All guidance below is aide-memoire only, not certified. Check official sources before field use.</p><p class="small"><span class="pill">Trees</span><span class="pill">Fungi SAFEST</span><span class="pill">Knots BASIC ONLY</span><span class="pill">Weather NOT DEPENDABLE ALONE</span><span class="pill">Navigation CHECK MAP + BGS</span><span class="pill">First Aid NHS SOURCES ONLY</span></p></div>
-
-    <details open><summary>Trees — ID — multiple features required</summary>
-      <ul><li>Use leaf, bark, buds, fruit, habitat, season — single feature never enough. Log measurements. Paper tree guide primary. Note disease like ash dieback alters appearance.</li></ul>
-    </details>
-
-    <details><summary>Fungi — safest approach — NOT identification</summary>
-      <div class="alert"><b>Harcom safest rule:</b> Do not eat any wild mushroom unless an appropriately qualified expert has positively identified it in person. This is NOT a foraging guide.</div>
-      <ul><li>Log location, trees, time, photos of cap, gills, stem, base, habitat — do not pick for consumption unless expert present. Keep sample, note time eaten, call 111, do not induce vomiting. 999 with grid + What3Words if needed. No visual test proves safe.</li></ul>
-    </details>
-
-    <details><summary>Knots — basic examples — NOT rescue or climbing instruction</summary>
-      <div class="alert"><b>Disclaimer:</b> Basic illustrations only. Not rescue, climbing, or load-bearing instruction. Actual performance depends on rope, load, dressing, and training. Seek qualified instruction for safety-critical use.</div>
-      <div class="knot-grid">
-        <div class="knot"><b>Bowline — example loop</b><div class="diagram">1. Loop up
-2. Up through loop
-3. Around line
-4. Back down loop
-Dress and check</div><small>Example — needs training</small></div>
-        <div class="knot"><b>Clove Hitch — example attach</b><div class="diagram">1. Wrap post
-2. Cross over
-3. Wrap again
-4. Tuck under
-Tension both</div><small>Example temporary lashing — can slip</small></div>
-        <div class="knot"><b>Taut-line — example adjustable</b><div class="diagram">1. 2 wraps inside
-2. 1 wrap outside
-3. Slide adjust
-Check</div><small>Example tarp line — not for climbing</small></div>
-        <div class="knot"><b>Figure-8 — example stopper</b><div class="diagram">1. Loop
-2. Tail behind
-3. Up through loop
-4. Tighten</div><small>Example stopper only</small></div>
-      </div>
-    </details>
-
-    <details><summary>Weather — not dependable alone</summary>
-      <div class="alert"><b>Disclaimer:</b> Single observations are NOT dependable standalone warnings. Use multiple sources and official forecasts before trip. Log actual conditions.</div>
-      <ul><li>Cloud types are indicators not forecasts. Local topography alters wind. Best practice: check Met Office before departure.</li></ul>
-    </details>
-
-    <details><summary>Navigation — OS symbols, bearings — check current map + BGS tool — no prediction</summary>
-      <ul>
-        <li><b>OS symbols UK:</b> Brown contours, blue water, green woodland, black manmade. Close contours steep. V points uphill along streams. Paper OS map primary.</li>
-        <li><b>Bearings:</b> Map to ground align north. Edge from you to target, rotate bezel north, red in shed. Handrail, catching, aiming off, attack points at night. Seek qualified training for night navigation.</li>
-        <li><b>Magnetic declination — substantiable only:</b> Magnetic north differs from true north and grid north and changes over time. The amount varies across UK. Check your current Ordnance Survey map for the declination information printed on it. Use British Geological Survey tool which calculates angle between grid north and magnetic north for your location. Do not rely on this aide-memoire for declination value — check map + BGS at time of use.</li>
-        <li>Removed in v0.3.7: Previous versions included specific prediction about triple alignment leaving England at triple-alignment location</li>
-      </ul>
-    </details>
-
-    <details><summary>First Aid — NHS sources only — aide-memoire only — stripped to substantiable</summary>
-      <div class="alert"><b>Call 999 or 112. Police then Mountain Rescue if hills. Grid + What3Words + what happened + casualties. Not training. Check NHS and MREW sources listed below.</b></div>
-      <ul>
-        <li><b>Hypothermia — NHS:</b> Dangerous drop below 35C, medical emergency, Go to A&E or call 999. See NHS page for full guidance. Shelter, insulation from ground, dry clothes, gentle handling. Warm non-alcoholic drink + sugary food ONLY if fully awake and can swallow safely. Usually treated in hospital.</li>
-        <li><b>Heat exhaustion vs Heatstroke — NHS 30-min rule:</b> Heat exhaustion does NOT usually need emergency help IF you can cool down within 30 minutes. If it turns into heatstroke, treat as emergency. See NHS page for signs. If still hot after 30min cooling or temp above 40C or confusion, call 999.</li>
-        <li><b>Anaphylaxis — NHS positioning:</b> Lie flat legs raised if possible. If breathing difficult allow to raise shoulders or sit up slowly. If pregnant lie on left side. Do NOT allow to stand or walk at any time even if feeling better due to cardiac arrest risk. Avoid sudden posture change. If vomiting or unconscious breathing recovery position. Adrenaline pen if prescribed — auto-injection pen — stay till ambulance, second dose after 5min if no improvement. See NHS pages.</li>
-        <li><b>Distress — MREW:</b> Both torch and whistle can be used to signal for help: Six good long blasts in a minute. Stop for one minute. Repeat. Continue until someone reaches you and do not stop because you hear a reply. International: six blasts or six flashes in one minute then minute pause then repeat. Full guidance on Mountain Rescue England and Wales site.</li>
-      </ul>
-      <div class="card" style="background:#fff;margin-top:12px"><h2>Sources — individually dated — clickable — aide-memoire only — not certified — stripped to substantiable</h2><p class="small">
-        NHS Hypothermia — <a href="https://www.nhs.uk/conditions/hypothermia/" target="_blank" rel="noopener">nhs.uk hypothermia</a> — Page last reviewed 9 June 2023 — dangerous drop below 35C, medical emergency, Go to A&E or call 999<br><br>
-        NHS Heat exhaustion and heatstroke — <a href="https://www.nhs.uk/conditions/heat-exhaustion-heatstroke/" target="_blank" rel="noopener">nhs.uk heat</a> — Page last reviewed 28 May 2026 Next review due 28 May 2029 — does NOT usually need emergency help if cool down within 30 minutes, if turns into heatstroke emergency<br><br>
-        NHS Allergies and Anaphylaxis — <a href="https://www.nhs.uk/conditions/anaphylaxis/" target="_blank" rel="noopener">nhs.uk anaphylaxis</a> and <a href="https://www.nhs.uk/conditions/allergies/" target="_blank" rel="noopener">nhs.uk allergies</a> — Allergies page last reviewed 5 March 2026 Next review due 5 March 2029 — lie down legs raised, if breathing difficult raise shoulders or sit up slowly, if pregnant left side, do not stand or walk — avoid sudden change<br><br>
-        Mountain Rescue England and Wales — Fact File 6: How to stay safe — <a href="https://www.mountain.rescue.org.uk/" target="_blank" rel="noopener">mountain rescue</a> — Both torch and whistle can be used to signal for help: Six good long blasts in a minute. Stop for one minute. Repeat. Continue until someone reaches you and do not stop because you hear a reply — International six blasts or six flashes in one minute then minute pause then repeat<br><br>
-        Ordnance Survey and BGS — Magnetic declination — <a href="https://www.ordnancesurvey.co.uk/" target="_blank" rel="noopener">ordnance survey</a> and <a href="https://www.bgs.ac.uk/" target="_blank" rel="noopener">bgs</a> — Magnetic data shown on OS maps supplied by BGS. BGS site includes tool which calculates angle between grid north and magnetic north — Check current map + BGS tool at time of use — Unsupported date and location prediction for triple alignment removed in v0.3.7<br><br>
-        Reviewed for v0.3.7: 2026-11-02 — Field Guide stripped to substantiable info only, no confident guesswork, no triple-alignment location</p></div>
-    </details>
-  </div>
+<div class="card"><h2>Field Guide</h2><p class="small">Quick UK countryside reference. Practise skills before relying on them.</p></div>
+<details open><summary>Emergency</summary><div class="alert"><b>Serious injury or immediate danger: call 999 or 112.</b> Give your location, hazards and what happened. Follow the call handler's instructions.</div><ul><li>Make the scene safe.</li><li>Do not move a seriously injured person unless they are in immediate danger.</li><li>Keep them sheltered and warm while help is coming.</li></ul></details>
+<details><summary>Shelter — examples</summary><p class="small">Basic shapes only. Avoid flood channels, exposed ridges and dead branches. Secure the shelter and keep an exit clear.</p><div class="knot-grid">
+<div class="knot"><b>A-frame tarp</b><svg viewBox="0 0 300 150" role="img" aria-label="A-frame tarp shelter diagram" style="width:100%;height:auto"><path d="M25 125H275M55 125L150 35L245 125" fill="none" stroke="#9edcf2" stroke-width="5"/><path d="M55 125L150 35L245 125" fill="none" stroke="#f08a36" stroke-width="2" stroke-dasharray="5 4"/><text x="150" y="145" text-anchor="middle" fill="#aebdc6" font-size="10">Ridge line • two sloping sides</text></svg><p class="small">Ridge line between two suitable anchor points.</p></div>
+<div class="knot"><b>Lean-to tarp</b><svg viewBox="0 0 300 150" role="img" aria-label="Lean-to tarp shelter diagram" style="width:100%;height:auto"><path d="M25 125H275M65 125V38L245 125" fill="none" stroke="#9edcf2" stroke-width="5"/><path d="M65 38L245 125" fill="none" stroke="#f08a36" stroke-width="2"/><text x="150" y="145" text-anchor="middle" fill="#aebdc6" font-size="10">High edge • sloping cover</text></svg><p class="small">Open front; angle away from the wind where possible.</p></div></div></details>
+<details><summary>Navigation</summary><div class="knot"><b>Compass points</b><svg viewBox="0 0 300 150" role="img" aria-label="Compass rose diagram" style="width:100%;height:auto"><circle cx="150" cy="72" r="52" fill="none" stroke="#536875" stroke-width="2"/><path d="M150 12L160 72L150 132L140 72Z" fill="#f08a36"/><path d="M150 12L140 72L150 132L160 72Z" fill="#9edcf2"/><text x="150" y="9" text-anchor="middle" fill="#f08a36" font-size="11">N</text><text x="218" y="76" fill="#aebdc6" font-size="10">E</text><text x="150" y="148" text-anchor="middle" fill="#aebdc6" font-size="10">S</text><text x="77" y="76" fill="#aebdc6" font-size="10">W</text></svg></div><ul><li>Lost? Stop. Do not keep walking and hope.</li><li>Check map, terrain and compass together.</li><li>Use a current map and check magnetic variation before setting a bearing.</li><li>If conditions worsen, seek help early.</li></ul></details>
+<details><summary>Water</summary><ul><li>Use treated water or a suitable filter.</li><li>Boiling kills many disease-causing organisms but does not remove chemical contamination or fuel.</li><li>Clear water is not automatically safe.</li></ul></details>
+<details><summary>Wild plants and fungi</summary><div class="alert"><b>Do not eat wild plants or fungi unless a suitably qualified expert has positively identified them.</b> Photos and apps cannot prove safety.</div><p class="small">Suspected poisoning: seek urgent medical advice. Serious symptoms: call 999.</p></details>
+<details><summary>Weather and ground</summary><ul><li>Check the Met Office forecast before setting out.</li><li>Watch wind, temperature, visibility and water levels.</li><li>Avoid fast or rising river crossings. Turn back early.</li><li>Tell someone your route and return time.</li></ul></details>
+<details><summary>Knots — practice list</summary><p class="small">Names only. Learn and practise with proper instruction. Never use these notes for climbing, rescue or life-safety loads.</p><div class="knot-grid"><div class="knot"><b>Bowline</b><p class="small">Fixed loop.</p></div><div class="knot"><b>Clove hitch</b><p class="small">Quick attachment; can slip.</p></div><div class="knot"><b>Figure-eight</b><p class="small">Stopper knot.</p></div><div class="knot"><b>Taut-line hitch</b><p class="small">Adjustable tensioning knot.</p></div></div></details>
+</div>
 
   <div id="backup" class="panel">
-    <div class="card"><h2>Backup and Recovery — v0.3.7 — read-back validated before delete, collision-safe, safe DOM, byte-size fixed</h2>
-      <p class="small">Fixes v0.3.6 to v0.3.7: migration now reads back harcom_data and validates before deleting legacy keys, triple-alignment location</p>
+    <div class="card"><h2>Backup</h2>
+      <p class="small">Save a copy of your data. Check it before relying on it. Restoring replaces the data currently on this device.</p>
       <div class="row" style="margin-top:12px"><button id="exportJsonBtn">Export JSON File (download)</button><button class="secondary" id="copyJsonBtn">Copy JSON to Clipboard</button></div>
       <div class="row" style="margin-top:8px"><button class="secondary" id="confirmBackupBtn">I have manually opened and checked downloaded JSON — Mark Backup as Verified</button></div>
       <div id="exportStatus" class="small" style="margin-top:8px"></div>
