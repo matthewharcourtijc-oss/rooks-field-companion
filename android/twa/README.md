@@ -32,9 +32,9 @@ The same release key must be retained for all future APK updates. Losing or chan
 
 A signed APK alone does not establish a verified TWA. Android/Chrome also needs the signing certificate SHA-256 fingerprint published at:
 
-`https://matthewharcourtijc-oss.github.io/rooks-field-companion/.well-known/assetlinks.json`
+`https://matthewharcourtijc-oss.github.io/.well-known/assetlinks.json`
 
-The fingerprint cannot be filled in until the dedicated release keystore exists. The Android build workflow produces a fingerprint report and an `assetlinks.json` candidate as artifacts. Review the fingerprint and publish that file to the PWA site's `.well-known/` directory only after confirming it belongs to the dedicated Companion key.
+The fingerprint cannot be filled in until the dedicated release keystore exists. The Android build workflow produces a fingerprint report and an `assetlinks.json` candidate as artifacts. **Important:** GitHub Pages project sites serve under `/rooks-field-companion/`, but Digital Asset Links must be served from the origin root at `/.well-known/assetlinks.json`. This repository cannot publish that root path through its project-site deployment. Before claiming verified full-screen TWA behaviour, publish the reviewed file from an account-level Pages site (`matthewharcourtijc-oss.github.io`) or a dedicated custom domain whose origin root you control. Do not put the file under `/rooks-field-companion/.well-known/`; Android will not use that path.
 
 Until the matching association is live, Chrome may show browser UI (Custom Tab fallback). Do not describe that build as a verified full-screen TWA.
 
