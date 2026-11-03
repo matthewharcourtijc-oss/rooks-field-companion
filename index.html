@@ -873,7 +873,7 @@ function updateCounts(){
     const w=document.getElementById('storageWarn');
     if(w && w.style.display==='none'){w.style.display='block'; w.textContent='Opened via file origin — localStorage varies per browser. For Android stable origin, test via GitHub Pages https origin.';}
   }
-  if(navigator.onLine){if(d) d.className='dot'; if(t) t.textContent='Online — but app does not need it';} else {if(d) d.className='dot off'; if(t) t.textContent='Offline — fully working';}
+  if(navigator.onLine){if(d) d.className='dot'; if(t) t.textContent='Online — offline cache prepares automatically';} else {if(d) d.className='dot off'; if(t) t.textContent=(navigator.serviceWorker&&navigator.serviceWorker.controller)?'Offline — cached app available':'Offline — open online once to prepare app';}
   let last=null; try{last=localStorage.getItem(LS_B);}catch{}
   const bs=document.getElementById('backupStatus');
   if(bs){
@@ -1415,6 +1415,20 @@ document.getElementById('runTxTests').onclick=async()=>{
 
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).catch(err=>{const n=document.getElementById('netText');if(n)n.textContent='offline cache unavailable';});});}
+</script>
+
+<script>
+(function(){
+  const hash=decodeURIComponent(location.hash.slice(1));
+  if(!hash)return;
+  const target=document.getElementById(hash);
+  const panel=target&&(target.classList.contains('panel')?target:target.closest('.panel'));
+  if(panel){
+    const tab=document.querySelector('.tab[data-tab="'+panel.id+'"]');
+    if(tab)tab.click();
+    if(target!==panel)setTimeout(()=>target.scrollIntoView({block:'start'}),80);
+  }
+})();
 </script>
 </body>
 </html>
