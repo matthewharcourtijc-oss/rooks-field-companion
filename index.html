@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rook's Field Companion — v0.6.2 Unified Field Edition</title>
+<title>Rook's Field Companion — v0.7.0 Clean Field Edition</title>
 <meta name="description" content="Offline-first field companion for tasks, notes, mission logs, practical field references and local backups.">
 <style>
 :root{--olive:#222b20;--stone:#e8e2d5;--paper:#faf6ec;--moss:#3d4f3a;--ink:#1a1e19;--rust:#b86a2c;--line:#d6d0c2;--alert:#8a3a2a;--ok:#4a7a4a}
@@ -144,6 +144,7 @@ a:hover{color:#fff}
 <style>
 #guide .manual-content{--bg:#101820;--panel:#1c2933;--panel2:#22323e;--line:#405462;--text:#edf5f8;--muted:#afc0c9;--ice:#bcecff;--orange:#f08a36;--red:#ff897b;--green:#9ed6b0;color:var(--text);font:15px/1.58 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;max-width:1040px;margin:0 auto;padding:8px 0 26px}
 #guide .manual-content header{position:sticky;top:0;z-index:5;background:#101820f2;border-bottom:1px solid var(--line);backdrop-filter:blur(12px);padding:12px max(16px,calc((100% - 1040px)/2))}#guide .manual-content .head{max-width:1040px;margin:auto;display:flex;align-items:center;gap:12px}#guide .manual-content .mark{width:42px;height:42px;display:grid;place-items:center;border:1px solid #607987;border-radius:8px;color:var(--orange);font-weight:900;font-size:22px}#guide .manual-content .brand{font-size:10px;letter-spacing:.18em;color:var(--ice);font-weight:800}#guide .manual-content .brand b{display:block;font-size:17px;letter-spacing:.06em;color:white}#guide .manual-content .back{margin-left:auto;color:var(--ice);font-size:12px}#guide .manual-content{max-width:1040px;margin:auto;padding:20px 16px 60px}#guide .manual-content .hero{padding:24px;border:1px solid #536a78;border-radius:15px;background:linear-gradient(120deg,#293d4a,#1a2933);margin-bottom:16px}#guide .manual-content .eyebrow{font:800 10px ui-monospace,monospace;letter-spacing:.18em;color:var(--ice)}#guide .manual-content h1{font-size:clamp(25px,5vw,40px);line-height:1.1;margin:9px 0}#guide .manual-content h2{font-size:21px;margin:0 0 12px;color:#f4fbff}#guide .manual-content h3{font-size:16px;margin:18px 0 7px;color:var(--ice)}#guide .manual-content p{margin:7px 0 12px}#guide .manual-content .muted{color:var(--muted);font-size:13px}#guide .manual-content .toc{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}#guide .manual-content .toc a,#guide .manual-content .tag{border:1px solid var(--line);border-radius:7px;padding:7px 10px;color:var(--ice);text-decoration:none;font-size:12px;background:#1b2932}#guide .manual-content section{scroll-margin-top:82px;margin:14px 0;padding:19px;border:1px solid var(--line);border-radius:13px;background:#1a2731}#guide .manual-content .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}#guide .manual-content .tile{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px}#guide .manual-content .tile b{display:block;color:var(--ice);margin-bottom:4px}#guide .manual-content .call{padding:12px 14px;border-radius:9px;margin:12px 0;border:1px solid #92564d;background:#392722;color:#ffe1db}#guide .manual-content .warn{padding:12px 14px;border-radius:9px;margin:12px 0;border:1px solid #8e713e;background:#382f20;color:#ffe6b7}#guide .manual-content .good{padding:12px 14px;border-radius:9px;margin:12px 0;border:1px solid #456d59;background:#20372c;color:#d9f5e3}#guide .manual-content ul,#guide .manual-content ol{padding-left:22px}#guide .manual-content li{margin:5px 0}#guide .manual-content .steps{counter-reset:step;list-style:none;padding:0}#guide .manual-content .steps li{counter-increment:step;padding:8px 0 8px 42px;position:relative;border-bottom:1px solid #ffffff12}#guide .manual-content .steps li:before{content:counter(step);position:absolute;left:0;top:7px;width:28px;height:28px;border-radius:7px;background:#334a58;color:var(--ice);display:grid;place-items:center;font-weight:900}#guide .manual-content figure{margin:12px 0;padding:10px;background:#111a21;border:1px solid var(--line);border-radius:10px}#guide .manual-content svg{display:block;width:100%;height:auto;max-height:260px}#guide .manual-content figcaption{font-size:11px;color:var(--muted);margin-top:6px}#guide .manual-content details{border:1px solid var(--line);border-radius:9px;background:#1d2b35;margin:9px 0;padding:11px 13px}#guide .manual-content summary{cursor:pointer;font-weight:800;color:var(--ice)}#guide .manual-content details[open] summary{margin-bottom:8px}#guide .manual-content a{color:#bcecff}#guide .manual-content a:hover{color:white}#guide .manual-content .source{font-size:12px;color:var(--muted)}#guide .manual-content .source a{margin-right:8px}#guide .manual-content table{width:100%;border-collapse:collapse;font-size:13px}#guide .manual-content th,#guide .manual-content td{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid var(--line)}#guide .manual-content th{color:var(--ice)}#guide .manual-content footer{padding:18px 0;color:var(--muted);font-size:12px}@media(max-width:560px){#guide .manual-content{padding:12px 11px 42px}#guide .manual-content .hero,#guide .manual-content section{padding:15px}#guide .manual-content .back{font-size:11px}#guide .manual-content .toc a{font-size:11px}}@media(prefers-reduced-motion:reduce){}
+#guide .manual-content .manual-search{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:10px;background:#17232c}#guide .manual-content .manual-search label{grid-column:1/-1;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ice)}#guide .manual-content .manual-search input{width:100%;min-width:0;padding:11px 12px;border:1px solid #526572;border-radius:8px;background:#101820;color:#edf5f8;font:14px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}#guide .manual-content .manual-search input:focus-visible{outline:3px solid #f08a36;outline-offset:2px}#guide .manual-content .manual-search .muted{font-size:10px;white-space:nowrap}#guide .manual-content .toc a[hidden],#guide .manual-content section[hidden]{display:none!important}
 #guide .manual-content .hero{margin-top:4px}
 #guide .manual-content section{scroll-margin-top:90px}
 #guide .manual-content figure svg{max-height:260px}
@@ -152,7 +153,7 @@ a:hover{color:#fff}
 </head>
 <body>
 <header>
-  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.6.2 • UNIFIED OFFLINE FIELD SYSTEM</div></div><span class="release-chip">FIELD EDITION</span></div>
+  <div class="brand"><div class="helm" aria-label="Field Companion mark">H</div><div class="brand-copy"><div class="brand-overline">HARCOM INDUSTRIES <span> / FIELD SYSTEMS</span></div><h1>ROOK'S FIELD COMPANION</h1><div class="tag">V0.7.0 • CLEAN OFFLINE FIELD SYSTEM</div></div><span class="release-chip">FIELD EDITION</span></div>
   <div class="status"><span id="netDot" class="dot"></span><span id="netText">checking origin…</span><span id="storageText"></span><span id="backupStatus"></span></div>
 </header>
 <div class="wrap">
@@ -164,7 +165,7 @@ a:hover{color:#fff}
     <div class="hero-kicker"><span class="hero-pulse"></span> HARCOM FIELD SYSTEMS</div>
     <h2>Field tools. No fuss.</h2>
     <p>Plan. Record. Prepare. Keep your field notes and survival reference in one place.</p>
-    <div class="hero-foot"><span>FIELD COMPANION</span><span class="hero-version">HARCOM • V0.6.2</span></div>
+    <div class="hero-foot"><span>FIELD COMPANION</span><span class="hero-version">HARCOM • V0.7.0</span></div>
   </section>
 
   <div class="tabs" role="group" aria-label="Companion sections">
@@ -187,9 +188,10 @@ a:hover{color:#fff}
 
   <div id="guide" class="panel guide">
     <div class="manual-content">
-      <div class="hero"><div class="eyebrow">FIELD SYSTEMS / UK EDITION</div><h1>Stay capable.<br>Think clearly. Adapt.</h1><p>A practical UK field manual for preventing trouble, managing the essentials and caring for yourself or a companion when help is delayed or unavailable.</p><div class="muted">Version 0.6.2 • Offline reference. Practise skills before relying on them.</div></div>
+      <div class="hero"><div class="eyebrow">FIELD SYSTEMS / UK EDITION</div><h1>Stay capable.<br>Think clearly. Adapt.</h1><p>A practical UK field manual for preventing trouble, managing the essentials and caring for yourself or a companion when help is delayed or unavailable.</p><div class="muted">Version 0.7.0 • Offline reference. Practise skills before relying on them.</div></div>
 <div class="good"><b>Operating principle:</b> prevent, protect, stabilise, reassess. Use the skills and equipment you have; conserve energy, warmth, water and battery. Do not create a second casualty trying to be a hero.</div>
 <div class="call"><b>Know the red lines.</b> Severe bleeding, penetrating wounds, chest pain, stroke signs, major breathing difficulty, unconsciousness, anaphylaxis, serious burns, suspected hypothermia or major trauma need urgent professional care. In the UK call 999/112 when life is at risk. Self-reliance means doing the right things immediately—not delaying care that may be lifesaving.</div>
+<div class="manual-search" role="search"><label for="manualSearch">Find in field manual</label><input id="manualSearch" type="search" autocomplete="off" placeholder="Search water, shelter, bleeding, knots…"><span id="manualSearchCount" class="muted" aria-live="polite">28 topics</span></div>
 <nav class="toc" aria-label="Manual sections">
 <a href="#priorities">First priorities</a><a href="#fieldcraft">Remote fieldcraft</a><a href="#trauma">Trauma & gunshots</a><a href="#remote-care">Remote casualty care</a><a href="#firstaid">First aid</a><a href="#shelter">Shelter</a><a href="#fire">Fire</a><a href="#water">Water</a><a href="#sanitation">Hygiene</a><a href="#food">Food & foraging</a><a href="#fungi">Mushrooms</a><a href="#navigation">Navigation</a><a href="#weather">Weather</a><a href="#rescue">Rescue</a><a href="#kit">Kit</a><a href="#campcraft">Campcraft</a><a href="#knots">Knots</a><a href="#firecraft">Firecraft</a><a href="#watercraft">Watercraft</a><a href="#navigation-practice">Navigation practice</a><a href="#field-tools">Tools & repairs</a><a href="#camp-systems">Longer stays</a><a href="#signalling">Signalling</a>
 </nav>
@@ -402,7 +404,7 @@ a:hover{color:#fff}
 <li><a href="https://www.woodlandtrust.org.uk/blog/types-of-mushroom/" target="_blank" rel="noopener">Woodland Trust — common UK fungi</a></li>
 <li><a href="https://www.woodlandtrust.org.uk/visiting-woods/things-to-do/foraging/foraging-guidelines" target="_blank" rel="noopener">Woodland Trust — responsible foraging</a></li>
 </ul></section>
-<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.6.2<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
+<footer>HARCOM INDUSTRIES / FIELD SYSTEMS • SURVIVAL MANUAL v0.7.0<br>Use responsibly. Practise the skills. Keep your head. Know when the risk is beyond you.</footer>
     </div>
   </div>
 
@@ -1547,6 +1549,36 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.s
     if(tab)tab.click();
     if(target!==panel)setTimeout(()=>target.scrollIntoView({block:'start'}),80);
   }
+})();
+</script>
+<script>
+/* Offline manual search: local text only; no network, storage or external dependency. */
+(function(){
+  const input=document.getElementById('manualSearch');
+  const count=document.getElementById('manualSearchCount');
+  const manual=document.querySelector('#guide .manual-content');
+  if(!input||!count||!manual)return;
+  const sections=[...manual.querySelectorAll('section[id]')];
+  const links=[...manual.querySelectorAll('.toc a[href^="#"]')];
+  function update(){
+    const query=input.value.trim().toLocaleLowerCase();
+    let shown=0;
+    for(const section of sections){
+      const match=!query||section.textContent.toLocaleLowerCase().includes(query);
+      section.hidden=!match;
+      if(match)shown++;
+    }
+    for(const link of links){
+      const target=sections.find(section=>section.id===decodeURIComponent(link.getAttribute('href').slice(1)));
+      link.hidden=!!query&&(!target||target.hidden);
+    }
+    count.textContent=query?(shown+' of '+sections.length+' topics'):(sections.length+' topics');
+  }
+  input.addEventListener('input',update);
+  input.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){input.value='';update();input.blur();}
+  });
+  update();
 })();
 </script>
 </body>
