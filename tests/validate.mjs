@@ -50,7 +50,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.6\.1/);
+assert.match(worker, /harcom-field-companion-v0\.6\.2/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
