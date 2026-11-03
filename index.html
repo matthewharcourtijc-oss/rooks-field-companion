@@ -320,6 +320,12 @@ button,.manual-link{border-radius:6px}
 #guide .manual-content .species-legend span{border:1px solid #536b78;border-radius:6px;padding:5px 8px;font-size:10px;color:#c6dce5;background:#172630}
 @media(max-width:560px){#guide .manual-content .species-grid{grid-template-columns:1fr}#guide .manual-content .species-card{padding:11px}}
 </style>
+<style>
+/* HARCOM Android install panel — no app data or storage changes. */
+.install-panel{margin:0 0 16px;padding:16px;border:1px solid #587382;border-left:3px solid #f08a36;border-radius:12px;background:linear-gradient(120deg,#1d303b,#17242d);box-shadow:0 8px 22px #0003}
+.install-panel[hidden]{display:none!important}.install-head{display:flex;align-items:center;gap:10px}.install-mark{width:36px;height:36px;display:grid;place-items:center;border:1px solid #688493;border-radius:9px;color:#bcecff;font-size:19px;font-weight:900}.install-head strong{display:block;color:#f3f8fa;font-size:13px;letter-spacing:.08em}.install-head small{display:block;color:#aebdc6;font-size:11px}.install-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.install-actions button{min-height:44px}.install-help{margin-top:10px;color:#b9c9d1;font-size:11px;line-height:1.6}.install-help ol{padding-left:20px;margin-top:6px}.install-state{margin-top:9px;color:#bcecff;font-size:11px;font-weight:700}.install-secondary{background:#243641!important;color:#d8edf5!important;border:1px solid #587382!important;box-shadow:none!important}
+@media(min-width:700px){.install-panel{display:flex;align-items:center;justify-content:space-between;gap:18px}.install-panel[hidden]{display:none!important}.install-copy{flex:1}.install-actions{margin-top:0}}
+</style>
 </head>
 <body>
 <header>
@@ -350,6 +356,15 @@ button,.manual-link{border-radius:6px}
     <div class="hero-foot"><span>KNOWLEDGE</span><span>FIELDCRAFT</span><span>PERSONAL RECORD</span><span class="hero-version">HARCOM INDUSTRIES</span></div>
   </section>
 
+<section class="install-panel" id="installPanel" aria-labelledby="installTitle" hidden>
+ <div class="install-copy">
+  <div class="install-head"><span class="install-mark" aria-hidden="true">↧</span><span><strong id="installTitle">TAKE FIELD COMPANION WITH YOU</strong><small>Install on Android for an app-style launch and offline access.</small></span></div>
+  <p class="install-help" id="installHelp">Install once while online. The app shell and field manual are then available offline on this device.</p>
+  <div class="install-state" id="installState" role="status" aria-live="polite"></div>
+ </div>
+ <div class="install-actions"><button type="button" id="installAppBtn">INSTALL APP</button><button type="button" class="install-secondary" id="installStepsBtn">HOW TO INSTALL</button></div>
+ <div class="install-help" id="installSteps" hidden><strong>Chrome on Android:</strong><ol><li>Tap INSTALL APP when offered, then confirm Install.</li><li>If no prompt appears, open Chrome's ⋮ menu and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li><li>Open Field Companion once while online and wait for “offline cache ready”.</li><li>Switch to Airplane mode and test it before relying on it in the field.</li></ol></div>
+</section>
 <section class="field-loop" aria-label="Field response cycle"><div class="loop-heading"><span>HARCOM / FIELD METHOD</span><b>THE RESPONSE LOOP</b></div><div class="loop-steps"><div><i>01</i><b>PREPARE</b><small>Know your kit</small></div><span class="loop-arrow">›</span><div><i>02</i><b>RESPOND</b><small>Act on priorities</small></div><span class="loop-arrow">›</span><div><i>03</i><b>STABILISE</b><small>Protect life</small></div><span class="loop-arrow">›</span><div><i>04</i><b>REASSESS</b><small>Adapt and move</small></div></div></section>
   <div class="tabs" role="group" aria-label="Companion sections">
     <button type="button" class="tab active" data-tab="tasks" aria-controls="tasks" aria-pressed="true">Tasks</button>
@@ -1854,6 +1869,29 @@ document.getElementById('runTxTests').onclick=async()=>{
 })();
 </script>
 
+<script>
+/* Android PWA install guidance. Browsers retain the final install confirmation. */
+(function(){
+ const panel=document.getElementById('installPanel'),installBtn=document.getElementById('installAppBtn'),stepsBtn=document.getElementById('installStepsBtn'),steps=document.getElementById('installSteps'),state=document.getElementById('installState');
+ if(!panel||!installBtn||!stepsBtn)return;
+ let installPrompt=null;
+ const isStandalone=()=>window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+ if(!/Android/i.test(navigator.userAgent)||!(location.protocol==='https:'||location.hostname==='localhost'))return;
+ panel.hidden=false;
+ function showInstalled(){installBtn.disabled=true;installBtn.textContent='APP INSTALLED';state.textContent='Installed on this device — launch it from your home screen.';steps.hidden=true;}
+ if(isStandalone()){showInstalled();return;}
+ window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;installBtn.disabled=false;installBtn.textContent='INSTALL APP';state.textContent='Ready to install on this Android device.';});
+ window.addEventListener('appinstalled',()=>{installPrompt=null;showInstalled();});
+ installBtn.addEventListener('click',async()=>{
+   if(installPrompt){
+     const prompt=installPrompt;installPrompt=null;
+     try{await prompt.prompt();const choice=await prompt.userChoice;state.textContent=choice&&choice.outcome==='accepted'?'Installation accepted. Follow the Android confirmation if it appears.':'Installation was not completed. Use HOW TO INSTALL instead.';}
+     catch(error){state.textContent='Install prompt unavailable. Use HOW TO INSTALL for Chrome menu steps.';}
+   }else{steps.hidden=false;state.textContent='Use Chrome’s ⋮ menu and choose Install app or Add to Home screen.';}
+ });
+ stepsBtn.addEventListener('click',()=>{steps.hidden=!steps.hidden;stepsBtn.textContent=steps.hidden?'HOW TO INSTALL':'HIDE INSTALL STEPS';});
+})();
+</script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).then(()=>navigator.serviceWorker.ready).then(()=>{const n=document.getElementById('netText');if(n&&navigator.onLine)n.textContent='Online — offline cache ready';}).catch(err=>{const n=document.getElementById('netText');if(n)n.textContent='offline cache unavailable';});});}
 </script>
