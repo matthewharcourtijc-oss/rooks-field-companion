@@ -7,16 +7,20 @@ const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
-assert.ok(html.includes("Rook's Field Companion — v0.8.0 Field Edition"), "app title/version mismatch");
-assert.ok(readme.includes("v0.8.0 — Field Edition"), "README release version is stale");
+assert.ok(html.includes("Rook's Field Companion — v0.9.0 Connected Field Edition"), "app title/version mismatch");
+assert.ok(readme.includes("v0.9.0 — Connected Field Edition"), "README release version is stale");
 assert.ok(readme.includes("fully offline manual search"), "README missing manual search feature");
 assert.ok(manifest.name.includes("Field Edition"), "manifest app name is stale");
-assert.ok(html.includes("SURVIVAL MANUAL v0.8.0"), "manual version mismatch");
-assert.ok(html.includes("V0.8.0 • OFFLINE FIELD COMPANION"), "visible release label mismatch");
+assert.ok(html.includes("SURVIVAL MANUAL v0.9.0"), "manual version mismatch");
+assert.ok(html.includes("V0.9.0 • CONNECTED FIELD EDITION"), "visible release label mismatch");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
 assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
 assert.ok(html.includes("Offline field-manual search: local index"), "manual search must remain local/offline");
+assert.ok(html.includes("BUILD A SIMPLE GRAVITY PRE-FILTER"), "water filter build guide missing");
+assert.ok(html.includes("COMMERCIAL TOURNIQUET — LIMB PLACEMENT"), "tourniquet visual missing");
+assert.ok(html.includes("offline cross-topic field navigation"), "cross-topic navigation missing");
+assert.ok(html.includes("THE RESPONSE LOOP"), "field response visual missing");
 assert.match(html, /addEventListener\('input',update\)/, "manual search input handler missing");
 assert.ok(html.includes('id="manualSearchCount"'), "manual search result status missing");
 
@@ -59,7 +63,7 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Rook's Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0\.8\.0/);
+assert.match(worker, /harcom-field-companion-v0\.9\.0/);
 assert.match(worker, /await cache\.addAll/);
 assert.match(worker, /await cache\.put/);
 assert.match(worker, /self\.clients\.claim/);
@@ -126,4 +130,4 @@ assert.equal(searchSections.every(section => !section.hidden), true, "Escape did
 assert.equal(searchInput.blurred, true, "Escape did not return focus from search");
 assert.equal(searchCount.textContent, "Search 2 field topics", "Escape did not reset search count");
 
-console.log("Rook's Field Companion v0.8.0 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
+console.log("Rook's Field Companion v0.9.0 validation passed: " + ids.length + " unique IDs, " + links.length + " valid in-page links, " + diagrams.length + " inline diagrams.");
