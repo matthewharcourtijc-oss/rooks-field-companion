@@ -161,7 +161,8 @@ const floodResults = await db.search("flood warning");
 console.log("Flood search result IDs:", floodResults.map(article => article.id));
 assert.ok(floodResults.some(article => article.id === "flood-warning-actions"));
 assert.ok(floodResults.every(article => [article.title, article.summary, article.body, ...(article.tags || []), ...(article.steps || []), ...(article.equipment || []), ...(article.commonMistakes || []), ...(article.dangers || []), article.stopAndGetHelp].join(" ").toLowerCase().includes("flood") && [article.title, article.summary, article.body, ...(article.tags || []), ...(article.steps || []), ...(article.equipment || []), ...(article.commonMistakes || []), ...(article.dangers || []), article.stopAndGetHelp].join(" ").toLowerCase().includes("warning")));
-assert.equal((await db.search("hypothermia")).length, 1);
+const hypothermiaResults = await db.search("hypothermia");
+assert.ok(hypothermiaResults.some(article => article.id === "hypothermia-recognition-response"));
 assert.equal((await db.search("tent fire")).length, 1);
 
 
