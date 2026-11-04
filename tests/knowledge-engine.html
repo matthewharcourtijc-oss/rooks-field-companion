@@ -73,8 +73,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
       results.push({test:"article read-back",passed:!!article&&article.title==="Water safety basics"});
       const categories=await window.HarcomKnowledgeDB.listCategories();
       results.push({test:"category read-back",passed:categories.length===1});
-      const search=await window.HarcomKnowledgeDB.search("water");
-      results.push({test:"offline local search",passed:search.length===1&&search[0].id==="water-basics"});
+      const search=await window.HarcomKnowledgeDB.search("water safety");
+      results.push({test:"offline indexed multi-word search",passed:search.length===1&&search[0].id==="water-basics"});
+      const noMatch=await window.HarcomKnowledgeDB.search("water unicorn");
+      results.push({test:"search requires every query term",passed:noMatch.length===0});
       const status=await window.HarcomKnowledgeDB.storageStatus();
       results.push({test:"storage status",passed:typeof status.supported==="boolean",storage:status});
       log({summary:results.every(item=>item.passed)?"ALL PROTOTYPE CHECKS PASSED":"ONE OR MORE CHECKS FAILED",results});
