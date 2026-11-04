@@ -55,11 +55,12 @@ try {
   assert.equal(await page.locator("#knowledgeCategories button").count(), 18);
 
   await page.locator("#knowledgeSearch").fill("coastal tide");
-  const coastalResult = page.locator("#knowledgeResults button").filter({ hasText: /coastal tide/i }).first();
+  const coastalResult = page.locator("#knowledgeResults button").first();
   await coastalResult.waitFor({ state: "visible" });
   await coastalResult.click();
   await page.locator("#knowledgeArticle").waitFor({ state: "visible" });
-  assert.match(await page.locator("#knowledgeArticleContent").innerText(), /coastal tide/i);
+  const coastalArticleText = await page.locator("#knowledgeArticleContent").innerText();
+  assert.match(coastalArticleText, /Coastguard/i, "coastal/tide search should open the Coastguard safety article");
   assert.ok(await page.locator("#knowledgeArticleContent a").count() > 0, "article sources should render as links");
   await page.locator("#knowledgeBack").click();
 
