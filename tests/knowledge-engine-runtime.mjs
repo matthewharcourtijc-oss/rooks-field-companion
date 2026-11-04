@@ -153,11 +153,11 @@ await assert.rejects(
 
 
 const ukPack = JSON.parse(fs.readFileSync("knowledge/content/uk-core-v1.json", "utf8"));
-assert.equal(ukPack.articles.length, 12, "starter library article count changed");
-assert.equal(db.validatePackage(ukPack).articles.length, 12, "UK starter library must satisfy the content schema");
+assert.equal(ukPack.articles.length, 13, "starter library article count changed");
+assert.equal(db.validatePackage(ukPack).articles.length, 13, "UK starter library must satisfy the content schema");
 await db.installRelease(ukPack);
 assert.equal((await db.getActiveRelease()).id, ukPack.releaseId);
-assert.equal((await db.listArticles()).length, 12);
+assert.equal((await db.listArticles()).length, 13);
 assert.equal((await db.listArticles({ categoryId: "first-aid" })).length, 3);
 const floodArticle = await db.getArticle("flood-warning-actions");
 const floodSources = await db.getSourcesForArticle("flood-warning-actions");
