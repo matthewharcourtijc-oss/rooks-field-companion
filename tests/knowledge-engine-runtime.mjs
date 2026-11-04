@@ -21,15 +21,22 @@ function makePackage(releaseId, suffix = "") {
     categories: [{ id: "water", title: "Water" }],
     sources: [{
       id: "nhs-reference",
-      title: "NHS poisoning guidance",
-      publisher: "NHS",
-      url: "https://www.nhs.uk/conditions/poisoning/"
+      title: "Receiving a Boil Water Notice",
+      publisher: "Drinking Water Inspectorate",
+      url: "https://www.dwi.gov.uk/receiving-a-boil-water-notice/"
     }],
     articles: [{
       id: "water-safety",
       title: "Water safety basics" + suffix,
-      summary: "Choosing safe water",
-      body: "Clear water is not necessarily safe. Use a suitable treatment method.",
+      summary: "What to do when a UK water supplier issues a boil-water notice.",
+      body: "Follow the exact notice from the water supplier or local authority. A boil-water notice is different from a do-not-drink or do-not-use notice.",
+      steps: ["Follow the notice exactly.", "If instructed to boil, bring water to a rolling boil before drinking or using it for food preparation.", "Cool naturally and store in a clean covered container in the fridge; follow the notice for how long it can be kept."],
+      equipment: ["Kettle or suitable pan", "Clean covered storage container"],
+      commonMistakes: ["Assuming boiling makes chemically contaminated water safe.", "Ignoring a do-not-use notice."],
+      dangers: ["Boiling water can cause serious scalds.", "Boiling does not remove chemical contamination."],
+      stopAndGetHelp: "If the notice says do not drink or do not use, use an alternative supply and contact the water supplier or local authority for instructions.",
+      contentBasis: "official-guidance",
+      jurisdiction: "UK-wide",
       categoryId: "water",
       tags: ["water", "safety"],
       sourceIds: ["nhs-reference"],
