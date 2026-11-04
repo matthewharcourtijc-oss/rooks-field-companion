@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-field-v3-2026-11-04-r1",
-  "createdAt": "2026-11-04T22:04:00.000Z",
+  "releaseId": "uk-field-v3-2026-11-04-r2",
+  "createdAt": "2026-11-04T22:12:00.000Z",
   "summary": "Expanded UK field library: medical emergencies, forestry, foraging safety, bushcraft and offline illustrations.",
   "categories": [
     {
@@ -783,26 +783,26 @@
         "first aid"
       ],
       "steps": [
-        "If someone may have swallowed, touched or breathed in something harmful, seek medical advice immediately.",
-        "Call 999 if you think someone may have been poisoned, has lost consciousness, stopped breathing, has severe breathing difficulty or has a seizure.",
-        "If you are unsure whether a substance is harmful, call NHS 111 for urgent advice.",
-        "Do not try to make the person vomit and do not give them food or drink.",
+        "If someone may have swallowed, touched or breathed in a harmful substance, call 999 or go to A&E immediately, following NHS advice. Do not wait for symptoms.",
+        "If the exposure is uncertain and you do not know whether the substance is harmful, call NHS 111 for urgent advice.",
+        "Do not try to make the person vomit and do not give them food or drink unless a medical professional tells you to.",
         "Keep the packaging, container or details of the suspected substance for medical staff, if safe to do so.",
-        "Monitor their breathing and follow the emergency call handler's instructions."
+        "Monitor their breathing and responsiveness. If they become unresponsive or are not breathing normally, tell the 999 call handler and follow their instructions."
       ],
       "equipment": [
         "Original packaging or a photograph of the suspected substance, if safe to obtain"
       ],
       "commonMistakes": [
-        "Waiting for symptoms before seeking advice.",
+        "Waiting for symptoms before seeking help after a possible harmful exposure.",
         "Trying to make the person vomit.",
-        "Giving food, drink or home remedies without medical instruction."
+        "Giving food, drink or home remedies without medical instruction.",
+        "Assuming a small amount or brief exposure is automatically harmless."
       ],
       "dangers": [
         "Symptoms can be delayed for hours or days.",
         "Some substances can cause life-threatening breathing problems, seizures or loss of consciousness."
       ],
-      "stopAndGetHelp": "Call 999 if poisoning is suspected or serious symptoms are present. Use NHS 111 if you are unsure whether exposure is harmful. Follow professional advice.",
+      "stopAndGetHelp": "Call 999 or go to A&E if someone may have swallowed, touched or breathed in a harmful substance, or has severe symptoms. If you are unsure whether a substance is harmful, call NHS 111. Do not wait for symptoms or induce vomiting.",
       "contentBasis": "official-guidance",
       "jurisdiction": "NHS guidance; check local service arrangements",
       "safetyLevel": "high",
