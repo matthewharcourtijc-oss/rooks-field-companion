@@ -110,10 +110,13 @@ const toBase64 = bytes => Buffer.from(bytes).toString("base64");
 const hashBytes = new Uint8Array(await webcrypto.subtle.digest("SHA-256", packageBytes));
 const hashHex = Array.from(hashBytes, value => value.toString(16).padStart(2, "0")).join("");
 const signedManifest = {
+  format: "HARCOM_KNOWLEDGE_RELEASE",
   manifestVersion: 1,
   schemaVersion: 1,
   packageSize: packageBytes.byteLength,
   releaseId: signedPackage.releaseId,
+  createdAt: signedPackage.createdAt,
+  packageUrl: "./knowledge/releases/runtime-test.json",
   packageSha256: hashHex,
   signature: toBase64(signature),
   keyId: "ephemeral-test-key"
@@ -139,6 +142,10 @@ await assert.rejects(
 await assert.rejects(
   () => packageVerifier.verifySignedPackage(packageBytes, { ...signedManifest, releaseId: "wrong-id" }, toBase64(rawPublicKey)),
   error => error.code === "MANIFEST_MISMATCH"
+);
+await assert.rejects(
+  () => packageVerifier.verifySignedPackage(packageBytes, { ...signedManifest, packageUrl: "https://attacker.invalid/package.json" }, toBase64(rawPublicKey)),
+  error => error.code === "INVALID_MANIFEST"
 );
 
 
