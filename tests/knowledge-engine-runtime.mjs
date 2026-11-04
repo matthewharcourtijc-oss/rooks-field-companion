@@ -201,7 +201,7 @@ try {
   const updateResult = await updater.installUpdate({ checked, trustedKeys });
   assert.equal(updateResult.status, "installed");
   assert.equal((await db.getActiveRelease()).id, networkPackage.releaseId);
-  const unchanged = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedKeys });
+  const unchanged = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedOrigin: "https://example.test", trustedKeys });
   assert.equal(unchanged.status, "current");
 } finally {
   if (fetchDescriptor) Object.defineProperty(globalThis, "fetch", fetchDescriptor);
