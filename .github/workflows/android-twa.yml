@@ -49,7 +49,7 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
-          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0 emulator'
 
 
       - name: Validate checked-in TWA configuration
@@ -177,6 +177,7 @@ jobs:
           sudo chmod 0666 /dev/kvm
           ls -l /dev/kvm
           test -r /dev/kvm && test -w /dev/kvm
+          test -x "$ANDROID_HOME/emulator/emulator"
           "$ANDROID_HOME/emulator/emulator" -accel-check
 
       - name: Install and launch on Android emulator
