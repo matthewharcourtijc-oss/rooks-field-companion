@@ -338,7 +338,7 @@
       "accessedAt": "2026-11-04"
     },
     {
-      "id": "nhs-broken-bones",
+      "id": "sja-fractures",
       "title": "Broken bones and fractures",
       "publisher": "St John Ambulance",
       "url": "https://www.sja.org.uk/first-aid-advice/fractures-and-broken-bones/",
@@ -426,6 +426,13 @@
       "title": "Receiving a Boil Water Notice",
       "publisher": "Drinking Water Inspectorate",
       "url": "https://www.dwi.gov.uk/receiving-a-boil-water-notice/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "cdc-emergency-water",
+      "title": "How to Make Water Safe in an Emergency",
+      "publisher": "US Centers for Disease Control and Prevention",
+      "url": "https://www.cdc.gov/water-emergency/about/index.html",
       "accessedAt": "2026-11-04"
     }
   ],
@@ -2018,7 +2025,7 @@
       "safetyLevel": "high",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
-        "nhs-broken-bones"
+        "sja-fractures"
       ]
     },
     {
@@ -2444,7 +2451,8 @@
       "safetyLevel": "caution",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
-        "countryside-code"
+        "countryside-code",
+        "bmc-wild-camp"
       ],
       "illustration": "./knowledge/illustrations/tarp-a-frame.svg",
       "illustrationAlt": "Side-view diagram of a simple A-frame tarp over a ridgeline."
@@ -2535,7 +2543,8 @@
       "reviewedAt": "2026-11-04",
       "sourceIds": [
         "outdoor-fire",
-        "countryside-code"
+        "countryside-code",
+        "bmc-wild-camp"
       ],
       "illustration": "./knowledge/illustrations/fire-safety.svg",
       "illustrationAlt": "Diagram showing outdoor cooking on clear ground, away from shelter and vegetation."
@@ -2576,11 +2585,12 @@
       ],
       "stopAndGetHelp": "If fuel, chemicals, sewage or industrial pollution may be present, do not drink it. Find a known safe supply and follow local authority advice.",
       "contentBasis": "official-guidance",
-      "jurisdiction": "UK public-health principles; follow local water authority instructions",
+      "jurisdiction": "UK; CDC technical reference for general emergency water treatment principles; follow local authority advice",
       "safetyLevel": "high",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
-        "dwi-water"
+        "dwi-water",
+        "cdc-emergency-water"
       ],
       "illustration": "./knowledge/illustrations/water-treatment.svg",
       "illustrationAlt": "Decision diagram distinguishing microbial treatment from chemical contamination."
