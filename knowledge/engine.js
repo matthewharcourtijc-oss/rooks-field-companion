@@ -38,7 +38,8 @@
     if (typeof value !== "string" || !value.trim() || value.length > LIMITS.id) {
       fail("INVALID_RECORD", label + " must be a non-empty string no longer than " + LIMITS.id + " characters.");
     }
-    return value.trim();
+    if (value !== value.trim()) fail("INVALID_RECORD", label + " cannot contain leading or trailing whitespace.");
+    return value;
   }
 
   function arrayOf(value, label, max) {
@@ -121,6 +122,9 @@
       if (!Array.isArray(item.tags) || item.tags.length > 40 || item.tags.some(tag => typeof tag !== "string" || tag.length > 50)) {
         fail("INVALID_RECORD", "Article " + id + " has invalid tags.");
       }
+      if (tokenize([item.title, item.summary || "", item.body, ...item.tags].join(" ")).length > LIMITS.searchTermsPerArticle) {
+        fail("PACKAGE_LIMIT", "Article " + id + " contains too many unique search terms.");
+      }
       if (!SAFETY_LEVELS.has(item.safetyLevel)) {
         fail("INVALID_RECORD", "Article " + id + " must declare safetyLevel as info, caution or high.");
       }
@@ -160,11 +164,13 @@
   }
 
   function transactionDone(transaction) {
-    return new Promise((resolve, reject) => {
+    const completion = new Promise((resolve, reject) => {
       transaction.oncomplete = () => resolve();
       transaction.onabort = () => reject(transaction.error || new Error("Database transaction was aborted."));
       transaction.onerror = () => reject(transaction.error || new Error("Database transaction failed."));
     });
+    completion.catch(() => {});
+    return completion;
   }
 
   function makeTransaction(db, names, mode) {
@@ -298,10 +304,6 @@
         stores.articles.add({ ...item, releaseId: pkg.releaseId });
         const titleTerms = new Set(tokenize(item.title));
         const terms = tokenize([item.title, item.summary || "", item.body, ...(item.tags || [])].join(" "));
-        if (terms.length > LIMITS.searchTermsPerArticle) {
-          tx.abort();
-          fail("PACKAGE_LIMIT", "Article " + item.id + " contains too many unique search terms.");
-        }
         terms.forEach(term => stores.searchTerms.add({ releaseId: pkg.releaseId, term, articleId: item.id, titleHit: titleTerms.has(term) }));
       });
       pkg.media.forEach(item => stores.media.add({ ...item, releaseId: pkg.releaseId }));
