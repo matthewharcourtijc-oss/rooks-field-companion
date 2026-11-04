@@ -488,6 +488,25 @@
     });
   }
 
+  async function getSource(sourceId) {
+    validId(sourceId, "sourceId");
+    const active = await getActiveRelease();
+    if (!active) return null;
+    return withDatabase(async db => {
+      const tx = makeTransaction(db, [STORES.sources], "readonly");
+      const done = transactionDone(tx);
+      const source = await requestResult(tx.objectStore(STORES.sources).get([active.id, sourceId]));
+      await done;
+      return source || null;
+    });
+  }
+
+  async function getSourcesForArticle(articleId) {
+    const article = await getArticle(articleId);
+    if (!article) return [];
+    return Promise.all(article.sourceIds.map(getSource));
+  }
+
   async function search(query, options) {
     const terms = tokenize(String(query || "").trim());
     if (!terms.length) return [];
@@ -557,6 +576,8 @@
     discardRelease,
     listCategories,
     getArticle,
+    getSource,
+    getSourcesForArticle,
     search,
     storageStatus,
     requestPersistentStorage
