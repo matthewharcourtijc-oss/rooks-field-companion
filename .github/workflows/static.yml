@@ -29,8 +29,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Install isolated IndexedDB test dependency
+        run: npm install --no-save --no-package-lock fake-indexeddb@6.2.4
       - name: Validate app shell, links, manifest and JavaScript
-        run: node tests/validate.mjs && node tests/knowledge-engine.mjs
+        run: node tests/validate.mjs && node tests/knowledge-engine.mjs && node tests/knowledge-engine-runtime.mjs
 
   deploy:
     name: Deploy GitHub Pages
