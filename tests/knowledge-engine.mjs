@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 
 const engine = fs.readFileSync("knowledge/engine.js", "utf8");
 const crypto = fs.readFileSync("knowledge/crypto.js", "utf8");
+const ukPack = JSON.parse(fs.readFileSync("knowledge/content/uk-core-v1.json", "utf8"));
 const harness = fs.readFileSync("tests/knowledge-engine.html", "utf8");
 new vm.Script(engine, { filename: "knowledge/engine.js" });
 new vm.Script(crypto, { filename: "knowledge/crypto.js" });
@@ -16,6 +17,9 @@ assert.ok(crypto.includes("SIZE_MISMATCH"));
 assert.ok(crypto.includes("manifest.packageSize"));
 assert.ok(crypto.includes("INVALID_SIGNATURE"));
 assert.ok(!crypto.includes("privateKey"));
+assert.ok(ukPack.articles.length >= 10, "UK starter content pack must contain at least 10 articles");
+assert.ok(ukPack.sources.length >= 10, "UK starter content pack must retain source provenance");
+assert.ok(ukPack.articles.every(article => article.sourceIds.length && article.reviewedAt && article.stopAndGetHelp && article.contentBasis), "every article must carry provenance, review and safety fields");
 assert.ok(engine.includes('const DB_NAME = "harcom-field-knowledge"'));
 assert.ok(engine.includes('const DB_VERSION = 2'));
 assert.ok(engine.includes('root.HarcomKnowledgeDB = Object.freeze'));
