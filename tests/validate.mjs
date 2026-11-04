@@ -11,17 +11,18 @@ const deploymentWorkflow = fs.readFileSync(".github/workflows/static.yml", "utf8
 // Release-safety regression: a manual workflow dispatch must never publish a
 // development branch. Validation is read-only; only the gated deploy job gets
 // the Pages and OIDC permissions it needs.
-assert.match(deploymentWorkflow,
-  /if:\\s*github\\.ref\\s*==\\s*['"]refs\\/heads\\/main['"]\\s*&&\\s*\\(github\\.event_name\\s*==\\s*['"]push['"]\\s*\\|\\|\\s*github\\.event_name\\s*==\\s*['"]workflow_dispatch['"]\\s*\\)/,
+assert.ok(deploymentWorkflow.includes(
+  "if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')"),
   "Pages deployment must be restricted to push/manual dispatch on main");
 const topLevelPermissions = deploymentWorkflow.split("jobs:")[0];
-assert.doesNotMatch(topLevelPermissions, /pages:\\s*write|id-token:\\s*write/,
+assert.ok(!topLevelPermissions.includes("pages: write") && !topLevelPermissions.includes("id-token: write"),
   "Pages/OIDC write permissions must not be granted globally");
-assert.match(deploymentWorkflow,
-  /validate:[\\s\\S]*?permissions:\\s*\\n\\s+contents:\\s*read/,
+const validateJob = deploymentWorkflow.split("validate:")[1]?.split("deploy:")[0] || "";
+const deployJob = deploymentWorkflow.split("deploy:")[1] || "";
+assert.ok(validateJob.includes("permissions:\\n      contents: read"),
   "validation job must remain read-only");
-assert.match(deploymentWorkflow,
-  /deploy:[\\s\\S]*?needs:\\s*validate[\\s\\S]*?permissions:\\s*\\n\\s+contents:\\s*read\\s*\\n\\s+pages:\\s*write\\s*\\n\\s+id-token:\\s*write/,
+assert.ok(deployJob.includes("needs: validate") &&
+  deployJob.includes("permissions:\\n      contents: read\\n      pages: write\\n      id-token: write"),
   "deployment must depend on validation and scope Pages/OIDC permissions to deploy");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
