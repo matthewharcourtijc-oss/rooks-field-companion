@@ -61,6 +61,7 @@
     const sources = arrayOf(input.sources, "sources", LIMITS.sources);
     const articles = arrayOf(input.articles, "articles", LIMITS.articles);
     const media = arrayOf(input.media || [], "media", LIMITS.media);
+    if (!categories.length || !articles.length || !sources.length) fail("INVALID_PACKAGE", "A release must contain at least one category, one article and one source.");
 
     const categoryIds = new Set();
     const sourceIds = new Set();
@@ -246,7 +247,7 @@
     if (estimate && Number.isFinite(estimate.quota) && Number.isFinite(estimate.usage)) {
       const approximateBytes = JSON.stringify({
         categories: pkg.categories, sources: pkg.sources, articles: pkg.articles
-      }).length * 2;
+      }).length * 2 + pkg.media.reduce((total, item) => total + (item.data.size || item.data.byteLength || 0), 0);
       const remaining = Math.max(0, estimate.quota - estimate.usage);
       if (approximateBytes > remaining * 0.8) {
         fail("QUOTA_RISK", "There may not be enough browser storage for this update. The active library has not been changed.");
@@ -278,9 +279,6 @@
         sources: tx.objectStore(STORES.sources),
         media: tx.objectStore(STORES.media)
       };
-      try {
-        stores.categories.add(...[]);
-      } catch (_) {}
       pkg.categories.forEach(item => stores.categories.add({ ...item, releaseId: pkg.releaseId }));
       pkg.sources.forEach(item => stores.sources.add({ ...item, releaseId: pkg.releaseId }));
       pkg.articles.forEach(item => stores.articles.add({ ...item, releaseId: pkg.releaseId }));
@@ -295,23 +293,7 @@
       fail("READBACK_FAILED", "The downloaded library did not pass read-back verification. The previous active library remains in place.");
     }
 
-    await withDatabase(async db => {
-      const tx = makeTransaction(db, [STORES.settings, STORES.releases], "readwrite");
-      const done = transactionDone(tx);
-      const releases = tx.objectStore(STORES.releases);
-      const settings = tx.objectStore(STORES.settings);
-      const release = await requestResult(releases.get(pkg.releaseId));
-      if (!release || release.status !== "staged") {
-        tx.abort();
-        fail("ACTIVATION_FAILED", "The staged release could not be confirmed. The previous library remains active.");
-      }
-      release.status = "active";
-      release.activatedAt = new Date().toISOString();
-      releases.put(release);
-      settings.put({ key: "activeRelease", value: pkg.releaseId, updatedAt: new Date().toISOString() });
-      await done;
-    });
-
+    await activateRelease(pkg.releaseId);
     return { ok: true, release: await getActiveRelease(), verified };
   }
 
@@ -337,11 +319,55 @@
         requestResult(tx.objectStore(STORES.media).index("byRelease").getAll(releaseId))
       ]);
       await done;
-      if (!release || release.status !== "staged") return { ok: false, reason: "missing-staged-release" };
+      if (!release || !["staged", "active", "previous"].includes(release.status)) return { ok: false, reason: "missing-release" };
       const counts = { articles: articles.length, categories: categories.length, sources: sources.length, media: media.length };
       const expected = release.counts;
-      const ok = Object.keys(counts).every(key => counts[key] === expected[key]);
-      return { ok, counts, expected, reason: ok ? null : "record-count-mismatch" };
+      if (!Object.keys(counts).every(key => counts[key] === expected[key])) return { ok: false, counts, expected, reason: "record-count-mismatch" };
+      try {
+        validatePackage({
+          schemaVersion: release.schemaVersion, releaseId: release.id, createdAt: release.createdAt, summary: release.summary,
+          articles: articles.map(({ releaseId: ignored, ...item }) => item),
+          categories: categories.map(({ releaseId: ignored, ...item }) => item),
+          sources: sources.map(({ releaseId: ignored, ...item }) => item),
+          media: media.map(({ releaseId: ignored, ...item }) => item)
+        });
+      } catch (error) {
+        return { ok: false, counts, expected, reason: "record-validation-failed", message: error.message };
+      }
+      return { ok: true, counts, expected, reason: null };
+    });
+  }
+
+  async function activateRelease(releaseId) {
+    validId(releaseId, "releaseId");
+    const verified = await verifyStagedRelease(releaseId);
+    if (!verified.ok) fail("ACTIVATION_FAILED", "The selected release failed verification and cannot be activated.");
+    return withDatabase(async db => {
+      const tx = makeTransaction(db, [STORES.settings, STORES.releases], "readwrite");
+      const done = transactionDone(tx);
+      const releases = tx.objectStore(STORES.releases);
+      const settings = tx.objectStore(STORES.settings);
+      const [release, pointer] = await Promise.all([
+        requestResult(releases.get(releaseId)),
+        requestResult(settings.get("activeRelease"))
+      ]);
+      if (!release) {
+        tx.abort();
+        fail("ACTIVATION_FAILED", "The selected release no longer exists.");
+      }
+      if (pointer && pointer.value && pointer.value !== releaseId) {
+        const previous = await requestResult(releases.get(pointer.value));
+        if (previous) {
+          previous.status = "previous";
+          releases.put(previous);
+        }
+      }
+      release.status = "active";
+      release.activatedAt = new Date().toISOString();
+      releases.put(release);
+      settings.put({ key: "activeRelease", value: releaseId, updatedAt: new Date().toISOString() });
+      await done;
+      return release;
     });
   }
 
@@ -419,10 +445,12 @@
       await done;
       const terms = term.split(/\s+/).filter(Boolean);
       return records.map(article => {
+        const title = article.title.toLocaleLowerCase();
         const haystack = [article.title, article.summary || "", article.body, ...(article.tags || [])].join(" ").toLocaleLowerCase();
-        const score = terms.reduce((sum, word) => sum + (haystack.includes(word) ? (article.title.toLocaleLowerCase().includes(word) ? 4 : 1) : 0), 0);
+        const matchesAllTerms = terms.every(word => haystack.includes(word));
+        const score = matchesAllTerms ? terms.reduce((sum, word) => sum + (title.includes(word) ? 4 : 1), 0) : 0;
         return { article, score };
-      }).filter(item => item.score === terms.length + (terms.length ? item.score - terms.length : 0) && item.score > 0)
+      }).filter(item => item.score > 0)
         .sort((a, b) => b.score - a.score || a.article.title.localeCompare(b.article.title))
         .slice(0, limit).map(item => item.article);
     });
@@ -458,6 +486,7 @@
     getActiveRelease,
     getRelease,
     verifyStagedRelease,
+    activateRelease,
     discardRelease,
     listCategories,
     getArticle,
