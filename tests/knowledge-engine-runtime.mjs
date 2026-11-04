@@ -6,7 +6,7 @@ import { webcrypto } from "node:crypto";
 
 const source = fs.readFileSync("knowledge/engine.js", "utf8");
 const cryptoSource = fs.readFileSync("knowledge/crypto.js", "utf8");
-globalThis.crypto = webcrypto;
+Object.defineProperty(globalThis, "crypto", { configurable: true, value: webcrypto });
 vm.runInThisContext(cryptoSource, { filename: "knowledge/crypto.js" });
 vm.runInThisContext(source, { filename: "knowledge/engine.js" });
 const db = globalThis.HarcomKnowledgeDB;
