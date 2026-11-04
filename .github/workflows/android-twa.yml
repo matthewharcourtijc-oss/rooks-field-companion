@@ -29,7 +29,7 @@ concurrency:
 jobs:
   generate-and-validate:
     name: Generate and validate Android project
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - name: Check out source
@@ -208,7 +208,7 @@ jobs:
     name: Build signed APK and asset-link candidate
     if: inputs.build_release == true
     needs: generate-and-validate
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out source
         uses: actions/checkout@v7
