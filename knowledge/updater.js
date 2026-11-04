@@ -17,7 +17,8 @@
     let url;
     try { url = new URL(value, baseOrigin || undefined); }
     catch (_) { fail("INVALID_URL", "The update address is invalid."); }
-    if (url.protocol !== "https:" || (baseOrigin && url.origin !== baseOrigin)) {
+    const expectedOrigin = baseOrigin ? new URL(baseOrigin).origin : null;
+    if (url.protocol !== "https:" || (expectedOrigin && url.origin !== expectedOrigin)) {
       fail("INVALID_URL", "Updates must come from the same HTTPS site as Field Companion.");
     }
     return url;
@@ -118,12 +119,12 @@
       if (error && error.code) throw error;
       fail("INVALID_MANIFEST", "The update manifest was not valid JSON.");
     }
-    return { manifest: validateManifest(manifest), origin: url.origin };
+    return { manifest: validateManifest(manifest), origin: url.origin, packageBaseUrl: new URL("../", url.href).href };
   }
 
   async function checkForUpdates(options) {
     const opts = options || {};
-    const { manifest, origin } = await fetchManifest(opts.manifestUrl, opts.trustedOrigin);
+    const { manifest, origin, packageBaseUrl } = await fetchManifest(opts.manifestUrl, opts.trustedOrigin);
     const current = await root.HarcomKnowledgeDB.getActiveRelease();
     if (current && current.id === manifest.releaseId) {
       return { status: "current", current, manifest };
@@ -133,7 +134,7 @@
     }
     const publicKey = opts.trustedKeys && opts.trustedKeys[manifest.keyId];
     if (!publicKey) fail("UNKNOWN_SIGNING_KEY", "This release was signed with an untrusted key. It was not installed.");
-    return { status: "update-available", current, manifest, origin };
+    return { status: "update-available", current, manifest, origin, packageBaseUrl };
   }
 
   async function installUpdate(options) {
@@ -144,7 +145,8 @@
     const origin = checked.origin || new URL(opts.manifestUrl).origin;
     const publicKey = opts.trustedKeys && opts.trustedKeys[manifest.keyId];
     if (!publicKey) fail("UNKNOWN_SIGNING_KEY", "This release was signed with an untrusted key. It was not installed.");
-    const packageUrl = checkedHttpsUrl(manifest.packageUrl, origin);
+    const packageBaseUrl = checked.packageBaseUrl || new URL("../", opts.manifestUrl).href;
+    const packageUrl = checkedHttpsUrl(manifest.packageUrl, packageBaseUrl);
     let response;
     try {
       response = await root.fetch(packageUrl.href, {
