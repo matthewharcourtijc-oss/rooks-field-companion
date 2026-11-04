@@ -90,6 +90,8 @@ try {
   assert.equal(snapshotB.tasks.length, 2, "Tasks regression setup should save both tasks");
   assert.equal(snapshotB.notes.length, 2, "Notes regression setup should save both notes");
   assert.equal(snapshotB.logs.length, 2, "Mission Log regression setup should save both entries");
+  assert.equal(await page.locator("#logList .item").count(), 2,
+    "Mission Log UI should render both persisted entries");
 
   await page.locator('[data-tab="backup"]').click();
   await page.locator("#importArea").fill(JSON.stringify(backupA));
