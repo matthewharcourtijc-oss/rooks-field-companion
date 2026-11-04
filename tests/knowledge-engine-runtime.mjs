@@ -170,6 +170,9 @@ assert.ok(floodResults.every(article => [article.title, article.summary, article
 const hypothermiaResults = await db.search("hypothermia");
 assert.ok(hypothermiaResults.some(article => article.id === "hypothermia-recognition-response"));
 assert.equal((await db.search("tent fire")).length, 1);
+assert.ok((await db.search("anaphylaxis")).some(article => article.id === "anaphylaxis-emergency-response"));
+assert.ok((await db.search("snake bite")).some(article => article.id === "uk-snake-bite-response"));
+assert.ok((await db.search("foraging")).some(article => article.id === "wild-foraging-safety"));
 
 
 const networkPackage = makePackage("network-update-1");
