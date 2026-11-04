@@ -129,7 +129,7 @@
       validateStringList(item.dangers, "Article " + id + " dangers", 20, 500);
       if (typeof item.stopAndGetHelp !== "string" || !item.stopAndGetHelp.trim() || item.stopAndGetHelp.length > 1200) fail("INVALID_RECORD", "Article " + id + " needs clear stop-and-get-help guidance.");
       if (!["official-guidance", "established-practice", "field-note"].includes(item.contentBasis)) fail("INVALID_RECORD", "Article " + id + " must declare its contentBasis.");
-      if (typeof item.jurisdiction !== "string" || !item.jurisdiction.trim() || item.jurisdiction.length > 80) fail("INVALID_RECORD", "Article " + id + " must declare its jurisdiction.");
+      if (typeof item.jurisdiction !== "string" || !item.jurisdiction.trim() || item.jurisdiction.length > 160) fail("INVALID_RECORD", "Article " + id + " must declare its jurisdiction.");
       if (!categoryIds.has(item.categoryId)) fail("MISSING_REFERENCE", "Article " + id + " refers to a missing category.");
       if (!Array.isArray(item.sourceIds) || item.sourceIds.length === 0) {
         fail("MISSING_REFERENCE", "Article " + id + " must cite at least one source.");
