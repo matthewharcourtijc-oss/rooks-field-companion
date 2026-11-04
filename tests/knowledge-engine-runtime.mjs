@@ -110,7 +110,9 @@ const toBase64 = bytes => Buffer.from(bytes).toString("base64");
 const hashBytes = new Uint8Array(await webcrypto.subtle.digest("SHA-256", packageBytes));
 const hashHex = Array.from(hashBytes, value => value.toString(16).padStart(2, "0")).join("");
 const signedManifest = {
+  manifestVersion: 1,
   schemaVersion: 1,
+  packageSize: packageBytes.byteLength,
   releaseId: signedPackage.releaseId,
   packageSha256: hashHex,
   signature: toBase64(signature),
@@ -124,6 +126,10 @@ changedBytes[0] ^= 1;
 await assert.rejects(
   () => packageVerifier.verifySignedPackage(changedBytes, signedManifest, toBase64(rawPublicKey)),
   error => error.code === "HASH_MISMATCH"
+);
+await assert.rejects(
+  () => packageVerifier.verifySignedPackage(packageBytes, { ...signedManifest, packageSize: packageBytes.byteLength + 1 }, toBase64(rawPublicKey)),
+  error => error.code === "SIZE_MISMATCH"
 );
 const invalidSignatureManifest = { ...signedManifest, signature: toBase64(new Uint8Array(64)) };
 await assert.rejects(
