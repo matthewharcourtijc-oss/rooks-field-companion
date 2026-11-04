@@ -162,3 +162,19 @@ Review security boundaries, update authenticity, storage failure modes, accessib
 
 ---
 This is an engineering plan plus an isolated prototype. It is not a production release, and online content updates are not enabled.
+
+
+## Content expansion roadmap
+
+The 31-article starter pack is a foundation, not the requested mega-library. Expand in reviewed batches towards a broad 100+ article reference, without sacrificing source quality or offline reliability.
+
+Next batches:
+1. **Shelter and campcraft:** tarp and emergency shelter patterns, insulation, safe campsite routines, knots and cordage for non-life-safety camp tasks, stove and fire management.
+2. **Water and sanitation:** source-risk assessment, microbial versus chemical contamination, filtration limits, safe storage, hand hygiene, waste and sanitation.
+3. **UK plants, trees and wildlife:** common tree and plant recognition for orientation, poisonous species and lookalikes, fungi and berries, ticks, adders, livestock and animal encounters. No casual edibility guarantees.
+4. **Navigation and weather:** grid references, map symbols, compass bearings, relocation procedures, low-visibility navigation, flood and coastal planning, winter and mountain weather.
+5. **First aid and health:** severe bleeding, choking, CPR/AED, burns, fractures, hypothermia, heat illness, dehydration, allergic reactions, poisoning and when to call 999.
+6. **Equipment and field repairs:** clothing systems, footwear, lighting, batteries, communications, repairs, load planning and vehicle kits.
+7. **Home, vehicle and community resilience:** power cuts, severe weather, evacuation, water interruption, road breakdowns, family plans and emergency communications.
+
+Each batch gets source review, jurisdiction checks, article validation, safety review and regression tests before it is included in a signed content release. A larger article count is not a quality metric on its own.
