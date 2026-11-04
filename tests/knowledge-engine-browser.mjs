@@ -32,6 +32,73 @@ try {
   page.on("pageerror", error => pageErrors.push(error.message));
 
   await page.goto(baseUrl, { waitUntil: "networkidle" });
+
+  // Real-browser regression: preserve existing Tasks, Notes, Mission Log and backup/restore.
+  // This runs on a fresh 127.0.0.1 origin, never against the live GitHub Pages origin.
+  await page.waitForFunction(() => {
+    const status = document.getElementById("lastTest");
+    return status && status.textContent.startsWith("Persistence test:");
+  }, null, { timeout: 15000 });
+
+  await page.locator("#taskInput").fill("PR25 regression task A");
+  await page.locator("#addTask").click();
+  await page.locator('[data-tab="notes"]').click();
+  await page.locator("#noteTitle").fill("PR25 regression note A");
+  await page.locator("#noteText").fill("Note A must survive Library use and restore.");
+  await page.locator("#addNote").click();
+  await page.locator('[data-tab="log"]').click();
+  await page.locator("#logInput").fill("PR25 regression log A");
+  await page.locator("#addLog").click();
+
+  const backupA = await page.evaluate(() => getExport());
+  await page.locator('[data-tab="tasks"]').click();
+  await page.locator("#taskInput").fill("PR25 regression task B");
+  await page.locator("#addTask").click();
+  await page.locator('[data-tab="notes"]').click();
+  await page.locator("#noteTitle").fill("PR25 regression note B");
+  await page.locator("#noteText").fill("Note B is the post-backup state.");
+  await page.locator("#addNote").click();
+  await page.locator('[data-tab="log"]').click();
+  await page.locator("#logInput").fill("PR25 regression log B");
+  await page.locator("#addLog").click();
+
+  const snapshotB = await page.evaluate(() => {
+    const data = JSON.parse(localStorage.getItem("harcom_data"));
+    return { tasks: data.tasks, notes: data.notes, logs: data.logs };
+  });
+  assert.equal(snapshotB.tasks.length, 2, "Tasks regression setup should save both tasks");
+  assert.equal(snapshotB.notes.length, 2, "Notes regression setup should save both notes");
+  assert.equal(snapshotB.logs.length, 2, "Mission Log regression setup should save both entries");
+
+  await page.locator('[data-tab="backup"]').click();
+  await page.locator("#importArea").fill(JSON.stringify(backupA));
+  await page.locator("#validateBtn").click();
+  await page.waitForFunction(() => document.getElementById("importStatus").textContent.includes("Backup looks good"));
+  page.once("dialog", dialog => dialog.accept());
+  await page.locator("#importBtn").click();
+  await page.waitForFunction(() => document.getElementById("importStatus").textContent.includes("Import complete"));
+  const restoredA = await page.evaluate(() => {
+    const data = JSON.parse(localStorage.getItem("harcom_data"));
+    return { tasks: data.tasks, notes: data.notes, logs: data.logs };
+  });
+  assert.deepEqual(restoredA, { tasks: backupA.tasks, notes: backupA.notes, logs: backupA.logs },
+    "backup import should restore the exact earlier Tasks, Notes and Mission Log records");
+
+  const safetyRestore = page.locator("#safetyList .safety-item button").filter({ hasText: "Restore" }).first();
+  await safetyRestore.waitFor({ state: "visible" });
+  page.once("dialog", dialog => dialog.accept());
+  await safetyRestore.click();
+  await page.waitForFunction(() => {
+    const data = JSON.parse(localStorage.getItem("harcom_data"));
+    return data.tasks.length === 2 && data.notes.length === 2 && data.logs.length === 2;
+  });
+  const restoredB = await page.evaluate(() => {
+    const data = JSON.parse(localStorage.getItem("harcom_data"));
+    return { tasks: data.tasks, notes: data.notes, logs: data.logs };
+  });
+  assert.deepEqual(restoredB, snapshotB,
+    "restoring the automatic safety copy should recover the post-backup records exactly");
+
   await page.locator('[data-tab="library"]').click();
   await page.waitForFunction(() => {
     const status = document.getElementById("knowledgeStatus");
