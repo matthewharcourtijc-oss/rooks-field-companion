@@ -141,4 +141,14 @@ await assert.rejects(
   error => error.code === "MANIFEST_MISMATCH"
 );
 
+
+const ukPack = JSON.parse(fs.readFileSync("knowledge/content/uk-core-v1.json", "utf8"));
+assert.equal(ukPack.articles.length, 12, "starter library article count changed");
+assert.equal(db.validatePackage(ukPack).articles.length, 12, "UK starter library must satisfy the content schema");
+await db.installRelease(ukPack);
+assert.equal((await db.getActiveRelease()).id, ukPack.releaseId);
+assert.equal((await db.search("flood warning")).length, 1);
+assert.equal((await db.search("hypothermia")).length, 1);
+assert.equal((await db.search("tent fire")).length, 1);
+
 console.log("HARCOM Knowledge Engine runtime tests passed: IndexedDB validation, staging, search, rollback, retention, quota fail-closed and Ed25519 package verification.");
