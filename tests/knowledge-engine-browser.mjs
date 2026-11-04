@@ -33,6 +33,21 @@ try {
 
   await page.goto(baseUrl, { waitUntil: "networkidle" });
 
+  // UI clicks do not await async save handlers. Wait for the persisted state
+  // after each write so this regression setup tests sequential user actions,
+  // not overlapping commits caused by the test runner moving between tabs.
+  async function waitForRecordCounts(expected) {
+    await page.waitForFunction(({ tasks, notes, logs }) => {
+      try {
+        const data = JSON.parse(localStorage.getItem("harcom_data"));
+        return data && data.tasks.length === tasks &&
+          data.notes.length === notes && data.logs.length === logs;
+      } catch (_) {
+        return false;
+      }
+    }, expected, { timeout: 10000 });
+  }
+
   // Real-browser regression: preserve existing Tasks, Notes, Mission Log and backup/restore.
   // This runs on a fresh 127.0.0.1 origin, never against the live GitHub Pages origin.
   await page.waitForFunction(() => {
@@ -42,25 +57,31 @@ try {
 
   await page.locator("#taskInput").fill("PR25 regression task A");
   await page.locator("#addTask").click();
+  await waitForRecordCounts({ tasks: 1, notes: 0, logs: 0 });
   await page.locator('[data-tab="notes"]').click();
   await page.locator("#noteTitle").fill("PR25 regression note A");
   await page.locator("#noteText").fill("Note A must survive Library use and restore.");
   await page.locator("#addNote").click();
+  await waitForRecordCounts({ tasks: 1, notes: 1, logs: 0 });
   await page.locator('[data-tab="log"]').click();
   await page.locator("#logInput").fill("PR25 regression log A");
   await page.locator("#addLog").click();
+  await waitForRecordCounts({ tasks: 1, notes: 1, logs: 1 });
 
   const backupA = await page.evaluate(() => getExport());
   await page.locator('[data-tab="tasks"]').click();
   await page.locator("#taskInput").fill("PR25 regression task B");
   await page.locator("#addTask").click();
+  await waitForRecordCounts({ tasks: 2, notes: 1, logs: 1 });
   await page.locator('[data-tab="notes"]').click();
   await page.locator("#noteTitle").fill("PR25 regression note B");
   await page.locator("#noteText").fill("Note B is the post-backup state.");
   await page.locator("#addNote").click();
+  await waitForRecordCounts({ tasks: 2, notes: 2, logs: 1 });
   await page.locator('[data-tab="log"]').click();
   await page.locator("#logInput").fill("PR25 regression log B");
   await page.locator("#addLog").click();
+  await waitForRecordCounts({ tasks: 2, notes: 2, logs: 2 });
 
   const snapshotB = await page.evaluate(() => {
     const data = JSON.parse(localStorage.getItem("harcom_data"));
