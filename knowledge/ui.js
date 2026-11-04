@@ -51,20 +51,31 @@
 
   async function ensureSeedLibrary() {
     let active = await DB.getActiveRelease();
-    const response = await fetch("./knowledge/content/uk-core-v1.json");
-    if (!response.ok) throw new Error("The bundled offline knowledge pack could not be read.");
-    const seed = await response.json();
+    let seed;
+    try {
+      const response = await fetch("./knowledge/content/uk-core-v1.json");
+      if (!response.ok) throw new Error("The bundled offline knowledge pack could not be read.");
+      seed = await response.json();
+    } catch (error) {
+      if (active) return active;
+      throw error;
+    }
 
     if (!active || Date.parse(seed.createdAt) > Date.parse(active.createdAt)) {
-      const existing = await DB.getRelease(seed.releaseId);
-      if (existing) {
-        const verification = await DB.verifyStagedRelease(seed.releaseId);
-        if (!verification.ok) throw new Error("The bundled library did not pass its local integrity checks.");
-        await DB.activateRelease(seed.releaseId);
-      } else {
-        await DB.installRelease(seed);
+      try {
+        const existing = await DB.getRelease(seed.releaseId);
+        if (existing) {
+          const verification = await DB.verifyStagedRelease(seed.releaseId);
+          if (!verification.ok) throw new Error("The bundled library did not pass its local integrity checks.");
+          await DB.activateRelease(seed.releaseId);
+        } else {
+          await DB.installRelease(seed);
+        }
+        active = await DB.getActiveRelease();
+      } catch (error) {
+        if (!active) throw error;
+        // A failed bundled refresh must never make the existing local library unavailable.
       }
-      active = await DB.getActiveRelease();
     }
     if (!active) throw new Error("No active offline knowledge library is available.");
     return active;
