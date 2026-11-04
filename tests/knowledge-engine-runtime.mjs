@@ -2,10 +2,15 @@ import "fake-indexeddb/auto";
 import fs from "node:fs";
 import vm from "node:vm";
 import assert from "node:assert/strict";
+import { webcrypto } from "node:crypto";
 
 const source = fs.readFileSync("knowledge/engine.js", "utf8");
+const cryptoSource = fs.readFileSync("knowledge/crypto.js", "utf8");
+globalThis.crypto = webcrypto;
+vm.runInThisContext(cryptoSource, { filename: "knowledge/crypto.js" });
 vm.runInThisContext(source, { filename: "knowledge/engine.js" });
 const db = globalThis.HarcomKnowledgeDB;
+const packageVerifier = globalThis.HarcomKnowledgeCrypto;
 
 function makePackage(releaseId, suffix = "") {
   return {
@@ -87,4 +92,40 @@ try {
   else delete globalThis.navigator;
 }
 
-console.log("HARCOM Knowledge Engine IndexedDB runtime tests passed: validation, staging, search, rollback, retention and quota fail-closed.");
+
+// Verify exact-byte Ed25519 package signing with an ephemeral test key.
+const signedPackage = makePackage("signed-runtime-release");
+const packageBytes = new TextEncoder().encode(JSON.stringify(signedPackage));
+const keyPair = await webcrypto.subtle.generateKey({ name: "Ed25519" }, true, ["sign", "verify"]);
+const rawPublicKey = new Uint8Array(await webcrypto.subtle.exportKey("raw", keyPair.publicKey));
+const signature = new Uint8Array(await webcrypto.subtle.sign({ name: "Ed25519" }, keyPair.privateKey, packageBytes));
+const toBase64 = bytes => Buffer.from(bytes).toString("base64");
+const hashBytes = new Uint8Array(await webcrypto.subtle.digest("SHA-256", packageBytes));
+const hashHex = Array.from(hashBytes, value => value.toString(16).padStart(2, "0")).join("");
+const signedManifest = {
+  schemaVersion: 1,
+  releaseId: signedPackage.releaseId,
+  packageSha256: hashHex,
+  signature: toBase64(signature),
+  keyId: "ephemeral-test-key"
+};
+const verified = await packageVerifier.verifySignedPackage(packageBytes, signedManifest, toBase64(rawPublicKey));
+assert.equal(verified.package.releaseId, signedPackage.releaseId);
+assert.equal(verified.sha256, hashHex);
+const changedBytes = new Uint8Array(packageBytes);
+changedBytes[0] ^= 1;
+await assert.rejects(
+  () => packageVerifier.verifySignedPackage(changedBytes, signedManifest, toBase64(rawPublicKey)),
+  error => error.code === "HASH_MISMATCH"
+);
+const invalidSignatureManifest = { ...signedManifest, signature: toBase64(new Uint8Array(64)) };
+await assert.rejects(
+  () => packageVerifier.verifySignedPackage(packageBytes, invalidSignatureManifest, toBase64(rawPublicKey)),
+  error => error.code === "INVALID_SIGNATURE"
+);
+await assert.rejects(
+  () => packageVerifier.verifySignedPackage(packageBytes, { ...signedManifest, releaseId: "wrong-id" }, toBase64(rawPublicKey)),
+  error => error.code === "MANIFEST_MISMATCH"
+);
+
+console.log("HARCOM Knowledge Engine runtime tests passed: IndexedDB validation, staging, search, rollback, retention, quota fail-closed and Ed25519 package verification.");
