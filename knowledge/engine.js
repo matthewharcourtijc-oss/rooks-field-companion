@@ -356,6 +356,22 @@
           sources: sources.map(({ releaseId: ignored, ...item }) => item),
           media: media.map(({ releaseId: ignored, ...item }) => item)
         });
+        const expectedTerms = new Map();
+        articles.forEach(article => {
+          const titleTerms = new Set(tokenize(article.title));
+          tokenize([article.title, article.summary || "", article.body, ...(article.tags || [])].join(" ")).forEach(term => {
+            expectedTerms.set(article.id + "\u0000" + term, { articleId: article.id, term, titleHit: titleTerms.has(term) });
+          });
+        });
+        if (expectedTerms.size !== searchTerms.length) {
+          return { ok: false, counts, expected, reason: "search-index-count-mismatch" };
+        }
+        for (const record of searchTerms) {
+          const expectedRecord = expectedTerms.get(record.articleId + "\u0000" + record.term);
+          if (!expectedRecord || expectedRecord.titleHit !== record.titleHit) {
+            return { ok: false, counts, expected, reason: "search-index-content-mismatch" };
+          }
+        }
       } catch (error) {
         return { ok: false, counts, expected, reason: "record-validation-failed", message: error.message };
       }
