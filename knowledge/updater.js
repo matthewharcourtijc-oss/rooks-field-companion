@@ -146,6 +146,7 @@
     const publicKey = opts.trustedKeys && opts.trustedKeys[manifest.keyId];
     if (!publicKey) fail("UNKNOWN_SIGNING_KEY", "This release was signed with an untrusted key. It was not installed.");
     const packageBaseUrl = checked.packageBaseUrl || new URL("../", opts.manifestUrl).href;
+    if (new URL(packageBaseUrl).origin !== origin) fail("INVALID_URL", "The content package base does not match the trusted update site.");
     const packageUrl = checkedHttpsUrl(manifest.packageUrl, packageBaseUrl);
     let response;
     try {
