@@ -12,6 +12,8 @@ assert.ok(crypto.includes("verifySignedPackage"));
 assert.ok(crypto.includes("SHA-256"));
 assert.ok(crypto.includes("Ed25519"));
 assert.ok(crypto.includes("HASH_MISMATCH"));
+assert.ok(crypto.includes("SIZE_MISMATCH"));
+assert.ok(crypto.includes("manifest.packageSize"));
 assert.ok(crypto.includes("INVALID_SIGNATURE"));
 assert.ok(!crypto.includes("privateKey"));
 assert.ok(engine.includes('const DB_NAME = "harcom-field-knowledge"'));
