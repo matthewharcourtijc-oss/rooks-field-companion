@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-core-2026-11-04-c",
+  "releaseId": "uk-core-2026-11-04-d",
   "createdAt": "2026-11-04T00:00:00.000Z",
   "summary": "Initial UK-first emergency, weather, water, coast, navigation, campcraft and food-safety knowledge release.",
   "categories": [
@@ -206,6 +206,50 @@
       "publisher": "National Highways",
       "url": "https://nationalhighways.co.uk/safety/driving-on-our-roads/driving-on-motorways/",
       "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-dehydration",
+      "title": "Dehydration",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/dehydration/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-anaphylaxis",
+      "title": "Anaphylaxis",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/anaphylaxis/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-snake-bites",
+      "title": "Snake bites",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/snake-bites/",
+      "accessedAt": "2026-11-04",
+      "publishedOrReviewed": "2026-07-17"
+    },
+    {
+      "id": "nhs-insect-bites",
+      "title": "Insect bites and stings",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/insect-bites-and-stings/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-foraging",
+      "title": "Foraging guidelines",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/visiting-woods/things-to-do/foraging/foraging-guidelines",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "govuk-countryside-code",
+      "title": "The Countryside Code: advice for countryside visitors",
+      "publisher": "GOV.UK / Natural England / Natural Resources Wales",
+      "url": "https://www.gov.uk/government/publications/the-countryside-code/the-countryside-code-advice-for-countryside-visitors",
+      "accessedAt": "2026-11-04",
+      "publishedAt": "2023-05-26"
     }
   ],
   "articles": [
@@ -1113,6 +1157,279 @@
       "reviewedAt": "2026-11-04",
       "sourceIds": [
         "mountain-rescue-safety"
+      ]
+    },
+    {
+      "id": "dehydration-recognition-response",
+      "title": "Recognising and responding to dehydration",
+      "summary": "Recognise common dehydration signs, replace fluids safely and know when urgent medical help is needed.",
+      "body": "Dehydration happens when the body loses more fluid than it takes in. Babies, children and older adults are at greater risk. Heat, exertion, vomiting and diarrhoea can increase fluid loss.",
+      "categoryId": "first-aid",
+      "tags": [
+        "dehydration",
+        "water",
+        "heat",
+        "illness",
+        "fluid loss"
+      ],
+      "steps": [
+        "Look for thirst, headache, light-headedness, dark strong-smelling urine, passing urine less often, tiredness and a dry mouth.",
+        "If the person is awake and able to swallow, encourage fluids. If they feel sick, start with small sips and gradually drink more.",
+        "If vomiting or diarrhoea has caused fluid loss, ask a pharmacist about an oral rehydration solution to replace salts and minerals.",
+        "For prevention, drink regularly during the day and increase fluid intake during heat, exercise, vomiting or diarrhoea.",
+        "Seek urgent GP or NHS 111 advice for unusual tiredness, persistent dizziness on standing, reduced urination or a fast heart rate.",
+        "Call 999 or go to A&E if there are signs of shock such as confusion, difficulty breathing, cold skin or blue, grey, pale or blotchy skin."
+      ],
+      "equipment": [
+        "Safe drinking water",
+        "Oral rehydration solution when advised by a pharmacist"
+      ],
+      "commonMistakes": [
+        "Ignoring reduced urination or persistent dizziness.",
+        "Trying to make someone who is drowsy or unable to swallow drink.",
+        "Assuming every case can be managed with water alone."
+      ],
+      "dangers": [
+        "Severe dehydration can lead to shock.",
+        "Babies, children and older adults can deteriorate more quickly."
+      ],
+      "stopAndGetHelp": "Use NHS 111 for urgent advice when serious dehydration is suspected. Call 999 for confusion, difficulty breathing, cold skin or other signs of shock.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-dehydration"
+      ]
+    },
+    {
+      "id": "anaphylaxis-emergency-response",
+      "title": "Anaphylaxis: life-threatening allergic reaction",
+      "summary": "Recognise a severe allergic reaction, use a prescribed adrenaline auto-injector and call 999 immediately.",
+      "body": "Anaphylaxis is a life-threatening allergic reaction that can develop quickly, including after food, medicines or insect stings. Do not wait for every symptom to appear.",
+      "categoryId": "first-aid",
+      "tags": [
+        "anaphylaxis",
+        "allergy",
+        "adrenaline",
+        "EpiPen",
+        "insect sting",
+        "emergency"
+      ],
+      "steps": [
+        "Suspect anaphylaxis if there is sudden swelling of the lips, mouth, tongue or throat, breathing difficulty, throat tightness, faintness, confusion or collapse.",
+        "Use the person's adrenaline auto-injector immediately if they have one. Follow the instructions for that device.",
+        "Call 999 and say you suspect anaphylaxis.",
+        "Help the person lie down. They can raise their legs; if breathing is difficult, raise the shoulders or sit up slowly. If pregnant, they should lie on their left side.",
+        "Do not let the person stand or walk, even if they start to feel better.",
+        "If symptoms have not improved after 5 minutes and a second auto-injector is available, use it as directed.",
+        "Stay with the person and follow the emergency call handler's instructions until help arrives."
+      ],
+      "equipment": [
+        "The person's prescribed adrenaline auto-injector or injectors",
+        "Emergency contact and allergy information if readily available"
+      ],
+      "commonMistakes": [
+        "Delaying adrenaline or the 999 call.",
+        "Allowing the person to stand or walk.",
+        "Assuming symptoms are resolved because the person feels temporarily better."
+      ],
+      "dangers": [
+        "Anaphylaxis can cause life-threatening breathing and circulation problems within minutes.",
+        "Hospital treatment is required even if symptoms improve after adrenaline."
+      ],
+      "stopAndGetHelp": "Call 999 immediately if anaphylaxis is suspected. Use the person's prescribed auto-injector and follow the NHS and emergency call handler's instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-anaphylaxis",
+        "govuk-emergency-numbers"
+      ]
+    },
+    {
+      "id": "uk-snake-bite-response",
+      "title": "UK snake bite: immediate response",
+      "summary": "Treat every suspected UK snake bite as needing urgent medical assessment; the adder is the UK's only venomous wild snake.",
+      "body": "Most UK snake bites are not serious, but NHS advice is to get all snake bites checked as soon as possible. Do not approach, catch or kill the snake.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "adder",
+        "snake bite",
+        "wildlife",
+        "venom",
+        "first aid"
+      ],
+      "steps": [
+        "Call 999 or go to A&E immediately if you think someone has been bitten by a snake. Do not drive yourself to A&E.",
+        "Keep the bitten body part as still as possible and stay calm.",
+        "Lie in the recovery position if you can.",
+        "Remove jewellery and loosen clothing near the bite in case swelling develops.",
+        "If safe from a distance, remember the snake's colour and pattern or take a photograph without approaching it.",
+        "Follow emergency medical advice and bring a list of medicines if available."
+      ],
+      "equipment": [
+        "Mobile phone",
+        "Medication list if readily available"
+      ],
+      "commonMistakes": [
+        "Trying to catch, kill or handle the snake.",
+        "Cutting or sucking the bite.",
+        "Tying a tourniquet or anything tight around the limb.",
+        "Taking aspirin or ibuprofen after a snake bite."
+      ],
+      "dangers": [
+        "The adder is the only venomous snake found in the wild in the UK.",
+        "Swelling and other effects can develop; hospital assessment is required."
+      ],
+      "stopAndGetHelp": "Call 999 or go to A&E immediately for any suspected UK snake bite. Do not drive yourself. Keep the affected area still and follow emergency instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide NHS guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-snake-bites"
+      ]
+    },
+    {
+      "id": "insect-stings-and-allergy",
+      "title": "Insect stings: basic care and red flags",
+      "summary": "Remove a bee stinger safely, clean the area and recognise signs of a serious allergic reaction.",
+      "body": "Most insect bites and stings are not serious, but some cause infection or a severe allergic reaction. The response depends on the symptoms.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "bee sting",
+        "wasp sting",
+        "insect bite",
+        "allergy",
+        "anaphylaxis"
+      ],
+      "steps": [
+        "If a bee stinger remains in the skin, scrape it sideways with a fingernail or the edge of a bank card. Do not pull it out with tweezers.",
+        "Wash the area with soap and water.",
+        "For swelling, apply a cold pack wrapped in cloth or a clean cloth soaked in cold water for at least 20 minutes.",
+        "Keep the affected area raised if possible and avoid scratching.",
+        "Seek urgent NHS 111 advice if the sting is in the mouth, throat or near the eyes, if there are multiple stings, or if symptoms worsen.",
+        "Call 999 immediately for sudden swelling of the lips, mouth, tongue or throat, breathing difficulty, throat tightness, collapse or other signs of anaphylaxis."
+      ],
+      "equipment": [
+        "Clean water and soap",
+        "Cold pack or clean cloth",
+        "Bank card or fingernail to scrape out a bee stinger"
+      ],
+      "commonMistakes": [
+        "Pulling a bee stinger out with tweezers and squeezing the venom sac.",
+        "Scratching the area until the skin breaks.",
+        "Treating breathing difficulty or throat swelling as a routine sting."
+      ],
+      "dangers": [
+        "A severe allergic reaction can develop rapidly.",
+        "Stings in the mouth or throat can cause dangerous swelling."
+      ],
+      "stopAndGetHelp": "Call 999 for signs of anaphylaxis. Use NHS 111 urgently for a sting in the mouth, throat or near the eyes, multiple stings or worsening symptoms.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-insect-bites",
+        "nhs-anaphylaxis"
+      ]
+    },
+    {
+      "id": "wild-foraging-safety",
+      "title": "Wild plants, berries and fungi: foraging safety",
+      "summary": "Do not eat wild plants, berries or fungi unless you can identify them with certainty using reliable specialist guidance.",
+      "body": "Some UK wild plants, berries and fungi are poisonous, and some dangerous species resemble edible ones. Pictures and short descriptions are not a safe identification method.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "foraging",
+        "wild plants",
+        "berries",
+        "mushrooms",
+        "fungi",
+        "poisonous plants"
+      ],
+      "steps": [
+        "Do not eat any wild plant, berry or fungus unless you can identify the species with certainty using a reliable specialist field guide and appropriate expertise.",
+        "Never rely on an app, online picture, this article or a single visual feature to decide that a wild food is safe.",
+        "If uncertain, leave it where it grows. Do not taste-test an unknown plant or mushroom.",
+        "Check local rules and landowner permission before collecting anything. Some plants and fungi are protected and removal may be illegal.",
+        "Only consider collecting plentiful species when identification and permission are certain; leave enough for wildlife and regeneration.",
+        "If someone may have eaten a poisonous plant or fungus, seek medical advice immediately and follow the poisoning response guidance."
+      ],
+      "equipment": [
+        "A reliable specialist field guide for study, not as a guarantee of edibility",
+        "Permission to collect where required"
+      ],
+      "commonMistakes": [
+        "Assuming a berry is safe because birds eat it.",
+        "Assuming cooking makes a poisonous mushroom safe.",
+        "Relying on a phone photograph or AI identification.",
+        "Collecting rare or protected species."
+      ],
+      "dangers": [
+        "Some plant and fungal toxins can cause severe illness or delayed organ damage.",
+        "Symptoms of poisoning may be delayed for hours or days."
+      ],
+      "stopAndGetHelp": "If a potentially poisonous plant, berry or fungus has been eaten, seek medical advice immediately. Call 999 for serious symptoms and use the NHS poisoning guidance. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide safety guidance; plant collection laws and access rules differ across the UK",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-foraging",
+        "nhs-poisoning"
+      ]
+    },
+    {
+      "id": "countryside-code-basics",
+      "title": "Countryside access and responsible fieldcraft",
+      "summary": "Respect local access rules, protect wildlife and property, and check route, weather and tide conditions before setting out.",
+      "body": "The Countryside Code provides visitor guidance for England and Wales. Scotland and Northern Ireland have separate access guidance, so do not assume the same rules apply everywhere.",
+      "categoryId": "navigation",
+      "tags": [
+        "countryside code",
+        "access",
+        "landowner permission",
+        "wild camping",
+        "wildlife",
+        "leave no trace"
+      ],
+      "steps": [
+        "Follow local signs and use marked paths unless wider access is clearly available.",
+        "Leave gates and property as you find them and do not interfere with livestock, farm machinery or working animals.",
+        "Give livestock, horses and wild animals plenty of space; keep dogs under control and in sight.",
+        "Take litter and food waste home and avoid damaging plants, trees, habitats or historic sites.",
+        "Check weather, route, water and tide conditions before setting out; turn back if conditions change.",
+        "Check the access rules for the nation and location. Camping, freshwater swimming and fishing may require landowner permission.",
+        "Leave clear access for emergency vehicles when parking in rural areas."
+      ],
+      "equipment": [
+        "Current map and route information",
+        "Rubbish bag for waste",
+        "Suitable clothing and footwear"
+      ],
+      "commonMistakes": [
+        "Assuming open access land automatically permits camping.",
+        "Assuming the England and Wales Countryside Code is the law or guidance for all UK nations.",
+        "Leaving gates open or disturbing livestock and wildlife.",
+        "Ignoring tides and local signs."
+      ],
+      "dangers": [
+        "Livestock and wild animals can behave unpredictably, especially near young.",
+        "Blocking access can delay emergency vehicles.",
+        "Incorrect assumptions about access rights can lead to conflict or unlawful activity."
+      ],
+      "stopAndGetHelp": "If local signs, land access or safety conditions are unclear, choose another route or seek advice from the land manager or relevant local authority.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England and Wales; Scotland and Northern Ireland have separate access guidance",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-countryside-code",
+        "woodland-foraging"
       ]
     }
   ],
