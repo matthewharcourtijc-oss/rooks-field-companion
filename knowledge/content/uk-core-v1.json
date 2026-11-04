@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-field-v3-2026-11-04",
-  "createdAt": "2026-11-04T22:00:00.000Z",
+  "releaseId": "uk-field-v3-2026-11-04-r1",
+  "createdAt": "2026-11-04T22:04:00.000Z",
   "summary": "Expanded UK field library: medical emergencies, forestry, foraging safety, bushcraft and offline illustrations.",
   "categories": [
     {
@@ -440,6 +440,21 @@
       "title": "First Aid Guidelines (2025)",
       "publisher": "Resuscitation Council UK",
       "url": "https://www.resus.org.uk/cy/node/36662"
+    },
+    {
+      "id": "nhs-chemical-burns",
+      "title": "Acid and chemical burns",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/acid-and-chemical-burns/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "sja-electric-shock",
+      "title": "Electric shock",
+      "publisher": "St John Ambulance",
+      "url": "https://www.sja.org.uk/first-aid-advice/electrocution/",
+      "accessedAt": "2026-11-04",
+      "publishedOrReviewed": "2025-04-28"
     }
   ],
   "articles": [
@@ -799,8 +814,8 @@
     {
       "id": "burns-first-response",
       "title": "Burns and scalds: first response",
-      "summary": "Cool a burn or scald with cool running water for 20 minutes and know when emergency help is needed.",
-      "body": "NHS guidance says to treat burns and scalds straight away. The priority is cooling the affected area and obtaining emergency care for serious burns.",
+      "summary": "First make the scene safe, then use the correct cooling or decontamination steps for heat, chemical or electrical injuries.",
+      "body": "Burns need immediate first aid, but the correct response depends on the cause. Heat and scald burns need 20 minutes of cool running water. Chemical burns need prolonged irrigation and urgent emergency help. Electrical incidents are dangerous until the power source is isolated.",
       "categoryId": "first-aid",
       "tags": [
         "burns",
@@ -810,11 +825,13 @@
         "fire"
       ],
       "steps": [
-        "Cool the burn under cool running water for 20 minutes as soon as possible, ideally within 3 hours.",
-        "Remove nearby clothing or jewellery if it is not stuck to the skin.",
-        "After cooling, lay cling film loosely over the burn if appropriate; do not wrap it around the limb.",
-        "Do not apply creams, oils or butter and do not burst blisters.",
-        "Call 999 or go to A&E for very large or deep burns, burns to the face, genitals or bottom, or burns caused by chemicals or electricity."
+        "Make sure the scene is safe. For an electrical injury, never touch the person while they may still be in contact with electricity. Isolate the power only if you can do so safely; never approach high-voltage cables or equipment.",
+        "For a heat or scald burn, cool the area under cool running water for 20 minutes as soon as possible, ideally within 3 hours.",
+        "For a chemical burn, call 999 immediately. Protect yourself from the substance; wear suitable gloves if available and safe. Remove contaminated clothing if this can be done safely, brush dry chemicals off the skin, then rinse with cool or lukewarm running water for about 1 hour.",
+        "Do not try to neutralise a chemical with another chemical, and do not put creams, oils or other substances on the burn.",
+        "Remove nearby clothing or jewellery if it is not stuck to the skin. Do not pull away anything stuck to the burn.",
+        "After cooling, lay cling film loosely over an ordinary heat or scald burn if appropriate; do not wrap it around a limb.",
+        "Call 999 or go to A&E for very large or deep burns, burns to the face, genitals or bottom, and all chemical or electrical burns. Follow the emergency call handler's instructions."
       ],
       "equipment": [
         "Access to cool running water",
@@ -823,19 +840,25 @@
       "commonMistakes": [
         "Using ice, butter, oils or creams on a fresh burn.",
         "Pulling away clothing stuck to the skin.",
-        "Wrapping cling film tightly around a limb."
+        "Wrapping cling film tightly around a limb.",
+        "Touching a person who may still be in contact with a live electrical source.",
+        "Trying to neutralise a chemical burn or delaying irrigation while looking for a product."
       ],
       "dangers": [
-        "Large, deep, chemical and electrical burns can be serious.",
-        "Cooling and treatment should not delay calling 999 for a severe burn."
+        "Large, deep, chemical and electrical burns can cause serious injury.",
+        "Electrical current can remain dangerous until the supply is isolated; high-voltage equipment must not be approached.",
+        "Chemical burns can continue damaging tissue until the substance is removed by prolonged irrigation.",
+        "Cooling or decontamination must not delay calling 999 for a chemical, electrical or otherwise severe burn."
       ],
-      "stopAndGetHelp": "Call 999 or attend A&E for very large or deep burns, burns to the face, genitals or bottom, and chemical or electrical burns. Use NHS 111 if unsure what to do.",
+      "stopAndGetHelp": "Call 999 immediately for any chemical or electrical burn, very large or deep burn, or burn to the face, genitals or bottom. For chemical exposure, start safe irrigation while help is arranged. Never approach a live electrical or high-voltage hazard. Use NHS 111 if unsure about a less serious heat or scald burn.",
       "contentBasis": "official-guidance",
       "jurisdiction": "NHS guidance; check local service arrangements",
       "safetyLevel": "high",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
-        "nhs-burns"
+        "nhs-burns",
+        "nhs-chemical-burns",
+        "sja-electric-shock"
       ]
     },
     {
