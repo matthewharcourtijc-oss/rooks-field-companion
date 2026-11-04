@@ -434,6 +434,12 @@
       "publisher": "US Centers for Disease Control and Prevention",
       "url": "https://www.cdc.gov/water-emergency/about/index.html",
       "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "resus-first-aid-2025",
+      "title": "First Aid Guidelines (2025)",
+      "publisher": "Resuscitation Council UK",
+      "url": "https://www.resus.org.uk/cy/node/36662"
     }
   ],
   "articles": [
@@ -1946,7 +1952,7 @@
       "id": "severe-bleeding-control",
       "title": "Severe bleeding: firm direct pressure",
       "summary": "Control serious external bleeding while emergency help is on the way.",
-      "body": "Severe bleeding can become life-threatening quickly. Protect yourself from blood where possible and focus on firm, continuous pressure over the bleeding site.",
+      "body": "Severe bleeding can become life-threatening within minutes. Call 999 early, protect yourself from blood where possible and apply firm, continuous direct pressure. Follow the emergency call handler's instructions.",
       "categoryId": "first-aid",
       "tags": [
         "bleeding",
@@ -1955,33 +1961,41 @@
         "trauma"
       ],
       "steps": [
-        "Make sure the scene is safe. Use gloves or a barrier if immediately available, but do not delay help.",
-        "Call 999 for severe, spurting or uncontrolled bleeding.",
-        "If nothing is embedded, press firmly on the wound with a sterile dressing or clean cloth.",
-        "Maintain pressure. If blood comes through, add another dressing rather than repeatedly lifting the first.",
-        "If an object is embedded, do not remove it or press directly on it; apply pressure around it.",
-        "Keep the person still and warm. Monitor response and breathing."
+        "Check that the scene is safe. Use gloves or another barrier if immediately available, but do not delay emergency help.",
+        "Call 999 for severe, spurting or uncontrolled bleeding. Use speakerphone and follow the call handler.",
+        "Apply firm, continuous direct pressure directly over the wound using a sterile dressing or clean material. If clothing covers the wound, expose it if safe to do so.",
+        "If an object is embedded, do not remove it and do not press on it. Apply pressure around the object.",
+        "If blood comes through the dressing, maintain pressure and follow the call handler's instructions; avoid repeatedly lifting the dressing to inspect the wound.",
+        "Once bleeding is controlled, secure the dressing with a pressure bandage if available and keep checking the person's response and breathing.",
+        "For life-threatening bleeding from an arm or leg that is not controlled by direct pressure, a tourniquet may be needed. Use a suitable commercial tourniquet if trained, or follow the 999 call handler's instructions. Once applied, do not loosen or remove it; note the time if possible.",
+        "Keep the person still and warm while waiting for help. If they become unresponsive and are not breathing normally, follow the call handler's CPR instructions."
       ],
       "equipment": [
-        "Gloves or barrier",
-        "Sterile dressing or clean cloth",
+        "Protective gloves or barrier",
+        "Sterile dressing or clean non-fluffy cloth",
+        "Pressure bandage if available",
+        "Commercial tourniquet only where appropriate and the user is trained or directed by the emergency call handler",
         "Phone"
       ],
       "commonMistakes": [
+        "Delaying the 999 call while searching for equipment.",
         "Removing an embedded object.",
-        "Repeatedly lifting the dressing.",
-        "Delaying 999 while finding a kit."
+        "Repeatedly lifting the dressing and interrupting pressure.",
+        "Loosening or removing an applied tourniquet.",
+        "Using equipment or techniques beyond your training instead of following the emergency call handler."
       ],
       "dangers": [
         "Major blood loss can cause shock and death.",
-        "Blood exposure can carry infection risk."
+        "Blood exposure can carry infection risk.",
+        "Tourniquets can cause significant pain and should not be loosened once applied."
       ],
-      "stopAndGetHelp": "Call 999 for severe bleeding or bleeding that will not stop. Do not remove embedded objects.",
+      "stopAndGetHelp": "Call 999 immediately for severe, spurting or uncontrolled bleeding. Apply firm direct pressure and follow the emergency call handler. A tourniquet may be required for life-threatening limb bleeding not controlled by pressure; use one if trained or as directed, and do not loosen it.",
       "contentBasis": "official-guidance",
       "jurisdiction": "UK NHS first-aid guidance",
       "safetyLevel": "high",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
+        "resus-first-aid-2025",
         "nhs-cuts-grazes"
       ],
       "illustration": "./knowledge/illustrations/bleeding-pressure.svg",
