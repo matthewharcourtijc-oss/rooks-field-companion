@@ -47,10 +47,12 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Added staged installation, read-back validation, atomic active-release pointer changes, previous-release retention and explicit rollback activation.
 - Added local multi-word search using an inverted index; all query terms must match.
 - Added quota-estimate guardrails and an optional user-invoked persistent-storage request. Persistence is never assumed.
+- Added a separate Ed25519/SHA-256 verifier that checks the exact downloaded bytes, rejects hash/signature/manifest mismatches and fails closed if the browser lacks the required cryptography.
+- Added runtime tests using a pinned `fake-indexeddb` test dependency, including staged installs, search, rollback, release retention, quota rejection and ephemeral Ed25519 signature/tamper checks.
 - Added a device test page at `tests/knowledge-engine.html` and Node structural checks at `tests/knowledge-engine.mjs`.
-- CI now runs the original app validator and the new structural checks.
+- CI runs the original app validator, structural checks and IndexedDB/crypto runtime tests.
 - The prototype is not yet connected to the app interface, service-worker precache or an online updater.
-- Package authenticity/signature verification is not yet implemented.
+- The signature-verification primitive is implemented and tested with ephemeral keys. A production signing key, trusted public-key pin, signed release manifest and network updater are not yet configured.
 - Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute.
 
 ## 5. Proposed architecture and next engineering decisions
