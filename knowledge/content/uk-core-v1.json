@@ -1922,6 +1922,8 @@
       ],
       "steps": [
         "Call 999 for tight or squeezing chest pain, pain spreading to the arm, neck or jaw, severe breathing difficulty or collapse.",
+        "If 300mg aspirin is immediately available, help the person chew it unless they are allergic to aspirin or have been told not to take it. Do not delay the 999 call to find aspirin.",
+        "If the person has prescribed GTN for angina, help them use their own medicine as directed.",
         "Help the person sit and rest in a comfortable supported position.",
         "Keep them still, warm and reassured.",
         "Follow the ambulance call handler. Do not delay to search for information.",
@@ -1934,7 +1936,9 @@
       "commonMistakes": [
         "Assuming it is indigestion and waiting.",
         "Letting the person exert themselves.",
-        "Driving them to hospital yourself."
+        "Driving them to hospital yourself.",
+        "Delaying the 999 call while looking for aspirin or other medication.",
+        "Giving aspirin to someone with a known aspirin allergy or who has been told not to take it."
       ],
       "dangers": [
         "A heart attack can deteriorate into cardiac arrest."
