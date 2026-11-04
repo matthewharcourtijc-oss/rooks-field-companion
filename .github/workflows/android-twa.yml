@@ -49,7 +49,7 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
         with:
-          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0 emulator'
 
 
       - name: Validate checked-in TWA configuration
@@ -164,6 +164,22 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Enable and verify KVM acceleration
+        run: |
+          set -euo pipefail
+          if [[ ! -e /dev/kvm ]]; then
+            echo "GitHub runner does not expose /dev/kvm; refusing a slow, unreliable x86_64 software-emulation fallback."
+            exit 1
+          fi
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo chmod 0666 /dev/kvm
+          ls -l /dev/kvm
+          test -r /dev/kvm && test -w /dev/kvm
+          test -x "$ANDROID_HOME/emulator/emulator"
+          "$ANDROID_HOME/emulator/emulator" -accel-check
+
       - name: Install and launch on Android emulator
         timeout-minutes: 12
         uses: reactivecircus/android-emulator-runner@v2
@@ -173,22 +189,16 @@ jobs:
           arch: x86_64
           profile: pixel_2
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          emulator-boot-timeout: 300
+          emulator-boot-timeout: 600
+          disable-linux-hw-accel: false
           disable-animations: true
           script: |
-            set -euo pipefail
-            APK="android/twa/app/build/outputs/apk/debug/app-debug.apk"
-            APP_ID="com.harcomindustries.fieldcompanion.diagnostic${{ github.run_number }}"
-            adb install "$APK"
-            ACTIVITY="$(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "$APP_ID" | tr -d '\\r' | tail -n 1)"
-            test -n "$ACTIVITY"
-            adb shell am start -W -n "$ACTIVITY"
+            echo "Starting Companion fresh-install and launcher smoke test."
+            adb install "android/twa/app/build/outputs/apk/debug/app-debug.apk"
+            ACTIVITY="$(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "com.harcomindustries.fieldcompanion.diagnostic${{ github.run_number }}" | tr -d '\r' | tail -n 1)" && test -n "$ACTIVITY" && adb shell am start -W -n "$ACTIVITY"
             sleep 8
-            if adb logcat -d -t 1200 | grep -E "FATAL EXCEPTION.*$APP_ID|Process: $APP_ID"; then
-              echo "Android launcher crashed during smoke test."
-              exit 1
-            fi
-            echo "Fresh install and launcher start passed for $APP_ID."
+            if adb logcat -d -t 1200 | grep -E "FATAL EXCEPTION.*com.harcomindustries.fieldcompanion.diagnostic${{ github.run_number }}|Process: com.harcomindustries.fieldcompanion.diagnostic${{ github.run_number }}"; then echo "Android launcher crashed during smoke test."; exit 1; fi
+            echo "Fresh install and launcher start passed for diagnostic build ${{ github.run_number }}."
 
       - name: Publish direct APK download
         uses: softprops/action-gh-release@v2

@@ -14,7 +14,9 @@ assert.equal(config.minSdkVersion, 24, "Current Android Browser Helper requires 
 assert.equal(config.enableNotifications, false);
 assert.equal(config.fallbackType, "customtabs");
 assert.equal(config.webManifestUrl, "https://matthewharcourtijc-oss.github.io/rooks-field-companion/manifest.json");
-assert.match(config.iconUrl, /icon-512\.png$/);
+assert.equal(config.iconUrl, "https://matthewharcourtijc-oss.github.io/rooks-field-companion/assets/harcom-industries-logo.png");
+assert.equal(config.maskableIconUrl, config.iconUrl,
+  "Launcher and maskable launcher icons must use the approved HARCOM Industries logo.");
 assert.equal(config.signingKey.alias, "harcom-field-companion");
 assert.ok(!("password" in config.signingKey), "Signing credentials must never be stored in the checked-in TWA manifest.");
 assert.ok(Array.isArray(config.fingerprints));
