@@ -110,13 +110,6 @@
       "accessedAt": "2026-11-04"
     },
     {
-      "id": "fsa-camping-food",
-      "title": "Camping food safety",
-      "publisher": "Food Standards Agency",
-      "url": "https://food.blog.gov.uk/2020/07/20/camping-food-safety/",
-      "accessedAt": "2026-11-04"
-    },
-    {
       "id": "os-map-reading",
       "title": "Map reading",
       "publisher": "Ordnance Survey",
@@ -128,6 +121,20 @@
       "title": "Mountain forecast guide",
       "publisher": "Met Office",
       "url": "https://weather.metoffice.gov.uk/guides/mountain/forecast",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-food-poisoning",
+      "title": "Food poisoning: how to reduce the risk",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.food.gov.uk/food-safety-and-hygiene/food-poisoning",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-cooking",
+      "title": "Cooking your food",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.food.gov.uk/safety-hygiene/cooking-your-food",
       "accessedAt": "2026-11-04"
     }
   ],
@@ -531,7 +538,7 @@
       "id": "camp-food-hygiene",
       "title": "Food hygiene at camp",
       "summary": "Keep high-risk food cold, separate raw and ready-to-eat foods, cook thoroughly and clean equipment.",
-      "body": "Outdoor temperatures and storage conditions can make food spoil more quickly. Food Standards Agency advice highlights careful chilling, separation, cooking and cleaning.",
+      "body": "Outdoor storage can make food spoil more quickly. Follow the Food Standards Agency's four food-safety principles: cleaning, chilling, cooking and avoiding cross-contamination.",
       "categoryId": "food",
       "tags": [
         "food safety",
@@ -542,7 +549,7 @@
       ],
       "steps": [
         "Plan meals around the food you can safely keep chilled; use a cool box and ice packs for foods that normally need refrigeration.",
-        "Keep chilled food at 5°C or below where possible; do not assume a cool box will stay cold for an extended trip.",
+        "Keep chilled foods below 5°C; use an insulated cool box and ice packs, and check the temperature where possible. Do not assume a cool box will stay cold for an extended trip.",
         "Keep raw foods separate from ready-to-eat foods and use sealed containers to prevent cross-contamination.",
         "Wash hands before and after handling food, especially raw meat and dirty equipment.",
         "Cook food thoroughly; meat should be steaming hot throughout and cooked according to reliable food-safety guidance.",
@@ -571,7 +578,8 @@
       "safetyLevel": "caution",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
-        "fsa-camping-food"
+        "fsa-food-poisoning",
+        "fsa-cooking"
       ]
     },
     {
