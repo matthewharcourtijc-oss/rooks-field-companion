@@ -49,7 +49,7 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Added quota-estimate guardrails and an optional user-invoked persistent-storage request. Persistence is never assumed.
 - Added a separate Ed25519/SHA-256 verifier that checks the exact downloaded bytes, rejects hash/signature/manifest mismatches and fails closed if the browser lacks the required cryptography.
 - Added runtime tests using a pinned `fake-indexeddb` test dependency, including staged installs, search, rollback, release retention, quota rejection and ephemeral Ed25519 signature/tamper checks.
-- Added a 26-article UK-first starter pack with 26 named sources covering emergencies, first aid, water, weather, coast, navigation, campcraft and food safety.
+- Added a 31-article UK-first starter pack with 31 named sources covering emergencies, first aid, water, weather, coast, navigation, campcraft and food safety.
 - Added an editorial standard requiring source provenance, jurisdiction, review dates, risk levels and explicit stop/help guidance.
 - Added a device test page at `tests/knowledge-engine.html`, Node structural checks at `tests/knowledge-engine.mjs` and IndexedDB/crypto runtime tests at `tests/knowledge-engine-runtime.mjs`.
 - CI runs the original app validator, structural checks and IndexedDB/crypto runtime tests.
