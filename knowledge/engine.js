@@ -6,7 +6,7 @@
   "use strict";
 
   const DB_NAME = "harcom-field-knowledge";
-  const DB_VERSION = 1;
+  const DB_VERSION = 2;
   const STORES = Object.freeze({
     articles: "articles",
     categories: "categories",
