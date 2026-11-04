@@ -6,11 +6,14 @@ import { webcrypto } from "node:crypto";
 
 const source = fs.readFileSync("knowledge/engine.js", "utf8");
 const cryptoSource = fs.readFileSync("knowledge/crypto.js", "utf8");
+const updaterSource = fs.readFileSync("knowledge/updater.js", "utf8");
 Object.defineProperty(globalThis, "crypto", { configurable: true, value: webcrypto });
 vm.runInThisContext(cryptoSource, { filename: "knowledge/crypto.js" });
 vm.runInThisContext(source, { filename: "knowledge/engine.js" });
+vm.runInThisContext(updaterSource, { filename: "knowledge/updater.js" });
 const db = globalThis.HarcomKnowledgeDB;
 const packageVerifier = globalThis.HarcomKnowledgeCrypto;
+const updater = globalThis.HarcomKnowledgeUpdater;
 
 function makePackage(releaseId, suffix = "") {
   return {
@@ -158,4 +161,51 @@ assert.equal((await db.search("flood warning")).length, 1);
 assert.equal((await db.search("hypothermia")).length, 1);
 assert.equal((await db.search("tent fire")).length, 1);
 
-console.log("HARCOM Knowledge Engine runtime tests passed: IndexedDB validation, staging, search, rollback, retention, quota fail-closed and Ed25519 package verification.");
+
+const networkPackage = makePackage("network-update-1");
+networkPackage.createdAt = "2026-11-05T00:00:00.000Z";
+const networkBytes = new TextEncoder().encode(JSON.stringify(networkPackage));
+const networkSignature = new Uint8Array(await webcrypto.subtle.sign({ name: "Ed25519" }, keyPair.privateKey, networkBytes));
+const networkHashBytes = new Uint8Array(await webcrypto.subtle.digest("SHA-256", networkBytes));
+const networkHash = Array.from(networkHashBytes, value => value.toString(16).padStart(2, "0")).join("");
+const networkManifest = {
+  format: "HARCOM_KNOWLEDGE_RELEASE",
+  manifestVersion: 1,
+  schemaVersion: 1,
+  packageSize: networkBytes.byteLength,
+  releaseId: networkPackage.releaseId,
+  createdAt: networkPackage.createdAt,
+  packageUrl: "./knowledge/releases/network-update-1.json",
+  packageSha256: networkHash,
+  signature: toBase64(networkSignature),
+  keyId: "ephemeral-test-key"
+};
+const fetchDescriptor = Object.getOwnPropertyDescriptor(globalThis, "fetch");
+Object.defineProperty(globalThis, "fetch", {
+  configurable: true,
+  value: async url => {
+    const target = String(url);
+    if (target.endsWith("/knowledge/release.json")) {
+      return new Response(JSON.stringify(networkManifest), { status: 200, headers: { "content-type": "application/json" } });
+    }
+    if (target.endsWith("/knowledge/releases/network-update-1.json")) {
+      return new Response(networkBytes, { status: 200, headers: { "content-length": String(networkBytes.byteLength) } });
+    }
+    throw new Error("Unexpected test URL: " + target);
+  }
+});
+try {
+  const trustedKeys = { "ephemeral-test-key": toBase64(rawPublicKey) };
+  const checked = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedKeys });
+  assert.equal(checked.status, "update-available");
+  const updateResult = await updater.installUpdate({ checked, trustedKeys });
+  assert.equal(updateResult.status, "installed");
+  assert.equal((await db.getActiveRelease()).id, networkPackage.releaseId);
+  const unchanged = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedKeys });
+  assert.equal(unchanged.status, "current");
+} finally {
+  if (fetchDescriptor) Object.defineProperty(globalThis, "fetch", fetchDescriptor);
+  else delete globalThis.fetch;
+}
+
+console.log("HARCOM Knowledge Engine runtime tests passed: IndexedDB validation, staging, search, rollback, retention, quota fail-closed Ed25519 package verification and signed update installation.");
