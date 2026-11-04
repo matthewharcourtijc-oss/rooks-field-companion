@@ -23,15 +23,20 @@
     return url;
   }
 
+  function validPackagePath(value) {
+    const prefix = "./knowledge/releases/";
+    if (typeof value !== "string" || !value.startsWith(prefix) || !value.endsWith(".json")) return false;
+    const filename = value.slice(prefix.length, -5);
+    return !!filename && /^[A-Za-z0-9._-]+$/.test(filename);
+  }
+
   function validateManifest(manifest) {
     if (!manifest || manifest.format !== "HARCOM_KNOWLEDGE_RELEASE" ||
         manifest.manifestVersion !== 1 || manifest.schemaVersion !== 1 ||
         typeof manifest.releaseId !== "string" ||
         !/^[A-Za-z0-9._-]{1,120}$/.test(manifest.releaseId) ||
         typeof manifest.createdAt !== "string" || Number.isNaN(Date.parse(manifest.createdAt)) ||
-        typeof manifest.packageUrl !== "string" ||
-        !manifest.packageUrl.startsWith("./knowledge/releases/") ||
-        !manifest.packageUrl.endsWith(".json") ||
+        !validPackagePath(manifest.packageUrl) ||
         !Number.isSafeInteger(manifest.packageSize) ||
         manifest.packageSize < 1 || manifest.packageSize > MAX_PACKAGE_BYTES ||
         typeof manifest.packageSha256 !== "string" || !/^[a-f0-9]{64}$/.test(manifest.packageSha256) ||
