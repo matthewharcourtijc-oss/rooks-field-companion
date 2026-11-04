@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101820">
+<title>HARCOM Knowledge Engine — Device Test</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101820;color:#edf4f7}
+body{max-width:760px;margin:auto;padding:20px;line-height:1.5}
+h1{font-size:1.35rem}p{color:#b9c8d0}
+button{padding:12px 16px;margin:5px 5px 5px 0;border:1px solid #9edcf2;border-radius:8px;background:#c9e2eb;color:#14212a;font-weight:700}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px solid #43535e;padding:14px;border-radius:8px;min-height:100px}
+.status{padding:10px;border:1px solid #43535e;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>HARCOM Offline Knowledge Engine — Device Test</h1>
+<p>This is an isolated prototype test page. It writes only to the separate IndexedDB database <strong>harcom-field-knowledge</strong>. It does not access Tasks, Notes, Mission Logs or backups.</p>
+<div class="status" id="status">Checking browser support…</div>
+<p>
+<button id="run">Run database tests</button>
+<button id="inspect">Inspect active library</button>
+<button id="search">Search “water”</button>
+</p>
+<pre id="output">Waiting.</pre>
+<script src="../knowledge/engine.js"></script>
+<script>
+(function(){
+  "use strict";
+  const out=document.getElementById("output");
+  const status=document.getElementById("status");
+  const log=value=>{out.textContent=typeof value==="string"?value:JSON.stringify(value,null,2);};
+  status.textContent=window.indexedDB?"IndexedDB available — prototype can be tested offline.":"IndexedDB unavailable in this browser.";
+  const sample=()=>({
+    schemaVersion:1,
+    releaseId:"device-test-1",
+    createdAt:new Date().toISOString(),
+    summary:"Small UK-first prototype test package.",
+    categories:[{id:"water",title:"Water",description:"Water safety and treatment."}],
+    sources:[{id:"nhs-poisoning",title:"NHS poisoning guidance",publisher:"NHS",url:"https://www.nhs.uk/conditions/poisoning/"}],
+    articles:[{
+      id:"water-basics",title:"Water safety basics",summary:"Choosing and treating water safely.",
+      body:"Prefer a known safe supply. Clear water is not necessarily safe to drink. Follow trusted public-health advice and use a suitable treatment method for the identified risk.",
+      categoryId:"water",tags:["water","purification","safety"],sourceIds:["nhs-poisoning"],
+      reviewedAt:new Date().toISOString(),safetyLevel:"caution"
+    }],
+    media:[]
+  });
+  document.getElementById("run").addEventListener("click",async()=>{
+    const results=[];
+    try{
+      const valid=window.HarcomKnowledgeDB.validatePackage(sample());
+      results.push({test:"package validation",passed:valid.articles.length===1});
+      try{window.HarcomKnowledgeDB.validatePackage({...sample(),schemaVersion:99});results.push({test:"unsupported schema rejection",passed:false});}
+      catch(error){results.push({test:"unsupported schema rejection",passed:error.code==="UNSUPPORTED_SCHEMA",code:error.code});}
+      try{window.HarcomKnowledgeDB.validatePackage({...sample(),articles:[{...sample().articles[0],sourceIds:["missing"]}]});results.push({test:"missing source rejection",passed:false});}
+      catch(error){results.push({test:"missing source rejection",passed:error.code==="MISSING_REFERENCE",code:error.code});}
+      const installed=await window.HarcomKnowledgeDB.installRelease(sample());
+      results.push({test:"install and activate release",passed:installed.ok,release:installed.release.id});
+      const active=await window.HarcomKnowledgeDB.getActiveRelease();
+      results.push({test:"active release read-back",passed:!!active&&active.id==="device-test-1"});
+      const article=await window.HarcomKnowledgeDB.getArticle("water-basics");
+      results.push({test:"article read-back",passed:!!article&&article.title==="Water safety basics"});
+      const categories=await window.HarcomKnowledgeDB.listCategories();
+      results.push({test:"category read-back",passed:categories.length===1});
+      const search=await window.HarcomKnowledgeDB.search("water");
+      results.push({test:"offline local search",passed:search.length===1&&search[0].id==="water-basics"});
+      const status=await window.HarcomKnowledgeDB.storageStatus();
+      results.push({test:"storage status",passed:typeof status.supported==="boolean",storage:status});
+      log({summary:results.every(item=>item.passed)?"ALL PROTOTYPE CHECKS PASSED":"ONE OR MORE CHECKS FAILED",results});
+    }catch(error){results.push({test:"unexpected failure",passed:false,code:error.code||"ERROR",message:error.message});log({summary:"TEST RUN FAILED",results});}
+  });
+  document.getElementById("inspect").addEventListener("click",async()=>{
+    try{log({activeRelease:await window.HarcomKnowledgeDB.getActiveRelease(),categories:await window.HarcomKnowledgeDB.listCategories()});}
+    catch(error){log({error:error.message,code:error.code});}
+  });
+  document.getElementById("search").addEventListener("click",async()=>{
+    try{log(await window.HarcomKnowledgeDB.search("water"));}
+    catch(error){log({error:error.message,code:error.code});}
+  });
+})();
+</script>
+</body>
+</html>
