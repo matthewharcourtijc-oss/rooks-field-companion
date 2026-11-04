@@ -159,7 +159,7 @@ assert.equal(db.validatePackage(ukPack).articles.length, 48, "expanded UK field 
 await db.installRelease(ukPack);
 assert.equal((await db.getActiveRelease()).id, ukPack.releaseId);
 assert.equal((await db.listArticles()).length, 48);
-assert.equal((await db.listCategories()).length, 15);
+assert.equal((await db.listCategories()).length, 18, "expanded library category count changed");
 assert.equal((await db.listArticles({ categoryId: "first-aid" })).length, 11);
 assert.equal((await db.listArticles({ categoryId: "forestry" })).length, 5);
 assert.equal((await db.listArticles({ categoryId: "foraging" })).length, 4);
