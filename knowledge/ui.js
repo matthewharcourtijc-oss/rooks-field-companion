@@ -61,7 +61,7 @@
       throw error;
     }
 
-    if (!active || Date.parse(seed.createdAt) > Date.parse(active.createdAt)) {
+    if (!active || (seed.releaseId !== active.id && Date.parse(seed.createdAt) >= Date.parse(active.createdAt))) {
       try {
         const existing = await DB.getRelease(seed.releaseId);
         if (existing) {
