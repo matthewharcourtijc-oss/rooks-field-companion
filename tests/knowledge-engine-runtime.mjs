@@ -8,6 +8,7 @@ const source = fs.readFileSync("knowledge/engine.js", "utf8");
 const cryptoSource = fs.readFileSync("knowledge/crypto.js", "utf8");
 const updaterSource = fs.readFileSync("knowledge/updater.js", "utf8");
 Object.defineProperty(globalThis, "crypto", { configurable: true, value: webcrypto });
+globalThis.HARCOM_KNOWLEDGE_DB_NAME = "harcom-field-knowledge-runtime-test";
 vm.runInThisContext(cryptoSource, { filename: "knowledge/crypto.js" });
 vm.runInThisContext(source, { filename: "knowledge/engine.js" });
 vm.runInThisContext(updaterSource, { filename: "knowledge/updater.js" });
@@ -50,7 +51,7 @@ function makePackage(releaseId, suffix = "") {
   };
 }
 
-assert.equal(db.name, "harcom-field-knowledge");
+assert.equal(db.name, "harcom-field-knowledge-runtime-test");
 assert.equal(db.schemaVersion, 2);
 assert.equal(await db.getActiveRelease(), null, "database should start without an active release");
 
