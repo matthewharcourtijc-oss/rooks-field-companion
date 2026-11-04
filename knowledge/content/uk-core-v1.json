@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-core-2026-11-04-a",
+  "releaseId": "uk-core-2026-11-04-b",
   "createdAt": "2026-11-04T00:00:00.000Z",
   "summary": "Initial UK-first emergency, weather, water, coast, navigation, campcraft and food-safety knowledge release.",
   "categories": [
@@ -135,6 +135,13 @@
       "title": "Cooking your food",
       "publisher": "Food Standards Agency",
       "url": "https://www.food.gov.uk/safety-hygiene/cooking-your-food",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "govuk-emergency-numbers",
+      "title": "999 and 112: the UK's national emergency numbers",
+      "publisher": "GOV.UK",
+      "url": "https://www.gov.uk/guidance/999-and-112-the-uks-national-emergency-numbers",
       "accessedAt": "2026-11-04"
     }
   ],
@@ -674,6 +681,51 @@
       "reviewedAt": "2026-11-04",
       "sourceIds": [
         "metoffice-mountain"
+      ]
+    },
+    {
+      "id": "calling-999-or-112",
+      "title": "Calling 999 or 112",
+      "summary": "What to expect when calling the UK's emergency numbers and what information to give the call handler.",
+      "body": "999 and 112 are the UK's national emergency numbers. The call handler will ask which emergency service you need. Caller location information may be available, but you must still give a clear location for the incident.",
+      "categoryId": "emergencies",
+      "tags": [
+        "999",
+        "112",
+        "emergency call",
+        "ambulance",
+        "police",
+        "fire",
+        "coastguard"
+      ],
+      "steps": [
+        "Call 999 or 112 when someone is in immediate danger or needs an emergency response.",
+        "When the call handler answers, state which service you need: Police, Ambulance, Fire or Coastguard.",
+        "Give the exact incident location. Outdoors, provide a map grid reference, named path or road, nearby landmark and access details if known.",
+        "Explain what has happened, how many people are involved, any serious injuries and any immediate hazards.",
+        "Give a callback number if asked and stay on the line. Answer the questions and follow the call handler's instructions.",
+        "If a mobile call does not connect and it is safe to do so, move to a place with better signal and try 112."
+      ],
+      "equipment": [
+        "Charged mobile phone",
+        "Map or offline mapping with a grid reference when travelling outdoors"
+      ],
+      "commonMistakes": [
+        "Assuming the call handler automatically knows the exact location of the incident.",
+        "Giving only a broad area name when a precise location or grid reference is available.",
+        "Ending the call before the call handler says it is safe to do so."
+      ],
+      "dangers": [
+        "A vague or incorrect incident location can delay help.",
+        "A phone may have poor signal, low battery or be damaged during an incident."
+      ],
+      "stopAndGetHelp": "If there is immediate danger, call 999 or 112 now. Do not delay the call to gather equipment or perfect a grid reference; give the best location you have and update the call handler if it changes.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-emergency-numbers"
       ]
     }
   ],
