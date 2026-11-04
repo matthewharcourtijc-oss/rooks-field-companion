@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-core-2026-11-04-b",
+  "releaseId": "uk-core-2026-11-04-c",
   "createdAt": "2026-11-04T00:00:00.000Z",
   "summary": "Initial UK-first emergency, weather, water, coast, navigation, campcraft and food-safety knowledge release.",
   "categories": [
@@ -43,6 +43,26 @@
       "id": "food",
       "title": "Food & Hygiene",
       "description": "Outdoor food storage, preparation and hygiene."
+    },
+    {
+      "id": "plants-wildlife",
+      "title": "Plants & Wildlife",
+      "description": "UK wildlife risks, bites, stings and conservative foraging safety."
+    },
+    {
+      "id": "home-resilience",
+      "title": "Home Resilience",
+      "description": "Power cuts, essential services and household emergency planning."
+    },
+    {
+      "id": "vehicle",
+      "title": "Vehicle Safety",
+      "description": "Roadside emergencies, breakdowns and vehicle preparedness."
+    },
+    {
+      "id": "signalling",
+      "title": "Signalling & Rescue",
+      "description": "Simple ways to make your location and need for help known."
     }
   ],
   "sources": [
@@ -142,6 +162,49 @@
       "title": "999 and 112: the UK's national emergency numbers",
       "publisher": "GOV.UK",
       "url": "https://www.gov.uk/guidance/999-and-112-the-uks-national-emergency-numbers",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "resus-adult-bls-2025",
+      "title": "Adult basic life support Guidelines",
+      "publisher": "Resuscitation Council UK",
+      "url": "https://www.resus.org.uk/professional-library/2025-resuscitation-guidelines/adult-basic-life-support-guidelines",
+      "accessedAt": "2026-11-04",
+      "publishedAt": "2025-10-27"
+    },
+    {
+      "id": "nhs-heat",
+      "title": "Heat exhaustion and heatstroke",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/heat-exhaustion-heatstroke/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-lyme",
+      "title": "Lyme disease",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/lyme-disease/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "be-ready-power",
+      "title": "Power cuts",
+      "publisher": "GOV.UK Be Ready",
+      "url": "https://beready.campaign.gov.uk/be-informed-about-hazards/power-cuts/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-power-cut-food",
+      "title": "Food safety in a power cut — advice for consumers",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "national-highways-breakdown",
+      "title": "Driving on motorways — what to do if you break down",
+      "publisher": "National Highways",
+      "url": "https://nationalhighways.co.uk/safety/driving-on-our-roads/driving-on-motorways/",
       "accessedAt": "2026-11-04"
     }
   ],
@@ -725,7 +788,337 @@
       "safetyLevel": "high",
       "reviewedAt": "2026-11-04",
       "sourceIds": [
+        "govuk-emergency-numbers",
+        "be-ready-power"
+      ]
+    },
+    {
+      "id": "adult-cpr-and-aed",
+      "title": "Adult cardiac arrest: CPR and AED",
+      "summary": "Follow the 2025 Resuscitation Council UK adult basic life support sequence and the emergency call handler's instructions.",
+      "body": "This article covers adult basic life support only. If a person is unresponsive, call 999 immediately. The ambulance call handler can help you recognise cardiac arrest and guide CPR. Practical training is strongly recommended.",
+      "categoryId": "first-aid",
+      "tags": [
+        "CPR",
+        "cardiac arrest",
+        "AED",
+        "defibrillator",
+        "first aid",
+        "unresponsive"
+      ],
+      "steps": [
+        "Make sure the scene is safe to approach.",
+        "If an adult is unresponsive, call 999 immediately and ask for an ambulance. Put the phone on speaker if possible and send someone to find an AED.",
+        "While waiting for the call to be answered, assess whether breathing is normal. If the person is unresponsive with abnormal breathing, or you are unsure, follow the call handler and start CPR.",
+        "Place the heel of one hand in the centre of the chest, place the other hand on top and keep your arms straight.",
+        "Push hard and fast: 100 to 120 compressions per minute, to a depth of 5 to 6 cm. Allow the chest to come fully back up between compressions.",
+        "If you are not trained or willing to give rescue breaths, perform continuous chest compressions. If trained and able, use 30 compressions followed by 2 rescue breaths.",
+        "As soon as an AED arrives, switch it on and follow its spoken and visual instructions. Make sure nobody touches the person while the AED analyses or delivers a shock.",
+        "Continue CPR and follow the AED and call-handler instructions until help takes over or the person shows clear signs of life."
+      ],
+      "equipment": [
+        "Mobile phone",
+        "Public-access AED if available"
+      ],
+      "commonMistakes": [
+        "Delaying the 999 call while trying to diagnose the cause.",
+        "Stopping compressions for long periods.",
+        "Being afraid to use an AED; follow its prompts and do not touch the person during analysis or shock."
+      ],
+      "dangers": [
+        "Only approach if the scene is safe.",
+        "This article is for adults; children and infants require age-specific guidance.",
+        "CPR is physically demanding. If another rescuer is present, take turns when practical while keeping interruptions short."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for an unresponsive person. Put the phone on speaker and follow the ambulance call handler. This quick reference does not replace recognised first-aid training.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide adult basic life support guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "resus-adult-bls-2025",
         "govuk-emergency-numbers"
+      ]
+    },
+    {
+      "id": "heat-exhaustion-heatstroke",
+      "title": "Heat exhaustion and heatstroke",
+      "summary": "Cool someone with heat exhaustion and recognise heatstroke as a medical emergency.",
+      "body": "Heat exhaustion can progress to heatstroke. NHS guidance says a person with heat exhaustion should start to improve within 30 minutes of cooling. Heatstroke needs immediate emergency help.",
+      "categoryId": "first-aid",
+      "tags": [
+        "heat",
+        "heat exhaustion",
+        "heatstroke",
+        "hot weather",
+        "dehydration"
+      ],
+      "steps": [
+        "Move the person to a cool place, ideally shade or an air-conditioned area.",
+        "Remove unnecessary clothing such as a jacket or socks.",
+        "If fully awake and able to swallow, give plenty of cool water or an appropriate rehydration drink.",
+        "Cool the skin by spraying or sponging with cool water and fanning. Wrapped cold packs can be placed under the armpits or on the neck.",
+        "Stay with the person and watch for improvement; they should start to feel better within 30 minutes.",
+        "Call NHS 111 if heat-exhaustion symptoms are difficult to treat or you need urgent advice.",
+        "Call 999 immediately if heatstroke is suspected, including confusion, poor coordination, seizure, loss of consciousness, very high temperature or hot skin without sweating. Continue active cooling while waiting for help."
+      ],
+      "equipment": [
+        "Cool water",
+        "Shade or a cool indoor space",
+        "Fan or cloth for cooling"
+      ],
+      "commonMistakes": [
+        "Leaving the person alone.",
+        "Assuming heavy sweating rules out heatstroke.",
+        "Giving drinks to someone who is confused, unconscious or unable to swallow safely.",
+        "Driving someone with suspected heatstroke to A&E instead of calling 999."
+      ],
+      "dangers": [
+        "Heatstroke can be life-threatening.",
+        "Confusion, seizures and loss of consciousness require emergency help."
+      ],
+      "stopAndGetHelp": "Call 999 for suspected heatstroke. If heat-exhaustion symptoms do not improve within 30 minutes of cooling and fluids, seek urgent NHS advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-heat"
+      ]
+    },
+    {
+      "id": "tick-bite-and-lyme",
+      "title": "Tick bites and Lyme disease prevention",
+      "summary": "Reduce tick bites, remove an attached tick safely and know when to seek medical advice.",
+      "body": "Ticks are found across the UK in woodland, long grass and some parks and gardens. Not all ticks carry Lyme disease, but prompt safe removal and awareness of symptoms are important.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "ticks",
+        "Lyme disease",
+        "woodland",
+        "bites",
+        "wildlife"
+      ],
+      "steps": [
+        "Reduce exposure by covering skin, tucking trousers into socks, using a suitable insect repellent and staying on clear paths where practical.",
+        "Check skin, clothing, children and pets after time outdoors, especially around skin folds and hairlines.",
+        "If a tick is attached, use fine-tipped tweezers or a tick-removal tool and grasp it as close to the skin as possible.",
+        "Pull slowly upwards without squeezing or crushing the tick.",
+        "After removal, clean the bite with antiseptic or soap and water.",
+        "Watch for a spreading circular or oval rash and flu-like symptoms in the weeks after a bite; a rash may appear up to 3 months later.",
+        "Seek an urgent GP appointment or NHS 111 advice if you develop a possible Lyme rash or flu-like symptoms after a tick bite or time in a tick area."
+      ],
+      "equipment": [
+        "Fine-tipped tweezers or a tick-removal tool",
+        "Antiseptic or soap and clean water"
+      ],
+      "commonMistakes": [
+        "Squeezing or crushing the tick.",
+        "Ignoring a spreading rash or flu-like illness because the bite was not noticed at the time.",
+        "Assuming every tick carries Lyme disease or that every bite causes infection."
+      ],
+      "dangers": [
+        "Lyme disease is easier to treat when diagnosed early.",
+        "A rash may be less obvious on darker skin and may resemble a bruise."
+      ],
+      "stopAndGetHelp": "Seek urgent GP or NHS 111 advice if you develop a spreading round or oval rash, or flu-like symptoms after a tick bite or possible exposure.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide NHS guidance",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-lyme"
+      ]
+    },
+    {
+      "id": "power-cut-preparation-response",
+      "title": "Preparing for and managing a power cut",
+      "summary": "Keep essential supplies, communication and household safety covered before and during a power outage.",
+      "body": "A power cut can also affect heating, internet, mobile signal and sometimes water supply. The UK Be Ready campaign recommends preparing for several days without normal services.",
+      "categoryId": "home-resilience",
+      "tags": [
+        "power cut",
+        "electricity",
+        "emergency planning",
+        "radio",
+        "105",
+        "resilience"
+      ],
+      "steps": [
+        "Keep battery or wind-up torches and spare batteries; they are safer than candles and preserve phone battery.",
+        "Prepare at least 3 days of drinking water and non-perishable food that does not need cooking; include pet food and any essential baby supplies.",
+        "Keep a battery or wind-up radio, a charged power bank and a written list of important contacts and local radio frequencies.",
+        "Write down the power-cut reporting number: 105 in England, Scotland and Wales; 03457 643643 in Northern Ireland.",
+        "During an outage, keep away from fallen power lines and damaged electrical equipment. High-voltage electricity can jump gaps.",
+        "Switch off appliances that could become dangerous when power returns. Keep warm with layers and blankets and check on neighbours if safe.",
+        "Keep fridge and freezer doors closed. Follow Food Standards Agency guidance before deciding whether chilled or frozen food is safe.",
+        "If there is a life-threatening emergency, call 999 or 112 from a mobile; emergency calls may roam onto other available networks."
+      ],
+      "equipment": [
+        "Battery or wind-up torch and spare batteries",
+        "Battery or wind-up radio",
+        "Power bank and charging cable",
+        "Drinking water and non-perishable food",
+        "Written emergency contacts",
+        "Pet food and essential medication"
+      ],
+      "commonMistakes": [
+        "Using a phone torch as the only light and draining its battery.",
+        "Opening fridge and freezer doors repeatedly.",
+        "Using outdoor-only camping stoves or barbecues indoors.",
+        "Assuming a digital landline or home internet phone will work during a power cut."
+      ],
+      "dangers": [
+        "Downed power lines and damaged electrical equipment can be lethal.",
+        "Indoor use of outdoor fuel-burning appliances can cause carbon-monoxide poisoning.",
+        "Mobile signal and mains water may also be disrupted."
+      ],
+      "stopAndGetHelp": "Stay away from electrical hazards. Call 999 or 112 for immediate danger. Report power cuts using the correct regional number and follow the electricity network operator's advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; reporting numbers differ in Northern Ireland",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "be-ready-power"
+      ]
+    },
+    {
+      "id": "power-cut-food-safety",
+      "title": "Food safety during a power cut",
+      "summary": "Use time and temperature carefully to decide what chilled and frozen food can safely be kept after an outage.",
+      "body": "Food Standards Agency advice for domestic settings in England, Northern Ireland and Wales gives practical time and temperature limits. These are estimates: appliance type, room temperature and how often doors are opened all matter.",
+      "categoryId": "food",
+      "tags": [
+        "power cut",
+        "food safety",
+        "fridge",
+        "freezer",
+        "temperature",
+        "food poisoning"
+      ],
+      "steps": [
+        "Keep fridge and freezer doors closed as much as possible.",
+        "If the power outage lasts less than 4 hours, chilled and frozen food is unlikely to be affected, according to the FSA guidance.",
+        "A fridge may stay cold for up to 4 hours. A full freezer may stay frozen for up to 48 hours, or a half-full freezer for about 24 hours; these are estimates, not guarantees.",
+        "Use a fridge thermometer if available. Under normal conditions, keep a fridge at 5°C or below; during a power cut, FSA guidance allows food to remain chilled below 8°C.",
+        "If the fridge reaches 8°C or above, eat food that normally needs refrigeration within 4 hours, then discard it if not used.",
+        "Keep raw and cooked foods separate, wash hands and surfaces, and cook food thoroughly if preparing meals during an outage.",
+        "When in doubt about the safety of high-risk food, discard it rather than taste-testing it."
+      ],
+      "equipment": [
+        "Fridge thermometer",
+        "Cool box and ice packs if suitable",
+        "Clean containers"
+      ],
+      "commonMistakes": [
+        "Opening the fridge or freezer repeatedly to check food.",
+        "Assuming the freezer time estimates are guaranteed.",
+        "Tasting food to decide whether it is safe."
+      ],
+      "dangers": [
+        "Food can become unsafe without looking or smelling spoiled.",
+        "This linked FSA guidance applies to England, Northern Ireland and Wales; check the relevant food-safety authority for Scotland."
+      ],
+      "stopAndGetHelp": "Discard food that has been held outside safe temperature limits or may be contaminated. Seek medical advice if someone becomes seriously unwell after eating.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England, Northern Ireland and Wales; check Food Standards Scotland guidance for Scotland",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-power-cut-food"
+      ]
+    },
+    {
+      "id": "motorway-breakdown-safety",
+      "title": "Motorway breakdown: keep people safe",
+      "summary": "What to do if a vehicle breaks down on an English motorway or National Highways road.",
+      "body": "The safest option is to leave the carriageway at the next exit or reach a service area if possible. If you cannot, prioritise getting as far left as possible and protecting passengers from traffic.",
+      "categoryId": "vehicle",
+      "tags": [
+        "vehicle",
+        "motorway",
+        "breakdown",
+        "roadside",
+        "National Highways",
+        "emergency"
+      ],
+      "steps": [
+        "If possible, leave the motorway at the next exit or pull into a service area. Do not stop in a live lane unless unavoidable.",
+        "If you cannot leave, move left into an emergency area, lay-by or hard shoulder if possible. Stop as far left as possible and switch on hazard lights.",
+        "If it is safe to exit, leave on the side furthest from traffic, put on high-visibility clothing if it is within easy reach and get behind a safety barrier where available.",
+        "Keep passengers away from the carriageway and do not return to the vehicle or attempt repairs beside moving traffic.",
+        "Do not place a warning triangle on the carriageway.",
+        "If you cannot exit safely, stay in the vehicle with seatbelts on and hazard lights on, then call 999 and ask for Police.",
+        "If stopped in an emergency area, do not leave it until you have spoken to National Highways. Use the emergency telephone or call National Highways for assistance."
+      ],
+      "equipment": [
+        "High-visibility clothing stored within easy reach",
+        "Charged mobile phone",
+        "Warm clothing",
+        "Torch",
+        "Breakdown recovery details"
+      ],
+      "commonMistakes": [
+        "Standing between the vehicle and moving traffic.",
+        "Attempting roadside repairs in a live lane or beside fast traffic.",
+        "Returning to the vehicle to retrieve belongings.",
+        "Leaving an emergency area without speaking to National Highways."
+      ],
+      "dangers": [
+        "Fast-moving traffic can make a roadside stop immediately life-threatening.",
+        "A vehicle may be struck and pushed into people standing nearby."
+      ],
+      "stopAndGetHelp": "If you cannot get to a place of relative safety or cannot exit the vehicle safely, stay belted in with hazards on and call 999. This article covers the National Highways network in England; follow the relevant road authority's instructions elsewhere.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England — National Highways network",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "national-highways-breakdown"
+      ]
+    },
+    {
+      "id": "mountain-whistle-distress-signal",
+      "title": "Using a whistle to signal for mountain rescue",
+      "summary": "Use the Mountain Rescue England and Wales recommended whistle pattern to make your location easier to find.",
+      "body": "A whistle carries farther than shouting and uses less energy. Mountain Rescue England and Wales recommends a repeated pattern of six long blasts in one minute.",
+      "categoryId": "signalling",
+      "tags": [
+        "whistle",
+        "signalling",
+        "mountain rescue",
+        "distress",
+        "rescue"
+      ],
+      "steps": [
+        "Stay in a safe position and call 999 or 112, asking for Police then Mountain Rescue, if there is an emergency.",
+        "Give your location and details to the call handler; do not move from the reported position unless it is unsafe or the rescue team instructs you.",
+        "Blow six good long whistle blasts within one minute.",
+        "Stop for one minute, then repeat the six-blast pattern.",
+        "Continue the pattern until someone reaches you. Do not stop just because you hear a reply.",
+        "Use a torch to signal as well when visibility is poor or darkness falls."
+      ],
+      "equipment": [
+        "Whistle attached where it can be reached quickly",
+        "Torch or head torch",
+        "Charged mobile phone"
+      ],
+      "commonMistakes": [
+        "Shouting continuously and exhausting yourself.",
+        "Using an inconsistent signal pattern.",
+        "Moving away from the location given to Mountain Rescue without updating them."
+      ],
+      "dangers": [
+        "Cold, darkness, weather and terrain can make a casualty harder to locate.",
+        "A reply may be difficult to identify; continue the pattern until help reaches you."
+      ],
+      "stopAndGetHelp": "Call 999 or 112 and ask for Police then Mountain Rescue in an emergency in England or Wales. The whistle is a locating aid, not a replacement for calling for help.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England and Wales",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "mountain-rescue-safety"
       ]
     }
   ],
