@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-core-2026-11-04-d",
+  "releaseId": "uk-core-2026-11-04-e",
   "createdAt": "2026-11-04T00:00:00.000Z",
   "summary": "Initial UK-first emergency, weather, water, coast, navigation, campcraft and food-safety knowledge release.",
   "categories": [
@@ -63,6 +63,21 @@
       "id": "signalling",
       "title": "Signalling & Rescue",
       "description": "Simple ways to make your location and need for help known."
+    },
+    {
+      "id": "shelter",
+      "title": "Shelter & Camp",
+      "description": "Shelter location, warmth, campsite choices and low-impact campcraft."
+    },
+    {
+      "id": "equipment",
+      "title": "Equipment & Clothing",
+      "description": "Practical kit, layering, footwear and field readiness."
+    },
+    {
+      "id": "sanitation",
+      "title": "Sanitation & Hygiene",
+      "description": "Hand hygiene, food hygiene and low-impact outdoor routines."
     }
   ],
   "sources": [
@@ -250,6 +265,41 @@
       "url": "https://www.gov.uk/government/publications/the-countryside-code/the-countryside-code-advice-for-countryside-visitors",
       "accessedAt": "2026-11-04",
       "publishedAt": "2023-05-26"
+    },
+    {
+      "id": "rnli-tides",
+      "title": "Tides — Know the risks",
+      "publisher": "Royal National Lifeboat Institution",
+      "url": "https://rnli.org/water-safety/know-the-risks/tides",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "bmc-hillwalking-kit",
+      "title": "What gear do I need to start hill walking?",
+      "publisher": "British Mountaineering Council",
+      "url": "https://www.thebmc.co.uk/en/what-gear-do-i-need-to-start-hill-walking",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "os-compass-bearings",
+      "title": "Compass bearings",
+      "publisher": "Ordnance Survey",
+      "url": "https://www.ordnancesurvey.co.uk/mapzone/map-skills/compass-bearings/page-three",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-handwashing",
+      "title": "How to wash your hands",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/live-well/best-way-to-wash-your-hands/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "bmc-wild-camp",
+      "title": "How to wild camp",
+      "publisher": "British Mountaineering Council",
+      "url": "https://www.thebmc.co.uk/en/how-to-wild-camp",
+      "accessedAt": "2026-11-04"
     }
   ],
   "articles": [
@@ -1430,6 +1480,250 @@
       "sourceIds": [
         "govuk-countryside-code",
         "woodland-foraging"
+      ]
+    },
+    {
+      "id": "coastal-tide-cutoff-safety",
+      "title": "Coastal walks: avoid being cut off by the tide",
+      "summary": "Check tide times and heights before a coastal walk, identify safe exits and call the Coastguard if trapped.",
+      "body": "Tide times and heights change each day. Headlands, rocky outcrops, causeways and sandbanks can become isolated as the tide rises, sometimes removing the route you used to enter.",
+      "categoryId": "coast",
+      "tags": [
+        "tide",
+        "coastal walk",
+        "cut off",
+        "coastguard",
+        "beach safety"
+      ],
+      "steps": [
+        "Before setting out, check tide times and heights for the exact location and date; do not rely on yesterday's tide time.",
+        "Identify safe return routes and alternative exits before walking onto a beach, headland or rocky outcrop.",
+        "While walking, watch the direction of the tide and keep checking your route back.",
+        "Carry a charged phone and tell someone your route and expected return time.",
+        "If you become cut off, do not attempt to wade or swim through rising water. Move to a safe position or higher ground if possible.",
+        "Call 999 or 112 and ask for the Coastguard if you are in danger or see someone at risk of being cut off."
+      ],
+      "equipment": [
+        "Charged mobile phone in a waterproof pouch",
+        "Local tide times and coastal route information",
+        "Suitable footwear"
+      ],
+      "commonMistakes": [
+        "Assuming the tide will be at the same time as the previous day.",
+        "Walking around a headland or onto a sandbank without checking the return tide.",
+        "Trying to wade or swim through a tidal channel."
+      ],
+      "dangers": [
+        "Incoming water can cut off the route back to shore.",
+        "Wet rocks, seaweed and cliff edges can be slippery and unstable."
+      ],
+      "stopAndGetHelp": "If trapped by the tide or in danger, call 999 or 112 and ask for the Coastguard. Do not try to swim or wade to safety through moving tidal water.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK coast and tidal waters",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "rnli-tides",
+        "govuk-countryside-code"
+      ]
+    },
+    {
+      "id": "hillwalking-kit-and-layers",
+      "title": "Hillwalking kit and clothing layers",
+      "summary": "Choose footwear, clothing and essential kit to match the route, weather, daylight and ability of the group.",
+      "body": "There is no single kit list for every walk. Longer routes, rougher terrain and worse weather require more preparation. The aim is to stay warm, dry, visible and able to navigate or call for help.",
+      "categoryId": "equipment",
+      "tags": [
+        "hillwalking kit",
+        "clothing",
+        "layers",
+        "boots",
+        "waterproofs",
+        "torch",
+        "map",
+        "compass"
+      ],
+      "steps": [
+        "Choose footwear with grip that suits the route and terrain; check fit and condition before a long walk.",
+        "Wear layers: a moisture-managing base layer, an insulating middle layer and a waterproof or windproof outer layer.",
+        "Avoid cotton and denim for cold, wet hill conditions because they retain moisture and can become cold when wet.",
+        "Carry a map and compass, charged phone, torch, first-aid kit, food, water and emergency food.",
+        "Add warm hat, gloves, spare socks and extra insulation when conditions require them.",
+        "Pack waterproof clothing and keep spare layers in a dry bag.",
+        "Match the kit to the least experienced or most vulnerable person in the group, not just the strongest walker."
+      ],
+      "equipment": [
+        "Suitable footwear and socks",
+        "Base, insulating and waterproof outer layers",
+        "Map and compass",
+        "Torch and spare batteries",
+        "Charged phone",
+        "Food, water and emergency snacks",
+        "First-aid kit",
+        "Whistle and spare warm layer"
+      ],
+      "commonMistakes": [
+        "Assuming a town forecast reflects conditions on the hill.",
+        "Relying on a phone instead of carrying map and compass.",
+        "Leaving the torch behind because the walk is planned to finish in daylight.",
+        "Packing only for the strongest member of the group."
+      ],
+      "dangers": [
+        "Wet clothing and wind chill can lead to hypothermia.",
+        "Poor footwear and inadequate light increase the risk of falls and navigation errors."
+      ],
+      "stopAndGetHelp": "If the group is becoming cold, wet, exhausted or unable to navigate safely, stop in a safe place, add insulation and reassess. Turn back or call Mountain Rescue if there is an emergency.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK hillwalking; adapt to local terrain and weather",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "bmc-hillwalking-kit",
+        "mountain-rescue-safety",
+        "metoffice-mountain"
+      ]
+    },
+    {
+      "id": "map-compass-bearing-basics",
+      "title": "Map and compass: basic bearings",
+      "summary": "Use a map and compass to plan a short bearing, understand grid north and practise in easy terrain before relying on the skill.",
+      "body": "A compass is a navigation aid, not an automatic route finder. Ordnance Survey explains how to align the compass with a map and account for the difference between grid north and magnetic north.",
+      "categoryId": "navigation",
+      "tags": [
+        "compass",
+        "bearing",
+        "map reading",
+        "grid north",
+        "magnetic north",
+        "navigation"
+      ],
+      "steps": [
+        "Choose a clear destination on the map and identify your current position as accurately as possible.",
+        "Place the compass edge between your start point and destination, with the direction-of-travel arrow pointing towards the destination.",
+        "Rotate the compass housing until its orienting lines align with the map's north-south grid lines.",
+        "Read the bearing at the index line and check the map legend for the current magnetic variation for that map and area.",
+        "Apply the map's stated magnetic variation using the compass manufacturer's instructions; do not assume the value is unchanged from an older map.",
+        "On the ground, hold the compass level, turn your body until the magnetic needle aligns with the orienting arrow and follow the direction-of-travel arrow.",
+        "Use short legs between recognisable features and regularly confirm your position. Practise in safe lowland terrain before using bearings in mountains."
+      ],
+      "equipment": [
+        "Suitable Ordnance Survey or equivalent topographic map",
+        "Baseplate compass",
+        "Pencil and map case"
+      ],
+      "commonMistakes": [
+        "Confusing grid north with magnetic north.",
+        "Using an old magnetic variation value without checking the map legend.",
+        "Following a bearing for too long without checking terrain and position.",
+        "Assuming a compass bearing overrides cliffs, rivers, fences or other hazards."
+      ],
+      "dangers": [
+        "A wrong bearing can lead into steep, boggy or exposed terrain.",
+        "Metal objects and electronic devices can affect compass readings."
+      ],
+      "stopAndGetHelp": "If you cannot confirm your position, stop and relocate using identifiable map features. Do not continue blindly. If lost or in danger in the hills in England or Wales, call 999 or 112 and ask for Police then Mountain Rescue.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "Great Britain; check the current map legend for local magnetic variation",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "os-compass-bearings",
+        "os-map-reading",
+        "mountain-rescue-safety"
+      ]
+    },
+    {
+      "id": "hand-hygiene-in-the-field",
+      "title": "Hand hygiene when working outdoors",
+      "summary": "Clean hands before eating and treating wounds, after using the toilet and after handling animals or raw food.",
+      "body": "Handwashing helps reduce the spread of infections and food poisoning. In the field, plan for safe water, soap and a way to dry hands; sanitiser is a useful alternative when hands are not visibly dirty.",
+      "categoryId": "sanitation",
+      "tags": [
+        "handwashing",
+        "hygiene",
+        "sanitation",
+        "food safety",
+        "infection"
+      ],
+      "steps": [
+        "Wash hands with soap and water before eating or preparing food, after using the toilet, after handling raw food and after touching animals.",
+        "Wet hands, apply enough soap to cover all surfaces and rub palms, backs of hands, between fingers, thumbs and fingertips for around 20 seconds.",
+        "Rinse thoroughly with clean water and dry hands completely using a clean towel or suitable disposable material.",
+        "If soap and water are not immediately available and hands are not visibly dirty, use an alcohol-based hand sanitiser if available.",
+        "Use soap and water when hands are visibly dirty or contaminated with body fluids; sanitiser is not a full substitute in those situations.",
+        "Clean hands before and after treating a cut or wound."
+      ],
+      "equipment": [
+        "Soap",
+        "Safe water",
+        "Clean towel or disposable drying material",
+        "Alcohol-based hand sanitiser for situations without visible dirt"
+      ],
+      "commonMistakes": [
+        "Using sanitiser on visibly dirty or greasy hands instead of washing.",
+        "Sharing a dirty towel.",
+        "Handling food or treating wounds with unwashed hands."
+      ],
+      "dangers": [
+        "Poor hand hygiene can spread stomach and respiratory infections.",
+        "Contaminated hands can infect cuts and wounds."
+      ],
+      "stopAndGetHelp": "If clean water is not available, avoid preparing food or treating wounds until hands can be cleaned properly. Seek medical advice if a wound becomes infected.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; practical use in UK outdoor settings",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-handwashing",
+        "fsa-food-poisoning"
+      ]
+    },
+    {
+      "id": "campsite-site-selection",
+      "title": "Choosing a low-impact campsite",
+      "summary": "Choose dry, durable ground, avoid sensitive habitats and hazards, and check whether camping is permitted before pitching.",
+      "body": "A good campsite protects the group and the place being visited. Wild camping rights differ across the UK; permission may be required. The practical advice here is not a substitute for local access rules.",
+      "categoryId": "shelter",
+      "tags": [
+        "shelter",
+        "camping",
+        "wild camping",
+        "site selection",
+        "ground",
+        "leave no trace"
+      ],
+      "steps": [
+        "Check whether camping is allowed at the location and obtain landowner permission where required.",
+        "Choose durable, dry, well-drained ground that will not be easily damaged; avoid fragile vegetation and sensitive habitats.",
+        "Avoid riverbanks, dry watercourses, gullies and low hollows that may flood if rain arrives.",
+        "Avoid exposed ridges and obvious overhead hazards; do not pitch beneath dead or unstable branches.",
+        "Keep away from paths, gates, livestock and property, and do not block access for other users or emergency vehicles.",
+        "Keep the group small, minimise noise and light, take all rubbish and food waste away, and leave the site as you found it.",
+        "Do not light a fire or barbecue unless local signs and rules explicitly allow it; use a suitable stove safely outdoors."
+      ],
+      "equipment": [
+        "Tent or shelter suited to forecast conditions",
+        "Groundsheet or sleeping mat",
+        "Rubbish bag",
+        "Torch"
+      ],
+      "commonMistakes": [
+        "Assuming open access land automatically allows camping.",
+        "Pitching in a low hollow or beside a watercourse because the ground looks flat.",
+        "Damaging vegetation, digging drainage trenches or leaving waste behind."
+      ],
+      "dangers": [
+        "Heavy rain can turn gullies and watercourses into dangerous flows.",
+        "Exposed or unstable locations can become hazardous in wind and storms."
+      ],
+      "stopAndGetHelp": "If weather, water levels or ground conditions make the site unsafe, move to a safer permitted location or leave the area. Follow local authority and land-manager instructions.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK practical advice; access rights and camping rules differ between England, Wales, Scotland and Northern Ireland",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "bmc-wild-camp",
+        "govuk-countryside-code"
       ]
     }
   ],
