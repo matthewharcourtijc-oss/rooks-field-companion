@@ -2,7 +2,7 @@
 
 - Added a dedicated IndexedDB knowledge database, separate from Tasks, Notes, Mission Logs and backups.
 - Added local category browsing, multi-word search, structured article reading and source provenance.
-- Added an initial 20-article UK-first starter pack with reviewed source references and safety metadata.
+- Added an initial 26-article UK-first starter pack with reviewed source references and safety metadata.
 - Added signed-package verification and an explicit update module; automatic updates are not enabled until a production signing key is configured and independently tested.
 - Added the knowledge modules and starter pack to the offline service-worker precache.
 - Added a network-only route for signed update manifests and versioned content packages so a stale cache cannot hide a newer release.
