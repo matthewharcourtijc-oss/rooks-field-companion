@@ -85,9 +85,11 @@
     return result;
   }
 
-  async function fetchManifest(manifestUrl) {
+  async function fetchManifest(manifestUrl, trustedOrigin) {
     if (!root.fetch) fail("UNSUPPORTED", "This browser cannot check for updates.");
-    const url = checkedHttpsUrl(manifestUrl);
+    const origin = trustedOrigin || (root.location && root.location.origin);
+    if (!origin) fail("INVALID_URL", "The trusted Field Companion site origin is not available.");
+    const url = checkedHttpsUrl(manifestUrl, origin);
     let response;
     try {
       response = await root.fetch(url.href, {
@@ -110,7 +112,7 @@
 
   async function checkForUpdates(options) {
     const opts = options || {};
-    const { manifest, origin } = await fetchManifest(opts.manifestUrl);
+    const { manifest, origin } = await fetchManifest(opts.manifestUrl, opts.trustedOrigin);
     const current = await root.HarcomKnowledgeDB.getActiveRelease();
     if (current && current.id === manifest.releaseId) {
       return { status: "current", current, manifest };
