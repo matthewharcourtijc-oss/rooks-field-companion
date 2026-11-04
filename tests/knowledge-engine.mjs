@@ -3,9 +3,17 @@ import vm from "node:vm";
 import assert from "node:assert/strict";
 
 const engine = fs.readFileSync("knowledge/engine.js", "utf8");
+const crypto = fs.readFileSync("knowledge/crypto.js", "utf8");
 const harness = fs.readFileSync("tests/knowledge-engine.html", "utf8");
 new vm.Script(engine, { filename: "knowledge/engine.js" });
+new vm.Script(crypto, { filename: "knowledge/crypto.js" });
 
+assert.ok(crypto.includes("verifySignedPackage"));
+assert.ok(crypto.includes("SHA-256"));
+assert.ok(crypto.includes("Ed25519"));
+assert.ok(crypto.includes("HASH_MISMATCH"));
+assert.ok(crypto.includes("INVALID_SIGNATURE"));
+assert.ok(!crypto.includes("privateKey"));
 assert.ok(engine.includes('const DB_NAME = "harcom-field-knowledge"'));
 assert.ok(engine.includes('const DB_VERSION = 2'));
 assert.ok(engine.includes('root.HarcomKnowledgeDB = Object.freeze'));
