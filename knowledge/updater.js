@@ -105,8 +105,14 @@
     if (!response.ok) fail("MANIFEST_FETCH_FAILED", "The update service did not return a valid release manifest.");
     if (response.url) checkedHttpsUrl(response.url, url.origin);
     let manifest;
-    try { manifest = await response.json(); }
-    catch (_) { fail("INVALID_MANIFEST", "The update manifest was not valid JSON."); }
+    try {
+      const manifestText = await response.text();
+      if (manifestText.length > 65536) fail("INVALID_MANIFEST", "The update manifest exceeds the 64 KiB size limit.");
+      manifest = JSON.parse(manifestText);
+    } catch (error) {
+      if (error && error.code) throw error;
+      fail("INVALID_MANIFEST", "The update manifest was not valid JSON.");
+    }
     return { manifest: validateManifest(manifest), origin: url.origin };
   }
 
