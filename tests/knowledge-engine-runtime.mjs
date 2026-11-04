@@ -243,7 +243,7 @@ try {
   const badPackage = makePackage("network-update-2");
   badPackage.createdAt = "2026-11-06T00:00:00.000Z";
   activePackageBytes = new TextEncoder().encode(JSON.stringify(badPackage));
-  activePackagePath = "/field-app/knowledge/releases/network-update-2.json";
+  activePackagePath = "/knowledge/releases/network-update-2.json";
   const badHash = new Uint8Array(await webcrypto.subtle.digest("SHA-256", activePackageBytes));
   activeManifest = {
     format: "HARCOM_KNOWLEDGE_RELEASE", manifestVersion: 1, schemaVersion: 1,
