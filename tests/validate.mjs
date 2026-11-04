@@ -6,6 +6,23 @@ const html = fs.readFileSync("index.html", "utf8");
 const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
+const deploymentWorkflow = fs.readFileSync(".github/workflows/static.yml", "utf8");
+
+// Release-safety regression: a manual workflow dispatch must never publish a
+// development branch. Validation is read-only; only the gated deploy job gets
+// the Pages and OIDC permissions it needs.
+assert.match(deploymentWorkflow,
+  /if:\\s*github\\.ref\\s*==\\s*['"]refs\\/heads\\/main['"]\\s*&&\\s*\\(github\\.event_name\\s*==\\s*['"]push['"]\\s*\\|\\|\\s*github\\.event_name\\s*==\\s*['"]workflow_dispatch['"]\\s*\\)/,
+  "Pages deployment must be restricted to push/manual dispatch on main");
+const topLevelPermissions = deploymentWorkflow.split("jobs:")[0];
+assert.doesNotMatch(topLevelPermissions, /pages:\\s*write|id-token:\\s*write/,
+  "Pages/OIDC write permissions must not be granted globally");
+assert.match(deploymentWorkflow,
+  /validate:[\\s\\S]*?permissions:\\s*\\n\\s+contents:\\s*read/,
+  "validation job must remain read-only");
+assert.match(deploymentWorkflow,
+  /deploy:[\\s\\S]*?needs:\\s*validate[\\s\\S]*?permissions:\\s*\\n\\s+contents:\\s*read\\s*\\n\\s+pages:\\s*write\\s*\\n\\s+id-token:\\s*write/,
+  "deployment must depend on validation and scope Pages/OIDC permissions to deploy");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
 assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
