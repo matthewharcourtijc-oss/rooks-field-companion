@@ -5,10 +5,15 @@ import assert from "node:assert/strict";
 const engine = fs.readFileSync("knowledge/engine.js", "utf8");
 const crypto = fs.readFileSync("knowledge/crypto.js", "utf8");
 const ukPack = JSON.parse(fs.readFileSync("knowledge/content/uk-core-v1.json", "utf8"));
+const manifestSchema = JSON.parse(fs.readFileSync("knowledge/release-manifest.schema.json", "utf8"));
 const harness = fs.readFileSync("tests/knowledge-engine.html", "utf8");
 new vm.Script(engine, { filename: "knowledge/engine.js" });
 new vm.Script(crypto, { filename: "knowledge/crypto.js" });
 
+assert.equal(manifestSchema.properties.manifestVersion.const, 1);
+assert.equal(manifestSchema.properties.format.const, "HARCOM_KNOWLEDGE_RELEASE");
+assert.ok(manifestSchema.required.includes("packageSha256"));
+assert.ok(manifestSchema.required.includes("signature"));
 assert.ok(crypto.includes("verifySignedPackage"));
 assert.ok(crypto.includes("SHA-256"));
 assert.ok(crypto.includes("Ed25519"));
