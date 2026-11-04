@@ -35,7 +35,7 @@ assert.ok(crypto.includes("SIZE_MISMATCH"));
 assert.ok(crypto.includes("manifest.packageSize"));
 assert.ok(crypto.includes("INVALID_SIGNATURE"));
 assert.ok(!crypto.includes("privateKey"));
-assert.ok(ukPack.articles.length >= 31, "UK starter content pack must contain at least 10 articles");
+assert.ok(ukPack.articles.length >= 31, "UK starter content pack must contain at least 31 articles");
 assert.ok(ukPack.sources.length >= 31, "UK starter content pack must retain source provenance");
 assert.ok(ukPack.articles.every(article => article.sourceIds.length && article.reviewedAt && article.stopAndGetHelp && article.contentBasis), "every article must carry provenance, review and safety fields");
 assert.ok(engine.includes("getSourcesForArticle"));
