@@ -854,13 +854,7 @@
         "dehydration"
       ],
       "steps": [
-        "Move the person to a cool place, ideally shade or an air-conditioned area.",
-        "Remove unnecessary clothing such as a jacket or socks.",
-        "If fully awake and able to swallow, give plenty of cool water or an appropriate rehydration drink.",
-        "Cool the skin by spraying or sponging with cool water and fanning. Wrapped cold packs can be placed under the armpits or on the neck.",
-        "Stay with the person and watch for improvement; they should start to feel better within 30 minutes.",
-        "Call NHS 111 if heat-exhaustion symptoms are difficult to treat or you need urgent advice.",
-        "Call 999 immediately if heatstroke is suspected, including confusion, poor coordination, seizure, loss of consciousness, very high temperature or hot skin without sweating. Continue active cooling while waiting for help."
+        "If heat-exhaustion symptoms do not improve after 30 minutes of cooling, call 999."
       ],
       "equipment": [
         "Cool water",
@@ -877,7 +871,7 @@
         "Heatstroke can be life-threatening.",
         "Confusion, seizures and loss of consciousness require emergency help."
       ],
-      "stopAndGetHelp": "Call 999 for suspected heatstroke. If heat-exhaustion symptoms do not improve within 30 minutes of cooling and fluids, seek urgent NHS advice.",
+      "stopAndGetHelp": "Call 999 immediately for suspected heatstroke, or if heat-exhaustion symptoms have not improved after 30 minutes of cooling. Continue cooling while waiting for help.",
       "contentBasis": "official-guidance",
       "jurisdiction": "NHS guidance; check local service arrangements",
       "safetyLevel": "high",
