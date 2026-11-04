@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-core-2026-11-04-e",
-  "createdAt": "2026-11-04T00:00:00.000Z",
-  "summary": "Initial UK-first emergency, weather, water, coast, navigation, campcraft and food-safety knowledge release.",
+  "releaseId": "uk-field-v2-2026-11-04",
+  "createdAt": "2026-11-04T19:00:00.000Z",
+  "summary": "Expanded UK field library: medical emergencies, forestry, foraging safety, bushcraft and offline illustrations.",
   "categories": [
     {
       "id": "emergencies",
@@ -78,6 +78,21 @@
       "id": "sanitation",
       "title": "Sanitation & Hygiene",
       "description": "Hand hygiene, food hygiene and low-impact outdoor routines."
+    },
+    {
+      "id": "forestry",
+      "title": "Forestry & Trees",
+      "description": "Identify common UK trees, read woodland clues and recognise tree hazards."
+    },
+    {
+      "id": "foraging",
+      "title": "Foraging & Wild Food",
+      "description": "Seasonal gathering, poisonous lookalikes, hygiene, permission and sustainable practice."
+    },
+    {
+      "id": "bushcraft",
+      "title": "Bushcraft Skills",
+      "description": "Shelter, cordage, campcraft, water and low-impact outdoor techniques."
     }
   ],
   "sources": [
@@ -299,6 +314,118 @@
       "title": "How to wild camp",
       "publisher": "British Mountaineering Council",
       "url": "https://www.thebmc.co.uk/en/how-to-wild-camp",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-stroke",
+      "title": "Symptoms of a stroke",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/stroke/symptoms/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-heart-attack",
+      "title": "Heart attack",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/heart-attack/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-cuts-grazes",
+      "title": "Cuts and grazes",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/cuts-and-grazes/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-broken-bones",
+      "title": "Broken bones",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/broken-bones/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-tree-id",
+      "title": "How to identify trees",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/how-to-identify-trees/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-silver-birch",
+      "title": "Silver birch",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/silver-birch/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-oak",
+      "title": "Oak",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/oak/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-ash",
+      "title": "Ash",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/ash/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-yew",
+      "title": "Yew",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/yew/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-safe-foraging",
+      "title": "Guidance for safe foraging",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.gov.uk/government/publications/guidance-for-safe-foraging",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-lily",
+      "title": "Lily-of-the-valley",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/plants/wild-flowers/lily-of-the-valley",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nt-wild-garlic",
+      "title": "Forage for wild garlic",
+      "publisher": "National Trust",
+      "url": "https://www.nationaltrust.org.uk/visit/countryside-woodland/places-to-forage-for-wild-garlic",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "outdoor-fire",
+      "title": "Fire safety outdoors",
+      "publisher": "GOV.UK / Home Office",
+      "url": "https://www.gov.uk/government/publications/fire-safety-outdoors/fire-safety-outdoors-accessible-version",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "countryside-code",
+      "title": "The Countryside Code",
+      "publisher": "GOV.UK / Natural England",
+      "url": "https://www.gov.uk/government/publications/the-countryside-code/the-countryside-code-advice-for-countryside-visitors",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "scout-knots",
+      "title": "Simple knots guide",
+      "publisher": "The Scout Association",
+      "url": "https://prod-cms.scouts.org.uk/media/2709/scout-adventures-simple-knots-guide.pdf",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "dwi-water",
+      "title": "Receiving a Boil Water Notice",
+      "publisher": "Drinking Water Inspectorate",
+      "url": "https://www.dwi.gov.uk/receiving-a-boil-water-notice/",
       "accessedAt": "2026-11-04"
     }
   ],
@@ -1725,6 +1852,738 @@
         "bmc-wild-camp",
         "govuk-countryside-code"
       ]
+    },
+    {
+      "id": "stroke-fast-response",
+      "title": "Stroke: use FAST and call 999",
+      "summary": "Recognise sudden stroke signs and get emergency help without delay.",
+      "body": "A stroke is a medical emergency. Signs often appear suddenly. Symptoms may improve or disappear, but that does not make the event safe to ignore.",
+      "categoryId": "first-aid",
+      "tags": [
+        "stroke",
+        "FAST",
+        "face",
+        "arm",
+        "speech",
+        "emergency"
+      ],
+      "steps": [
+        "Face: ask the person to smile and look for one side drooping.",
+        "Arms: ask them to raise both arms and look for one arm drifting down.",
+        "Speech: ask them to repeat a simple sentence and listen for slurring or confusion.",
+        "Time: call 999 immediately if you suspect a stroke, even if symptoms improve or stop.",
+        "Note when symptoms began or when the person was last known well, if known.",
+        "Keep them comfortable and monitor breathing. Follow the call handler."
+      ],
+      "equipment": [
+        "Phone"
+      ],
+      "commonMistakes": [
+        "Waiting to see if symptoms pass.",
+        "Driving the person yourself."
+      ],
+      "dangers": [
+        "Stroke can cause permanent injury or death.",
+        "Symptoms can be temporary."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for any suspected stroke, including symptoms that have stopped. Do not drive the person to A&E.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS emergency guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-stroke"
+      ]
+    },
+    {
+      "id": "heart-attack-recognition",
+      "title": "Heart attack: recognise warning signs",
+      "summary": "Spot possible heart attack symptoms and call 999 without delay.",
+      "body": "A heart attack can be life-threatening. Chest discomfort may feel tight, heavy, crushing or like indigestion. Pain may spread to the arms, neck or jaw; symptoms vary.",
+      "categoryId": "first-aid",
+      "tags": [
+        "heart attack",
+        "chest pain",
+        "breathing",
+        "999"
+      ],
+      "steps": [
+        "Call 999 for tight or squeezing chest pain, pain spreading to the arm, neck or jaw, severe breathing difficulty or collapse.",
+        "Help the person sit and rest in a comfortable supported position.",
+        "Keep them still, warm and reassured.",
+        "Follow the ambulance call handler. Do not delay to search for information.",
+        "Keep checking response and breathing. If unresponsive and not breathing normally, start CPR and use an AED if available."
+      ],
+      "equipment": [
+        "Phone",
+        "Warm layer"
+      ],
+      "commonMistakes": [
+        "Assuming it is indigestion and waiting.",
+        "Letting the person exert themselves.",
+        "Driving them to hospital yourself."
+      ],
+      "dangers": [
+        "A heart attack can deteriorate into cardiac arrest."
+      ],
+      "stopAndGetHelp": "Call 999 for suspected heart attack and follow the call handler's instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS emergency guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-heart-attack"
+      ]
+    },
+    {
+      "id": "severe-bleeding-control",
+      "title": "Severe bleeding: firm direct pressure",
+      "summary": "Control serious external bleeding while emergency help is on the way.",
+      "body": "Severe bleeding can become life-threatening quickly. Protect yourself from blood where possible and focus on firm, continuous pressure over the bleeding site.",
+      "categoryId": "first-aid",
+      "tags": [
+        "bleeding",
+        "wound",
+        "pressure",
+        "trauma"
+      ],
+      "steps": [
+        "Make sure the scene is safe. Use gloves or a barrier if immediately available, but do not delay help.",
+        "Call 999 for severe, spurting or uncontrolled bleeding.",
+        "If nothing is embedded, press firmly on the wound with a sterile dressing or clean cloth.",
+        "Maintain pressure. If blood comes through, add another dressing rather than repeatedly lifting the first.",
+        "If an object is embedded, do not remove it or press directly on it; apply pressure around it.",
+        "Keep the person still and warm. Monitor response and breathing."
+      ],
+      "equipment": [
+        "Gloves or barrier",
+        "Sterile dressing or clean cloth",
+        "Phone"
+      ],
+      "commonMistakes": [
+        "Removing an embedded object.",
+        "Repeatedly lifting the dressing.",
+        "Delaying 999 while finding a kit."
+      ],
+      "dangers": [
+        "Major blood loss can cause shock and death.",
+        "Blood exposure can carry infection risk."
+      ],
+      "stopAndGetHelp": "Call 999 for severe bleeding or bleeding that will not stop. Do not remove embedded objects.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS first-aid guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-cuts-grazes"
+      ],
+      "illustration": "./knowledge/illustrations/bleeding-pressure.svg",
+      "illustrationAlt": "Simple reminder: firm pressure over a wound only when no object is embedded."
+    },
+    {
+      "id": "suspected-fracture-first-response",
+      "title": "Suspected broken bone: protect and support",
+      "summary": "Reduce movement and recognise injuries needing emergency help.",
+      "body": "A broken bone can be difficult to distinguish from a severe sprain. Treat serious injury carefully rather than testing or straightening it.",
+      "categoryId": "first-aid",
+      "tags": [
+        "fracture",
+        "broken bone",
+        "injury",
+        "support"
+      ],
+      "steps": [
+        "Check overall condition and deal with life-threatening bleeding or breathing problems first.",
+        "Do not ask the person to stand, walk or move the injured part to test it.",
+        "Support the area in the position found, using soft padding if this does not move it.",
+        "Do not straighten a deformity, push a bone back in or remove an embedded object.",
+        "Call 999 for an open or major fracture, severe deformity, loss of sensation or colour, or serious head, neck, back, hip or thigh injury.",
+        "For less severe injuries, seek NHS 111 or urgent clinical advice."
+      ],
+      "equipment": [
+        "Phone",
+        "Soft padding or clothing"
+      ],
+      "commonMistakes": [
+        "Trying to realign the limb.",
+        "Moving someone with possible spinal injury unnecessarily."
+      ],
+      "dangers": [
+        "Movement may worsen damage to nerves or blood vessels.",
+        "Open fractures carry infection risk."
+      ],
+      "stopAndGetHelp": "Call 999 for serious injury, open fracture, major deformity or suspected spinal injury. If unsure, seek emergency advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-broken-bones"
+      ]
+    },
+    {
+      "id": "uk-tree-identification-method",
+      "title": "UK trees: identify using several clues",
+      "summary": "Use season, leaves, bark, buds and overall form rather than guessing from one leaf.",
+      "body": "Tree identification works best when several clues are combined. Leaves help in spring and summer; winter identification often depends on bark, buds and twigs. Shape and habitat add context but are not decisive alone.",
+      "categoryId": "forestry",
+      "tags": [
+        "tree identification",
+        "leaves",
+        "bark",
+        "buds",
+        "twigs"
+      ],
+      "steps": [
+        "Start with the whole tree: broadleaf or conifer, shape, size and location.",
+        "Inspect several leaves or needles. Note shape, edge and arrangement; check whether a leaf is simple or compound.",
+        "Inspect bark at more than one height for colour, ridges, cracks and peeling.",
+        "Look at twig and bud arrangement: opposite, alternate or spiral.",
+        "Check flowers, catkins, cones, seeds or fruit when present and in season.",
+        "Compare all observations with a trusted UK field guide. Record uncertainty if features conflict."
+      ],
+      "equipment": [
+        "Pocket field guide",
+        "Notebook or camera"
+      ],
+      "commonMistakes": [
+        "Identifying from one fallen leaf.",
+        "Ignoring season and habitat.",
+        "Breaking branches or stripping bark."
+      ],
+      "dangers": [
+        "Some tree species and parts are poisonous.",
+        "Dead branches can fall without warning."
+      ],
+      "stopAndGetHelp": "If identification matters for food, medicine or safety, do not act on a tentative result. Leave it untouched and consult a qualified expert.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK woodland field identification",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-tree-id"
+      ],
+      "illustration": "./knowledge/illustrations/tree-identification.svg",
+      "illustrationAlt": "Diagram showing leaf, bark, buds and whole-tree form as combined clues."
+    },
+    {
+      "id": "silver-birch-field-notes",
+      "title": "Silver birch: field clues",
+      "summary": "Recognise silver birch from pale bark, triangular toothed leaves and a light crown.",
+      "body": "Silver birch (Betula pendula) is common in the UK. Mature trunks often have bright white bark that peels in papery layers, with darker fissures developing with age. Leaves are small, triangular and toothed.",
+      "categoryId": "forestry",
+      "tags": [
+        "silver birch",
+        "Betula pendula",
+        "bark",
+        "leaf",
+        "catkin"
+      ],
+      "steps": [
+        "Look for a light, often narrow crown with slender drooping branches.",
+        "Check for white papery bark; older trees may show dark fissures and a darker base.",
+        "Leaves are small, roughly triangular and toothed.",
+        "Young twigs are slender and may have small wart-like glands.",
+        "Use several features; downy birch can look similar and hybridisation occurs."
+      ],
+      "equipment": [
+        "Field guide",
+        "Notebook"
+      ],
+      "commonMistakes": [
+        "Treating white bark alone as proof.",
+        "Confusing silver birch with downy birch."
+      ],
+      "dangers": [
+        "Dead limbs can fall in poor weather."
+      ],
+      "stopAndGetHelp": "Do not use tentative identification to decide that any tree part is safe to eat or use medicinally.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK species identification",
+      "safetyLevel": "info",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-silver-birch",
+        "woodland-tree-id"
+      ],
+      "illustration": "./knowledge/illustrations/tree-identification.svg",
+      "illustrationAlt": "General identification features, not a definitive species plate."
+    },
+    {
+      "id": "oak-field-notes",
+      "title": "Oak: field identification clues",
+      "summary": "Use lobed leaves, acorns, buds and bark together to recognise UK oaks.",
+      "body": "Common and sessile oak are both native to the UK. Their leaves and bark can look similar, so use the whole tree, leaf stalks, acorns and habitat rather than one feature.",
+      "categoryId": "forestry",
+      "tags": [
+        "oak",
+        "Quercus",
+        "acorn",
+        "leaf"
+      ],
+      "steps": [
+        "Look for a broad spreading crown on a mature open-grown tree.",
+        "Leaves are lobed, often with rounded lobes on common UK oaks.",
+        "Look for acorns in cups when in season; note stalks but do not rely on this alone.",
+        "Mature bark is often deeply fissured, but age changes its appearance.",
+        "Compare with a trusted guide to distinguish pedunculate and sessile oak."
+      ],
+      "equipment": [
+        "Field guide"
+      ],
+      "commonMistakes": [
+        "Assuming every lobed leaf is oak; maples also have lobed leaves.",
+        "Using one feature to distinguish oak species."
+      ],
+      "dangers": [
+        "Acorns and other plant parts are not automatically safe food.",
+        "Old trees can shed branches."
+      ],
+      "stopAndGetHelp": "Do not eat unidentified tree parts. Keep clear of trees with unstable or hanging branches.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK woodland identification",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-tree-id",
+        "woodland-oak"
+      ]
+    },
+    {
+      "id": "ash-field-notes",
+      "title": "Ash: field identification clues",
+      "summary": "Recognise ash by opposite buds, compound leaves and clusters of winged seeds.",
+      "body": "Common ash (Fraxinus excelsior) is a native broadleaf tree. Its compound leaves have several leaflets along one stalk. In winter, dark buds in opposite pairs are a useful clue.",
+      "categoryId": "forestry",
+      "tags": [
+        "ash",
+        "Fraxinus excelsior",
+        "compound leaf",
+        "buds",
+        "keys"
+      ],
+      "steps": [
+        "Look for compound leaves made of several leaflets along one stalk.",
+        "Leaflets usually have toothed edges and pointed tips.",
+        "In winter, check for opposite pairs of dark buds.",
+        "Look for clusters of single-winged seeds, called keys, when present.",
+        "Use a field guide; do not diagnose tree disease from one symptom."
+      ],
+      "equipment": [
+        "Field guide",
+        "Notebook"
+      ],
+      "commonMistakes": [
+        "Mistaking a compound leaf for several separate leaves.",
+        "Relying on leaf colour alone."
+      ],
+      "dangers": [
+        "Ash dieback can weaken branches; dead limbs may fall."
+      ],
+      "stopAndGetHelp": "Keep clear of dead or hanging branches, especially in wind. Report serious hazards to the land manager.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK woodland identification",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-ash",
+        "woodland-tree-id"
+      ]
+    },
+    {
+      "id": "yew-woodland-hazard",
+      "title": "Yew: recognise a poisonous tree",
+      "summary": "Identify yew as a woodland hazard and keep its parts away from food and children.",
+      "body": "Yew (Taxus baccata) is a native evergreen conifer. It has flat dark-green needles and may have red fleshy seed coverings. Yew is poisonous: never use its parts as food, tea, medicine or improvised cooking material.",
+      "categoryId": "forestry",
+      "tags": [
+        "yew",
+        "Taxus baccata",
+        "poisonous plant"
+      ],
+      "steps": [
+        "Look for short, flat dark-green needles arranged along the sides of shoots.",
+        "Older trunks often have reddish-brown flaky bark.",
+        "Treat foliage and seeds as poisonous. Do not taste or prepare any part.",
+        "Keep children and animals away from fallen clippings, seeds and foliage.",
+        "Avoid using yew branches as skewers, cooking sticks or tea material."
+      ],
+      "equipment": [
+        "Observe without handling"
+      ],
+      "commonMistakes": [
+        "Assuming the red fleshy part makes the seed safe.",
+        "Using yew for cooking or tea."
+      ],
+      "dangers": [
+        "Yew poisoning can be severe and potentially fatal."
+      ],
+      "stopAndGetHelp": "If any part may have been eaten, seek urgent medical advice. Call 999 for collapse, breathing difficulty, seizure or serious symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK poisonous plant awareness",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-yew",
+        "fsa-safe-foraging"
+      ]
+    },
+    {
+      "id": "foraging-field-checklist",
+      "title": "Foraging: field safety checklist",
+      "summary": "Check identity, permission, contamination and sustainability before considering a harvest.",
+      "body": "Wild food can be poisonous, contaminated or protected. This is a conservative decision process, not a list of foods certified as edible.",
+      "categoryId": "foraging",
+      "tags": [
+        "foraging",
+        "wild food",
+        "permission",
+        "sustainability"
+      ],
+      "steps": [
+        "Identify the exact species with certainty using a specialist guide and several features. If uncertain, do not pick or eat it.",
+        "Check access, local signs, site rules and permission. Rules differ by place and species.",
+        "Avoid roadsides, polluted water edges, treated land and ground with obvious animal fouling.",
+        "Take only small amounts from abundant populations where collection is permitted. Never uproot unnecessarily.",
+        "Keep species separate, wash produce thoroughly and handle it like food.",
+        "Do not let children pick or eat wild plants or fungi unsupervised."
+      ],
+      "equipment": [
+        "Specialist field guide",
+        "Clean container",
+        "Safe water"
+      ],
+      "commonMistakes": [
+        "Relying on an app or one photo.",
+        "Assuming public access means collection is allowed.",
+        "Taste-testing unknown plants."
+      ],
+      "dangers": [
+        "Some wild species are deadly poisonous.",
+        "Contamination can cause serious illness."
+      ],
+      "stopAndGetHelp": "If a plant or fungus may have been eaten and its identity is uncertain, seek medical advice immediately. Call 999 for severe symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "FSA guidance applies to England, Wales and Northern Ireland; check local rules elsewhere",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-safe-foraging",
+        "woodland-foraging"
+      ],
+      "illustration": "./knowledge/illustrations/foraging-checks.svg",
+      "illustrationAlt": "Decision flow for identity, permission, site cleanliness and sustainable gathering."
+    },
+    {
+      "id": "wild-garlic-lookalikes",
+      "title": "Wild garlic: poisonous lookalikes",
+      "summary": "Understand why wild garlic must never be identified by smell or one leaf feature alone.",
+      "body": "Wild garlic (Allium ursinum) grows in some UK woodlands and can be confused with poisonous plants, including lily-of-the-valley. This article explains the hazard; it is not permission to eat a plant identified from a screen.",
+      "categoryId": "foraging",
+      "tags": [
+        "wild garlic",
+        "Allium ursinum",
+        "lily of the valley",
+        "lookalike"
+      ],
+      "steps": [
+        "Do not pick anything unless the whole plant is identified with certainty using a specialist botanical guide and several features.",
+        "Lily-of-the-valley has poisonous leaves that may be confused with wild garlic before flowering.",
+        "Compare leaf arrangement and growth form carefully using a trusted guide.",
+        "Smell is not a safe stand-alone test; crushed leaves can contaminate one another.",
+        "If plants are mixed, damaged or uncertain, leave the entire patch alone.",
+        "Check site permission and sustainability rules before any collection."
+      ],
+      "equipment": [
+        "Specialist botanical guide"
+      ],
+      "commonMistakes": [
+        "Using smell alone as proof.",
+        "Picking mixed leaves from a dense patch.",
+        "Assuming every broad green woodland leaf is wild garlic."
+      ],
+      "dangers": [
+        "Lily-of-the-valley is poisonous; other lookalikes may also be harmful."
+      ],
+      "stopAndGetHelp": "If a suspected lookalike has been eaten, seek urgent medical advice. Call 999 for severe symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK woodland; collection rules depend on land and site",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-lily",
+        "nt-wild-garlic",
+        "fsa-safe-foraging"
+      ],
+      "illustration": "./knowledge/illustrations/foraging-checks.svg",
+      "illustrationAlt": "Foraging decision chart only; not a plant-identification plate."
+    },
+    {
+      "id": "bramble-fruit-hygiene",
+      "title": "Bramble fruit: harvest hygiene",
+      "summary": "Use careful site selection and food hygiene when collecting familiar bramble fruit.",
+      "body": "Blackberries grow on bramble (Rubus fruticosus agg.) and are familiar in many UK hedgerows. Familiarity does not remove contamination risks or the need to confirm the plant and collection permission.",
+      "categoryId": "foraging",
+      "tags": [
+        "blackberry",
+        "bramble",
+        "Rubus",
+        "food hygiene"
+      ],
+      "steps": [
+        "Confirm the plant using a reliable field guide; do not assume every dark berry is a blackberry.",
+        "Check that collection is permitted and avoid protected sites or signs prohibiting picking.",
+        "Avoid busy roads, sprayed areas, industrial sites, standing water and obvious animal fouling.",
+        "Leave plenty for wildlife and other people; do not strip or damage a hedge.",
+        "Wash fruit thoroughly with safe water before eating or preparing it.",
+        "Discard mouldy or contaminated fruit and refrigerate or process promptly."
+      ],
+      "equipment": [
+        "Clean container",
+        "Safe water"
+      ],
+      "commonMistakes": [
+        "Collecting from polluted verges.",
+        "Assuming colour alone proves identity.",
+        "Eating fruit without washing."
+      ],
+      "dangers": [
+        "Other berries can be poisonous and may grow nearby.",
+        "Contaminated produce can cause illness."
+      ],
+      "stopAndGetHelp": "If you cannot confidently identify the plant or site, do not harvest. If an unknown berry is eaten, seek urgent medical advice.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK; check local access and collection rules",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-safe-foraging",
+        "woodland-foraging"
+      ]
+    },
+    {
+      "id": "wild-fungi-no-guessing",
+      "title": "Wild fungi: no guessing or taste tests",
+      "summary": "Understand why mushroom identification requires specialist expertise.",
+      "body": "UK fungi include species that are difficult to distinguish and some cause severe or fatal poisoning. A photograph, app result, smell, taste or cooking method cannot make an uncertain mushroom safe.",
+      "categoryId": "foraging",
+      "tags": [
+        "fungi",
+        "mushrooms",
+        "poisonous",
+        "toadstool"
+      ],
+      "steps": [
+        "Do not eat a wild mushroom unless identified with certainty by a competent specialist using all relevant features.",
+        "Never taste a mushroom to identify it. Cooking does not reliably remove toxins.",
+        "Do not rely on image-matching apps or this guide as an edible-mushroom identifier.",
+        "Keep unknown fungi separate from food and away from children and pets.",
+        "If recording fungi, photograph in place and leave undisturbed where possible.",
+        "If ingestion may have occurred, seek urgent medical advice even if the person feels well."
+      ],
+      "equipment": [
+        "Specialist fungi guide for observation only"
+      ],
+      "commonMistakes": [
+        "Using colour or cap shape alone.",
+        "Assuming animals eating a mushroom means it is safe for people.",
+        "Trying a tiny amount as a test."
+      ],
+      "dangers": [
+        "Some mushroom toxins cause delayed organ damage."
+      ],
+      "stopAndGetHelp": "Seek urgent medical advice after possible ingestion, even without symptoms. Call 999 for severe symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK poisoning safety",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-safe-foraging",
+        "woodland-foraging"
+      ]
+    },
+    {
+      "id": "tarp-a-frame-shelter",
+      "title": "Bushcraft: build a simple A-frame tarp shelter",
+      "summary": "A practical low-impact tarp layout for basic rain and wind protection in suitable conditions.",
+      "body": "An A-frame tarp shelter uses a ridgeline and two sloping sides. It is a basic camp shelter, not protection from severe weather. Site choice and tension matter more than elaborate construction.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "tarp",
+        "shelter",
+        "A-frame",
+        "ridgeline"
+      ],
+      "steps": [
+        "Check camping permission and choose durable ground away from watercourses, hollows, exposed ridges and dead overhead branches.",
+        "Run a ridgeline between suitable supports or purpose-made poles. Do not damage living trees or strip bark.",
+        "Throw the tarp over the ridgeline so both sides hang evenly.",
+        "Stake the corners out at a low angle; keep the ridgeline taut but not over-tight.",
+        "Lower the windward side for protection while keeping ventilation and a clear exit.",
+        "Make guy lines visible and recheck tension if wind or rain increases.",
+        "Pack away and leave the site as found."
+      ],
+      "equipment": [
+        "Tarp",
+        "Ridgeline cord",
+        "Pegs"
+      ],
+      "commonMistakes": [
+        "Pitching under dead branches.",
+        "Using weak supports.",
+        "Damaging tree bark.",
+        "Assuming a tarp is safe in storms."
+      ],
+      "dangers": [
+        "Wind can overload anchors.",
+        "Flooding and falling branches can make a site dangerous."
+      ],
+      "stopAndGetHelp": "Leave if storms, rising water, falling branches or strong winds make the site unsafe. A tarp is not an emergency evacuation plan.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK outdoor use; local camping and access rules apply",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "countryside-code"
+      ],
+      "illustration": "./knowledge/illustrations/tarp-a-frame.svg",
+      "illustrationAlt": "Side-view diagram of a simple A-frame tarp over a ridgeline."
+    },
+    {
+      "id": "camp-knots-and-cordage",
+      "title": "Bushcraft: three useful camp knots",
+      "summary": "Learn simple cordage knots for tents, tarps and joining lines, with clear limits.",
+      "body": "Knots must match the job and be tied correctly. This guide covers ordinary camp use: clove hitch for a temporary pole attachment, taut-line hitch for an adjustable guyline and sheet bend for joining ropes.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "knots",
+        "clove hitch",
+        "taut-line hitch",
+        "sheet bend",
+        "cordage"
+      ],
+      "steps": [
+        "Practise with soft cord at ground level.",
+        "Use a clove hitch as a temporary pole attachment and check it regularly.",
+        "Use a taut-line hitch for an adjustable guyline; test it with the expected light camp load.",
+        "Use a sheet bend to join two lines, especially lines of different thickness.",
+        "Dress, tighten and inspect every knot before use. Replace frayed cord."
+      ],
+      "equipment": [
+        "Practice cord",
+        "Two short poles or safe practice rail"
+      ],
+      "commonMistakes": [
+        "Using a reef knot to join loaded ropes.",
+        "Assuming a knot is secure because it looks similar.",
+        "Using camp cordage for lifting people or heavy loads."
+      ],
+      "dangers": [
+        "Incorrect knots can slip or fail under load."
+      ],
+      "stopAndGetHelp": "Never use these ordinary camp knots for climbing, abseiling, rescue, securing a person, towing or life-safety loads. Get qualified training.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "General campcraft; not a life-safety system",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "scout-knots"
+      ],
+      "illustration": "./knowledge/illustrations/camp-knots.svg",
+      "illustrationAlt": "Illustration of camp cordage use; practise the actual knot with rope."
+    },
+    {
+      "id": "outdoor-fire-and-stove-safety",
+      "title": "Bushcraft: fire and stove safety",
+      "summary": "Use a stove where possible and understand why open fires are restricted and risky.",
+      "body": "Open fires can spread rapidly and damage woodland, peat, heathland and wildlife. In England, official guidance advises avoiding open fires in the countryside except in safe designated areas. Local rules differ across the UK.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "fire",
+        "stove",
+        "campfire",
+        "fire safety"
+      ],
+      "steps": [
+        "Check local signs, land-manager rules, fire restrictions and weather before lighting anything.",
+        "Prefer a stable purpose-made camping stove used outdoors exactly as instructed.",
+        "Never use a stove, barbecue or open fire inside a tent, vehicle or enclosed shelter.",
+        "Keep equipment on stable non-flammable ground away from dry vegetation, tents and branches.",
+        "Keep water or a suitable extinguisher ready; never leave a flame unattended.",
+        "Allow equipment and ash to cool fully. Dispose only where local rules permit.",
+        "If a fire spreads beyond immediate control, move away and call 999."
+      ],
+      "equipment": [
+        "Outdoor stove",
+        "Manufacturer-approved fuel",
+        "Water or suitable extinguisher"
+      ],
+      "commonMistakes": [
+        "Lighting fires in dry or windy conditions.",
+        "Using a stove inside a tent.",
+        "Leaving embers warm.",
+        "Assuming rules are identical across the UK."
+      ],
+      "dangers": [
+        "Grass, heath and woodland fires spread quickly.",
+        "Fuel and carbon monoxide can cause severe injury or death."
+      ],
+      "stopAndGetHelp": "If a fire spreads, do not tackle it if it cannot be put out immediately and safely. Leave and call 999.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "GOV.UK outdoor fire guidance applies to England; check local rules in Scotland, Wales and Northern Ireland",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "outdoor-fire",
+        "countryside-code"
+      ],
+      "illustration": "./knowledge/illustrations/fire-safety.svg",
+      "illustrationAlt": "Diagram showing outdoor cooking on clear ground, away from shelter and vegetation."
+    },
+    {
+      "id": "field-water-treatment-limits",
+      "title": "Field water: treatment and its limits",
+      "summary": "Separate visible dirt, microbes and chemical contamination before choosing a treatment.",
+      "body": "Clear water is not necessarily safe. Boiling can deal with many disease-causing organisms when done correctly, but does not remove chemical contamination, fuel, salt or heavy metals. A filter is not automatically complete treatment.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "water",
+        "boiling",
+        "filter",
+        "chemical contamination"
+      ],
+      "steps": [
+        "Use a known safe supply whenever possible. Avoid water downstream of farms, industry, mines, sewage outlets or suspected spills.",
+        "Let muddy water settle and pre-filter visible particles; this does not make it safe to drink.",
+        "Use a purpose-made treatment method suitable for likely hazards and follow its instructions exactly.",
+        "If boiling is selected, bring water to a rolling boil and follow current public-health advice; cool naturally in a clean covered container.",
+        "Store treated water in a clean sealed container, separate from untreated water.",
+        "If chemical contamination is possible, do not rely on boiling or ordinary portable filters. Find another source."
+      ],
+      "equipment": [
+        "Clean vessel",
+        "Suitable treatment method",
+        "Clean covered storage"
+      ],
+      "commonMistakes": [
+        "Assuming clear water is safe.",
+        "Assuming boiling removes chemicals or salt.",
+        "Mixing treated and untreated water."
+      ],
+      "dangers": [
+        "Waterborne pathogens can cause serious illness.",
+        "Boiling does not remove chemical contamination."
+      ],
+      "stopAndGetHelp": "If fuel, chemicals, sewage or industrial pollution may be present, do not drink it. Find a known safe supply and follow local authority advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK public-health principles; follow local water authority instructions",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "dwi-water"
+      ],
+      "illustration": "./knowledge/illustrations/water-treatment.svg",
+      "illustrationAlt": "Decision diagram distinguishing microbial treatment from chemical contamination."
     }
   ],
   "media": []
