@@ -23,7 +23,7 @@ assert.ok(engine.includes('MISSING_REFERENCE'));
 assert.ok(engine.includes('DUPLICATE_ID'));
 assert.ok(engine.includes('READBACK_FAILED'));
 assert.ok(engine.includes('ACTIVE_RELEASE'));
-assert.ok(!/localStorage\\s*\\.|sessionStorage\\s*\\.|harcom_data|rooks_tasks|rooks_notes|rooks_logs/.test(engine),
+assert.ok(!engine.includes("localStorage.") && !engine.includes("sessionStorage.") && !/harcom_data|rooks_tasks|rooks_notes|rooks_logs/.test(engine),
   "knowledge engine must not access the existing personal-data stores");
 assert.ok(harness.includes('../knowledge/engine.js'));
 assert.ok(harness.includes('Run database tests'));
