@@ -202,6 +202,10 @@ Object.defineProperty(globalThis, "fetch", {
 });
 try {
   const trustedKeys = { "ephemeral-test-key": toBase64(rawPublicKey) };
+  await assert.rejects(
+    () => updater.checkForUpdates({ manifestUrl: "https://attacker.invalid/knowledge/release.json", trustedOrigin: "https://example.test", trustedKeys }),
+    error => error.code === "INVALID_URL"
+  );
   const checked = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedOrigin: "https://example.test", trustedKeys });
   assert.equal(checked.status, "update-available");
   const updateResult = await updater.installUpdate({ checked, trustedKeys });
