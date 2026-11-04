@@ -193,11 +193,11 @@ jobs:
           disable-linux-hw-accel: false
           disable-animations: true
           script: |
-            set -euo pipefail
+            set -eu
             APK="android/twa/app/build/outputs/apk/debug/app-debug.apk"
             APP_ID="com.harcomindustries.fieldcompanion.diagnostic${{ github.run_number }}"
             adb install "$APK"
-            ACTIVITY="$(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "$APP_ID" | tr -d '\\r' | tail -n 1)"
+            ACTIVITY="$(adb shell cmd package resolve-activity --brief -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "$APP_ID" | tr -d '\r' | tail -n 1)"
             test -n "$ACTIVITY"
             adb shell am start -W -n "$ACTIVITY"
             sleep 8
