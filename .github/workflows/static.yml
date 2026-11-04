@@ -21,7 +21,7 @@ concurrency:
 jobs:
   validate:
     name: Validate offline app
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       - name: Validate app shell, links, manifest and JavaScript
         run: node tests/validate.mjs && node tests/knowledge-engine.mjs && node tests/knowledge-engine-runtime.mjs
       - name: Install headless Chromium for browser verification
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps --only-shell chromium
       - name: Run browser and offline smoke tests
         run: node tests/knowledge-engine-browser.mjs
 
