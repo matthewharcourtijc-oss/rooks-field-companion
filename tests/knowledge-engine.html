@@ -16,7 +16,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
 </head>
 <body>
 <h1>HARCOM Offline Knowledge Engine — Device Test</h1>
-<p>This is an isolated prototype test page. It writes only to the separate IndexedDB database <strong>harcom-field-knowledge</strong>. It does not access Tasks, Notes, Mission Logs or backups.</p>
+<p>This is an isolated prototype test page. It writes only to its own isolated test database <strong>harcom-field-knowledge-device-test</strong>. It does not access Tasks, Notes, Mission Logs or backups.</p>
 <div class="status" id="status">Checking browser support…</div>
 <p>
 <button id="run">Run database tests</button>
@@ -24,6 +24,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
 <button id="search">Search “water”</button>
 </p>
 <pre id="output">Waiting.</pre>
+<script>window.HARCOM_KNOWLEDGE_DB_NAME = "harcom-field-knowledge-device-test";</script>
 <script src="../knowledge/crypto.js"></script>
 <script src="../knowledge/engine.js"></script>
 <script>
