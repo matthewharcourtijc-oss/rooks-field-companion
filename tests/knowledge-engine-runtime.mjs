@@ -154,13 +154,16 @@ await assert.rejects(
 
 
 const ukPack = JSON.parse(fs.readFileSync("knowledge/content/uk-core-v1.json", "utf8"));
-assert.equal(ukPack.articles.length, 31, "starter library article count changed");
-assert.equal(db.validatePackage(ukPack).articles.length, 31, "UK starter library must satisfy the content schema");
+assert.equal(ukPack.articles.length, 48, "expanded field library article count changed");
+assert.equal(db.validatePackage(ukPack).articles.length, 48, "expanded UK field library must satisfy the content schema");
 await db.installRelease(ukPack);
 assert.equal((await db.getActiveRelease()).id, ukPack.releaseId);
-assert.equal((await db.listArticles()).length, 31);
+assert.equal((await db.listArticles()).length, 48);
 assert.equal((await db.listCategories()).length, 15);
-assert.equal((await db.listArticles({ categoryId: "first-aid" })).length, 7);
+assert.equal((await db.listArticles({ categoryId: "first-aid" })).length, 11);
+assert.equal((await db.listArticles({ categoryId: "forestry" })).length, 5);
+assert.equal((await db.listArticles({ categoryId: "foraging" })).length, 4);
+assert.equal((await db.listArticles({ categoryId: "bushcraft" })).length, 4);
 const floodArticle = await db.getArticle("flood-warning-actions");
 const floodSources = await db.getSourcesForArticle("flood-warning-actions");
 assert.equal(floodSources.length, 1);
