@@ -49,6 +49,13 @@ assert.ok(ui.includes("knowledge-illustration"), "article UI must render offline
 assert.ok(ui.includes("image.alt"), "offline illustrations must have alt text");
 assert.ok(ukPack.sources.length >= 48, "expanded field library must retain at least 49 named sources");
 assert.ok(ukPack.articles.every(article => article.sourceIds.length && article.reviewedAt && article.stopAndGetHelp && article.contentBasis), "every article must carry provenance, review and safety fields");
+const heatGuide = ukPack.articles.find(article => article.id === "heat-exhaustion-heatstroke");
+assert.ok(heatGuide, "heat illness guide must exist");
+assert.ok(heatGuide.steps.some(step => /move .* cool place/i.test(step)), "heat illness guide must tell the reader to move the person somewhere cool");
+assert.ok(heatGuide.steps.some(step => /cool water|cool fluids/i.test(step)), "heat illness guide must explain safe fluid support");
+assert.ok(heatGuide.steps.some(step => /cool their skin|cool water/i.test(step)), "heat illness guide must describe active cooling");
+assert.ok(heatGuide.steps.some(step => /call 999/i.test(step)), "heat illness guide must give clear emergency escalation");
+
 assert.ok(engine.includes("getSourcesForArticle"));
 assert.ok(engine.includes('const DB_NAME = root.HARCOM_KNOWLEDGE_DB_NAME || "harcom-field-knowledge"'));
 assert.ok(engine.includes('const DB_VERSION = 2'));
