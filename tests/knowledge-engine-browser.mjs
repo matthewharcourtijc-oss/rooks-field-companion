@@ -76,7 +76,10 @@ try {
   const imageInfo = await illustration.evaluate(image => ({ alt: image.alt, width: image.naturalWidth }));
 
   const workerInfo = await page.evaluate(async () => {
-    const registration = await navigator.serviceWorker.ready;
+    const registration = await Promise.race([
+      navigator.serviceWorker.ready,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Service worker did not become ready within 10 seconds; inspect its install/cache errors.")), 10000))
+    ]);
     const cacheNames = await caches.keys();
     const cache = await caches.open("harcom-field-companion-v0.9.15");
     const keys = await cache.keys();
@@ -125,6 +128,16 @@ try {
   await handwashing.click();
   await page.locator("#knowledgeArticle").waitFor({ state: "visible" });
   assert.match(await page.locator("#knowledgeArticleContent").innerText(), /hand/i);
+  await page.locator("#knowledgeBack").click();
+  await page.locator("#knowledgeSearch").fill("severe bleeding");
+  const offlineBleeding = page.locator("#knowledgeResults button").filter({ hasText: /severe bleeding/i }).first();
+  await offlineBleeding.waitFor({ state: "visible" });
+  await offlineBleeding.click();
+  await page.locator("#knowledgeArticle").waitFor({ state: "visible" });
+  await page.waitForFunction(() => {
+    const image = document.querySelector("#knowledgeArticleContent img");
+    return image && image.complete && image.naturalWidth > 0;
+  }, null, { timeout: 10000 });
   assert.deepEqual(pageErrors, [], "browser runtime must not throw uncaught page errors");
 
   console.log(JSON.stringify({
