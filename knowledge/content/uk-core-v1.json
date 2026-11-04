@@ -1,0 +1,673 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "uk-core-2026-11-04-a",
+  "createdAt": "2026-11-04T00:00:00.000Z",
+  "summary": "Initial UK-first emergency, weather, water, coast, navigation, campcraft and food-safety knowledge release.",
+  "categories": [
+    {
+      "id": "emergencies",
+      "title": "Emergencies",
+      "description": "Immediate response, getting help and staying safe."
+    },
+    {
+      "id": "first-aid",
+      "title": "First Aid",
+      "description": "Recognising emergencies and following current first-aid guidance."
+    },
+    {
+      "id": "water",
+      "title": "Water",
+      "description": "Water notices, safe supplies and treatment limits."
+    },
+    {
+      "id": "weather",
+      "title": "Weather",
+      "description": "Floods, lightning, mountain forecasts and exposure."
+    },
+    {
+      "id": "coast",
+      "title": "Coast & Water",
+      "description": "Cold-water incidents and coastal hazards."
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation",
+      "description": "Route planning, maps, weather checks and rescue readiness."
+    },
+    {
+      "id": "campcraft",
+      "title": "Campcraft",
+      "description": "Safe camps, cooking and fire prevention."
+    },
+    {
+      "id": "food",
+      "title": "Food & Hygiene",
+      "description": "Outdoor food storage, preparation and hygiene."
+    }
+  ],
+  "sources": [
+    {
+      "id": "govuk-flood",
+      "title": "What to do before or during a flood",
+      "publisher": "GOV.UK",
+      "url": "https://www.gov.uk/help-during-flood",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-hypothermia",
+      "title": "Hypothermia",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/hypothermia/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "dwi-boil-water",
+      "title": "Receiving a Boil Water Notice",
+      "publisher": "Drinking Water Inspectorate",
+      "url": "https://www.dwi.gov.uk/receiving-a-boil-water-notice/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "rnli-water-risks",
+      "title": "Know the risks",
+      "publisher": "Royal National Lifeboat Institution",
+      "url": "https://rnli.org/water-safety/know-the-risks",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "mountain-rescue-safety",
+      "title": "Stay safe",
+      "publisher": "Mountain Rescue England and Wales",
+      "url": "https://www.mountain.rescue.org.uk/safety/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "metoffice-lightning",
+      "title": "3 tips for staying safe in lightning",
+      "publisher": "Met Office",
+      "url": "https://weather.metoffice.gov.uk/warnings-and-advice/seasonal-advice/stay-safe-in-lightning",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "govuk-outdoor-fire",
+      "title": "Fire safety outdoors",
+      "publisher": "GOV.UK / Home Office",
+      "url": "https://www.gov.uk/government/publications/fire-safety-outdoors/fire-safety-outdoors-accessible-version",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-poisoning",
+      "title": "Poisoning",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/poisoning/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-burns",
+      "title": "Burns and scalds",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/burns-and-scalds/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-camping-food",
+      "title": "Camping food safety",
+      "publisher": "Food Standards Agency",
+      "url": "https://food.blog.gov.uk/2020/07/20/camping-food-safety/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "os-map-reading",
+      "title": "Map reading",
+      "publisher": "Ordnance Survey",
+      "url": "https://www.ordnancesurvey.co.uk/documents/resources/map-reading.pdf",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "metoffice-mountain",
+      "title": "Mountain forecast guide",
+      "publisher": "Met Office",
+      "url": "https://weather.metoffice.gov.uk/guides/mountain/forecast",
+      "accessedAt": "2026-11-04"
+    }
+  ],
+  "articles": [
+    {
+      "id": "flood-warning-actions",
+      "title": "Flood warning: immediate actions",
+      "summary": "What to do when a flood warning is issued or floodwater threatens your area.",
+      "body": "Floodwater can move quickly, conceal hazards and contain sewage. Follow the flood advice for your nation and the instructions of emergency services. Do not put yourself at risk to save property.",
+      "categoryId": "weather",
+      "tags": [
+        "flood",
+        "floodwater",
+        "evacuation",
+        "emergency",
+        "weather"
+      ],
+      "steps": [
+        "Check official local flood alerts and warnings; advice and warning systems differ across the UK.",
+        "Move people, pets, essential medication and important items to a safer place or higher level before conditions worsen.",
+        "Turn off gas, electricity and water only if you can do so safely. Never touch electrical switches while standing in water.",
+        "Follow council and emergency-service instructions, including evacuation directions.",
+        "If you or another person is in immediate danger, call 999."
+      ],
+      "equipment": [
+        "Charged mobile phone",
+        "Essential medication",
+        "Torch",
+        "Waterproof bag for key documents"
+      ],
+      "commonMistakes": [
+        "Walking, cycling or driving through floodwater, even when it looks shallow.",
+        "Entering floodwater to retrieve belongings or move a vehicle.",
+        "Touching electrical switches while standing in water."
+      ],
+      "dangers": [
+        "Floodwater may hide open drains, broken covers, debris and damaged surfaces.",
+        "Floodwater may contain sewage or other contaminants.",
+        "Fast-moving water can sweep people and vehicles away."
+      ],
+      "stopAndGetHelp": "If trapped, injured or in immediate danger, call 999. Do not enter floodwater to attempt a rescue; follow emergency-service instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; use nation-specific flood agency advice",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-flood"
+      ],
+      "equipmentNote": ""
+    },
+    {
+      "id": "hypothermia-recognition-response",
+      "title": "Hypothermia: recognise and respond",
+      "summary": "Recognise possible hypothermia and protect the person while urgent medical help is arranged.",
+      "body": "Hypothermia is a medical emergency. It can happen after exposure to cold, wet weather or cold water. Do not wait for symptoms to become severe before seeking help.",
+      "categoryId": "first-aid",
+      "tags": [
+        "hypothermia",
+        "cold",
+        "exposure",
+        "first aid",
+        "medical emergency"
+      ],
+      "steps": [
+        "Suspect hypothermia if someone is shivering, cold and pale, unusually tired or confused, speaking unclearly or breathing slowly.",
+        "Call 999 if you think someone has hypothermia.",
+        "Move them indoors or to a sheltered place as soon as it is safe.",
+        "Remove wet clothing and wrap them in dry blankets, a sleeping bag or dry towels; cover the head.",
+        "Stay with them and keep talking to them until help arrives.",
+        "Offer a warm non-alcoholic drink and sugary food only if they are fully awake and able to swallow safely."
+      ],
+      "equipment": [
+        "Dry blankets or sleeping bag",
+        "Dry spare clothing",
+        "Shelter from wind and rain"
+      ],
+      "commonMistakes": [
+        "Assuming a person is safe because they have stopped shivering.",
+        "Using a hot bath, heat lamp or hot water bottle to warm them.",
+        "Rubbing their arms, legs, hands or feet.",
+        "Giving alcohol."
+      ],
+      "dangers": [
+        "Confusion, slurred speech and slow breathing can indicate serious deterioration.",
+        "Rough handling and rapid direct heating may make the situation worse."
+      ],
+      "stopAndGetHelp": "Call 999 if hypothermia is suspected. Follow the emergency call handler's instructions; this guide does not replace clinical care.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; follow local emergency-service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-hypothermia"
+      ]
+    },
+    {
+      "id": "boil-water-notice",
+      "title": "Boil-water notice: what it means",
+      "summary": "Follow the water supplier's exact instructions when a boil-water notice is issued.",
+      "body": "A boil-water notice usually addresses possible microbial contamination. It is not the same as a do-not-drink or do-not-use notice. Boiling does not remove chemical contamination, so the exact wording matters.",
+      "categoryId": "water",
+      "tags": [
+        "water",
+        "boil water notice",
+        "drinking water",
+        "contamination",
+        "hygiene"
+      ],
+      "steps": [
+        "Read the full notice from your water supplier or local authority and follow its exact instructions.",
+        "If told to boil, bring the water to a rolling boil before using it for drinking, brushing teeth, making ice, preparing food or cleaning feeding equipment.",
+        "Allow boiled water to cool naturally.",
+        "Store it in a clean, covered container in the fridge.",
+        "Discard boiled water that has not been used within 24 hours, as directed by the Drinking Water Inspectorate.",
+        "If the notice says do not drink or do not use the water, use a safe alternative supply and follow the supplier's instructions."
+      ],
+      "equipment": [
+        "Kettle or suitable pan",
+        "Clean covered storage container",
+        "Refrigerator or suitable cold storage"
+      ],
+      "commonMistakes": [
+        "Treating every water notice as a boil-water notice.",
+        "Assuming boiling removes chemicals or other non-microbial contaminants.",
+        "Using stored boiled water beyond the advised period."
+      ],
+      "dangers": [
+        "Boiling water can cause serious scalds.",
+        "A do-not-drink or do-not-use notice requires different action from a boil-water notice."
+      ],
+      "stopAndGetHelp": "If the notice is unclear, contact the water supplier or local authority. If you suspect chemical contamination, do not rely on boiling; use an alternative supply and follow official advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; follow the issuing water supplier or local authority",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "dwi-boil-water"
+      ]
+    },
+    {
+      "id": "unexpected-cold-water-entry",
+      "title": "Unexpected fall into cold water",
+      "summary": "Control breathing and float first after an unexpected fall into cold water.",
+      "body": "Cold-water shock can cause an involuntary gasp and panic. The RNLI advises not trying to swim immediately. First focus on staying afloat and regaining control of breathing.",
+      "categoryId": "coast",
+      "tags": [
+        "cold water",
+        "water safety",
+        "coast",
+        "drowning",
+        "float to live"
+      ],
+      "steps": [
+        "Try to stay calm and give yourself time to control your breathing; do not immediately try to swim.",
+        "Tilt your head back with ears submerged and relax as much as possible.",
+        "Use your hands to help you stay afloat; spread your arms and legs to improve stability.",
+        "Hold on to something buoyant if it is within reach.",
+        "Once your breathing is controlled, call for help and move towards safety only if you are able."
+      ],
+      "equipment": [
+        "Suitable personal flotation device when undertaking water activities",
+        "Waterproof means of calling for help when appropriate"
+      ],
+      "commonMistakes": [
+        "Trying to swim hard immediately after falling in.",
+        "Panic-driven movements that waste energy.",
+        "Entering the water to rescue another person."
+      ],
+      "dangers": [
+        "Cold water can cause gasping, panic and rapid loss of useful movement.",
+        "Fatigue can develop quickly.",
+        "A rescuer entering the water can become another casualty."
+      ],
+      "stopAndGetHelp": "If someone is in trouble in the water, call 999 or 112 and ask for the Coastguard. Do not enter the water yourself; throw flotation or a line if it is safe.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK coast and open-water safety",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "rnli-water-risks"
+      ]
+    },
+    {
+      "id": "mountain-rescue-callout",
+      "title": "Calling Mountain Rescue in England and Wales",
+      "summary": "How to request Mountain Rescue and what information to prepare during a hill or mountain emergency.",
+      "body": "In England and Wales, Mountain Rescue is contacted through the police via the emergency number. Give clear location and casualty details, then follow the rescue team's instructions.",
+      "categoryId": "emergencies",
+      "tags": [
+        "mountain rescue",
+        "lost",
+        "999",
+        "112",
+        "emergency",
+        "grid reference"
+      ],
+      "steps": [
+        "Dial 999 or 112 and ask for Police, then ask for Mountain Rescue.",
+        "Give your location as accurately as possible, ideally with a map grid reference.",
+        "Describe what happened and the casualty's condition; give the number of people in the party and a callback number.",
+        "Keep your phone available and conserve its battery.",
+        "Stay where you are unless remaining there is unsafe or the rescue team instructs you to move.",
+        "If you need to call again, repeat the emergency request and location details."
+      ],
+      "equipment": [
+        "Map and compass",
+        "Charged mobile phone",
+        "Power bank",
+        "Torch or head torch",
+        "Whistle"
+      ],
+      "commonMistakes": [
+        "Calling the wrong service without specifying Police then Mountain Rescue.",
+        "Giving an imprecise location when a grid reference or clear landmark is available.",
+        "Moving away from the reported location without telling the rescue team."
+      ],
+      "dangers": [
+        "Poor signal and low battery can delay communication.",
+        "Weather, darkness and terrain can make self-relocation more dangerous."
+      ],
+      "stopAndGetHelp": "Call 999 or 112 and ask for Police then Mountain Rescue when there is an emergency in the hills or mountains. Follow the call handler and rescue team's instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England and Wales",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "mountain-rescue-safety"
+      ]
+    },
+    {
+      "id": "lightning-outdoors",
+      "title": "Caught outdoors in lightning",
+      "summary": "Reduce exposure to lightning by seeking enclosed shelter and leaving exposed high ground.",
+      "body": "Lightning can strike people outdoors, especially during exposed activities. The safest choice is to avoid being outside during thunderstorms and to seek a safe enclosed shelter when thunder is heard.",
+      "categoryId": "weather",
+      "tags": [
+        "lightning",
+        "thunderstorm",
+        "weather",
+        "mountain safety"
+      ],
+      "steps": [
+        "Check the forecast before outdoor or water activities and postpone or leave exposed areas when thunderstorms are forecast.",
+        "If you hear thunder outdoors, seek a safe enclosed shelter such as a substantial building or a hard-topped vehicle.",
+        "If on open water, return to shore immediately if it is safe to do so.",
+        "Get off exposed high ground, ridges and peaks and move to lower ground.",
+        "If caught in the open with no shelter, move away from isolated trees, buildings and conductive objects; crouch low with minimal contact with the ground."
+      ],
+      "equipment": [
+        "Weather forecast before departure",
+        "Reliable means of receiving weather warnings"
+      ],
+      "commonMistakes": [
+        "Sheltering directly beneath an isolated tree.",
+        "Remaining on a ridge or summit during a thunderstorm.",
+        "Assuming a tent is a safe enclosed shelter."
+      ],
+      "dangers": [
+        "Lightning can cause fatal injury.",
+        "Exposed high ground and open water increase danger."
+      ],
+      "stopAndGetHelp": "If anyone is struck or injured, call 999 and follow emergency instructions. Do not approach a dangerous scene if it puts you at risk.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "metoffice-lightning"
+      ]
+    },
+    {
+      "id": "tent-fire-prevention",
+      "title": "Tent and campsite fire prevention",
+      "summary": "Prevent fires and carbon-monoxide risks around tents by keeping flames and fuel-burning appliances outside.",
+      "body": "Tents can ignite quickly and often have limited exits. Government outdoor-fire guidance for England says never cook inside a tent and keep cooking appliances away from tent walls and flammable materials.",
+      "categoryId": "campcraft",
+      "tags": [
+        "fire",
+        "tent",
+        "camping",
+        "stove",
+        "carbon monoxide"
+      ],
+      "steps": [
+        "Never cook inside a tent and never use candles in or near a tent.",
+        "Use cooking appliances outdoors, away from tent walls, long grass and other flammable materials.",
+        "Keep cooking appliances stable and attended; follow the manufacturer's instructions.",
+        "Keep flammable liquids and gas cylinders outside the tent and away from children.",
+        "Make sure everyone knows the exit route and how to get out quickly if the tent catches fire.",
+        "If a fire starts, get everyone out and call the fire and rescue service with the exact location."
+      ],
+      "equipment": [
+        "Torch or head torch instead of candles",
+        "Suitable carbon-monoxide alarm where relevant",
+        "Clear exit route"
+      ],
+      "commonMistakes": [
+        "Using a camping stove, barbecue, heater or lantern inside a tent.",
+        "Cooking beside tent fabric or long dry grass.",
+        "Blocking the tent exit with equipment."
+      ],
+      "dangers": [
+        "Tent fabric and equipment can catch fire rapidly.",
+        "Fuel-burning appliances can produce carbon monoxide.",
+        "Flammable liquids and gas cylinders increase fire risk."
+      ],
+      "stopAndGetHelp": "If a fire is spreading or anyone is in danger, evacuate immediately and call 999. Do not re-enter a burning tent to retrieve equipment.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England; check local rules and fire-service advice elsewhere in the UK",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-outdoor-fire"
+      ]
+    },
+    {
+      "id": "suspected-poisoning",
+      "title": "Suspected poisoning: immediate response",
+      "summary": "Get medical advice immediately if someone may have swallowed, touched or breathed in a harmful substance.",
+      "body": "Poisoning can involve medicines, household chemicals, plants, mushrooms or other harmful substances. Symptoms may take hours or days to appear, so do not wait for symptoms before seeking advice.",
+      "categoryId": "first-aid",
+      "tags": [
+        "poisoning",
+        "toxic plants",
+        "mushrooms",
+        "chemicals",
+        "first aid"
+      ],
+      "steps": [
+        "If someone may have swallowed, touched or breathed in something harmful, seek medical advice immediately.",
+        "Call 999 if you think someone may have been poisoned, has lost consciousness, stopped breathing, has severe breathing difficulty or has a seizure.",
+        "If you are unsure whether a substance is harmful, call NHS 111 for urgent advice.",
+        "Do not try to make the person vomit and do not give them food or drink.",
+        "Keep the packaging, container or details of the suspected substance for medical staff, if safe to do so.",
+        "Monitor their breathing and follow the emergency call handler's instructions."
+      ],
+      "equipment": [
+        "Original packaging or a photograph of the suspected substance, if safe to obtain"
+      ],
+      "commonMistakes": [
+        "Waiting for symptoms before seeking advice.",
+        "Trying to make the person vomit.",
+        "Giving food, drink or home remedies without medical instruction."
+      ],
+      "dangers": [
+        "Symptoms can be delayed for hours or days.",
+        "Some substances can cause life-threatening breathing problems, seizures or loss of consciousness."
+      ],
+      "stopAndGetHelp": "Call 999 if poisoning is suspected or serious symptoms are present. Use NHS 111 if you are unsure whether exposure is harmful. Follow professional advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-poisoning"
+      ]
+    },
+    {
+      "id": "burns-first-response",
+      "title": "Burns and scalds: first response",
+      "summary": "Cool a burn or scald with cool running water for 20 minutes and know when emergency help is needed.",
+      "body": "NHS guidance says to treat burns and scalds straight away. The priority is cooling the affected area and obtaining emergency care for serious burns.",
+      "categoryId": "first-aid",
+      "tags": [
+        "burns",
+        "scalds",
+        "first aid",
+        "hot water",
+        "fire"
+      ],
+      "steps": [
+        "Cool the burn under cool running water for 20 minutes as soon as possible, ideally within 3 hours.",
+        "Remove nearby clothing or jewellery if it is not stuck to the skin.",
+        "After cooling, lay cling film loosely over the burn if appropriate; do not wrap it around the limb.",
+        "Do not apply creams, oils or butter and do not burst blisters.",
+        "Call 999 or go to A&E for very large or deep burns, burns to the face, genitals or bottom, or burns caused by chemicals or electricity."
+      ],
+      "equipment": [
+        "Access to cool running water",
+        "Clean cling film for loose covering after cooling"
+      ],
+      "commonMistakes": [
+        "Using ice, butter, oils or creams on a fresh burn.",
+        "Pulling away clothing stuck to the skin.",
+        "Wrapping cling film tightly around a limb."
+      ],
+      "dangers": [
+        "Large, deep, chemical and electrical burns can be serious.",
+        "Cooling and treatment should not delay calling 999 for a severe burn."
+      ],
+      "stopAndGetHelp": "Call 999 or attend A&E for very large or deep burns, burns to the face, genitals or bottom, and chemical or electrical burns. Use NHS 111 if unsure what to do.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-burns"
+      ]
+    },
+    {
+      "id": "camp-food-hygiene",
+      "title": "Food hygiene at camp",
+      "summary": "Keep high-risk food cold, separate raw and ready-to-eat foods, cook thoroughly and clean equipment.",
+      "body": "Outdoor temperatures and storage conditions can make food spoil more quickly. Food Standards Agency advice highlights careful chilling, separation, cooking and cleaning.",
+      "categoryId": "food",
+      "tags": [
+        "food safety",
+        "camping",
+        "hygiene",
+        "cooking",
+        "chilling"
+      ],
+      "steps": [
+        "Plan meals around the food you can safely keep chilled; use a cool box and ice packs for foods that normally need refrigeration.",
+        "Keep chilled food at 5°C or below where possible; do not assume a cool box will stay cold for an extended trip.",
+        "Keep raw foods separate from ready-to-eat foods and use sealed containers to prevent cross-contamination.",
+        "Wash hands before and after handling food, especially raw meat and dirty equipment.",
+        "Cook food thoroughly; meat should be steaming hot throughout and cooked according to reliable food-safety guidance.",
+        "Clean utensils and cooking surfaces with safe water and washing-up liquid."
+      ],
+      "equipment": [
+        "Insulated cool box",
+        "Ice packs",
+        "Food thermometer where practical",
+        "Separate sealed containers",
+        "Clean water and washing-up supplies"
+      ],
+      "commonMistakes": [
+        "Leaving cooked meat, eggs or dairy warm for long periods.",
+        "Putting raw meat beside ready-to-eat food.",
+        "Assuming charred food is cooked safely inside.",
+        "Using dirty water or equipment to prepare food."
+      ],
+      "dangers": [
+        "Food poisoning can result from poor chilling, undercooking and cross-contamination.",
+        "A cool box may not maintain safe temperatures for a long trip."
+      ],
+      "stopAndGetHelp": "Discard food that has been stored unsafely or may be contaminated. Seek medical advice if someone becomes seriously unwell after eating.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; follow current Food Standards Agency guidance",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-camping-food"
+      ]
+    },
+    {
+      "id": "route-planning-before-walk",
+      "title": "Plan a walk before setting out",
+      "summary": "Prepare a route, carry map and compass, check conditions and leave your plan with someone reliable.",
+      "body": "Ordnance Survey and Mountain Rescue guidance emphasise route planning, suitable equipment, weather checks, a charged phone and telling someone where you are going.",
+      "categoryId": "navigation",
+      "tags": [
+        "navigation",
+        "map",
+        "compass",
+        "route planning",
+        "mountain safety"
+      ],
+      "steps": [
+        "Choose a route that matches the group's ability, daylight, terrain and season.",
+        "Plot the route on a suitable map and identify key features, escape options and a realistic return time.",
+        "Carry a map and compass and know how to use them; do not rely on a phone or GPS alone.",
+        "Check the latest weather forecast and sunset time before leaving; mountain conditions can differ sharply from valley conditions.",
+        "Tell a reliable person your route, start and finish points and expected return time; update them if plans change.",
+        "Carry suitable clothing, footwear, food, water, a charged phone, torch and basic first-aid supplies."
+      ],
+      "equipment": [
+        "Suitable paper map",
+        "Compass",
+        "Charged mobile phone",
+        "Torch or head torch and spare batteries",
+        "Weather-appropriate clothing and footwear",
+        "Food and water",
+        "Basic first-aid kit"
+      ],
+      "commonMistakes": [
+        "Starting too late for the route and available daylight.",
+        "Relying only on a phone or GPS.",
+        "Failing to tell anyone the intended route and return time.",
+        "Ignoring a deteriorating forecast."
+      ],
+      "dangers": [
+        "Weather, visibility and ground conditions can change quickly.",
+        "A navigation error can lead into steep, boggy or exposed terrain."
+      ],
+      "stopAndGetHelp": "Turn back or choose a safer route if conditions exceed the group's ability. If an emergency occurs in the mountains in England or Wales, call 999 or 112 and ask for Police then Mountain Rescue.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "Great Britain; Mountain Rescue call-out procedure stated here applies to England and Wales",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "os-map-reading",
+        "mountain-rescue-safety",
+        "metoffice-mountain"
+      ]
+    },
+    {
+      "id": "mountain-forecast-reading",
+      "title": "Read a UK mountain forecast",
+      "summary": "Check mountain-specific forecasts for wind, temperature, feels-like conditions, visibility and hazards before a hill day.",
+      "body": "Mountain weather can vary dramatically between valleys, ridges and summits. The Met Office provides specialist forecasts for UK mountain areas and describes hazards that may not be obvious from a low-level forecast.",
+      "categoryId": "weather",
+      "tags": [
+        "mountain weather",
+        "forecast",
+        "wind",
+        "visibility",
+        "hypothermia"
+      ],
+      "steps": [
+        "Check the Met Office mountain forecast for the exact mountain region, not only the general town forecast.",
+        "Review warnings and mountain hazards as well as wind speed, direction, gusts, temperature and feels-like temperature.",
+        "Check visibility, cloud and precipitation information in the forecast text.",
+        "Recheck the forecast on the day; mountain forecasts are updated and conditions can change.",
+        "Choose a lower-risk route or cancel if forecast conditions exceed the group's skills or equipment."
+      ],
+      "equipment": [
+        "Phone or device to check the forecast before departure",
+        "Map and compass",
+        "Weather-appropriate clothing"
+      ],
+      "commonMistakes": [
+        "Using a valley forecast as if it describes summit conditions.",
+        "Checking the forecast only several days before the trip.",
+        "Ignoring wind chill, visibility or freezing level."
+      ],
+      "dangers": [
+        "Strong winds, poor visibility, thunderstorms, heavy rain and severe chill can create serious mountain hazards.",
+        "Conditions can be worse at altitude than in nearby towns."
+      ],
+      "stopAndGetHelp": "Do not start or continue a route if the forecast or observed conditions exceed the group's capability. If conditions deteriorate, turn back or seek a safe route off the hill.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK mountain areas covered by Met Office specialist forecasts",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "metoffice-mountain"
+      ]
+    }
+  ],
+  "media": []
+}
