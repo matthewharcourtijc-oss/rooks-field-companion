@@ -1,3 +1,15 @@
+## v0.9.14 — Offline Knowledge Library foundation
+
+- Added a dedicated IndexedDB knowledge database, separate from Tasks, Notes, Mission Logs and backups.
+- Added local category browsing, multi-word search, structured article reading and source provenance.
+- Added an initial 12-article UK-first starter pack with reviewed source references and safety metadata.
+- Added signed-package verification and an explicit update module; automatic updates are not enabled until a production signing key is configured and independently tested.
+- Added the knowledge modules and starter pack to the offline service-worker precache.
+- Added a network-only route for signed update manifests and versioned content packages so a stale cache cannot hide a newer release.
+- Bumped the service-worker cache to `v0.9.14`.
+- The consumer-facing product release label remains v0.9.9 while the prototype completes physical-device and regression testing.
+- Existing personal records remain in their original storage system; the knowledge database does not read or write them.
+
 
 ## v0.9.11 — Chrome browser hand-off
 
