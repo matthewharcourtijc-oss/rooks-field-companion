@@ -13,13 +13,15 @@
     sources: "sources",
     media: "media",
     releases: "releases",
-    settings: "settings"
+    settings: "settings",
+    searchTerms: "searchTerms"
   });
   const LIMITS = Object.freeze({
     articles: 10000,
     categories: 500,
     sources: 5000,
     media: 2000,
+    searchTermsPerArticle: 5000,
     articleText: 100000,
     title: 180,
     id: 120
@@ -44,6 +46,10 @@
       fail("INVALID_PACKAGE", label + " must be an array containing no more than " + max + " records.");
     }
     return value;
+  }
+
+  function tokenize(value) {
+    return Array.from(new Set(String(value || "").toLocaleLowerCase().normalize("NFKC").match(/[\p{L}\p{N}]+/gu) || []));
   }
 
   function validatePackage(input) {
@@ -202,6 +208,11 @@
         if (!db.objectStoreNames.contains(STORES.settings)) {
           db.createObjectStore(STORES.settings, { keyPath: "key" });
         }
+        if (!db.objectStoreNames.contains(STORES.searchTerms)) {
+          const store = db.createObjectStore(STORES.searchTerms, { keyPath: ["releaseId", "term", "articleId"] });
+          store.createIndex("byReleaseTerm", ["releaseId", "term"], { unique: false });
+          store.createIndex("byRelease", "releaseId", { unique: false });
+        }
       };
       request.onblocked = () => reject(Object.assign(new Error("The knowledge database is busy in another open app tab. Close other Field Companion tabs and retry."), { code: "BLOCKED" }));
       request.onerror = () => reject(request.error || new Error("Could not open the knowledge database."));
@@ -264,24 +275,35 @@
         categories: pkg.categories.length,
         sources: pkg.sources.length,
         articles: pkg.articles.length,
-        media: pkg.media.length
+        media: pkg.media.length,
+        searchTerms: pkg.articles.reduce((total, article) => total + tokenize([article.title, article.summary || "", article.body, ...(article.tags || [])].join(" ")).length, 0)
       },
       status: "staged"
     };
 
     await withDatabase(async db => {
-      const names = [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.releases];
+      const names = [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.releases, STORES.searchTerms];
       const tx = makeTransaction(db, names, "readwrite");
       const done = transactionDone(tx);
       const stores = {
         articles: tx.objectStore(STORES.articles),
         categories: tx.objectStore(STORES.categories),
         sources: tx.objectStore(STORES.sources),
-        media: tx.objectStore(STORES.media)
+        media: tx.objectStore(STORES.media),
+        searchTerms: tx.objectStore(STORES.searchTerms)
       };
       pkg.categories.forEach(item => stores.categories.add({ ...item, releaseId: pkg.releaseId }));
       pkg.sources.forEach(item => stores.sources.add({ ...item, releaseId: pkg.releaseId }));
-      pkg.articles.forEach(item => stores.articles.add({ ...item, releaseId: pkg.releaseId }));
+      pkg.articles.forEach(item => {
+        stores.articles.add({ ...item, releaseId: pkg.releaseId });
+        const titleTerms = new Set(tokenize(item.title));
+        const terms = tokenize([item.title, item.summary || "", item.body, ...(item.tags || [])].join(" "));
+        if (terms.length > LIMITS.searchTermsPerArticle) {
+          tx.abort();
+          fail("PACKAGE_LIMIT", "Article " + item.id + " contains too many unique search terms.");
+        }
+        terms.forEach(term => stores.searchTerms.add({ releaseId: pkg.releaseId, term, articleId: item.id, titleHit: titleTerms.has(term) }));
+      });
       pkg.media.forEach(item => stores.media.add({ ...item, releaseId: pkg.releaseId }));
       tx.objectStore(STORES.releases).add(releaseRecord);
       await done;
@@ -309,18 +331,19 @@
 
   async function verifyStagedRelease(releaseId) {
     return withDatabase(async db => {
-      const tx = makeTransaction(db, [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.releases], "readonly");
+      const tx = makeTransaction(db, [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.releases, STORES.searchTerms], "readonly");
       const done = transactionDone(tx);
-      const [release, articles, categories, sources, media] = await Promise.all([
+      const [release, articles, categories, sources, media, searchTerms] = await Promise.all([
         requestResult(tx.objectStore(STORES.releases).get(releaseId)),
         requestResult(tx.objectStore(STORES.articles).index("byRelease").getAll(releaseId)),
         requestResult(tx.objectStore(STORES.categories).index("byRelease").getAll(releaseId)),
         requestResult(tx.objectStore(STORES.sources).index("byRelease").getAll(releaseId)),
-        requestResult(tx.objectStore(STORES.media).index("byRelease").getAll(releaseId))
+        requestResult(tx.objectStore(STORES.media).index("byRelease").getAll(releaseId)),
+        requestResult(tx.objectStore(STORES.searchTerms).index("byRelease").getAll(releaseId))
       ]);
       await done;
       if (!release || !["staged", "active", "previous"].includes(release.status)) return { ok: false, reason: "missing-release" };
-      const counts = { articles: articles.length, categories: categories.length, sources: sources.length, media: media.length };
+      const counts = { articles: articles.length, categories: categories.length, sources: sources.length, media: media.length, searchTerms: searchTerms.length };
       const expected = release.counts;
       if (!Object.keys(counts).every(key => counts[key] === expected[key])) return { ok: false, counts, expected, reason: "record-count-mismatch" };
       try {
@@ -374,7 +397,7 @@
   async function discardRelease(releaseId) {
     validId(releaseId, "releaseId");
     return withDatabase(async db => {
-      const tx = makeTransaction(db, [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.releases, STORES.settings], "readwrite");
+      const tx = makeTransaction(db, [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.searchTerms, STORES.releases, STORES.settings], "readwrite");
       const done = transactionDone(tx);
       const active = await requestResult(tx.objectStore(STORES.settings).get("activeRelease"));
       if (active && active.value === releaseId) {
@@ -386,7 +409,7 @@
         await done;
         return false;
       }
-      const names = [STORES.articles, STORES.categories, STORES.sources, STORES.media];
+      const names = [STORES.articles, STORES.categories, STORES.sources, STORES.media, STORES.searchTerms];
       names.forEach(name => {
         const store = tx.objectStore(name);
         const request = store.index("byRelease").openKeyCursor(IDBKeyRange.only(releaseId));
@@ -430,27 +453,32 @@
   }
 
   async function search(query, options) {
-    const term = String(query || "").trim().toLocaleLowerCase();
-    if (!term) return [];
+    const terms = tokenize(String(query || "").trim());
+    if (!terms.length) return [];
     const active = await getActiveRelease();
     if (!active) return [];
     const opts = options || {};
     const categoryId = opts.categoryId || null;
     const limit = Math.max(1, Math.min(Number(opts.limit) || 30, 100));
     return withDatabase(async db => {
-      const tx = makeTransaction(db, [STORES.articles], "readonly");
+      const tx = makeTransaction(db, [STORES.searchTerms], "readonly");
       const done = transactionDone(tx);
-      const index = tx.objectStore(STORES.articles).index(categoryId ? "byCategory" : "byRelease");
-      const records = await requestResult(index.getAll(categoryId ? [active.id, categoryId] : active.id));
+      const index = tx.objectStore(STORES.searchTerms).index("byReleaseTerm");
+      const lists = await Promise.all(terms.map(term => requestResult(index.getAll([active.id, term]))));
       await done;
-      const terms = term.split(/\s+/).filter(Boolean);
-      return records.map(article => {
-        const title = article.title.toLocaleLowerCase();
-        const haystack = [article.title, article.summary || "", article.body, ...(article.tags || [])].join(" ").toLocaleLowerCase();
-        const matchesAllTerms = terms.every(word => haystack.includes(word));
-        const score = matchesAllTerms ? terms.reduce((sum, word) => sum + (title.includes(word) ? 4 : 1), 0) : 0;
-        return { article, score };
-      }).filter(item => item.score > 0)
+      if (lists.some(list => !list.length)) return [];
+      const scores = new Map();
+      lists.forEach(list => list.forEach(record => {
+        scores.set(record.articleId, (scores.get(record.articleId) || 0) + (record.titleHit ? 4 : 1));
+      }));
+      const matches = Array.from(scores.entries()).filter(([, score]) => score >= terms.length);
+      if (!matches.length) return [];
+      const articleTx = makeTransaction(db, [STORES.articles], "readonly");
+      const articleDone = transactionDone(articleTx);
+      const articles = await Promise.all(matches.map(([id]) => requestResult(articleTx.objectStore(STORES.articles).get([active.id, id]))));
+      await articleDone;
+      return articles.filter(Boolean).filter(article => !categoryId || article.categoryId === categoryId)
+        .map(article => ({ article, score: scores.get(article.id) || 0 }))
         .sort((a, b) => b.score - a.score || a.article.title.localeCompare(b.article.title))
         .slice(0, limit).map(item => item.article);
     });
