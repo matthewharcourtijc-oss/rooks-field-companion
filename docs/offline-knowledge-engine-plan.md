@@ -49,9 +49,9 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Added quota-estimate guardrails and an optional user-invoked persistent-storage request. Persistence is never assumed.
 - Added a separate Ed25519/SHA-256 verifier that checks the exact downloaded bytes, rejects hash/signature/manifest mismatches and fails closed if the browser lacks the required cryptography.
 - Added runtime tests using a pinned `fake-indexeddb` test dependency, including staged installs, search, rollback, release retention, quota rejection and ephemeral Ed25519 signature/tamper checks.
-- Added a device test page at `tests/knowledge-engine.html` and Node structural checks at `tests/knowledge-engine.mjs`.
+- Added a 12-article UK-first starter pack with 13 named sources covering emergencies, first aid, water, weather, coast, navigation, campcraft and food safety.\n- Added an editorial standard requiring source provenance, jurisdiction, review dates, risk levels and explicit stop/help guidance.\n- Added a device test page at `tests/knowledge-engine.html`, Node structural checks at `tests/knowledge-engine.mjs` and IndexedDB/crypto runtime tests at `tests/knowledge-engine-runtime.mjs`.
 - CI runs the original app validator, structural checks and IndexedDB/crypto runtime tests.
-- The prototype is not yet connected to the app interface, service-worker precache or an online updater.
+- The prototype and starter content are not yet connected to the app interface, service-worker precache or an online updater.
 - The signature-verification primitive is implemented and tested with ephemeral keys. A production signing key, trusted public-key pin, signed release manifest and network updater are not yet configured.
 - Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute.
 
