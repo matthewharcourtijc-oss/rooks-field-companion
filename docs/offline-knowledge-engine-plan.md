@@ -32,7 +32,7 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Baseline branch: `main`
 - Baseline commit: `0a8c23644cf7e2adc7018c66d82ccbe909433e84`
 - Existing product is a single-page HTML PWA; main application and embedded manual are in `index.html`.
-- Current offline shell is managed by `service-worker.js`, cache name `harcom-field-companion-v0.9.13`.
+- Current offline shell is managed by `service-worker.js`, cache name `harcom-field-companion-v0.9.14`.
 - The manual is embedded in the HTML and has a local search index/behaviour.
 - Personal Tasks, Notes and Mission Logs are currently stored together in a validated localStorage record with transaction/recovery safeguards and separate backup/restore paths.
 - Existing test entry point is `node tests/validate.mjs`.
