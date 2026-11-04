@@ -53,6 +53,16 @@
     return Array.from(new Set(String(value || "").toLocaleLowerCase().normalize("NFKC").match(/[\p{L}\p{N}]+/gu) || []));
   }
 
+  function articleSearchText(item) {
+    return [item.title, item.summary || "", item.body, ...(item.tags || []), ...(item.steps || []), ...(item.equipment || []), ...(item.commonMistakes || []), ...(item.dangers || []), item.stopAndGetHelp || ""].join(" ");
+  }
+
+  function validateStringList(value, label, maxItems, maxLength) {
+    if (!Array.isArray(value) || value.length > maxItems || value.some(entry => typeof entry !== "string" || !entry.trim() || entry.length > maxLength)) {
+      fail("INVALID_RECORD", label + " must be a list of up to " + maxItems + " non-empty text entries.");
+    }
+  }
+
   function validatePackage(input) {
     if (!input || typeof input !== "object" || Array.isArray(input)) {
       fail("INVALID_PACKAGE", "The knowledge package must be an object.");
@@ -112,6 +122,14 @@
       if (typeof item.body !== "string" || !item.body.trim() || item.body.length > LIMITS.articleText) {
         fail("INVALID_RECORD", "Article " + id + " has invalid or oversized body text.");
       }
+      if (typeof item.summary !== "string" || !item.summary.trim() || item.summary.length > 600) fail("INVALID_RECORD", "Article " + id + " needs a short summary.");
+      validateStringList(item.steps, "Article " + id + " steps", 30, 1200);
+      validateStringList(item.equipment, "Article " + id + " equipment", 30, 200);
+      validateStringList(item.commonMistakes, "Article " + id + " commonMistakes", 20, 500);
+      validateStringList(item.dangers, "Article " + id + " dangers", 20, 500);
+      if (typeof item.stopAndGetHelp !== "string" || !item.stopAndGetHelp.trim() || item.stopAndGetHelp.length > 1200) fail("INVALID_RECORD", "Article " + id + " needs clear stop-and-get-help guidance.");
+      if (!["official-guidance", "established-practice", "field-note"].includes(item.contentBasis)) fail("INVALID_RECORD", "Article " + id + " must declare its contentBasis.");
+      if (typeof item.jurisdiction !== "string" || !item.jurisdiction.trim() || item.jurisdiction.length > 80) fail("INVALID_RECORD", "Article " + id + " must declare its jurisdiction.");
       if (!categoryIds.has(item.categoryId)) fail("MISSING_REFERENCE", "Article " + id + " refers to a missing category.");
       if (!Array.isArray(item.sourceIds) || item.sourceIds.length === 0) {
         fail("MISSING_REFERENCE", "Article " + id + " must cite at least one source.");
@@ -122,7 +140,7 @@
       if (!Array.isArray(item.tags) || item.tags.length > 40 || item.tags.some(tag => typeof tag !== "string" || tag.length > 50)) {
         fail("INVALID_RECORD", "Article " + id + " has invalid tags.");
       }
-      if (tokenize([item.title, item.summary || "", item.body, ...item.tags].join(" ")).length > LIMITS.searchTermsPerArticle) {
+      if (tokenize(articleSearchText(item)).length > LIMITS.searchTermsPerArticle) {
         fail("PACKAGE_LIMIT", "Article " + id + " contains too many unique search terms.");
       }
       if (!SAFETY_LEVELS.has(item.safetyLevel)) {
@@ -282,7 +300,7 @@
         sources: pkg.sources.length,
         articles: pkg.articles.length,
         media: pkg.media.length,
-        searchTerms: pkg.articles.reduce((total, article) => total + tokenize([article.title, article.summary || "", article.body, ...(article.tags || [])].join(" ")).length, 0)
+        searchTerms: pkg.articles.reduce((total, article) => total + tokenize(articleSearchText(article)).length, 0)
       },
       status: "staged"
     };
@@ -303,7 +321,7 @@
       pkg.articles.forEach(item => {
         stores.articles.add({ ...item, releaseId: pkg.releaseId });
         const titleTerms = new Set(tokenize(item.title));
-        const terms = tokenize([item.title, item.summary || "", item.body, ...(item.tags || [])].join(" "));
+        const terms = tokenize(articleSearchText(item));
         terms.forEach(term => stores.searchTerms.add({ releaseId: pkg.releaseId, term, articleId: item.id, titleHit: titleTerms.has(term) }));
       });
       pkg.media.forEach(item => stores.media.add({ ...item, releaseId: pkg.releaseId }));
@@ -359,7 +377,7 @@
         const expectedTerms = new Map();
         articles.forEach(article => {
           const titleTerms = new Set(tokenize(article.title));
-          tokenize([article.title, article.summary || "", article.body, ...(article.tags || [])].join(" ")).forEach(term => {
+          tokenize(articleSearchText(article)).forEach(term => {
             expectedTerms.set(article.id + "\u0000" + term, { articleId: article.id, term, titleHit: titleTerms.has(term) });
           });
         });
