@@ -157,6 +157,10 @@ assert.equal(ukPack.articles.length, 12, "starter library article count changed"
 assert.equal(db.validatePackage(ukPack).articles.length, 12, "UK starter library must satisfy the content schema");
 await db.installRelease(ukPack);
 assert.equal((await db.getActiveRelease()).id, ukPack.releaseId);
+const floodArticle = await db.getArticle("flood-warning-actions");
+const floodSources = await db.getSourcesForArticle("flood-warning-actions");
+assert.equal(floodSources.length, 1);
+assert.equal(floodSources[0].publisher, "GOV.UK");
 const floodResults = await db.search("flood warning");
 console.log("Flood search result IDs:", floodResults.map(article => article.id));
 assert.ok(floodResults.some(article => article.id === "flood-warning-actions"));
