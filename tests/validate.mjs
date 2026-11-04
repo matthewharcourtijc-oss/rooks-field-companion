@@ -52,6 +52,17 @@ assert.ok(!html.includes("single atomic key harcom_data"), "developer storage di
 assert.ok(!html.includes("Backup manually verified:"), "developer-style backup status leaked into consumer UI");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
+assert.ok(html.includes('id="knowledgeSearch"'), "offline knowledge search control missing");
+assert.ok(html.includes('id="knowledgeCategories"'), "knowledge category browser missing");
+assert.ok(html.includes('id="knowledgeArticleContent"'), "knowledge article reader missing");
+assert.ok(html.includes('data-knowledge-article="suspected-poisoning"'), "emergency quick reference missing");
+assert.ok(html.includes('src="./knowledge/ui.js"'), "knowledge UI module missing");
+assert.ok(html.includes('src="./knowledge/engine.js"'), "knowledge database module missing");
+assert.ok(html.includes('src="./knowledge/updater.js"'), "knowledge updater module missing");
+assert.ok(html.includes('src="./knowledge/crypto.js"'), "knowledge signature verifier module missing");
+assert.ok(worker.includes('"./knowledge/content/uk-core-v1.json"'), "starter knowledge pack must be precached for offline first use");
+assert.ok(worker.includes('"./knowledge/ui.js"'), "knowledge UI must be precached");
+assert.ok(worker.includes('url.pathname.endsWith("/knowledge/release.json")'), "update manifest must bypass cache-first handling");
 assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
 assert.ok(html.includes("Offline field-manual search: local index"), "manual search must remain local/offline");
 assert.ok(html.includes("BUILD A SIMPLE GRAVITY PRE-FILTER"), "water filter build guide missing");
@@ -62,7 +73,7 @@ assert.match(html, /addEventListener\('input',update\)/, "manual search input ha
 assert.ok(html.includes('id="manualSearchCount"'), "manual search result status missing");
 
 const requiredIds = [
-  "tasks", "notes", "log", "guide", "backup",
+  "tasks", "notes", "log", "library", "guide", "backup",
   "priorities", "fieldcraft", "trauma", "remote-care", "firstaid",
   "shelter", "fire", "water", "sanitation", "food", "fungi", "toxic-plants",
   "navigation", "weather", "rescue", "kit",
