@@ -24,6 +24,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
 <button id="search">Search “water”</button>
 </p>
 <pre id="output">Waiting.</pre>
+<script src="../knowledge/crypto.js"></script>
 <script src="../knowledge/engine.js"></script>
 <script>
 (function(){
@@ -77,6 +78,16 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
       results.push({test:"offline indexed multi-word search",passed:search.length===1&&search[0].id==="water-basics"});
       const noMatch=await window.HarcomKnowledgeDB.search("water unicorn");
       results.push({test:"search requires every query term",passed:noMatch.length===0});
+      const signedBytes=new TextEncoder().encode(JSON.stringify(sample()));
+      const keyPair=await crypto.subtle.generateKey({name:"Ed25519"},true,["sign","verify"]);
+      const publicBytes=new Uint8Array(await crypto.subtle.exportKey("raw",keyPair.publicKey));
+      const signatureBytes=new Uint8Array(await crypto.subtle.sign({name:"Ed25519"},keyPair.privateKey,signedBytes));
+      const digest=new Uint8Array(await crypto.subtle.digest("SHA-256",signedBytes));
+      const toBase64=bytes=>btoa(String.fromCharCode(...bytes));
+      const hash=Array.from(digest,value=>value.toString(16).padStart(2,"0")).join("");
+      const signedPayload=JSON.parse(new TextDecoder().decode(signedBytes));
+      const verified=await window.HarcomKnowledgeCrypto.verifySignedPackage(signedBytes,{schemaVersion:1,releaseId:signedPayload.releaseId,packageSha256:hash,signature:toBase64(signatureBytes),keyId:"device-ephemeral-test"},toBase64(publicBytes));
+      results.push({test:"Ed25519 signature and SHA-256 verification",passed:verified.sha256===hash});
       const status=await window.HarcomKnowledgeDB.storageStatus();
       results.push({test:"storage status",passed:typeof status.supported==="boolean",storage:status});
       log({summary:results.every(item=>item.passed)?"ALL PROTOTYPE CHECKS PASSED":"ONE OR MORE CHECKS FAILED",results});
