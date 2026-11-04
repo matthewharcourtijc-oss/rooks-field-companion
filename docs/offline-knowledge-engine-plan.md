@@ -1,6 +1,6 @@
 # Offline Knowledge Engine — Engineering Plan
 
-**Status:** Discovery and baseline recorded; implementation not yet started  
+**Status:** Baseline recorded; isolated IndexedDB prototype implemented; physical-device verification pending  
 **Target:** UK-first Field Companion knowledge library  
 **Working branch:** `development/offline-knowledge-engine`  
 **Protected baseline:** `main` at `0a8c23644cf7e2adc7018c66d82ccbe909433e84`  
@@ -84,7 +84,7 @@ Search must operate entirely against local records. Provide a simple home screen
 
 Do not introduce a large front-end framework or remote font/script dependency without measured need. Prefer the current lightweight PWA foundation.
 
-## 5. UK-first content scope
+## 5. Prototype implementation delivered\n\n- Added isolated `knowledge/engine.js` with its own IndexedDB database (`harcom-field-knowledge`), separate from all personal-data localStorage records.\n- Added versioned stores for articles, categories, sources, media, release metadata, settings and an inverted search-term index.\n- Added strict package shape checks, duplicate-ID detection, category/source reference validation, safety-level/review-date checks and size limits.\n- Added staged installation, read-back validation, atomic active-release pointer changes, previous-release retention and explicit rollback activation.\n- Added quota estimation guardrails and an optional user-invoked persistent-storage request; persistence is never assumed.\n- Added a device test page at `tests/knowledge-engine.html` and Node structural checks at `tests/knowledge-engine.mjs`.\n- The prototype is not yet connected to the app interface, service-worker precache or any online updater. Package authenticity/signature verification is not yet implemented.\n- Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute.\n\n## 6. UK-first content scope
 
 Priority content groups:
 1. UK emergency response, calling 999/112, location sharing and help-seeking.
@@ -104,7 +104,7 @@ Priority content groups:
 
 Content must distinguish official guidance, established practical technique and lower-confidence field tips. Every safety-critical article needs named sources, review date, hazards, stop conditions and escalation advice. UK legal/access advice must be location-aware and avoid presenting England rules as universal UK rules.
 
-## 6. User experience requirements
+## 7. User experience requirements
 
 - Mobile-first and comfortable on a Samsung Galaxy S22.
 - Plain English; no unexplained technical terms.
@@ -116,7 +116,7 @@ Content must distinguish official guidance, established practical technique and 
 - Update status must say plainly: current, update available, downloading, verified, or update failed (current library kept).
 - Preserve existing Tasks, Notes, Mission Log and Backup access.
 
-## 7. Quality gates
+## 8. Quality gates
 
 ### Gate 1 — Architecture spike
 Prove IndexedDB open/read/write, schema versioning, quota handling, transaction rollback and offline reads in Android Chrome and installed PWA. Compare failure modes against the existing localStorage baseline.
@@ -136,7 +136,7 @@ Install a diagnostic build alongside the existing app where possible. Test in ai
 ### Gate 6 — Independent review
 Review security boundaries, update authenticity, storage failure modes, accessibility, factual sources and safety wording. No release claims until evidence supports them.
 
-## 8. First implementation milestones
+## 9. First implementation milestones
 
 1. Complete source and storage audit; capture baseline test result.
 2. Write and test a minimal IndexedDB compatibility/failure-mode spike on a separate branch.
@@ -147,7 +147,7 @@ Review security boundaries, update authenticity, storage failure modes, accessib
 7. Integrate the simple home screen and navigation without removing existing personal tools.
 8. Run full regression and physical-device checks.
 
-## 9. Explicit non-goals for the first release
+## 10. Explicit non-goals for the first release
 
 - No cloud sync of personal records.
 - No accounts or user tracking.
