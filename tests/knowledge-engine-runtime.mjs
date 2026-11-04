@@ -153,11 +153,12 @@ await assert.rejects(
 
 
 const ukPack = JSON.parse(fs.readFileSync("knowledge/content/uk-core-v1.json", "utf8"));
-assert.equal(ukPack.articles.length, 26, "starter library article count changed");
-assert.equal(db.validatePackage(ukPack).articles.length, 26, "UK starter library must satisfy the content schema");
+assert.equal(ukPack.articles.length, 31, "starter library article count changed");
+assert.equal(db.validatePackage(ukPack).articles.length, 31, "UK starter library must satisfy the content schema");
 await db.installRelease(ukPack);
 assert.equal((await db.getActiveRelease()).id, ukPack.releaseId);
-assert.equal((await db.listArticles()).length, 26);
+assert.equal((await db.listArticles()).length, 31);
+assert.equal((await db.listCategories()).length, 15);
 assert.equal((await db.listArticles({ categoryId: "first-aid" })).length, 7);
 const floodArticle = await db.getArticle("flood-warning-actions");
 const floodSources = await db.getSourcesForArticle("flood-warning-actions");
@@ -173,6 +174,10 @@ assert.equal((await db.search("tent fire")).length, 1);
 assert.ok((await db.search("anaphylaxis")).some(article => article.id === "anaphylaxis-emergency-response"));
 assert.ok((await db.search("snake bite")).some(article => article.id === "uk-snake-bite-response"));
 assert.ok((await db.search("foraging")).some(article => article.id === "wild-foraging-safety"));
+assert.ok((await db.search("coastal tide")).some(article => article.id === "coastal-tide-cutoff-safety"));
+assert.ok((await db.search("compass bearing")).some(article => article.id === "map-compass-bearing-basics"));
+assert.ok((await db.search("handwashing")).some(article => article.id === "hand-hygiene-in-the-field"));
+assert.ok((await db.search("campsite")).some(article => article.id === "campsite-site-selection"));
 
 
 const networkPackage = makePackage("network-update-1");
