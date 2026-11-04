@@ -42,9 +42,11 @@
     if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) {
       error("INVALID_MANIFEST", "The release manifest is invalid.");
     }
-    if (manifest.schemaVersion !== 1 ||
+    if (manifest.manifestVersion !== 1 ||
+        manifest.schemaVersion !== 1 ||
         typeof manifest.releaseId !== "string" ||
         !/^[A-Za-z0-9._-]{1,120}$/.test(manifest.releaseId) ||
+        !Number.isSafeInteger(manifest.packageSize) || manifest.packageSize < 1 || manifest.packageSize > MAX_PACKAGE_BYTES ||
         typeof manifest.packageSha256 !== "string" ||
         !/^[a-f0-9]{64}$/.test(manifest.packageSha256) ||
         typeof manifest.signature !== "string" ||
@@ -56,6 +58,9 @@
     const bytes = asBytes(inputBytes);
     if (!bytes.byteLength || bytes.byteLength > MAX_PACKAGE_BYTES) {
       error("PACKAGE_LIMIT", "The content package is empty or exceeds the 32 MiB download limit.");
+    }
+    if (bytes.byteLength !== manifest.packageSize) {
+      error("SIZE_MISMATCH", "The downloaded package size does not match the release manifest.");
     }
 
     const digest = new Uint8Array(await root.crypto.subtle.digest("SHA-256", bytes));
