@@ -135,6 +135,16 @@
     articleContent.appendChild(node("h2", "", article.title));
     articleContent.appendChild(node("p", "knowledge-article-summary", article.summary));
     articleContent.appendChild(node("p", "knowledge-article-body", article.body));
+    if (typeof article.illustration === "string" && /^\.\/knowledge\/illustrations\/[a-z0-9-]+\.svg$/.test(article.illustration)) {
+      const figure = node("figure", "knowledge-illustration");
+      const image = document.createElement("img");
+      image.src = article.illustration;
+      image.alt = typeof article.illustrationAlt === "string" ? article.illustrationAlt : "Offline field-guide illustration";
+      image.loading = "eager";
+      image.decoding = "async";
+      figure.appendChild(image);
+      articleContent.appendChild(figure);
+    }
     addTextSection(articleContent, "What to do", article.steps, true);
     addTextSection(articleContent, "Equipment", article.equipment, false);
     addTextSection(articleContent, "Common mistakes", article.commonMistakes, false);
