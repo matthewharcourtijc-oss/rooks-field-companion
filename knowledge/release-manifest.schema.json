@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://matthewharcourtijc-oss.github.io/rooks-field-companion/knowledge/release-manifest.schema.json",
+  "title": "HARCOM Knowledge Release Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "manifestVersion",
+    "schemaVersion",
+    "releaseId",
+    "createdAt",
+    "packageUrl",
+    "packageSize",
+    "packageSha256",
+    "keyId",
+    "signature"
+  ],
+  "properties": {
+    "format": {
+      "const": "HARCOM_KNOWLEDGE_RELEASE"
+    },
+    "manifestVersion": {
+      "const": 1
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "releaseId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]{1,120}$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "packageUrl": {
+      "type": "string",
+      "pattern": "^\\./knowledge/releases/[A-Za-z0-9._-]+\\.json$"
+    },
+    "packageSize": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 33554432
+    },
+    "packageSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "keyId": {
+      "type": "string",
+      "pattern": "^[a-z0-9._-]{1,64}$"
+    },
+    "signature": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9+/]{86}==$"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "minimumAppRelease": {
+      "type": "string",
+      "maxLength": 40
+    }
+  }
+}

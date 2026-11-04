@@ -11,17 +11,18 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
     name: Validate offline app
-    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -29,13 +30,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Install isolated IndexedDB test dependency
+        run: npm install --no-save --no-package-lock fake-indexeddb@6.2.4 playwright@1.56.1
       - name: Validate app shell, links, manifest and JavaScript
-        run: node tests/validate.mjs
+        run: node tests/validate.mjs && node tests/knowledge-engine.mjs && node tests/knowledge-engine-runtime.mjs
+      - name: Install headless Chromium for browser verification
+        run: npx playwright install --with-deps --only-shell chromium
+      - name: Run browser and offline smoke tests
+        timeout-minutes: 5
+        run: node tests/knowledge-engine-browser.mjs
 
   deploy:
     name: Deploy GitHub Pages
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     needs: validate
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

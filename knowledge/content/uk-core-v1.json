@@ -1,0 +1,2648 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "uk-field-v3-2026-11-04-r2",
+  "createdAt": "2026-11-04T22:12:00.000Z",
+  "summary": "Expanded UK field library: medical emergencies, forestry, foraging safety, bushcraft and offline illustrations.",
+  "categories": [
+    {
+      "id": "emergencies",
+      "title": "Emergencies",
+      "description": "Immediate response, getting help and staying safe."
+    },
+    {
+      "id": "first-aid",
+      "title": "First Aid",
+      "description": "Recognising emergencies and following current first-aid guidance."
+    },
+    {
+      "id": "water",
+      "title": "Water",
+      "description": "Water notices, safe supplies and treatment limits."
+    },
+    {
+      "id": "weather",
+      "title": "Weather",
+      "description": "Floods, lightning, mountain forecasts and exposure."
+    },
+    {
+      "id": "coast",
+      "title": "Coast & Water",
+      "description": "Cold-water incidents and coastal hazards."
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation",
+      "description": "Route planning, maps, weather checks and rescue readiness."
+    },
+    {
+      "id": "campcraft",
+      "title": "Campcraft",
+      "description": "Safe camps, cooking and fire prevention."
+    },
+    {
+      "id": "food",
+      "title": "Food & Hygiene",
+      "description": "Outdoor food storage, preparation and hygiene."
+    },
+    {
+      "id": "plants-wildlife",
+      "title": "Plants & Wildlife",
+      "description": "UK wildlife risks, bites, stings and conservative foraging safety."
+    },
+    {
+      "id": "home-resilience",
+      "title": "Home Resilience",
+      "description": "Power cuts, essential services and household emergency planning."
+    },
+    {
+      "id": "vehicle",
+      "title": "Vehicle Safety",
+      "description": "Roadside emergencies, breakdowns and vehicle preparedness."
+    },
+    {
+      "id": "signalling",
+      "title": "Signalling & Rescue",
+      "description": "Simple ways to make your location and need for help known."
+    },
+    {
+      "id": "shelter",
+      "title": "Shelter & Camp",
+      "description": "Shelter location, warmth, campsite choices and low-impact campcraft."
+    },
+    {
+      "id": "equipment",
+      "title": "Equipment & Clothing",
+      "description": "Practical kit, layering, footwear and field readiness."
+    },
+    {
+      "id": "sanitation",
+      "title": "Sanitation & Hygiene",
+      "description": "Hand hygiene, food hygiene and low-impact outdoor routines."
+    },
+    {
+      "id": "forestry",
+      "title": "Forestry & Trees",
+      "description": "Identify common UK trees, read woodland clues and recognise tree hazards."
+    },
+    {
+      "id": "foraging",
+      "title": "Foraging & Wild Food",
+      "description": "Seasonal gathering, poisonous lookalikes, hygiene, permission and sustainable practice."
+    },
+    {
+      "id": "bushcraft",
+      "title": "Bushcraft Skills",
+      "description": "Shelter, cordage, campcraft, water and low-impact outdoor techniques."
+    }
+  ],
+  "sources": [
+    {
+      "id": "govuk-flood",
+      "title": "What to do before or during a flood",
+      "publisher": "GOV.UK",
+      "url": "https://www.gov.uk/help-during-flood",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-hypothermia",
+      "title": "Hypothermia",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/hypothermia/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "dwi-boil-water",
+      "title": "Receiving a Boil Water Notice",
+      "publisher": "Drinking Water Inspectorate",
+      "url": "https://www.dwi.gov.uk/receiving-a-boil-water-notice/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "rnli-water-risks",
+      "title": "Know the risks",
+      "publisher": "Royal National Lifeboat Institution",
+      "url": "https://rnli.org/water-safety/know-the-risks",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "mountain-rescue-safety",
+      "title": "Stay safe",
+      "publisher": "Mountain Rescue England and Wales",
+      "url": "https://www.mountain.rescue.org.uk/safety/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "metoffice-lightning",
+      "title": "3 tips for staying safe in lightning",
+      "publisher": "Met Office",
+      "url": "https://weather.metoffice.gov.uk/warnings-and-advice/seasonal-advice/stay-safe-in-lightning",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "govuk-outdoor-fire",
+      "title": "Fire safety outdoors",
+      "publisher": "GOV.UK / Home Office",
+      "url": "https://www.gov.uk/government/publications/fire-safety-outdoors/fire-safety-outdoors-accessible-version",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-poisoning",
+      "title": "Poisoning",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/poisoning/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-burns",
+      "title": "Burns and scalds",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/burns-and-scalds/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "os-map-reading",
+      "title": "Map reading",
+      "publisher": "Ordnance Survey",
+      "url": "https://www.ordnancesurvey.co.uk/documents/resources/map-reading.pdf",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "metoffice-mountain",
+      "title": "Mountain forecast guide",
+      "publisher": "Met Office",
+      "url": "https://weather.metoffice.gov.uk/guides/mountain/forecast",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-food-poisoning",
+      "title": "Food poisoning: how to reduce the risk",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.food.gov.uk/food-safety-and-hygiene/food-poisoning",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-cooking",
+      "title": "Cooking your food",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.food.gov.uk/safety-hygiene/cooking-your-food",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "govuk-emergency-numbers",
+      "title": "999 and 112: the UK's national emergency numbers",
+      "publisher": "GOV.UK",
+      "url": "https://www.gov.uk/guidance/999-and-112-the-uks-national-emergency-numbers",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "resus-adult-bls-2025",
+      "title": "Adult basic life support Guidelines",
+      "publisher": "Resuscitation Council UK",
+      "url": "https://www.resus.org.uk/professional-library/2025-resuscitation-guidelines/adult-basic-life-support-guidelines",
+      "accessedAt": "2026-11-04",
+      "publishedAt": "2025-10-27"
+    },
+    {
+      "id": "nhs-heat",
+      "title": "Heat exhaustion and heatstroke",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/heat-exhaustion-heatstroke/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-lyme",
+      "title": "Lyme disease",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/lyme-disease/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "be-ready-power",
+      "title": "Power cuts",
+      "publisher": "GOV.UK Be Ready",
+      "url": "https://beready.campaign.gov.uk/be-informed-about-hazards/power-cuts/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-power-cut-food",
+      "title": "Food safety in a power cut — advice for consumers",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "national-highways-breakdown",
+      "title": "Driving on motorways — what to do if you break down",
+      "publisher": "National Highways",
+      "url": "https://nationalhighways.co.uk/safety/driving-on-our-roads/driving-on-motorways/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-dehydration",
+      "title": "Dehydration",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/dehydration/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-anaphylaxis",
+      "title": "Anaphylaxis",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/anaphylaxis/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-snake-bites",
+      "title": "Snake bites",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/snake-bites/",
+      "accessedAt": "2026-11-04",
+      "publishedOrReviewed": "2026-07-17"
+    },
+    {
+      "id": "nhs-insect-bites",
+      "title": "Insect bites and stings",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/insect-bites-and-stings/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-foraging",
+      "title": "Foraging guidelines",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/visiting-woods/things-to-do/foraging/foraging-guidelines",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "govuk-countryside-code",
+      "title": "The Countryside Code: advice for countryside visitors",
+      "publisher": "GOV.UK / Natural England / Natural Resources Wales",
+      "url": "https://www.gov.uk/government/publications/the-countryside-code/the-countryside-code-advice-for-countryside-visitors",
+      "accessedAt": "2026-11-04",
+      "publishedAt": "2023-05-26"
+    },
+    {
+      "id": "rnli-tides",
+      "title": "Tides — Know the risks",
+      "publisher": "Royal National Lifeboat Institution",
+      "url": "https://rnli.org/water-safety/know-the-risks/tides",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "bmc-hillwalking-kit",
+      "title": "What gear do I need to start hill walking?",
+      "publisher": "British Mountaineering Council",
+      "url": "https://www.thebmc.co.uk/en/what-gear-do-i-need-to-start-hill-walking",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "os-compass-bearings",
+      "title": "Compass bearings",
+      "publisher": "Ordnance Survey",
+      "url": "https://www.ordnancesurvey.co.uk/mapzone/map-skills/compass-bearings/page-three",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-handwashing",
+      "title": "How to wash your hands",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/live-well/best-way-to-wash-your-hands/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "bmc-wild-camp",
+      "title": "How to wild camp",
+      "publisher": "British Mountaineering Council",
+      "url": "https://www.thebmc.co.uk/en/how-to-wild-camp",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-stroke",
+      "title": "Symptoms of a stroke",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/stroke/symptoms/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-heart-attack",
+      "title": "Heart attack",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/heart-attack/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nhs-cuts-grazes",
+      "title": "Cuts and grazes",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/cuts-and-grazes/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "sja-fractures",
+      "title": "Broken bones and fractures",
+      "publisher": "St John Ambulance",
+      "url": "https://www.sja.org.uk/first-aid-advice/fractures-and-broken-bones/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-tree-id",
+      "title": "How to identify trees",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/how-to-identify-trees/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-silver-birch",
+      "title": "Silver birch",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/silver-birch/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-oak",
+      "title": "Oak",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/english-oak/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-ash",
+      "title": "Ash",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/ash/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-yew",
+      "title": "Yew",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/yew/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "fsa-safe-foraging",
+      "title": "Guidance for safe foraging",
+      "publisher": "Food Standards Agency",
+      "url": "https://www.gov.uk/government/publications/guidance-for-safe-foraging",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "woodland-lily",
+      "title": "Lily-of-the-valley",
+      "publisher": "Woodland Trust",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/plants/wild-flowers/lily-of-the-valley",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "nt-wild-garlic",
+      "title": "Forage for wild garlic",
+      "publisher": "National Trust",
+      "url": "https://www.nationaltrust.org.uk/visit/countryside-woodland/places-to-forage-for-wild-garlic",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "outdoor-fire",
+      "title": "Fire safety outdoors",
+      "publisher": "GOV.UK / Home Office",
+      "url": "https://www.gov.uk/government/publications/fire-safety-outdoors/fire-safety-outdoors-accessible-version",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "countryside-code",
+      "title": "The Countryside Code",
+      "publisher": "GOV.UK / Natural England",
+      "url": "https://www.gov.uk/government/publications/the-countryside-code/the-countryside-code-advice-for-countryside-visitors",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "scout-knots",
+      "title": "Simple knots guide",
+      "publisher": "The Scout Association",
+      "url": "https://prod-cms.scouts.org.uk/media/2709/scout-adventures-simple-knots-guide.pdf",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "dwi-water",
+      "title": "Receiving a Boil Water Notice",
+      "publisher": "Drinking Water Inspectorate",
+      "url": "https://www.dwi.gov.uk/receiving-a-boil-water-notice/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "cdc-emergency-water",
+      "title": "How to Make Water Safe in an Emergency",
+      "publisher": "US Centers for Disease Control and Prevention",
+      "url": "https://www.cdc.gov/water-emergency/about/index.html",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "resus-first-aid-2025",
+      "title": "First Aid Guidelines (2025)",
+      "publisher": "Resuscitation Council UK",
+      "url": "https://www.resus.org.uk/cy/node/36662"
+    },
+    {
+      "id": "nhs-chemical-burns",
+      "title": "Acid and chemical burns",
+      "publisher": "NHS",
+      "url": "https://www.nhs.uk/conditions/acid-and-chemical-burns/",
+      "accessedAt": "2026-11-04"
+    },
+    {
+      "id": "sja-electric-shock",
+      "title": "Electric shock",
+      "publisher": "St John Ambulance",
+      "url": "https://www.sja.org.uk/first-aid-advice/electrocution/",
+      "accessedAt": "2026-11-04",
+      "publishedOrReviewed": "2025-04-28"
+    }
+  ],
+  "articles": [
+    {
+      "id": "flood-warning-actions",
+      "title": "Flood warning: immediate actions",
+      "summary": "What to do when a flood warning is issued or floodwater threatens your area.",
+      "body": "Floodwater can move quickly, conceal hazards and contain sewage. Follow the flood advice for your nation and the instructions of emergency services. Do not put yourself at risk to save property.",
+      "categoryId": "weather",
+      "tags": [
+        "flood",
+        "floodwater",
+        "evacuation",
+        "emergency",
+        "weather"
+      ],
+      "steps": [
+        "Check official local flood alerts and warnings; advice and warning systems differ across the UK.",
+        "Move people, pets, essential medication and important items to a safer place or higher level before conditions worsen.",
+        "Turn off gas, electricity and water only if you can do so safely. Never touch electrical switches while standing in water.",
+        "Follow council and emergency-service instructions, including evacuation directions.",
+        "If you or another person is in immediate danger, call 999."
+      ],
+      "equipment": [
+        "Charged mobile phone",
+        "Essential medication",
+        "Torch",
+        "Waterproof bag for key documents"
+      ],
+      "commonMistakes": [
+        "Walking, cycling or driving through floodwater, even when it looks shallow.",
+        "Entering floodwater to retrieve belongings or move a vehicle.",
+        "Touching electrical switches while standing in water."
+      ],
+      "dangers": [
+        "Floodwater may hide open drains, broken covers, debris and damaged surfaces.",
+        "Floodwater may contain sewage or other contaminants.",
+        "Fast-moving water can sweep people and vehicles away."
+      ],
+      "stopAndGetHelp": "If trapped, injured or in immediate danger, call 999. Do not enter floodwater to attempt a rescue; follow emergency-service instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; use nation-specific flood agency advice",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-flood"
+      ],
+      "equipmentNote": ""
+    },
+    {
+      "id": "hypothermia-recognition-response",
+      "title": "Hypothermia: recognise and respond",
+      "summary": "Recognise possible hypothermia and protect the person while urgent medical help is arranged.",
+      "body": "Hypothermia is a medical emergency. It can happen after exposure to cold, wet weather or cold water. Do not wait for symptoms to become severe before seeking help.",
+      "categoryId": "first-aid",
+      "tags": [
+        "hypothermia",
+        "cold",
+        "exposure",
+        "first aid",
+        "medical emergency"
+      ],
+      "steps": [
+        "Suspect hypothermia if someone is shivering, cold and pale, unusually tired or confused, speaking unclearly or breathing slowly.",
+        "Call 999 if you think someone has hypothermia.",
+        "Move them indoors or to a sheltered place as soon as it is safe.",
+        "Remove wet clothing and wrap them in dry blankets, a sleeping bag or dry towels; cover the head.",
+        "Stay with them and keep talking to them until help arrives.",
+        "Offer a warm non-alcoholic drink and sugary food only if they are fully awake and able to swallow safely."
+      ],
+      "equipment": [
+        "Dry blankets or sleeping bag",
+        "Dry spare clothing",
+        "Shelter from wind and rain"
+      ],
+      "commonMistakes": [
+        "Assuming a person is safe because they have stopped shivering.",
+        "Using a hot bath, heat lamp or hot water bottle to warm them.",
+        "Rubbing their arms, legs, hands or feet.",
+        "Giving alcohol."
+      ],
+      "dangers": [
+        "Confusion, slurred speech and slow breathing can indicate serious deterioration.",
+        "Rough handling and rapid direct heating may make the situation worse."
+      ],
+      "stopAndGetHelp": "Call 999 if hypothermia is suspected. Follow the emergency call handler's instructions; this guide does not replace clinical care.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; follow local emergency-service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-hypothermia"
+      ]
+    },
+    {
+      "id": "boil-water-notice",
+      "title": "Boil-water notice: what it means",
+      "summary": "Follow the water supplier's exact instructions when a boil-water notice is issued.",
+      "body": "A boil-water notice usually addresses possible microbial contamination. It is not the same as a do-not-drink or do-not-use notice. Boiling does not remove chemical contamination, so the exact wording matters.",
+      "categoryId": "water",
+      "tags": [
+        "water",
+        "boil water notice",
+        "drinking water",
+        "contamination",
+        "hygiene"
+      ],
+      "steps": [
+        "Read the full notice from your water supplier or local authority and follow its exact instructions.",
+        "If told to boil, bring the water to a rolling boil before using it for drinking, brushing teeth, making ice, preparing food or cleaning feeding equipment.",
+        "Allow boiled water to cool naturally.",
+        "Store it in a clean, covered container in the fridge.",
+        "Discard boiled water that has not been used within 24 hours, as directed by the Drinking Water Inspectorate.",
+        "If the notice says do not drink or do not use the water, use a safe alternative supply and follow the supplier's instructions."
+      ],
+      "equipment": [
+        "Kettle or suitable pan",
+        "Clean covered storage container",
+        "Refrigerator or suitable cold storage"
+      ],
+      "commonMistakes": [
+        "Treating every water notice as a boil-water notice.",
+        "Assuming boiling removes chemicals or other non-microbial contaminants.",
+        "Using stored boiled water beyond the advised period."
+      ],
+      "dangers": [
+        "Boiling water can cause serious scalds.",
+        "A do-not-drink or do-not-use notice requires different action from a boil-water notice."
+      ],
+      "stopAndGetHelp": "If the notice is unclear, contact the water supplier or local authority. If you suspect chemical contamination, do not rely on boiling; use an alternative supply and follow official advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; follow the issuing water supplier or local authority",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "dwi-boil-water"
+      ]
+    },
+    {
+      "id": "unexpected-cold-water-entry",
+      "title": "Unexpected fall into cold water",
+      "summary": "Control breathing and float first after an unexpected fall into cold water.",
+      "body": "Cold-water shock can cause an involuntary gasp and panic. The RNLI advises not trying to swim immediately. First focus on staying afloat and regaining control of breathing.",
+      "categoryId": "coast",
+      "tags": [
+        "cold water",
+        "water safety",
+        "coast",
+        "drowning",
+        "float to live"
+      ],
+      "steps": [
+        "Try to stay calm and give yourself time to control your breathing; do not immediately try to swim.",
+        "Tilt your head back with ears submerged and relax as much as possible.",
+        "Use your hands to help you stay afloat; spread your arms and legs to improve stability.",
+        "Hold on to something buoyant if it is within reach.",
+        "Once your breathing is controlled, call for help and move towards safety only if you are able."
+      ],
+      "equipment": [
+        "Suitable personal flotation device when undertaking water activities",
+        "Waterproof means of calling for help when appropriate"
+      ],
+      "commonMistakes": [
+        "Trying to swim hard immediately after falling in.",
+        "Panic-driven movements that waste energy.",
+        "Entering the water to rescue another person."
+      ],
+      "dangers": [
+        "Cold water can cause gasping, panic and rapid loss of useful movement.",
+        "Fatigue can develop quickly.",
+        "A rescuer entering the water can become another casualty."
+      ],
+      "stopAndGetHelp": "If someone is in trouble in the water, call 999 or 112 and ask for the Coastguard. Do not enter the water yourself; throw flotation or a line if it is safe.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK coast and open-water safety",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "rnli-water-risks"
+      ]
+    },
+    {
+      "id": "mountain-rescue-callout",
+      "title": "Calling Mountain Rescue in England and Wales",
+      "summary": "How to request Mountain Rescue and what information to prepare during a hill or mountain emergency.",
+      "body": "In England and Wales, Mountain Rescue is contacted through the police via the emergency number. Give clear location and casualty details, then follow the rescue team's instructions.",
+      "categoryId": "emergencies",
+      "tags": [
+        "mountain rescue",
+        "lost",
+        "999",
+        "112",
+        "emergency",
+        "grid reference"
+      ],
+      "steps": [
+        "Dial 999 or 112 and ask for Police, then ask for Mountain Rescue.",
+        "Give your location as accurately as possible, ideally with a map grid reference.",
+        "Describe what happened and the casualty's condition; give the number of people in the party and a callback number.",
+        "Keep your phone available and conserve its battery.",
+        "Stay where you are unless remaining there is unsafe or the rescue team instructs you to move.",
+        "If you need to call again, repeat the emergency request and location details."
+      ],
+      "equipment": [
+        "Map and compass",
+        "Charged mobile phone",
+        "Power bank",
+        "Torch or head torch",
+        "Whistle"
+      ],
+      "commonMistakes": [
+        "Calling the wrong service without specifying Police then Mountain Rescue.",
+        "Giving an imprecise location when a grid reference or clear landmark is available.",
+        "Moving away from the reported location without telling the rescue team."
+      ],
+      "dangers": [
+        "Poor signal and low battery can delay communication.",
+        "Weather, darkness and terrain can make self-relocation more dangerous."
+      ],
+      "stopAndGetHelp": "Call 999 or 112 and ask for Police then Mountain Rescue when there is an emergency in the hills or mountains. Follow the call handler and rescue team's instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England and Wales",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "mountain-rescue-safety"
+      ]
+    },
+    {
+      "id": "lightning-outdoors",
+      "title": "Caught outdoors in lightning",
+      "summary": "Reduce exposure to lightning by seeking enclosed shelter and leaving exposed high ground.",
+      "body": "Lightning can strike people outdoors, especially during exposed activities. The safest choice is to avoid being outside during thunderstorms and to seek a safe enclosed shelter when thunder is heard.",
+      "categoryId": "weather",
+      "tags": [
+        "lightning",
+        "thunderstorm",
+        "weather",
+        "mountain safety"
+      ],
+      "steps": [
+        "Check the forecast before outdoor or water activities and postpone or leave exposed areas when thunderstorms are forecast.",
+        "If you hear thunder outdoors, seek a safe enclosed shelter such as a substantial building or a hard-topped vehicle.",
+        "If on open water, return to shore immediately if it is safe to do so.",
+        "Get off exposed high ground, ridges and peaks and move to lower ground.",
+        "If caught in the open with no shelter, move away from isolated trees, buildings and conductive objects; crouch low with minimal contact with the ground."
+      ],
+      "equipment": [
+        "Weather forecast before departure",
+        "Reliable means of receiving weather warnings"
+      ],
+      "commonMistakes": [
+        "Sheltering directly beneath an isolated tree.",
+        "Remaining on a ridge or summit during a thunderstorm.",
+        "Assuming a tent is a safe enclosed shelter."
+      ],
+      "dangers": [
+        "Lightning can cause fatal injury.",
+        "Exposed high ground and open water increase danger."
+      ],
+      "stopAndGetHelp": "If anyone is struck or injured, call 999 and follow emergency instructions. Do not approach a dangerous scene if it puts you at risk.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "metoffice-lightning"
+      ]
+    },
+    {
+      "id": "tent-fire-prevention",
+      "title": "Tent and campsite fire prevention",
+      "summary": "Prevent fires and carbon-monoxide risks around tents by keeping flames and fuel-burning appliances outside.",
+      "body": "Tents can ignite quickly and often have limited exits. Government outdoor-fire guidance for England says never cook inside a tent and keep cooking appliances away from tent walls and flammable materials.",
+      "categoryId": "campcraft",
+      "tags": [
+        "fire",
+        "tent",
+        "camping",
+        "stove",
+        "carbon monoxide"
+      ],
+      "steps": [
+        "Never cook inside a tent and never use candles in or near a tent.",
+        "Use cooking appliances outdoors, away from tent walls, long grass and other flammable materials.",
+        "Keep cooking appliances stable and attended; follow the manufacturer's instructions.",
+        "Keep flammable liquids and gas cylinders outside the tent and away from children.",
+        "Make sure everyone knows the exit route and how to get out quickly if the tent catches fire.",
+        "If a fire starts, get everyone out and call the fire and rescue service with the exact location."
+      ],
+      "equipment": [
+        "Torch or head torch instead of candles",
+        "Suitable carbon-monoxide alarm where relevant",
+        "Clear exit route"
+      ],
+      "commonMistakes": [
+        "Using a camping stove, barbecue, heater or lantern inside a tent.",
+        "Cooking beside tent fabric or long dry grass.",
+        "Blocking the tent exit with equipment."
+      ],
+      "dangers": [
+        "Tent fabric and equipment can catch fire rapidly.",
+        "Fuel-burning appliances can produce carbon monoxide.",
+        "Flammable liquids and gas cylinders increase fire risk."
+      ],
+      "stopAndGetHelp": "If a fire is spreading or anyone is in danger, evacuate immediately and call 999. Do not re-enter a burning tent to retrieve equipment.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England; check local rules and fire-service advice elsewhere in the UK",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-outdoor-fire"
+      ]
+    },
+    {
+      "id": "suspected-poisoning",
+      "title": "Suspected poisoning: immediate response",
+      "summary": "Get medical advice immediately if someone may have swallowed, touched or breathed in a harmful substance.",
+      "body": "Poisoning can involve medicines, household chemicals, plants, mushrooms or other harmful substances. Symptoms may take hours or days to appear, so do not wait for symptoms before seeking advice.",
+      "categoryId": "first-aid",
+      "tags": [
+        "poisoning",
+        "toxic plants",
+        "mushrooms",
+        "chemicals",
+        "first aid"
+      ],
+      "steps": [
+        "If someone may have swallowed, touched or breathed in a harmful substance, call 999 or go to A&E immediately, following NHS advice. Do not wait for symptoms.",
+        "If the exposure is uncertain and you do not know whether the substance is harmful, call NHS 111 for urgent advice.",
+        "Do not try to make the person vomit and do not give them food or drink unless a medical professional tells you to.",
+        "Keep the packaging, container or details of the suspected substance for medical staff, if safe to do so.",
+        "Monitor their breathing and responsiveness. If they become unresponsive or are not breathing normally, tell the 999 call handler and follow their instructions."
+      ],
+      "equipment": [
+        "Original packaging or a photograph of the suspected substance, if safe to obtain"
+      ],
+      "commonMistakes": [
+        "Waiting for symptoms before seeking help after a possible harmful exposure.",
+        "Trying to make the person vomit.",
+        "Giving food, drink or home remedies without medical instruction.",
+        "Assuming a small amount or brief exposure is automatically harmless."
+      ],
+      "dangers": [
+        "Symptoms can be delayed for hours or days.",
+        "Some substances can cause life-threatening breathing problems, seizures or loss of consciousness."
+      ],
+      "stopAndGetHelp": "Call 999 or go to A&E if someone may have swallowed, touched or breathed in a harmful substance, or has severe symptoms. If you are unsure whether a substance is harmful, call NHS 111. Do not wait for symptoms or induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-poisoning"
+      ]
+    },
+    {
+      "id": "burns-first-response",
+      "title": "Burns and scalds: first response",
+      "summary": "First make the scene safe, then use the correct cooling or decontamination steps for heat, chemical or electrical injuries.",
+      "body": "Burns need immediate first aid, but the correct response depends on the cause. Heat and scald burns need 20 minutes of cool running water. Chemical burns need prolonged irrigation and urgent emergency help. Electrical incidents are dangerous until the power source is isolated.",
+      "categoryId": "first-aid",
+      "tags": [
+        "burns",
+        "scalds",
+        "first aid",
+        "hot water",
+        "fire"
+      ],
+      "steps": [
+        "Make sure the scene is safe. For an electrical injury, never touch the person while they may still be in contact with electricity. Isolate the power only if you can do so safely; never approach high-voltage cables or equipment.",
+        "For a heat or scald burn, cool the area under cool running water for 20 minutes as soon as possible, ideally within 3 hours.",
+        "For a chemical burn, call 999 immediately. Protect yourself from the substance; wear suitable gloves if available and safe. Remove contaminated clothing if this can be done safely, brush dry chemicals off the skin, then rinse with cool or lukewarm running water for about 1 hour.",
+        "Do not try to neutralise a chemical with another chemical, and do not put creams, oils or other substances on the burn.",
+        "Remove nearby clothing or jewellery if it is not stuck to the skin. Do not pull away anything stuck to the burn.",
+        "After cooling, lay cling film loosely over an ordinary heat or scald burn if appropriate; do not wrap it around a limb.",
+        "Call 999 or go to A&E for very large or deep burns, burns to the face, genitals or bottom, and all chemical or electrical burns. Follow the emergency call handler's instructions."
+      ],
+      "equipment": [
+        "Access to cool running water",
+        "Clean cling film for loose covering after cooling"
+      ],
+      "commonMistakes": [
+        "Using ice, butter, oils or creams on a fresh burn.",
+        "Pulling away clothing stuck to the skin.",
+        "Wrapping cling film tightly around a limb.",
+        "Touching a person who may still be in contact with a live electrical source.",
+        "Trying to neutralise a chemical burn or delaying irrigation while looking for a product."
+      ],
+      "dangers": [
+        "Large, deep, chemical and electrical burns can cause serious injury.",
+        "Electrical current can remain dangerous until the supply is isolated; high-voltage equipment must not be approached.",
+        "Chemical burns can continue damaging tissue until the substance is removed by prolonged irrigation.",
+        "Cooling or decontamination must not delay calling 999 for a chemical, electrical or otherwise severe burn."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for any chemical or electrical burn, very large or deep burn, or burn to the face, genitals or bottom. For chemical exposure, start safe irrigation while help is arranged. Never approach a live electrical or high-voltage hazard. Use NHS 111 if unsure about a less serious heat or scald burn.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-burns",
+        "nhs-chemical-burns",
+        "sja-electric-shock"
+      ]
+    },
+    {
+      "id": "camp-food-hygiene",
+      "title": "Food hygiene at camp",
+      "summary": "Keep high-risk food cold, separate raw and ready-to-eat foods, cook thoroughly and clean equipment.",
+      "body": "Outdoor storage can make food spoil more quickly. Follow the Food Standards Agency's four food-safety principles: cleaning, chilling, cooking and avoiding cross-contamination.",
+      "categoryId": "food",
+      "tags": [
+        "food safety",
+        "camping",
+        "hygiene",
+        "cooking",
+        "chilling"
+      ],
+      "steps": [
+        "Plan meals around the food you can safely keep chilled; use a cool box and ice packs for foods that normally need refrigeration.",
+        "Keep chilled foods below 5°C; use an insulated cool box and ice packs, and check the temperature where possible. Do not assume a cool box will stay cold for an extended trip.",
+        "Keep raw foods separate from ready-to-eat foods and use sealed containers to prevent cross-contamination.",
+        "Wash hands before and after handling food, especially raw meat and dirty equipment.",
+        "Cook food thoroughly; meat should be steaming hot throughout and cooked according to reliable food-safety guidance.",
+        "Clean utensils and cooking surfaces with safe water and washing-up liquid."
+      ],
+      "equipment": [
+        "Insulated cool box",
+        "Ice packs",
+        "Food thermometer where practical",
+        "Separate sealed containers",
+        "Clean water and washing-up supplies"
+      ],
+      "commonMistakes": [
+        "Leaving cooked meat, eggs or dairy warm for long periods.",
+        "Putting raw meat beside ready-to-eat food.",
+        "Assuming charred food is cooked safely inside.",
+        "Using dirty water or equipment to prepare food."
+      ],
+      "dangers": [
+        "Food poisoning can result from poor chilling, undercooking and cross-contamination.",
+        "A cool box may not maintain safe temperatures for a long trip."
+      ],
+      "stopAndGetHelp": "Discard food that has been stored unsafely or may be contaminated. Seek medical advice if someone becomes seriously unwell after eating.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; follow current Food Standards Agency guidance",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-food-poisoning",
+        "fsa-cooking"
+      ]
+    },
+    {
+      "id": "route-planning-before-walk",
+      "title": "Plan a walk before setting out",
+      "summary": "Prepare a route, carry map and compass, check conditions and leave your plan with someone reliable.",
+      "body": "Ordnance Survey and Mountain Rescue guidance emphasise route planning, suitable equipment, weather checks, a charged phone and telling someone where you are going.",
+      "categoryId": "navigation",
+      "tags": [
+        "navigation",
+        "map",
+        "compass",
+        "route planning",
+        "mountain safety"
+      ],
+      "steps": [
+        "Choose a route that matches the group's ability, daylight, terrain and season.",
+        "Plot the route on a suitable map and identify key features, escape options and a realistic return time.",
+        "Carry a map and compass and know how to use them; do not rely on a phone or GPS alone.",
+        "Check the latest weather forecast and sunset time before leaving; mountain conditions can differ sharply from valley conditions.",
+        "Tell a reliable person your route, start and finish points and expected return time; update them if plans change.",
+        "Carry suitable clothing, footwear, food, water, a charged phone, torch and basic first-aid supplies."
+      ],
+      "equipment": [
+        "Suitable paper map",
+        "Compass",
+        "Charged mobile phone",
+        "Torch or head torch and spare batteries",
+        "Weather-appropriate clothing and footwear",
+        "Food and water",
+        "Basic first-aid kit"
+      ],
+      "commonMistakes": [
+        "Starting too late for the route and available daylight.",
+        "Relying only on a phone or GPS.",
+        "Failing to tell anyone the intended route and return time.",
+        "Ignoring a deteriorating forecast."
+      ],
+      "dangers": [
+        "Weather, visibility and ground conditions can change quickly.",
+        "A navigation error can lead into steep, boggy or exposed terrain."
+      ],
+      "stopAndGetHelp": "Turn back or choose a safer route if conditions exceed the group's ability. If an emergency occurs in the mountains in England or Wales, call 999 or 112 and ask for Police then Mountain Rescue.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "Great Britain; Mountain Rescue call-out procedure stated here applies to England and Wales",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "os-map-reading",
+        "mountain-rescue-safety",
+        "metoffice-mountain"
+      ]
+    },
+    {
+      "id": "mountain-forecast-reading",
+      "title": "Read a UK mountain forecast",
+      "summary": "Check mountain-specific forecasts for wind, temperature, feels-like conditions, visibility and hazards before a hill day.",
+      "body": "Mountain weather can vary dramatically between valleys, ridges and summits. The Met Office provides specialist forecasts for UK mountain areas and describes hazards that may not be obvious from a low-level forecast.",
+      "categoryId": "weather",
+      "tags": [
+        "mountain weather",
+        "forecast",
+        "wind",
+        "visibility",
+        "hypothermia"
+      ],
+      "steps": [
+        "Check the Met Office mountain forecast for the exact mountain region, not only the general town forecast.",
+        "Review warnings and mountain hazards as well as wind speed, direction, gusts, temperature and feels-like temperature.",
+        "Check visibility, cloud and precipitation information in the forecast text.",
+        "Recheck the forecast on the day; mountain forecasts are updated and conditions can change.",
+        "Choose a lower-risk route or cancel if forecast conditions exceed the group's skills or equipment."
+      ],
+      "equipment": [
+        "Phone or device to check the forecast before departure",
+        "Map and compass",
+        "Weather-appropriate clothing"
+      ],
+      "commonMistakes": [
+        "Using a valley forecast as if it describes summit conditions.",
+        "Checking the forecast only several days before the trip.",
+        "Ignoring wind chill, visibility or freezing level."
+      ],
+      "dangers": [
+        "Strong winds, poor visibility, thunderstorms, heavy rain and severe chill can create serious mountain hazards.",
+        "Conditions can be worse at altitude than in nearby towns."
+      ],
+      "stopAndGetHelp": "Do not start or continue a route if the forecast or observed conditions exceed the group's capability. If conditions deteriorate, turn back or seek a safe route off the hill.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK mountain areas covered by Met Office specialist forecasts",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "metoffice-mountain"
+      ]
+    },
+    {
+      "id": "calling-999-or-112",
+      "title": "Calling 999 or 112",
+      "summary": "What to expect when calling the UK's emergency numbers and what information to give the call handler.",
+      "body": "999 and 112 are the UK's national emergency numbers. The call handler will ask which emergency service you need. Caller location information may be available, but you must still give a clear location for the incident.",
+      "categoryId": "emergencies",
+      "tags": [
+        "999",
+        "112",
+        "emergency call",
+        "ambulance",
+        "police",
+        "fire",
+        "coastguard"
+      ],
+      "steps": [
+        "Call 999 or 112 when someone is in immediate danger or needs an emergency response.",
+        "When the call handler answers, state which service you need: Police, Ambulance, Fire or Coastguard.",
+        "Give the exact incident location. Outdoors, provide a map grid reference, named path or road, nearby landmark and access details if known.",
+        "Explain what has happened, how many people are involved, any serious injuries and any immediate hazards.",
+        "Give a callback number if asked and stay on the line. Answer the questions and follow the call handler's instructions.",
+        "If a mobile call does not connect and it is safe to do so, move to a place with better signal and try 112."
+      ],
+      "equipment": [
+        "Charged mobile phone",
+        "Map or offline mapping with a grid reference when travelling outdoors"
+      ],
+      "commonMistakes": [
+        "Assuming the call handler automatically knows the exact location of the incident.",
+        "Giving only a broad area name when a precise location or grid reference is available.",
+        "Ending the call before the call handler says it is safe to do so."
+      ],
+      "dangers": [
+        "A vague or incorrect incident location can delay help.",
+        "A phone may have poor signal, low battery or be damaged during an incident."
+      ],
+      "stopAndGetHelp": "If there is immediate danger, call 999 or 112 now. Do not delay the call to gather equipment or perfect a grid reference; give the best location you have and update the call handler if it changes.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-emergency-numbers",
+        "be-ready-power"
+      ]
+    },
+    {
+      "id": "adult-cpr-and-aed",
+      "title": "Adult cardiac arrest: CPR and AED",
+      "summary": "Follow the 2025 Resuscitation Council UK adult basic life support sequence and the emergency call handler's instructions.",
+      "body": "This article covers adult basic life support only. If a person is unresponsive, call 999 immediately. The ambulance call handler can help you recognise cardiac arrest and guide CPR. Practical training is strongly recommended.",
+      "categoryId": "first-aid",
+      "tags": [
+        "CPR",
+        "cardiac arrest",
+        "AED",
+        "defibrillator",
+        "first aid",
+        "unresponsive"
+      ],
+      "steps": [
+        "Make sure the scene is safe to approach.",
+        "If an adult is unresponsive, call 999 immediately and ask for an ambulance. Put the phone on speaker if possible and send someone to find an AED.",
+        "While waiting for the call to be answered, assess whether breathing is normal. If the person is unresponsive with abnormal breathing, or you are unsure, follow the call handler and start CPR.",
+        "Place the heel of one hand in the centre of the chest, place the other hand on top and keep your arms straight.",
+        "Push hard and fast: 100 to 120 compressions per minute, to a depth of 5 to 6 cm. Allow the chest to come fully back up between compressions.",
+        "If you are not trained or willing to give rescue breaths, perform continuous chest compressions. If trained and able, use 30 compressions followed by 2 rescue breaths.",
+        "As soon as an AED arrives, switch it on and follow its spoken and visual instructions. Make sure nobody touches the person while the AED analyses or delivers a shock.",
+        "Continue CPR and follow the AED and call-handler instructions until help takes over or the person shows clear signs of life."
+      ],
+      "equipment": [
+        "Mobile phone",
+        "Public-access AED if available"
+      ],
+      "commonMistakes": [
+        "Delaying the 999 call while trying to diagnose the cause.",
+        "Stopping compressions for long periods.",
+        "Being afraid to use an AED; follow its prompts and do not touch the person during analysis or shock."
+      ],
+      "dangers": [
+        "Only approach if the scene is safe.",
+        "This article is for adults; children and infants require age-specific guidance.",
+        "CPR is physically demanding. If another rescuer is present, take turns when practical while keeping interruptions short."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for an unresponsive person. Put the phone on speaker and follow the ambulance call handler. This quick reference does not replace recognised first-aid training.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide adult basic life support guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "resus-adult-bls-2025",
+        "govuk-emergency-numbers"
+      ]
+    },
+    {
+      "id": "heat-exhaustion-heatstroke",
+      "title": "Heat exhaustion and heatstroke",
+      "summary": "Cool someone with heat exhaustion and recognise heatstroke as a medical emergency.",
+      "body": "Heat exhaustion can progress to heatstroke. NHS guidance recommends moving the person somewhere cool, removing unnecessary clothing, giving cool fluids only if they are fully awake and able to swallow, and actively cooling the skin. They should begin to improve within 30 minutes. Suspected heatstroke needs immediate emergency help.",
+      "categoryId": "first-aid",
+      "tags": [
+        "heat",
+        "heat exhaustion",
+        "heatstroke",
+        "hot weather",
+        "dehydration"
+      ],
+      "steps": [
+        "Move the person to a cool place, such as shade or a cool indoor room.",
+        "Remove unnecessary clothing, such as a jacket or extra layers.",
+        "If they are fully awake and can swallow safely, give cool water or a suitable rehydration drink. Do not give drinks to someone who is confused, unconscious or unable to swallow.",
+        "Cool their skin with cool water by spraying or sponging, and fan them. Cold packs wrapped in cloth may be placed at the neck or under the armpits.",
+        "Stay with the person and watch for worsening symptoms.",
+        "Call 999 immediately if they show signs of heatstroke, including confusion, poor coordination, a seizure, loss of consciousness, very high temperature, or hot skin that is not sweating.",
+        "If they have not started to improve after 30 minutes of cooling, call 999. If symptoms are difficult to manage or worsening before then, seek urgent NHS 111 advice."
+      ],
+      "equipment": [
+        "Cool water",
+        "Shade or a cool indoor space",
+        "Fan or cloth for cooling"
+      ],
+      "commonMistakes": [
+        "Leaving the person alone.",
+        "Assuming heavy sweating rules out heatstroke.",
+        "Giving drinks to someone who is confused, unconscious or unable to swallow safely.",
+        "Delaying 999 when heatstroke is suspected.",
+        "Driving someone with suspected heatstroke to A&E instead of calling 999."
+      ],
+      "dangers": [
+        "Heatstroke can be life-threatening and requires immediate emergency help.",
+        "Confusion, poor coordination, seizures and loss of consciousness are emergency warning signs."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for suspected heatstroke, including confusion, poor coordination, seizure, loss of consciousness, or no improvement after 30 minutes of cooling. Continue active cooling while waiting for help. If heat-exhaustion symptoms are difficult to manage or are worsening, contact NHS 111 urgently.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-heat"
+      ]
+    },
+    {
+      "id": "tick-bite-and-lyme",
+      "title": "Tick bites and Lyme disease prevention",
+      "summary": "Reduce tick bites, remove an attached tick safely and know when to seek medical advice.",
+      "body": "Ticks are found across the UK in woodland, long grass and some parks and gardens. Not all ticks carry Lyme disease, but prompt safe removal and awareness of symptoms are important.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "ticks",
+        "Lyme disease",
+        "woodland",
+        "bites",
+        "wildlife"
+      ],
+      "steps": [
+        "Reduce exposure by covering skin, tucking trousers into socks, using a suitable insect repellent and staying on clear paths where practical.",
+        "Check skin, clothing, children and pets after time outdoors, especially around skin folds and hairlines.",
+        "If a tick is attached, use fine-tipped tweezers or a tick-removal tool and grasp it as close to the skin as possible.",
+        "Pull slowly upwards without squeezing or crushing the tick.",
+        "After removal, clean the bite with antiseptic or soap and water.",
+        "Watch for a spreading circular or oval rash and flu-like symptoms in the weeks after a bite; a rash may appear up to 3 months later.",
+        "Seek an urgent GP appointment or NHS 111 advice if you develop a possible Lyme rash or flu-like symptoms after a tick bite or time in a tick area."
+      ],
+      "equipment": [
+        "Fine-tipped tweezers or a tick-removal tool",
+        "Antiseptic or soap and clean water"
+      ],
+      "commonMistakes": [
+        "Squeezing or crushing the tick.",
+        "Ignoring a spreading rash or flu-like illness because the bite was not noticed at the time.",
+        "Assuming every tick carries Lyme disease or that every bite causes infection."
+      ],
+      "dangers": [
+        "Lyme disease is easier to treat when diagnosed early.",
+        "A rash may be less obvious on darker skin and may resemble a bruise."
+      ],
+      "stopAndGetHelp": "Seek urgent GP or NHS 111 advice if you develop a spreading round or oval rash, or flu-like symptoms after a tick bite or possible exposure.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide NHS guidance",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-lyme"
+      ]
+    },
+    {
+      "id": "power-cut-preparation-response",
+      "title": "Preparing for and managing a power cut",
+      "summary": "Keep essential supplies, communication and household safety covered before and during a power outage.",
+      "body": "A power cut can also affect heating, internet, mobile signal and sometimes water supply. The UK Be Ready campaign recommends preparing for several days without normal services.",
+      "categoryId": "home-resilience",
+      "tags": [
+        "power cut",
+        "electricity",
+        "emergency planning",
+        "radio",
+        "105",
+        "resilience"
+      ],
+      "steps": [
+        "Keep battery or wind-up torches and spare batteries; they are safer than candles and preserve phone battery.",
+        "Prepare at least 3 days of drinking water and non-perishable food that does not need cooking; include pet food and any essential baby supplies.",
+        "Keep a battery or wind-up radio, a charged power bank and a written list of important contacts and local radio frequencies.",
+        "Write down the power-cut reporting number: 105 in England, Scotland and Wales; 03457 643643 in Northern Ireland.",
+        "During an outage, keep away from fallen power lines and damaged electrical equipment. High-voltage electricity can jump gaps.",
+        "Switch off appliances that could become dangerous when power returns. Keep warm with layers and blankets and check on neighbours if safe.",
+        "Keep fridge and freezer doors closed. Follow Food Standards Agency guidance before deciding whether chilled or frozen food is safe.",
+        "If there is a life-threatening emergency, call 999 or 112 from a mobile; emergency calls may roam onto other available networks."
+      ],
+      "equipment": [
+        "Battery or wind-up torch and spare batteries",
+        "Battery or wind-up radio",
+        "Power bank and charging cable",
+        "Drinking water and non-perishable food",
+        "Written emergency contacts",
+        "Pet food and essential medication"
+      ],
+      "commonMistakes": [
+        "Using a phone torch as the only light and draining its battery.",
+        "Opening fridge and freezer doors repeatedly.",
+        "Using outdoor-only camping stoves or barbecues indoors.",
+        "Assuming a digital landline or home internet phone will work during a power cut."
+      ],
+      "dangers": [
+        "Downed power lines and damaged electrical equipment can be lethal.",
+        "Indoor use of outdoor fuel-burning appliances can cause carbon-monoxide poisoning.",
+        "Mobile signal and mains water may also be disrupted."
+      ],
+      "stopAndGetHelp": "Stay away from electrical hazards. Call 999 or 112 for immediate danger. Report power cuts using the correct regional number and follow the electricity network operator's advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide; reporting numbers differ in Northern Ireland",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "be-ready-power"
+      ]
+    },
+    {
+      "id": "power-cut-food-safety",
+      "title": "Food safety during a power cut",
+      "summary": "Use time and temperature carefully to decide what chilled and frozen food can safely be kept after an outage.",
+      "body": "Food Standards Agency advice for domestic settings in England, Northern Ireland and Wales gives practical time and temperature limits. These are estimates: appliance type, room temperature and how often doors are opened all matter.",
+      "categoryId": "food",
+      "tags": [
+        "power cut",
+        "food safety",
+        "fridge",
+        "freezer",
+        "temperature",
+        "food poisoning"
+      ],
+      "steps": [
+        "Keep fridge and freezer doors closed as much as possible.",
+        "If the power outage lasts less than 4 hours, chilled and frozen food is unlikely to be affected, according to the FSA guidance.",
+        "A fridge may stay cold for up to 4 hours. A full freezer may stay frozen for up to 48 hours, or a half-full freezer for about 24 hours; these are estimates, not guarantees.",
+        "Use a fridge thermometer if available. Under normal conditions, keep a fridge at 5°C or below; during a power cut, FSA guidance allows food to remain chilled below 8°C.",
+        "If the fridge reaches 8°C or above, eat food that normally needs refrigeration within 4 hours, then discard it if not used.",
+        "Keep raw and cooked foods separate, wash hands and surfaces, and cook food thoroughly if preparing meals during an outage.",
+        "When in doubt about the safety of high-risk food, discard it rather than taste-testing it."
+      ],
+      "equipment": [
+        "Fridge thermometer",
+        "Cool box and ice packs if suitable",
+        "Clean containers"
+      ],
+      "commonMistakes": [
+        "Opening the fridge or freezer repeatedly to check food.",
+        "Assuming the freezer time estimates are guaranteed.",
+        "Tasting food to decide whether it is safe."
+      ],
+      "dangers": [
+        "Food can become unsafe without looking or smelling spoiled.",
+        "This linked FSA guidance applies to England, Northern Ireland and Wales; check the relevant food-safety authority for Scotland."
+      ],
+      "stopAndGetHelp": "Discard food that has been held outside safe temperature limits or may be contaminated. Seek medical advice if someone becomes seriously unwell after eating.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England, Northern Ireland and Wales; check Food Standards Scotland guidance for Scotland",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-power-cut-food"
+      ]
+    },
+    {
+      "id": "motorway-breakdown-safety",
+      "title": "Motorway breakdown: keep people safe",
+      "summary": "What to do if a vehicle breaks down on an English motorway or National Highways road.",
+      "body": "The safest option is to leave the carriageway at the next exit or reach a service area if possible. If you cannot, prioritise getting as far left as possible and protecting passengers from traffic.",
+      "categoryId": "vehicle",
+      "tags": [
+        "vehicle",
+        "motorway",
+        "breakdown",
+        "roadside",
+        "National Highways",
+        "emergency"
+      ],
+      "steps": [
+        "If possible, leave the motorway at the next exit or pull into a service area. Do not stop in a live lane unless unavoidable.",
+        "If you cannot leave, move left into an emergency area, lay-by or hard shoulder if possible. Stop as far left as possible and switch on hazard lights.",
+        "If it is safe to exit, leave on the side furthest from traffic, put on high-visibility clothing if it is within easy reach and get behind a safety barrier where available.",
+        "Keep passengers away from the carriageway and do not return to the vehicle or attempt repairs beside moving traffic.",
+        "Do not place a warning triangle on the carriageway.",
+        "If you cannot exit safely, stay in the vehicle with seatbelts on and hazard lights on, then call 999 and ask for Police.",
+        "If stopped in an emergency area, do not leave it until you have spoken to National Highways. Use the emergency telephone or call National Highways for assistance."
+      ],
+      "equipment": [
+        "High-visibility clothing stored within easy reach",
+        "Charged mobile phone",
+        "Warm clothing",
+        "Torch",
+        "Breakdown recovery details"
+      ],
+      "commonMistakes": [
+        "Standing between the vehicle and moving traffic.",
+        "Attempting roadside repairs in a live lane or beside fast traffic.",
+        "Returning to the vehicle to retrieve belongings.",
+        "Leaving an emergency area without speaking to National Highways."
+      ],
+      "dangers": [
+        "Fast-moving traffic can make a roadside stop immediately life-threatening.",
+        "A vehicle may be struck and pushed into people standing nearby."
+      ],
+      "stopAndGetHelp": "If you cannot get to a place of relative safety or cannot exit the vehicle safely, stay belted in with hazards on and call 999. This article covers the National Highways network in England; follow the relevant road authority's instructions elsewhere.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England — National Highways network",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "national-highways-breakdown"
+      ]
+    },
+    {
+      "id": "mountain-whistle-distress-signal",
+      "title": "Using a whistle to signal for mountain rescue",
+      "summary": "Use the Mountain Rescue England and Wales recommended whistle pattern to make your location easier to find.",
+      "body": "A whistle carries farther than shouting and uses less energy. Mountain Rescue England and Wales recommends a repeated pattern of six long blasts in one minute.",
+      "categoryId": "signalling",
+      "tags": [
+        "whistle",
+        "signalling",
+        "mountain rescue",
+        "distress",
+        "rescue"
+      ],
+      "steps": [
+        "Stay in a safe position and call 999 or 112, asking for Police then Mountain Rescue, if there is an emergency.",
+        "Give your location and details to the call handler; do not move from the reported position unless it is unsafe or the rescue team instructs you.",
+        "Blow six good long whistle blasts within one minute.",
+        "Stop for one minute, then repeat the six-blast pattern.",
+        "Continue the pattern until someone reaches you. Do not stop just because you hear a reply.",
+        "Use a torch to signal as well when visibility is poor or darkness falls."
+      ],
+      "equipment": [
+        "Whistle attached where it can be reached quickly",
+        "Torch or head torch",
+        "Charged mobile phone"
+      ],
+      "commonMistakes": [
+        "Shouting continuously and exhausting yourself.",
+        "Using an inconsistent signal pattern.",
+        "Moving away from the location given to Mountain Rescue without updating them."
+      ],
+      "dangers": [
+        "Cold, darkness, weather and terrain can make a casualty harder to locate.",
+        "A reply may be difficult to identify; continue the pattern until help reaches you."
+      ],
+      "stopAndGetHelp": "Call 999 or 112 and ask for Police then Mountain Rescue in an emergency in England or Wales. The whistle is a locating aid, not a replacement for calling for help.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England and Wales",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "mountain-rescue-safety"
+      ]
+    },
+    {
+      "id": "dehydration-recognition-response",
+      "title": "Recognising and responding to dehydration",
+      "summary": "Recognise common dehydration signs, replace fluids safely and know when urgent medical help is needed.",
+      "body": "Dehydration happens when the body loses more fluid than it takes in. Babies, children and older adults are at greater risk. Heat, exertion, vomiting and diarrhoea can increase fluid loss.",
+      "categoryId": "first-aid",
+      "tags": [
+        "dehydration",
+        "water",
+        "heat",
+        "illness",
+        "fluid loss"
+      ],
+      "steps": [
+        "Look for thirst, headache, light-headedness, dark strong-smelling urine, passing urine less often, tiredness and a dry mouth.",
+        "If the person is awake and able to swallow, encourage fluids. If they feel sick, start with small sips and gradually drink more.",
+        "If vomiting or diarrhoea has caused fluid loss, ask a pharmacist about an oral rehydration solution to replace salts and minerals.",
+        "For prevention, drink regularly during the day and increase fluid intake during heat, exercise, vomiting or diarrhoea.",
+        "Seek urgent GP or NHS 111 advice for unusual tiredness, persistent dizziness on standing, reduced urination or a fast heart rate.",
+        "Call 999 or go to A&E if there are signs of shock such as confusion, difficulty breathing, cold skin or blue, grey, pale or blotchy skin."
+      ],
+      "equipment": [
+        "Safe drinking water",
+        "Oral rehydration solution when advised by a pharmacist"
+      ],
+      "commonMistakes": [
+        "Ignoring reduced urination or persistent dizziness.",
+        "Trying to make someone who is drowsy or unable to swallow drink.",
+        "Assuming every case can be managed with water alone."
+      ],
+      "dangers": [
+        "Severe dehydration can lead to shock.",
+        "Babies, children and older adults can deteriorate more quickly."
+      ],
+      "stopAndGetHelp": "Use NHS 111 for urgent advice when serious dehydration is suspected. Call 999 for confusion, difficulty breathing, cold skin or other signs of shock.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-dehydration"
+      ]
+    },
+    {
+      "id": "anaphylaxis-emergency-response",
+      "title": "Anaphylaxis: life-threatening allergic reaction",
+      "summary": "Recognise a severe allergic reaction, use a prescribed adrenaline auto-injector and call 999 immediately.",
+      "body": "Anaphylaxis is a life-threatening allergic reaction that can develop quickly, including after food, medicines or insect stings. Do not wait for every symptom to appear.",
+      "categoryId": "first-aid",
+      "tags": [
+        "anaphylaxis",
+        "allergy",
+        "adrenaline",
+        "EpiPen",
+        "insect sting",
+        "emergency"
+      ],
+      "steps": [
+        "Suspect anaphylaxis if there is sudden swelling of the lips, mouth, tongue or throat, breathing difficulty, throat tightness, faintness, confusion or collapse.",
+        "Use the person's adrenaline auto-injector immediately if they have one. Follow the instructions for that device.",
+        "Call 999 and say you suspect anaphylaxis.",
+        "Help the person lie down. They can raise their legs; if breathing is difficult, raise the shoulders or sit up slowly. If pregnant, they should lie on their left side.",
+        "Do not let the person stand or walk, even if they start to feel better.",
+        "If symptoms have not improved after 5 minutes and a second auto-injector is available, use it as directed.",
+        "Stay with the person and follow the emergency call handler's instructions until help arrives."
+      ],
+      "equipment": [
+        "The person's prescribed adrenaline auto-injector or injectors",
+        "Emergency contact and allergy information if readily available"
+      ],
+      "commonMistakes": [
+        "Delaying adrenaline or the 999 call.",
+        "Allowing the person to stand or walk.",
+        "Assuming symptoms are resolved because the person feels temporarily better."
+      ],
+      "dangers": [
+        "Anaphylaxis can cause life-threatening breathing and circulation problems within minutes.",
+        "Hospital treatment is required even if symptoms improve after adrenaline."
+      ],
+      "stopAndGetHelp": "Call 999 immediately if anaphylaxis is suspected. Use the person's prescribed auto-injector and follow the NHS and emergency call handler's instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-anaphylaxis",
+        "govuk-emergency-numbers"
+      ]
+    },
+    {
+      "id": "uk-snake-bite-response",
+      "title": "UK snake bite: immediate response",
+      "summary": "Treat every suspected UK snake bite as needing urgent medical assessment; the adder is the UK's only venomous wild snake.",
+      "body": "Most UK snake bites are not serious, but NHS advice is to get all snake bites checked as soon as possible. Do not approach, catch or kill the snake.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "adder",
+        "snake bite",
+        "wildlife",
+        "venom",
+        "first aid"
+      ],
+      "steps": [
+        "Call 999 or go to A&E immediately if you think someone has been bitten by a snake. Do not drive yourself to A&E.",
+        "Keep the bitten body part as still as possible and stay calm.",
+        "Lie in the recovery position if you can.",
+        "Remove jewellery and loosen clothing near the bite in case swelling develops.",
+        "If safe from a distance, remember the snake's colour and pattern or take a photograph without approaching it.",
+        "Follow emergency medical advice and bring a list of medicines if available."
+      ],
+      "equipment": [
+        "Mobile phone",
+        "Medication list if readily available"
+      ],
+      "commonMistakes": [
+        "Trying to catch, kill or handle the snake.",
+        "Cutting or sucking the bite.",
+        "Tying a tourniquet or anything tight around the limb.",
+        "Taking aspirin or ibuprofen after a snake bite."
+      ],
+      "dangers": [
+        "The adder is the only venomous snake found in the wild in the UK.",
+        "Swelling and other effects can develop; hospital assessment is required."
+      ],
+      "stopAndGetHelp": "Call 999 or go to A&E immediately for any suspected UK snake bite. Do not drive yourself. Keep the affected area still and follow emergency instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide NHS guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-snake-bites"
+      ]
+    },
+    {
+      "id": "insect-stings-and-allergy",
+      "title": "Insect stings: basic care and red flags",
+      "summary": "Remove a bee stinger safely, clean the area and recognise signs of a serious allergic reaction.",
+      "body": "Most insect bites and stings are not serious, but some cause infection or a severe allergic reaction. The response depends on the symptoms.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "bee sting",
+        "wasp sting",
+        "insect bite",
+        "allergy",
+        "anaphylaxis"
+      ],
+      "steps": [
+        "If a bee stinger remains in the skin, scrape it sideways with a fingernail or the edge of a bank card. Do not pull it out with tweezers.",
+        "Wash the area with soap and water.",
+        "For swelling, apply a cold pack wrapped in cloth or a clean cloth soaked in cold water for at least 20 minutes.",
+        "Keep the affected area raised if possible and avoid scratching.",
+        "Seek urgent NHS 111 advice if the sting is in the mouth, throat or near the eyes, if there are multiple stings, or if symptoms worsen.",
+        "Call 999 immediately for sudden swelling of the lips, mouth, tongue or throat, breathing difficulty, throat tightness, collapse or other signs of anaphylaxis."
+      ],
+      "equipment": [
+        "Clean water and soap",
+        "Cold pack or clean cloth",
+        "Bank card or fingernail to scrape out a bee stinger"
+      ],
+      "commonMistakes": [
+        "Pulling a bee stinger out with tweezers and squeezing the venom sac.",
+        "Scratching the area until the skin breaks.",
+        "Treating breathing difficulty or throat swelling as a routine sting."
+      ],
+      "dangers": [
+        "A severe allergic reaction can develop rapidly.",
+        "Stings in the mouth or throat can cause dangerous swelling."
+      ],
+      "stopAndGetHelp": "Call 999 for signs of anaphylaxis. Use NHS 111 urgently for a sting in the mouth, throat or near the eyes, multiple stings or worsening symptoms.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; check local service arrangements",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-insect-bites",
+        "nhs-anaphylaxis"
+      ]
+    },
+    {
+      "id": "wild-foraging-safety",
+      "title": "Wild plants, berries and fungi: foraging safety",
+      "summary": "Do not eat wild plants, berries or fungi unless you can identify them with certainty using reliable specialist guidance.",
+      "body": "Some UK wild plants, berries and fungi are poisonous, and some dangerous species resemble edible ones. Pictures and short descriptions are not a safe identification method.",
+      "categoryId": "plants-wildlife",
+      "tags": [
+        "foraging",
+        "wild plants",
+        "berries",
+        "mushrooms",
+        "fungi",
+        "poisonous plants"
+      ],
+      "steps": [
+        "Do not eat any wild plant, berry or fungus unless you can identify the species with certainty using a reliable specialist field guide and appropriate expertise.",
+        "Never rely on an app, online picture, this article or a single visual feature to decide that a wild food is safe.",
+        "If uncertain, leave it where it grows. Do not taste-test an unknown plant or mushroom.",
+        "Check local rules and landowner permission before collecting anything. Some plants and fungi are protected and removal may be illegal.",
+        "Only consider collecting plentiful species when identification and permission are certain; leave enough for wildlife and regeneration.",
+        "If someone may have eaten a poisonous plant or fungus, seek medical advice immediately and follow the poisoning response guidance."
+      ],
+      "equipment": [
+        "A reliable specialist field guide for study, not as a guarantee of edibility",
+        "Permission to collect where required"
+      ],
+      "commonMistakes": [
+        "Assuming a berry is safe because birds eat it.",
+        "Assuming cooking makes a poisonous mushroom safe.",
+        "Relying on a phone photograph or AI identification.",
+        "Collecting rare or protected species."
+      ],
+      "dangers": [
+        "Some plant and fungal toxins can cause severe illness or delayed organ damage.",
+        "Symptoms of poisoning may be delayed for hours or days."
+      ],
+      "stopAndGetHelp": "If a potentially poisonous plant, berry or fungus has been eaten, seek medical advice immediately. Call 999 for serious symptoms and use the NHS poisoning guidance. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK-wide safety guidance; plant collection laws and access rules differ across the UK",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-foraging",
+        "nhs-poisoning"
+      ]
+    },
+    {
+      "id": "countryside-code-basics",
+      "title": "Countryside access and responsible fieldcraft",
+      "summary": "Respect local access rules, protect wildlife and property, and check route, weather and tide conditions before setting out.",
+      "body": "The Countryside Code provides visitor guidance for England and Wales. Scotland and Northern Ireland have separate access guidance, so do not assume the same rules apply everywhere.",
+      "categoryId": "navigation",
+      "tags": [
+        "countryside code",
+        "access",
+        "landowner permission",
+        "wild camping",
+        "wildlife",
+        "leave no trace"
+      ],
+      "steps": [
+        "Follow local signs and use marked paths unless wider access is clearly available.",
+        "Leave gates and property as you find them and do not interfere with livestock, farm machinery or working animals.",
+        "Give livestock, horses and wild animals plenty of space; keep dogs under control and in sight.",
+        "Take litter and food waste home and avoid damaging plants, trees, habitats or historic sites.",
+        "Check weather, route, water and tide conditions before setting out; turn back if conditions change.",
+        "Check the access rules for the nation and location. Camping, freshwater swimming and fishing may require landowner permission.",
+        "Leave clear access for emergency vehicles when parking in rural areas."
+      ],
+      "equipment": [
+        "Current map and route information",
+        "Rubbish bag for waste",
+        "Suitable clothing and footwear"
+      ],
+      "commonMistakes": [
+        "Assuming open access land automatically permits camping.",
+        "Assuming the England and Wales Countryside Code is the law or guidance for all UK nations.",
+        "Leaving gates open or disturbing livestock and wildlife.",
+        "Ignoring tides and local signs."
+      ],
+      "dangers": [
+        "Livestock and wild animals can behave unpredictably, especially near young.",
+        "Blocking access can delay emergency vehicles.",
+        "Incorrect assumptions about access rights can lead to conflict or unlawful activity."
+      ],
+      "stopAndGetHelp": "If local signs, land access or safety conditions are unclear, choose another route or seek advice from the land manager or relevant local authority.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "England and Wales; Scotland and Northern Ireland have separate access guidance",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "govuk-countryside-code",
+        "woodland-foraging"
+      ]
+    },
+    {
+      "id": "coastal-tide-cutoff-safety",
+      "title": "Coastal walks: avoid being cut off by the tide",
+      "summary": "Check tide times and heights before a coastal walk, identify safe exits and call the Coastguard if trapped.",
+      "body": "Tide times and heights change each day. Headlands, rocky outcrops, causeways and sandbanks can become isolated as the tide rises, sometimes removing the route you used to enter.",
+      "categoryId": "coast",
+      "tags": [
+        "tide",
+        "coastal walk",
+        "cut off",
+        "coastguard",
+        "beach safety"
+      ],
+      "steps": [
+        "Before setting out, check tide times and heights for the exact location and date; do not rely on yesterday's tide time.",
+        "Identify safe return routes and alternative exits before walking onto a beach, headland or rocky outcrop.",
+        "While walking, watch the direction of the tide and keep checking your route back.",
+        "Carry a charged phone and tell someone your route and expected return time.",
+        "If you become cut off, do not attempt to wade or swim through rising water. Move to a safe position or higher ground if possible.",
+        "Call 999 or 112 and ask for the Coastguard if you are in danger or see someone at risk of being cut off."
+      ],
+      "equipment": [
+        "Charged mobile phone in a waterproof pouch",
+        "Local tide times and coastal route information",
+        "Suitable footwear"
+      ],
+      "commonMistakes": [
+        "Assuming the tide will be at the same time as the previous day.",
+        "Walking around a headland or onto a sandbank without checking the return tide.",
+        "Trying to wade or swim through a tidal channel."
+      ],
+      "dangers": [
+        "Incoming water can cut off the route back to shore.",
+        "Wet rocks, seaweed and cliff edges can be slippery and unstable."
+      ],
+      "stopAndGetHelp": "If trapped by the tide or in danger, call 999 or 112 and ask for the Coastguard. Do not try to swim or wade to safety through moving tidal water.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK coast and tidal waters",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "rnli-tides",
+        "govuk-countryside-code"
+      ]
+    },
+    {
+      "id": "hillwalking-kit-and-layers",
+      "title": "Hillwalking kit and clothing layers",
+      "summary": "Choose footwear, clothing and essential kit to match the route, weather, daylight and ability of the group.",
+      "body": "There is no single kit list for every walk. Longer routes, rougher terrain and worse weather require more preparation. The aim is to stay warm, dry, visible and able to navigate or call for help.",
+      "categoryId": "equipment",
+      "tags": [
+        "hillwalking kit",
+        "clothing",
+        "layers",
+        "boots",
+        "waterproofs",
+        "torch",
+        "map",
+        "compass"
+      ],
+      "steps": [
+        "Choose footwear with grip that suits the route and terrain; check fit and condition before a long walk.",
+        "Wear layers: a moisture-managing base layer, an insulating middle layer and a waterproof or windproof outer layer.",
+        "Avoid cotton and denim for cold, wet hill conditions because they retain moisture and can become cold when wet.",
+        "Carry a map and compass, charged phone, torch, first-aid kit, food, water and emergency food.",
+        "Add warm hat, gloves, spare socks and extra insulation when conditions require them.",
+        "Pack waterproof clothing and keep spare layers in a dry bag.",
+        "Match the kit to the least experienced or most vulnerable person in the group, not just the strongest walker."
+      ],
+      "equipment": [
+        "Suitable footwear and socks",
+        "Base, insulating and waterproof outer layers",
+        "Map and compass",
+        "Torch and spare batteries",
+        "Charged phone",
+        "Food, water and emergency snacks",
+        "First-aid kit",
+        "Whistle and spare warm layer"
+      ],
+      "commonMistakes": [
+        "Assuming a town forecast reflects conditions on the hill.",
+        "Relying on a phone instead of carrying map and compass.",
+        "Leaving the torch behind because the walk is planned to finish in daylight.",
+        "Packing only for the strongest member of the group."
+      ],
+      "dangers": [
+        "Wet clothing and wind chill can lead to hypothermia.",
+        "Poor footwear and inadequate light increase the risk of falls and navigation errors."
+      ],
+      "stopAndGetHelp": "If the group is becoming cold, wet, exhausted or unable to navigate safely, stop in a safe place, add insulation and reassess. Turn back or call Mountain Rescue if there is an emergency.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK hillwalking; adapt to local terrain and weather",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "bmc-hillwalking-kit",
+        "mountain-rescue-safety",
+        "metoffice-mountain"
+      ]
+    },
+    {
+      "id": "map-compass-bearing-basics",
+      "title": "Map and compass: basic bearings",
+      "summary": "Use a map and compass to plan a short bearing, understand grid north and practise in easy terrain before relying on the skill.",
+      "body": "A compass is a navigation aid, not an automatic route finder. Ordnance Survey explains how to align the compass with a map and account for the difference between grid north and magnetic north.",
+      "categoryId": "navigation",
+      "tags": [
+        "compass",
+        "bearing",
+        "map reading",
+        "grid north",
+        "magnetic north",
+        "navigation"
+      ],
+      "steps": [
+        "Choose a clear destination on the map and identify your current position as accurately as possible.",
+        "Place the compass edge between your start point and destination, with the direction-of-travel arrow pointing towards the destination.",
+        "Rotate the compass housing until its orienting lines align with the map's north-south grid lines.",
+        "Read the bearing at the index line and check the map legend for the current magnetic variation for that map and area.",
+        "Apply the map's stated magnetic variation using the compass manufacturer's instructions; do not assume the value is unchanged from an older map.",
+        "On the ground, hold the compass level, turn your body until the magnetic needle aligns with the orienting arrow and follow the direction-of-travel arrow.",
+        "Use short legs between recognisable features and regularly confirm your position. Practise in safe lowland terrain before using bearings in mountains."
+      ],
+      "equipment": [
+        "Suitable Ordnance Survey or equivalent topographic map",
+        "Baseplate compass",
+        "Pencil and map case"
+      ],
+      "commonMistakes": [
+        "Confusing grid north with magnetic north.",
+        "Using an old magnetic variation value without checking the map legend.",
+        "Following a bearing for too long without checking terrain and position.",
+        "Assuming a compass bearing overrides cliffs, rivers, fences or other hazards."
+      ],
+      "dangers": [
+        "A wrong bearing can lead into steep, boggy or exposed terrain.",
+        "Metal objects and electronic devices can affect compass readings."
+      ],
+      "stopAndGetHelp": "If you cannot confirm your position, stop and relocate using identifiable map features. Do not continue blindly. If lost or in danger in the hills in England or Wales, call 999 or 112 and ask for Police then Mountain Rescue.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "Great Britain; check the current map legend for local magnetic variation",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "os-compass-bearings",
+        "os-map-reading",
+        "mountain-rescue-safety"
+      ]
+    },
+    {
+      "id": "hand-hygiene-in-the-field",
+      "title": "Hand hygiene when working outdoors",
+      "summary": "Clean hands before eating and treating wounds, after using the toilet and after handling animals or raw food.",
+      "body": "Handwashing helps reduce the spread of infections and food poisoning. In the field, plan for safe water, soap and a way to dry hands; sanitiser is a useful alternative when hands are not visibly dirty.",
+      "categoryId": "sanitation",
+      "tags": [
+        "handwashing",
+        "hygiene",
+        "sanitation",
+        "food safety",
+        "infection"
+      ],
+      "steps": [
+        "Wash hands with soap and water before eating or preparing food, after using the toilet, after handling raw food and after touching animals.",
+        "Wet hands, apply enough soap to cover all surfaces and rub palms, backs of hands, between fingers, thumbs and fingertips for around 20 seconds.",
+        "Rinse thoroughly with clean water and dry hands completely using a clean towel or suitable disposable material.",
+        "If soap and water are not immediately available and hands are not visibly dirty, use an alcohol-based hand sanitiser if available.",
+        "Use soap and water when hands are visibly dirty or contaminated with body fluids; sanitiser is not a full substitute in those situations.",
+        "Clean hands before and after treating a cut or wound."
+      ],
+      "equipment": [
+        "Soap",
+        "Safe water",
+        "Clean towel or disposable drying material",
+        "Alcohol-based hand sanitiser for situations without visible dirt"
+      ],
+      "commonMistakes": [
+        "Using sanitiser on visibly dirty or greasy hands instead of washing.",
+        "Sharing a dirty towel.",
+        "Handling food or treating wounds with unwashed hands."
+      ],
+      "dangers": [
+        "Poor hand hygiene can spread stomach and respiratory infections.",
+        "Contaminated hands can infect cuts and wounds."
+      ],
+      "stopAndGetHelp": "If clean water is not available, avoid preparing food or treating wounds until hands can be cleaned properly. Seek medical advice if a wound becomes infected.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "NHS guidance; practical use in UK outdoor settings",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-handwashing",
+        "fsa-food-poisoning"
+      ]
+    },
+    {
+      "id": "campsite-site-selection",
+      "title": "Choosing a low-impact campsite",
+      "summary": "Choose dry, durable ground, avoid sensitive habitats and hazards, and check whether camping is permitted before pitching.",
+      "body": "A good campsite protects the group and the place being visited. Wild camping rights differ across the UK; permission may be required. The practical advice here is not a substitute for local access rules.",
+      "categoryId": "shelter",
+      "tags": [
+        "shelter",
+        "camping",
+        "wild camping",
+        "site selection",
+        "ground",
+        "leave no trace"
+      ],
+      "steps": [
+        "Check whether camping is allowed at the location and obtain landowner permission where required.",
+        "Choose durable, dry, well-drained ground that will not be easily damaged; avoid fragile vegetation and sensitive habitats.",
+        "Avoid riverbanks, dry watercourses, gullies and low hollows that may flood if rain arrives.",
+        "Avoid exposed ridges and obvious overhead hazards; do not pitch beneath dead or unstable branches.",
+        "Keep away from paths, gates, livestock and property, and do not block access for other users or emergency vehicles.",
+        "Keep the group small, minimise noise and light, take all rubbish and food waste away, and leave the site as you found it.",
+        "Do not light a fire or barbecue unless local signs and rules explicitly allow it; use a suitable stove safely outdoors."
+      ],
+      "equipment": [
+        "Tent or shelter suited to forecast conditions",
+        "Groundsheet or sleeping mat",
+        "Rubbish bag",
+        "Torch"
+      ],
+      "commonMistakes": [
+        "Assuming open access land automatically allows camping.",
+        "Pitching in a low hollow or beside a watercourse because the ground looks flat.",
+        "Damaging vegetation, digging drainage trenches or leaving waste behind."
+      ],
+      "dangers": [
+        "Heavy rain can turn gullies and watercourses into dangerous flows.",
+        "Exposed or unstable locations can become hazardous in wind and storms."
+      ],
+      "stopAndGetHelp": "If weather, water levels or ground conditions make the site unsafe, move to a safer permitted location or leave the area. Follow local authority and land-manager instructions.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK practical advice; access rights and camping rules differ between England, Wales, Scotland and Northern Ireland",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "bmc-wild-camp",
+        "govuk-countryside-code"
+      ]
+    },
+    {
+      "id": "stroke-fast-response",
+      "title": "Stroke: use FAST and call 999",
+      "summary": "Recognise sudden stroke signs and get emergency help without delay.",
+      "body": "A stroke is a medical emergency. Signs often appear suddenly. Symptoms may improve or disappear, but that does not make the event safe to ignore.",
+      "categoryId": "first-aid",
+      "tags": [
+        "stroke",
+        "FAST",
+        "face",
+        "arm",
+        "speech",
+        "emergency"
+      ],
+      "steps": [
+        "Face: ask the person to smile and look for one side drooping.",
+        "Arms: ask them to raise both arms and look for one arm drifting down.",
+        "Speech: ask them to repeat a simple sentence and listen for slurring or confusion.",
+        "Time: call 999 immediately if you suspect a stroke, even if symptoms improve or stop.",
+        "Note when symptoms began or when the person was last known well, if known.",
+        "Keep them comfortable and monitor breathing. Follow the call handler."
+      ],
+      "equipment": [
+        "Phone"
+      ],
+      "commonMistakes": [
+        "Waiting to see if symptoms pass.",
+        "Driving the person yourself."
+      ],
+      "dangers": [
+        "Stroke can cause permanent injury or death.",
+        "Symptoms can be temporary."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for any suspected stroke, including symptoms that have stopped. Do not drive the person to A&E.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS emergency guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-stroke"
+      ]
+    },
+    {
+      "id": "heart-attack-recognition",
+      "title": "Heart attack: recognise warning signs",
+      "summary": "Spot possible heart attack symptoms and call 999 without delay.",
+      "body": "A heart attack can be life-threatening. Chest discomfort may feel tight, heavy, crushing or like indigestion. Pain may spread to the arms, neck or jaw; symptoms vary.",
+      "categoryId": "first-aid",
+      "tags": [
+        "heart attack",
+        "chest pain",
+        "breathing",
+        "999"
+      ],
+      "steps": [
+        "Call 999 for tight or squeezing chest pain, pain spreading to the arm, neck or jaw, severe breathing difficulty or collapse.",
+        "If 300mg aspirin is immediately available, help the person chew it unless they are allergic to aspirin or have been told not to take it. Do not delay the 999 call to find aspirin.",
+        "If the person has prescribed GTN for angina, help them use their own medicine as directed.",
+        "Help the person sit and rest in a comfortable supported position.",
+        "Keep them still, warm and reassured.",
+        "Follow the ambulance call handler. Do not delay to search for information.",
+        "Keep checking response and breathing. If unresponsive and not breathing normally, start CPR and use an AED if available."
+      ],
+      "equipment": [
+        "Phone",
+        "Warm layer"
+      ],
+      "commonMistakes": [
+        "Assuming it is indigestion and waiting.",
+        "Letting the person exert themselves.",
+        "Driving them to hospital yourself.",
+        "Delaying the 999 call while looking for aspirin or other medication.",
+        "Giving aspirin to someone with a known aspirin allergy or who has been told not to take it."
+      ],
+      "dangers": [
+        "A heart attack can deteriorate into cardiac arrest."
+      ],
+      "stopAndGetHelp": "Call 999 for suspected heart attack and follow the call handler's instructions.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS emergency guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "nhs-heart-attack"
+      ]
+    },
+    {
+      "id": "severe-bleeding-control",
+      "title": "Severe bleeding: firm direct pressure",
+      "summary": "Control serious external bleeding while emergency help is on the way.",
+      "body": "Severe bleeding can become life-threatening within minutes. Call 999 early, protect yourself from blood where possible and apply firm, continuous direct pressure. Follow the emergency call handler's instructions.",
+      "categoryId": "first-aid",
+      "tags": [
+        "bleeding",
+        "wound",
+        "pressure",
+        "trauma"
+      ],
+      "steps": [
+        "Check that the scene is safe. Use gloves or another barrier if immediately available, but do not delay emergency help.",
+        "Call 999 for severe, spurting or uncontrolled bleeding. Use speakerphone and follow the call handler.",
+        "Apply firm, continuous direct pressure directly over the wound using a sterile dressing or clean material. If clothing covers the wound, expose it if safe to do so.",
+        "If an object is embedded, do not remove it and do not press on it. Apply pressure around the object.",
+        "If blood comes through the dressing, maintain pressure and follow the call handler's instructions; avoid repeatedly lifting the dressing to inspect the wound.",
+        "Once bleeding is controlled, secure the dressing with a pressure bandage if available and keep checking the person's response and breathing.",
+        "For life-threatening bleeding from an arm or leg that is not controlled by direct pressure, a tourniquet may be needed. Use a suitable commercial tourniquet if trained, or follow the 999 call handler's instructions. Once applied, do not loosen or remove it; note the time if possible.",
+        "Keep the person still and warm while waiting for help. If they become unresponsive and are not breathing normally, follow the call handler's CPR instructions."
+      ],
+      "equipment": [
+        "Protective gloves or barrier",
+        "Sterile dressing or clean non-fluffy cloth",
+        "Pressure bandage if available",
+        "Commercial tourniquet only where appropriate and the user is trained or directed by the emergency call handler",
+        "Phone"
+      ],
+      "commonMistakes": [
+        "Delaying the 999 call while searching for equipment.",
+        "Removing an embedded object.",
+        "Repeatedly lifting the dressing and interrupting pressure.",
+        "Loosening or removing an applied tourniquet.",
+        "Using equipment or techniques beyond your training instead of following the emergency call handler."
+      ],
+      "dangers": [
+        "Major blood loss can cause shock and death.",
+        "Blood exposure can carry infection risk.",
+        "Tourniquets can cause significant pain and should not be loosened once applied."
+      ],
+      "stopAndGetHelp": "Call 999 immediately for severe, spurting or uncontrolled bleeding. Apply firm direct pressure and follow the emergency call handler. A tourniquet may be required for life-threatening limb bleeding not controlled by pressure; use one if trained or as directed, and do not loosen it.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS first-aid guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "resus-first-aid-2025",
+        "nhs-cuts-grazes"
+      ],
+      "illustration": "./knowledge/illustrations/bleeding-pressure.svg",
+      "illustrationAlt": "Simple reminder: firm pressure over a wound only when no object is embedded."
+    },
+    {
+      "id": "suspected-fracture-first-response",
+      "title": "Suspected broken bone: protect and support",
+      "summary": "Reduce movement and recognise injuries needing emergency help.",
+      "body": "A broken bone can be difficult to distinguish from a severe sprain. Treat serious injury carefully rather than testing or straightening it.",
+      "categoryId": "first-aid",
+      "tags": [
+        "fracture",
+        "broken bone",
+        "injury",
+        "support"
+      ],
+      "steps": [
+        "Check overall condition and deal with life-threatening bleeding or breathing problems first.",
+        "Do not ask the person to stand, walk or move the injured part to test it.",
+        "Support the area in the position found, using soft padding if this does not move it.",
+        "Do not straighten a deformity, push a bone back in or remove an embedded object.",
+        "Call 999 for an open or major fracture, severe deformity, loss of sensation or colour, or serious head, neck, back, hip or thigh injury.",
+        "For less severe injuries, seek NHS 111 or urgent clinical advice."
+      ],
+      "equipment": [
+        "Phone",
+        "Soft padding or clothing"
+      ],
+      "commonMistakes": [
+        "Trying to realign the limb.",
+        "Moving someone with possible spinal injury unnecessarily."
+      ],
+      "dangers": [
+        "Movement may worsen damage to nerves or blood vessels.",
+        "Open fractures carry infection risk."
+      ],
+      "stopAndGetHelp": "Call 999 for serious injury, open fracture, major deformity or suspected spinal injury. If unsure, seek emergency advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK NHS guidance",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "sja-fractures"
+      ]
+    },
+    {
+      "id": "uk-tree-identification-method",
+      "title": "UK trees: identify using several clues",
+      "summary": "Use season, leaves, bark, buds and overall form rather than guessing from one leaf.",
+      "body": "Tree identification works best when several clues are combined. Leaves help in spring and summer; winter identification often depends on bark, buds and twigs. Shape and habitat add context but are not decisive alone.",
+      "categoryId": "forestry",
+      "tags": [
+        "tree identification",
+        "leaves",
+        "bark",
+        "buds",
+        "twigs"
+      ],
+      "steps": [
+        "Start with the whole tree: broadleaf or conifer, shape, size and location.",
+        "Inspect several leaves or needles. Note shape, edge and arrangement; check whether a leaf is simple or compound.",
+        "Inspect bark at more than one height for colour, ridges, cracks and peeling.",
+        "Look at twig and bud arrangement: opposite, alternate or spiral.",
+        "Check flowers, catkins, cones, seeds or fruit when present and in season.",
+        "Compare all observations with a trusted UK field guide. Record uncertainty if features conflict."
+      ],
+      "equipment": [
+        "Pocket field guide",
+        "Notebook or camera"
+      ],
+      "commonMistakes": [
+        "Identifying from one fallen leaf.",
+        "Ignoring season and habitat.",
+        "Breaking branches or stripping bark."
+      ],
+      "dangers": [
+        "Some tree species and parts are poisonous.",
+        "Dead branches can fall without warning."
+      ],
+      "stopAndGetHelp": "If identification matters for food, medicine or safety, do not act on a tentative result. Leave it untouched and consult a qualified expert.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK woodland field identification",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-tree-id"
+      ],
+      "illustration": "./knowledge/illustrations/tree-identification.svg",
+      "illustrationAlt": "Diagram showing leaf, bark, buds and whole-tree form as combined clues."
+    },
+    {
+      "id": "silver-birch-field-notes",
+      "title": "Silver birch: field clues",
+      "summary": "Recognise silver birch from pale bark, triangular toothed leaves and a light crown.",
+      "body": "Silver birch (Betula pendula) is common in the UK. Mature trunks often have bright white bark that peels in papery layers, with darker fissures developing with age. Leaves are small, triangular and toothed.",
+      "categoryId": "forestry",
+      "tags": [
+        "silver birch",
+        "Betula pendula",
+        "bark",
+        "leaf",
+        "catkin"
+      ],
+      "steps": [
+        "Look for a light, often narrow crown with slender drooping branches.",
+        "Check for white papery bark; older trees may show dark fissures and a darker base.",
+        "Leaves are small, roughly triangular and toothed.",
+        "Young twigs are slender and may have small wart-like glands.",
+        "Use several features; downy birch can look similar and hybridisation occurs."
+      ],
+      "equipment": [
+        "Field guide",
+        "Notebook"
+      ],
+      "commonMistakes": [
+        "Treating white bark alone as proof.",
+        "Confusing silver birch with downy birch."
+      ],
+      "dangers": [
+        "Dead limbs can fall in poor weather."
+      ],
+      "stopAndGetHelp": "Do not use tentative identification to decide that any tree part is safe to eat or use medicinally.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK species identification",
+      "safetyLevel": "info",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-silver-birch",
+        "woodland-tree-id"
+      ],
+      "illustration": "./knowledge/illustrations/tree-identification.svg",
+      "illustrationAlt": "General identification features, not a definitive species plate."
+    },
+    {
+      "id": "oak-field-notes",
+      "title": "Oak: field identification clues",
+      "summary": "Use lobed leaves, acorns, buds and bark together to recognise UK oaks.",
+      "body": "Common and sessile oak are both native to the UK. Their leaves and bark can look similar, so use the whole tree, leaf stalks, acorns and habitat rather than one feature.",
+      "categoryId": "forestry",
+      "tags": [
+        "oak",
+        "Quercus",
+        "acorn",
+        "leaf"
+      ],
+      "steps": [
+        "Look for a broad spreading crown on a mature open-grown tree.",
+        "Leaves are lobed, often with rounded lobes on common UK oaks.",
+        "Look for acorns in cups when in season; note stalks but do not rely on this alone.",
+        "Mature bark is often deeply fissured, but age changes its appearance.",
+        "Compare with a trusted guide to distinguish pedunculate and sessile oak."
+      ],
+      "equipment": [
+        "Field guide"
+      ],
+      "commonMistakes": [
+        "Assuming every lobed leaf is oak; maples also have lobed leaves.",
+        "Using one feature to distinguish oak species."
+      ],
+      "dangers": [
+        "Acorns and other plant parts are not automatically safe food.",
+        "Old trees can shed branches."
+      ],
+      "stopAndGetHelp": "Do not eat unidentified tree parts. Keep clear of trees with unstable or hanging branches.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK woodland identification",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-tree-id",
+        "woodland-oak"
+      ]
+    },
+    {
+      "id": "ash-field-notes",
+      "title": "Ash: field identification clues",
+      "summary": "Recognise ash by opposite buds, compound leaves and clusters of winged seeds.",
+      "body": "Common ash (Fraxinus excelsior) is a native broadleaf tree. Its compound leaves have several leaflets along one stalk. In winter, dark buds in opposite pairs are a useful clue.",
+      "categoryId": "forestry",
+      "tags": [
+        "ash",
+        "Fraxinus excelsior",
+        "compound leaf",
+        "buds",
+        "keys"
+      ],
+      "steps": [
+        "Look for compound leaves made of several leaflets along one stalk.",
+        "Leaflets usually have toothed edges and pointed tips.",
+        "In winter, check for opposite pairs of dark buds.",
+        "Look for clusters of single-winged seeds, called keys, when present.",
+        "Use a field guide; do not diagnose tree disease from one symptom."
+      ],
+      "equipment": [
+        "Field guide",
+        "Notebook"
+      ],
+      "commonMistakes": [
+        "Mistaking a compound leaf for several separate leaves.",
+        "Relying on leaf colour alone."
+      ],
+      "dangers": [
+        "Ash dieback can weaken branches; dead limbs may fall."
+      ],
+      "stopAndGetHelp": "Keep clear of dead or hanging branches, especially in wind. Report serious hazards to the land manager.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK woodland identification",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-ash",
+        "woodland-tree-id"
+      ]
+    },
+    {
+      "id": "yew-woodland-hazard",
+      "title": "Yew: recognise a poisonous tree",
+      "summary": "Identify yew as a woodland hazard and keep its parts away from food and children.",
+      "body": "Yew (Taxus baccata) is a native evergreen conifer. It has flat dark-green needles and may have red fleshy seed coverings. Yew is poisonous: never use its parts as food, tea, medicine or improvised cooking material.",
+      "categoryId": "forestry",
+      "tags": [
+        "yew",
+        "Taxus baccata",
+        "poisonous plant"
+      ],
+      "steps": [
+        "Look for short, flat dark-green needles arranged along the sides of shoots.",
+        "Older trunks often have reddish-brown flaky bark.",
+        "Treat foliage and seeds as poisonous. Do not taste or prepare any part.",
+        "Keep children and animals away from fallen clippings, seeds and foliage.",
+        "Avoid using yew branches as skewers, cooking sticks or tea material."
+      ],
+      "equipment": [
+        "Observe without handling"
+      ],
+      "commonMistakes": [
+        "Assuming the red fleshy part makes the seed safe.",
+        "Using yew for cooking or tea."
+      ],
+      "dangers": [
+        "Yew poisoning can be severe and potentially fatal."
+      ],
+      "stopAndGetHelp": "If any part may have been eaten, seek urgent medical advice. Call 999 for collapse, breathing difficulty, seizure or serious symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK poisonous plant awareness",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-yew",
+        "fsa-safe-foraging"
+      ]
+    },
+    {
+      "id": "foraging-field-checklist",
+      "title": "Foraging: field safety checklist",
+      "summary": "Check identity, permission, contamination and sustainability before considering a harvest.",
+      "body": "Wild food can be poisonous, contaminated or protected. This is a conservative decision process, not a list of foods certified as edible.",
+      "categoryId": "foraging",
+      "tags": [
+        "foraging",
+        "wild food",
+        "permission",
+        "sustainability"
+      ],
+      "steps": [
+        "Identify the exact species with certainty using a specialist guide and several features. If uncertain, do not pick or eat it.",
+        "Check access, local signs, site rules and permission. Rules differ by place and species.",
+        "Avoid roadsides, polluted water edges, treated land and ground with obvious animal fouling.",
+        "Take only small amounts from abundant populations where collection is permitted. Never uproot unnecessarily.",
+        "Keep species separate, wash produce thoroughly and handle it like food.",
+        "Do not let children pick or eat wild plants or fungi unsupervised."
+      ],
+      "equipment": [
+        "Specialist field guide",
+        "Clean container",
+        "Safe water"
+      ],
+      "commonMistakes": [
+        "Relying on an app or one photo.",
+        "Assuming public access means collection is allowed.",
+        "Taste-testing unknown plants."
+      ],
+      "dangers": [
+        "Some wild species are deadly poisonous.",
+        "Contamination can cause serious illness."
+      ],
+      "stopAndGetHelp": "If a plant or fungus may have been eaten and its identity is uncertain, seek medical advice immediately. Call 999 for severe symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "FSA guidance applies to England, Wales and Northern Ireland; check local rules elsewhere",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-safe-foraging",
+        "woodland-foraging"
+      ],
+      "illustration": "./knowledge/illustrations/foraging-checks.svg",
+      "illustrationAlt": "Decision flow for identity, permission, site cleanliness and sustainable gathering."
+    },
+    {
+      "id": "wild-garlic-lookalikes",
+      "title": "Wild garlic: poisonous lookalikes",
+      "summary": "Understand why wild garlic must never be identified by smell or one leaf feature alone.",
+      "body": "Wild garlic (Allium ursinum) grows in some UK woodlands and can be confused with poisonous plants, including lily-of-the-valley. This article explains the hazard; it is not permission to eat a plant identified from a screen.",
+      "categoryId": "foraging",
+      "tags": [
+        "wild garlic",
+        "Allium ursinum",
+        "lily of the valley",
+        "lookalike"
+      ],
+      "steps": [
+        "Do not pick anything unless the whole plant is identified with certainty using a specialist botanical guide and several features.",
+        "Lily-of-the-valley has poisonous leaves that may be confused with wild garlic before flowering.",
+        "Compare leaf arrangement and growth form carefully using a trusted guide.",
+        "Smell is not a safe stand-alone test; crushed leaves can contaminate one another.",
+        "If plants are mixed, damaged or uncertain, leave the entire patch alone.",
+        "Check site permission and sustainability rules before any collection."
+      ],
+      "equipment": [
+        "Specialist botanical guide"
+      ],
+      "commonMistakes": [
+        "Using smell alone as proof.",
+        "Picking mixed leaves from a dense patch.",
+        "Assuming every broad green woodland leaf is wild garlic."
+      ],
+      "dangers": [
+        "Lily-of-the-valley is poisonous; other lookalikes may also be harmful."
+      ],
+      "stopAndGetHelp": "If a suspected lookalike has been eaten, seek urgent medical advice. Call 999 for severe symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK woodland; collection rules depend on land and site",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "woodland-lily",
+        "nt-wild-garlic",
+        "fsa-safe-foraging"
+      ],
+      "illustration": "./knowledge/illustrations/foraging-checks.svg",
+      "illustrationAlt": "Foraging decision chart only; not a plant-identification plate."
+    },
+    {
+      "id": "bramble-fruit-hygiene",
+      "title": "Bramble fruit: harvest hygiene",
+      "summary": "Use careful site selection and food hygiene when collecting familiar bramble fruit.",
+      "body": "Blackberries grow on bramble (Rubus fruticosus agg.) and are familiar in many UK hedgerows. Familiarity does not remove contamination risks or the need to confirm the plant and collection permission.",
+      "categoryId": "foraging",
+      "tags": [
+        "blackberry",
+        "bramble",
+        "Rubus",
+        "food hygiene"
+      ],
+      "steps": [
+        "Confirm the plant using a reliable field guide; do not assume every dark berry is a blackberry.",
+        "Check that collection is permitted and avoid protected sites or signs prohibiting picking.",
+        "Avoid busy roads, sprayed areas, industrial sites, standing water and obvious animal fouling.",
+        "Leave plenty for wildlife and other people; do not strip or damage a hedge.",
+        "Wash fruit thoroughly with safe water before eating or preparing it.",
+        "Discard mouldy or contaminated fruit and refrigerate or process promptly."
+      ],
+      "equipment": [
+        "Clean container",
+        "Safe water"
+      ],
+      "commonMistakes": [
+        "Collecting from polluted verges.",
+        "Assuming colour alone proves identity.",
+        "Eating fruit without washing."
+      ],
+      "dangers": [
+        "Other berries can be poisonous and may grow nearby.",
+        "Contaminated produce can cause illness."
+      ],
+      "stopAndGetHelp": "If you cannot confidently identify the plant or site, do not harvest. If an unknown berry is eaten, seek urgent medical advice.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK; check local access and collection rules",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-safe-foraging",
+        "woodland-foraging"
+      ]
+    },
+    {
+      "id": "wild-fungi-no-guessing",
+      "title": "Wild fungi: no guessing or taste tests",
+      "summary": "Understand why mushroom identification requires specialist expertise.",
+      "body": "UK fungi include species that are difficult to distinguish and some cause severe or fatal poisoning. A photograph, app result, smell, taste or cooking method cannot make an uncertain mushroom safe.",
+      "categoryId": "foraging",
+      "tags": [
+        "fungi",
+        "mushrooms",
+        "poisonous",
+        "toadstool"
+      ],
+      "steps": [
+        "Do not eat a wild mushroom unless identified with certainty by a competent specialist using all relevant features.",
+        "Never taste a mushroom to identify it. Cooking does not reliably remove toxins.",
+        "Do not rely on image-matching apps or this guide as an edible-mushroom identifier.",
+        "Keep unknown fungi separate from food and away from children and pets.",
+        "If recording fungi, photograph in place and leave undisturbed where possible.",
+        "If ingestion may have occurred, seek urgent medical advice even if the person feels well."
+      ],
+      "equipment": [
+        "Specialist fungi guide for observation only"
+      ],
+      "commonMistakes": [
+        "Using colour or cap shape alone.",
+        "Assuming animals eating a mushroom means it is safe for people.",
+        "Trying a tiny amount as a test."
+      ],
+      "dangers": [
+        "Some mushroom toxins cause delayed organ damage."
+      ],
+      "stopAndGetHelp": "Seek urgent medical advice after possible ingestion, even without symptoms. Call 999 for severe symptoms. Do not induce vomiting.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK poisoning safety",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "fsa-safe-foraging",
+        "woodland-foraging"
+      ]
+    },
+    {
+      "id": "tarp-a-frame-shelter",
+      "title": "Bushcraft: build a simple A-frame tarp shelter",
+      "summary": "A practical low-impact tarp layout for basic rain and wind protection in suitable conditions.",
+      "body": "An A-frame tarp shelter uses a ridgeline and two sloping sides. It is a basic camp shelter, not protection from severe weather. Site choice and tension matter more than elaborate construction.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "tarp",
+        "shelter",
+        "A-frame",
+        "ridgeline"
+      ],
+      "steps": [
+        "Check camping permission and choose durable ground away from watercourses, hollows, exposed ridges and dead overhead branches.",
+        "Run a ridgeline between suitable supports or purpose-made poles. Do not damage living trees or strip bark.",
+        "Throw the tarp over the ridgeline so both sides hang evenly.",
+        "Stake the corners out at a low angle; keep the ridgeline taut but not over-tight.",
+        "Lower the windward side for protection while keeping ventilation and a clear exit.",
+        "Make guy lines visible and recheck tension if wind or rain increases.",
+        "Pack away and leave the site as found."
+      ],
+      "equipment": [
+        "Tarp",
+        "Ridgeline cord",
+        "Pegs"
+      ],
+      "commonMistakes": [
+        "Pitching under dead branches.",
+        "Using weak supports.",
+        "Damaging tree bark.",
+        "Assuming a tarp is safe in storms."
+      ],
+      "dangers": [
+        "Wind can overload anchors.",
+        "Flooding and falling branches can make a site dangerous."
+      ],
+      "stopAndGetHelp": "Leave if storms, rising water, falling branches or strong winds make the site unsafe. A tarp is not an emergency evacuation plan.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "UK outdoor use; local camping and access rules apply",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "countryside-code",
+        "bmc-wild-camp"
+      ],
+      "illustration": "./knowledge/illustrations/tarp-a-frame.svg",
+      "illustrationAlt": "Side-view diagram of a simple A-frame tarp over a ridgeline."
+    },
+    {
+      "id": "camp-knots-and-cordage",
+      "title": "Bushcraft: three useful camp knots",
+      "summary": "Learn simple cordage knots for tents, tarps and joining lines, with clear limits.",
+      "body": "Knots must match the job and be tied correctly. This guide covers ordinary camp use: clove hitch for a temporary pole attachment, taut-line hitch for an adjustable guyline and sheet bend for joining ropes.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "knots",
+        "clove hitch",
+        "taut-line hitch",
+        "sheet bend",
+        "cordage"
+      ],
+      "steps": [
+        "Practise with soft cord at ground level.",
+        "Use a clove hitch as a temporary pole attachment and check it regularly.",
+        "Use a taut-line hitch for an adjustable guyline; test it with the expected light camp load.",
+        "Use a sheet bend to join two lines, especially lines of different thickness.",
+        "Dress, tighten and inspect every knot before use. Replace frayed cord."
+      ],
+      "equipment": [
+        "Practice cord",
+        "Two short poles or safe practice rail"
+      ],
+      "commonMistakes": [
+        "Using a reef knot to join loaded ropes.",
+        "Assuming a knot is secure because it looks similar.",
+        "Using camp cordage for lifting people or heavy loads."
+      ],
+      "dangers": [
+        "Incorrect knots can slip or fail under load."
+      ],
+      "stopAndGetHelp": "Never use these ordinary camp knots for climbing, abseiling, rescue, securing a person, towing or life-safety loads. Get qualified training.",
+      "contentBasis": "established-practice",
+      "jurisdiction": "General campcraft; not a life-safety system",
+      "safetyLevel": "caution",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "scout-knots"
+      ],
+      "illustration": "./knowledge/illustrations/camp-knots.svg",
+      "illustrationAlt": "Illustration of camp cordage use; practise the actual knot with rope."
+    },
+    {
+      "id": "outdoor-fire-and-stove-safety",
+      "title": "Bushcraft: fire and stove safety",
+      "summary": "Use a stove where possible and understand why open fires are restricted and risky.",
+      "body": "Open fires can spread rapidly and damage woodland, peat, heathland and wildlife. In England, official guidance advises avoiding open fires in the countryside except in safe designated areas. Local rules differ across the UK.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "fire",
+        "stove",
+        "campfire",
+        "fire safety"
+      ],
+      "steps": [
+        "Check local signs, land-manager rules, fire restrictions and weather before lighting anything.",
+        "Prefer a stable purpose-made camping stove used outdoors exactly as instructed.",
+        "Never use a stove, barbecue or open fire inside a tent, vehicle or enclosed shelter.",
+        "Keep equipment on stable non-flammable ground away from dry vegetation, tents and branches.",
+        "Keep water or a suitable extinguisher ready; never leave a flame unattended.",
+        "Allow equipment and ash to cool fully. Dispose only where local rules permit.",
+        "If a fire spreads beyond immediate control, move away and call 999."
+      ],
+      "equipment": [
+        "Outdoor stove",
+        "Manufacturer-approved fuel",
+        "Water or suitable extinguisher"
+      ],
+      "commonMistakes": [
+        "Lighting fires in dry or windy conditions.",
+        "Using a stove inside a tent.",
+        "Leaving embers warm.",
+        "Assuming rules are identical across the UK."
+      ],
+      "dangers": [
+        "Grass, heath and woodland fires spread quickly.",
+        "Fuel and carbon monoxide can cause severe injury or death."
+      ],
+      "stopAndGetHelp": "If a fire spreads, do not tackle it if it cannot be put out immediately and safely. Leave and call 999.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "GOV.UK outdoor fire guidance applies to England; check local rules in Scotland, Wales and Northern Ireland",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "outdoor-fire",
+        "countryside-code",
+        "bmc-wild-camp"
+      ],
+      "illustration": "./knowledge/illustrations/fire-safety.svg",
+      "illustrationAlt": "Diagram showing outdoor cooking on clear ground, away from shelter and vegetation."
+    },
+    {
+      "id": "field-water-treatment-limits",
+      "title": "Field water: treatment and its limits",
+      "summary": "Separate visible dirt, microbes and chemical contamination before choosing a treatment.",
+      "body": "Clear water is not necessarily safe. Boiling can deal with many disease-causing organisms when done correctly, but does not remove chemical contamination, fuel, salt or heavy metals. A filter is not automatically complete treatment.",
+      "categoryId": "bushcraft",
+      "tags": [
+        "water",
+        "boiling",
+        "filter",
+        "chemical contamination"
+      ],
+      "steps": [
+        "Use a known safe supply whenever possible. Avoid water downstream of farms, industry, mines, sewage outlets or suspected spills.",
+        "Let muddy water settle and pre-filter visible particles; this does not make it safe to drink.",
+        "Use a purpose-made treatment method suitable for likely hazards and follow its instructions exactly.",
+        "If boiling is selected, bring water to a rolling boil and follow current public-health advice; cool naturally in a clean covered container.",
+        "Store treated water in a clean sealed container, separate from untreated water.",
+        "If chemical contamination is possible, do not rely on boiling or ordinary portable filters. Find another source."
+      ],
+      "equipment": [
+        "Clean vessel",
+        "Suitable treatment method",
+        "Clean covered storage"
+      ],
+      "commonMistakes": [
+        "Assuming clear water is safe.",
+        "Assuming boiling removes chemicals or salt.",
+        "Mixing treated and untreated water."
+      ],
+      "dangers": [
+        "Waterborne pathogens can cause serious illness.",
+        "Boiling does not remove chemical contamination."
+      ],
+      "stopAndGetHelp": "If fuel, chemicals, sewage or industrial pollution may be present, do not drink it. Find a known safe supply and follow local authority advice.",
+      "contentBasis": "official-guidance",
+      "jurisdiction": "UK; CDC technical reference for general emergency water treatment principles; follow local authority advice",
+      "safetyLevel": "high",
+      "reviewedAt": "2026-11-04",
+      "sourceIds": [
+        "dwi-water",
+        "cdc-emergency-water"
+      ],
+      "illustration": "./knowledge/illustrations/water-treatment.svg",
+      "illustrationAlt": "Decision diagram distinguishing microbial treatment from chemical contamination."
+    }
+  ],
+  "media": []
+}

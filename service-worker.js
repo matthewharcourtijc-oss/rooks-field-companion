@@ -1,7 +1,7 @@
 /* Rook's Field Companion — offline app shell.
    Bump CACHE_NAME whenever the shell or embedded manual changes. */
-const CACHE_NAME = "harcom-field-companion-v0.9.13";
-const APP_SHELL = ["./", "./index.html", "./manifest.json", "./icon.svg", "./icon-192.png", "./icon-512.png", "./assets/harcom-logo.svg", "./assets/harcom-industries-logo.png"]
+const CACHE_NAME = "harcom-field-companion-v0.9.15";
+const APP_SHELL = ["./", "./index.html", "./manifest.json", "./icon.svg", "./icon-192.png", "./icon-512.png", "./assets/harcom-logo.svg", "./assets/harcom-industries-logo.png", "./knowledge/crypto.js", "./knowledge/engine.js", "./knowledge/updater.js", "./knowledge/ui.js", "./knowledge/content/uk-core-v1.json", "./knowledge/illustrations/bleeding-pressure.svg", "./knowledge/illustrations/tree-identification.svg", "./knowledge/illustrations/foraging-checks.svg", "./knowledge/illustrations/tarp-a-frame.svg", "./knowledge/illustrations/camp-knots.svg", "./knowledge/illustrations/fire-safety.svg", "./knowledge/illustrations/water-treatment.svg"]
   .map(path => new URL(path, self.registration.scope).href);
 
 self.addEventListener("install", event => {
@@ -31,6 +31,12 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  // Signed update manifests and versioned packages must be fetched fresh, never served from the app-shell cache.
+  if (url.pathname.endsWith("/knowledge/release.json") || url.pathname.includes("/knowledge/releases/")) {
+    event.respondWith(fetch(request, { cache: "no-store" }).catch(() => Response.error()));
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith((async () => {

@@ -6,10 +6,28 @@ const html = fs.readFileSync("index.html", "utf8");
 const worker = fs.readFileSync("service-worker.js", "utf8");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
+const deploymentWorkflow = fs.readFileSync(".github/workflows/static.yml", "utf8");
+
+// Release-safety regression: a manual workflow dispatch must never publish a
+// development branch. Validation is read-only; only the gated deploy job gets
+// the Pages and OIDC permissions it needs.
+assert.ok(deploymentWorkflow.includes(
+  "if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')"),
+  "Pages deployment must be restricted to push/manual dispatch on main");
+const topLevelPermissions = deploymentWorkflow.split("jobs:")[0];
+assert.ok(!topLevelPermissions.includes("pages: write") && !topLevelPermissions.includes("id-token: write"),
+  "Pages/OIDC write permissions must not be granted globally");
+const validateJob = deploymentWorkflow.split("validate:")[1]?.split("deploy:")[0] || "";
+const deployJob = deploymentWorkflow.split("deploy:")[1] || "";
+assert.ok(validateJob.includes("permissions:\n      contents: read"),
+  "validation job must remain read-only");
+assert.ok(deployJob.includes("needs: validate") &&
+  deployJob.includes("permissions:\n      contents: read\n      pages: write\n      id-token: write"),
+  "deployment must depend on validation and scope Pages/OIDC permissions to deploy");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
 assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
-assert.match(worker, /harcom-field-companion-v0\.9\.13/, "service-worker cache revision must be v0.9.13");
+assert.match(worker, /harcom-field-companion-v0\.9\.15/, "service-worker cache revision must be v0.9.15");
 assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
@@ -52,6 +70,17 @@ assert.ok(!html.includes("single atomic key harcom_data"), "developer storage di
 assert.ok(!html.includes("Backup manually verified:"), "developer-style backup status leaked into consumer UI");
 assert.ok(html.includes('<link rel="manifest" href="./manifest.json">'), "manifest link must resolve to shipped manifest.json");
 
+assert.ok(html.includes('id="knowledgeSearch"'), "offline knowledge search control missing");
+assert.ok(html.includes('id="knowledgeCategories"'), "knowledge category browser missing");
+assert.ok(html.includes('id="knowledgeArticleContent"'), "knowledge article reader missing");
+assert.ok(html.includes('data-knowledge-article="suspected-poisoning"'), "emergency quick reference missing");
+assert.ok(html.includes('src="./knowledge/ui.js"'), "knowledge UI module missing");
+assert.ok(html.includes('src="./knowledge/engine.js"'), "knowledge database module missing");
+assert.ok(html.includes('src="./knowledge/updater.js"'), "knowledge updater module missing");
+assert.ok(html.includes('src="./knowledge/crypto.js"'), "knowledge signature verifier module missing");
+assert.ok(worker.includes('"./knowledge/content/uk-core-v1.json"'), "starter knowledge pack must be precached for offline first use");
+assert.ok(worker.includes('"./knowledge/ui.js"'), "knowledge UI must be precached");
+assert.ok(worker.includes('url.pathname.endsWith("/knowledge/release.json")'), "update manifest must bypass cache-first handling");
 assert.ok(html.includes('id="manualSearch"'), "offline manual search control missing");
 assert.ok(html.includes("Offline field-manual search: local index"), "manual search must remain local/offline");
 assert.ok(html.includes("BUILD A SIMPLE GRAVITY PRE-FILTER"), "water filter build guide missing");
@@ -71,6 +100,7 @@ const requiredIds = [
 ];
 const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
 const idSet = new Set(ids);
+assert.ok(idSet.has("library"), "offline knowledge library panel missing");
 for (const id of requiredIds) {
   assert.ok(idSet.has(id), "missing required panel or manual section: " + id);
 }
@@ -117,7 +147,6 @@ for (const icon of [
   assert.ok(worker.includes('"./' + icon.path + '"'), icon.path + " is not precached");
 }
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.13/, "service-worker cache revision must be v0.9.13");
 assert.match(worker, /await cache\.addAll/);
 assert.equal(manifest.display, "standalone", "installed Field Companion must retain its standalone app display mode");
 const shellMatch = worker.match(/const APP_SHELL = \[([\s\S]*?)\]/);
