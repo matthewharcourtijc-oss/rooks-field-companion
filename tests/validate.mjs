@@ -73,7 +73,7 @@ assert.match(html, /addEventListener\('input',update\)/, "manual search input ha
 assert.ok(html.includes('id="manualSearchCount"'), "manual search result status missing");
 
 const requiredIds = [
-  "tasks", "notes", "log", "library", "guide", "backup",
+  "tasks", "notes", "log", "guide", "backup",
   "priorities", "fieldcraft", "trauma", "remote-care", "firstaid",
   "shelter", "fire", "water", "sanitation", "food", "fungi", "toxic-plants",
   "navigation", "weather", "rescue", "kit",
@@ -82,6 +82,7 @@ const requiredIds = [
 ];
 const ids = [...html.matchAll(/\bid=["']([^"']+)["']/g)].map(match => match[1]);
 const idSet = new Set(ids);
+assert.ok(idSet.has("library"), "offline knowledge library panel missing");
 for (const id of requiredIds) {
   assert.ok(idSet.has(id), "missing required panel or manual section: " + id);
 }
