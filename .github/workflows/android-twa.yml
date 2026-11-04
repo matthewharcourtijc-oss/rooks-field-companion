@@ -75,6 +75,8 @@ jobs:
           curl --fail --silent --show-error "$BASE/service-worker.js" -o /tmp/companion-service-worker.js
           curl --fail --silent --show-error "$BASE/icon-192.png" -o /dev/null
           curl --fail --silent --show-error "$BASE/icon-512.png" -o /dev/null
+          curl --fail --silent --show-error "$BASE/assets/harcom-industries-logo.png" -o /tmp/harcom-launcher-logo.png
+          test -s /tmp/harcom-launcher-logo.png
           node --input-type=module <<'NODE'
           import { readFileSync } from "node:fs";
           const m = JSON.parse(readFileSync("/tmp/companion-manifest.json", "utf8"));
