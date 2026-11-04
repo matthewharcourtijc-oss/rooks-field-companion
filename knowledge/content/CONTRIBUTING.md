@@ -52,6 +52,6 @@ Record the publisher, exact page title, canonical HTTPS URL and access date. Use
 
 ## Initial starter pack
 
-`uk-core-v1.json` contains 12 initial articles covering flood warnings, hypothermia, boil-water notices, cold-water incidents, Mountain Rescue call-outs, lightning, tent fire prevention, poisoning, burns, camp food hygiene, route planning and mountain forecasts.
+`uk-core-v1.json` currently contains 48 UK-first articles across emergencies, first aid, water, weather, coast, navigation, campcraft, food hygiene, plants and wildlife, forestry, foraging and bushcraft. It includes seven locally cached SVG illustrations. This is an expanding reference library, not a claim of complete coverage.
 
 This is the beginning of the library, not a claim of complete survival coverage.

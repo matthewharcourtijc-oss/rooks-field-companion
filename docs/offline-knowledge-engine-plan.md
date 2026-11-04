@@ -32,7 +32,7 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Baseline branch: `main`
 - Baseline commit: `0a8c23644cf7e2adc7018c66d82ccbe909433e84`
 - Existing product is a single-page HTML PWA; main application and embedded manual are in `index.html`.
-- Current offline shell is managed by `service-worker.js`, cache name `harcom-field-companion-v0.9.14`.
+- Current offline shell is managed by `service-worker.js`, cache name `harcom-field-companion-v0.9.15`.
 - The manual is embedded in the HTML and has a local search index/behaviour.
 - Personal Tasks, Notes and Mission Logs are currently stored together in a validated localStorage record with transaction/recovery safeguards and separate backup/restore paths.
 - Existing test entry point is `node tests/validate.mjs`.
@@ -49,13 +49,13 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Added quota-estimate guardrails and an optional user-invoked persistent-storage request. Persistence is never assumed.
 - Added a separate Ed25519/SHA-256 verifier that checks the exact downloaded bytes, rejects hash/signature/manifest mismatches and fails closed if the browser lacks the required cryptography.
 - Added runtime tests using a pinned `fake-indexeddb` test dependency, including staged installs, search, rollback, release retention, quota rejection and ephemeral Ed25519 signature/tamper checks.
-- Added a 31-article UK-first starter pack with 31 named sources covering emergencies, first aid, water, weather, coast, navigation, campcraft and food safety.
+- Expanded the UK-first library from 31 to 48 articles, adding four medical emergency guides, five forestry/tree guides, four foraging guides and four bushcraft guides. New entries carry source provenance, jurisdiction, safety level, review date and stop/help guidance.
 - Added an editorial standard requiring source provenance, jurisdiction, review dates, risk levels and explicit stop/help guidance.
 - Added a device test page at `tests/knowledge-engine.html`, Node structural checks at `tests/knowledge-engine.mjs` and IndexedDB/crypto runtime tests at `tests/knowledge-engine-runtime.mjs`.
 - CI runs the original app validator, structural checks and IndexedDB/crypto runtime tests.
-- The database, verifier, updater and simple library interface are now integrated into the development app. The service worker precaches the database modules and starter pack, and sends signed release paths to the network rather than serving stale cached manifests. The update button remains disabled until a production public key is pinned; no automatic downloads occur.
+- The database, verifier, updater and simple library interface are integrated into the development app. The article reader renders seven original local SVG illustrations from a strict path allow-list; the service worker precaches them for offline use. The service worker precaches the database modules and starter pack, and sends signed release paths to the network rather than serving stale cached manifests. The update button remains disabled until a production public key is pinned; no automatic downloads occur.
 - The signature-verification primitive, release-manifest schema and explicit signed-update flow are implemented and tested with ephemeral keys. A production signing key, trusted public-key pin and published signed release manifest are not yet configured.
-- Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute.
+- Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute. The expanded content still needs independent subject-matter review before release.
 
 ## 5. Proposed architecture and next engineering decisions
 
@@ -178,3 +178,17 @@ Next batches:
 7. **Home, vehicle and community resilience:** power cuts, severe weather, evacuation, water interruption, road breakdowns, family plans and emergency communications.
 
 Each batch gets source review, jurisdiction checks, article validation, safety review and regression tests before it is included in a signed content release. A larger article count is not a quality metric on its own.
+
+
+## 8. Expansion pass — 4 November 2026
+
+- Knowledge package release: `uk-field-v2-2026-11-04`.
+- Library size: 48 articles, 18 categories and 47 named sources.
+- Added medical quick references for stroke, heart attack, severe bleeding and suspected fractures.
+- Added forestry entries for multi-feature tree identification, silver birch, oak, ash and yew hazards.
+- Added foraging safety entries for general field checks, wild-garlic lookalikes, bramble-fruit hygiene and fungi caution.
+- Added bushcraft entries for an A-frame tarp shelter, ordinary camp knots, outdoor fire/stove safety and field-water treatment limits.
+- Added seven original offline SVG diagrams. The article reader only accepts local illustration paths and provides alt text; the service worker precaches every diagram.
+- The service-worker cache revision is now `harcom-field-companion-v0.9.15`.
+- Personal Tasks, Notes, Mission Logs and backups remain outside the knowledge database.
+- This is an expanded first release, not a complete field atlas or clinical certification. High-risk medical, foraging and species-identification material needs independent expert review and on-device testing before public release.
