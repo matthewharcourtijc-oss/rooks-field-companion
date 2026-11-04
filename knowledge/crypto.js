@@ -42,16 +42,19 @@
     if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) {
       error("INVALID_MANIFEST", "The release manifest is invalid.");
     }
-    if (manifest.manifestVersion !== 1 ||
+    if (manifest.format !== "HARCOM_KNOWLEDGE_RELEASE" ||
+        manifest.manifestVersion !== 1 ||
         manifest.schemaVersion !== 1 ||
         typeof manifest.releaseId !== "string" ||
         !/^[A-Za-z0-9._-]{1,120}$/.test(manifest.releaseId) ||
+        typeof manifest.createdAt !== "string" || Number.isNaN(Date.parse(manifest.createdAt)) ||
+        typeof manifest.packageUrl !== "string" || !/^\\.\\/knowledge\\/releases\\/[A-Za-z0-9._-]+\\.json$/.test(manifest.packageUrl) ||
         !Number.isSafeInteger(manifest.packageSize) || manifest.packageSize < 1 || manifest.packageSize > MAX_PACKAGE_BYTES ||
         typeof manifest.packageSha256 !== "string" ||
         !/^[a-f0-9]{64}$/.test(manifest.packageSha256) ||
         typeof manifest.signature !== "string" ||
         typeof manifest.keyId !== "string" ||
-        !manifest.keyId.trim()) {
+        !/^[a-z0-9._-]{1,64}$/.test(manifest.keyId)) {
       error("INVALID_MANIFEST", "The release manifest is missing required fields or uses an unsupported schema.");
     }
 
