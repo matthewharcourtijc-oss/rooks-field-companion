@@ -184,15 +184,18 @@ const networkManifest = {
   keyId: "ephemeral-test-key"
 };
 const fetchDescriptor = Object.getOwnPropertyDescriptor(globalThis, "fetch");
+let activeManifest = networkManifest;
+let activePackageBytes = networkBytes;
+let activePackagePath = "/knowledge/releases/network-update-1.json";
 Object.defineProperty(globalThis, "fetch", {
   configurable: true,
   value: async url => {
     const target = String(url);
     if (target.endsWith("/knowledge/release.json")) {
-      return new Response(JSON.stringify(networkManifest), { status: 200, headers: { "content-type": "application/json" } });
+      return new Response(JSON.stringify(activeManifest), { status: 200, headers: { "content-type": "application/json" } });
     }
-    if (target.endsWith("/knowledge/releases/network-update-1.json")) {
-      return new Response(networkBytes, { status: 200, headers: { "content-length": String(networkBytes.byteLength) } });
+    if (target.endsWith(activePackagePath)) {
+      return new Response(activePackageBytes, { status: 200, headers: { "content-length": String(activePackageBytes.byteLength) } });
     }
     throw new Error("Unexpected test URL: " + target);
   }
@@ -206,6 +209,21 @@ try {
   assert.equal((await db.getActiveRelease()).id, networkPackage.releaseId);
   const unchanged = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedOrigin: "https://example.test", trustedKeys });
   assert.equal(unchanged.status, "current");
+  const badPackage = makePackage("network-update-2");
+  badPackage.createdAt = "2026-11-06T00:00:00.000Z";
+  activePackageBytes = new TextEncoder().encode(JSON.stringify(badPackage));
+  activePackagePath = "/knowledge/releases/network-update-2.json";
+  const badHash = new Uint8Array(await webcrypto.subtle.digest("SHA-256", activePackageBytes));
+  activeManifest = {
+    format: "HARCOM_KNOWLEDGE_RELEASE", manifestVersion: 1, schemaVersion: 1,
+    packageSize: activePackageBytes.byteLength, releaseId: badPackage.releaseId, createdAt: badPackage.createdAt,
+    packageUrl: "./knowledge/releases/network-update-2.json",
+    packageSha256: Array.from(badHash, value => value.toString(16).padStart(2, "0")).join(""),
+    signature: toBase64(new Uint8Array(64)), keyId: "ephemeral-test-key"
+  };
+  const badCheck = await updater.checkForUpdates({ manifestUrl: "https://example.test/knowledge/release.json", trustedOrigin: "https://example.test", trustedKeys });
+  await assert.rejects(() => updater.installUpdate({ checked: badCheck, trustedKeys }), error => error.code === "INVALID_SIGNATURE");
+  assert.equal((await db.getActiveRelease()).id, networkPackage.releaseId, "invalid signed update must leave the active release untouched");
 } finally {
   if (fetchDescriptor) Object.defineProperty(globalThis, "fetch", fetchDescriptor);
   else delete globalThis.fetch;
