@@ -36,6 +36,17 @@ assert.ok(crypto.includes("manifest.packageSize"));
 assert.ok(crypto.includes("INVALID_SIGNATURE"));
 assert.ok(!crypto.includes("privateKey"));
 assert.ok(ukPack.articles.length >= 31, "UK starter content pack must contain at least 31 articles");
+assert.ok(ukPack.articles.length >= 48, "expanded field library must contain at least 48 articles");
+for (const categoryId of ["forestry", "foraging", "bushcraft"]) {
+  assert.ok(ukPack.categories.some(category => category.id === categoryId), "missing expanded category: " + categoryId);
+}
+for (const article of ukPack.articles.filter(item => item.illustration)) {
+  assert.match(article.illustration, /^\.\/knowledge\/illustrations\/[a-z0-9-]+\.svg$/);
+  assert.ok(article.illustrationAlt && article.illustrationAlt.length >= 12, "illustrated articles need useful alt text");
+  assert.ok(fs.existsSync(article.illustration.slice(2)), "offline illustration is missing: " + article.illustration);
+}
+assert.ok(ui.includes("knowledge-illustration"), "article UI must render offline illustrations");
+assert.ok(ui.includes("image.alt"), "offline illustrations must have alt text");
 assert.ok(ukPack.sources.length >= 31, "UK starter content pack must retain source provenance");
 assert.ok(ukPack.articles.every(article => article.sourceIds.length && article.reviewedAt && article.stopAndGetHelp && article.contentBasis), "every article must carry provenance, review and safety fields");
 assert.ok(engine.includes("getSourcesForArticle"));
