@@ -19,10 +19,10 @@ assert.ok(!topLevelPermissions.includes("pages: write") && !topLevelPermissions.
   "Pages/OIDC write permissions must not be granted globally");
 const validateJob = deploymentWorkflow.split("validate:")[1]?.split("deploy:")[0] || "";
 const deployJob = deploymentWorkflow.split("deploy:")[1] || "";
-assert.ok(validateJob.includes("permissions:\\n      contents: read"),
+assert.ok(validateJob.includes("permissions:\n      contents: read"),
   "validation job must remain read-only");
 assert.ok(deployJob.includes("needs: validate") &&
-  deployJob.includes("permissions:\\n      contents: read\\n      pages: write\\n      id-token: write"),
+  deployJob.includes("permissions:\n      contents: read\n      pages: write\n      id-token: write"),
   "deployment must depend on validation and scope Pages/OIDC permissions to deploy");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
