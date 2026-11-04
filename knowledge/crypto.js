@@ -25,6 +25,13 @@
     }
   }
 
+  function validPackagePath(value) {
+    const prefix = "./knowledge/releases/";
+    if (typeof value !== "string" || !value.startsWith(prefix) || !value.endsWith(".json")) return false;
+    const filename = value.slice(prefix.length, -5);
+    return !!filename && /^[A-Za-z0-9._-]+$/.test(filename);
+  }
+
   function asBytes(input) {
     if (input instanceof ArrayBuffer) return new Uint8Array(input);
     if (ArrayBuffer.isView(input)) return new Uint8Array(input.buffer, input.byteOffset, input.byteLength);
@@ -48,7 +55,7 @@
         typeof manifest.releaseId !== "string" ||
         !/^[A-Za-z0-9._-]{1,120}$/.test(manifest.releaseId) ||
         typeof manifest.createdAt !== "string" || Number.isNaN(Date.parse(manifest.createdAt)) ||
-        typeof manifest.packageUrl !== "string" || !/^\\.\\/knowledge\\/releases\\/[A-Za-z0-9._-]+\\.json$/.test(manifest.packageUrl) ||
+        !validPackagePath(manifest.packageUrl) ||
         !Number.isSafeInteger(manifest.packageSize) || manifest.packageSize < 1 || manifest.packageSize > MAX_PACKAGE_BYTES ||
         typeof manifest.packageSha256 !== "string" ||
         !/^[a-f0-9]{64}$/.test(manifest.packageSha256) ||
