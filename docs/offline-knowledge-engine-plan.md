@@ -33,60 +33,59 @@ The everyday interface must be simple, professional, readable on a phone and usa
 - Baseline commit: `0a8c23644cf7e2adc7018c66d82ccbe909433e84`
 - Existing product is a single-page HTML PWA; main application and embedded manual are in `index.html`.
 - Current offline shell is managed by `service-worker.js`, cache name `harcom-field-companion-v0.9.13`.
-- The service worker precaches the app shell and removes older matching app-shell caches on activation.
 - The manual is embedded in the HTML and has a local search index/behaviour.
 - Personal Tasks, Notes and Mission Logs are currently stored together in a validated localStorage record with transaction/recovery safeguards and separate backup/restore paths.
-- Existing test entry point is `node tests/validate.mjs`; it checks application structure, offline assumptions, manual sections, links, inline scripts and selected regression behaviours.
+- Existing test entry point is `node tests/validate.mjs`.
 - Existing GitHub Pages workflow validates pull requests and deploys only from `main`.
-- A dedicated development branch was created from the exact protected baseline. No application source or live deployment has been changed by this plan.
+- A dedicated development branch was created from the exact protected baseline. No application source has been changed on `main`.
 
-## 4. Proposed architecture
+## 4. Prototype implementation delivered
 
-### A. Personal-data boundary
+- Added isolated `knowledge/engine.js` with its own IndexedDB database (`harcom-field-knowledge`), separate from all personal-data stores.
+- Added versioned stores for articles, categories, sources, media, release metadata, settings and an inverted search-term index.
+- Added package validation: schema, record limits, duplicate IDs, category/source references, safety level, review date and media limits.
+- Added staged installation, read-back validation, atomic active-release pointer changes, previous-release retention and explicit rollback activation.
+- Added local multi-word search using an inverted index; all query terms must match.
+- Added quota-estimate guardrails and an optional user-invoked persistent-storage request. Persistence is never assumed.
+- Added a device test page at `tests/knowledge-engine.html` and Node structural checks at `tests/knowledge-engine.mjs`.
+- CI now runs the original app validator and the new structural checks.
+- The prototype is not yet connected to the app interface, service-worker precache or an online updater.
+- Package authenticity/signature verification is not yet implemented.
+- Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute.
 
-Keep personal operational records in their existing storage domain during the first knowledge-engine milestones. No content import, update, pruning or rollback code may write to personal-data keys. A future personal-data database migration would be a separate project with its own export, backup, migration and rollback gates.
+## 5. Proposed architecture and next engineering decisions
 
-### B. Knowledge database
+### Personal-data boundary
 
-Use IndexedDB as the leading candidate for a structured, searchable local content store, subject to a short compatibility and failure-mode spike on Android Chrome / installed PWA. Keep content data separate from personal records.
+Keep operational personal records in their existing storage domain. No content import, update, pruning or rollback code may write to personal-data keys. Any future personal-data migration is a separate project with its own export, backup, migration and rollback gates.
 
-Proposed logical stores:
-- `articles`: stable content ID, title, plain-language body, category, tags, reviewed date, review interval, reading time, safety level and source IDs.
-- `categories`: navigation groups and descriptions.
-- `media`: locally stored diagrams and supporting illustrations with type, size and hash.
-- `sources`: publisher, exact source URL, title, publication/review date, access date and evidence notes.
-- `releases`: installed content version, schema version, manifest hash, signature metadata and installation timestamp.
-- `settings`: library-only preferences and last successful update check.
+### Content package authenticity
 
-Avoid duplicating large media in article records. Use stable IDs and explicit schema versions.
+Before enabling network updates, define an immutable release manifest containing release ID, schema compatibility, package size, cryptographic hash, signing-key ID and signature. The private signing key must never be stored in the public app repository. Verify the signature and package hash before staging. HTTPS alone is not a substitute for package signing.
 
-### C. Update package and activation
+### Safe update sequence
 
-The update service should retrieve a small release manifest when online. The manifest identifies a versioned, immutable content package and includes expected size, cryptographic hashes, schema compatibility and publisher signature.
-
-Safe sequence:
 1. Check connectivity and read the current installed release.
 2. Fetch release metadata; do not download if unchanged.
 3. Validate manifest structure, version ordering, schema compatibility and signature.
-4. Download package into a staging area; enforce size limits.
-5. Verify complete byte count and cryptographic hashes.
+4. Download to staging with strict size limits.
+5. Verify byte count and cryptographic hashes.
 6. Parse and validate every record, reference and media item.
-7. Install into a new inactive database/release namespace.
-8. Run consistency checks and a read-back verification.
-9. Atomically switch the active-release pointer only after all checks pass.
-10. Retain the prior release for rollback; prune only after a later successful launch and explicit retention policy.
+7. Install into a new inactive release namespace.
+8. Run consistency checks and read-back verification.
+9. Atomically switch the active-release pointer.
+10. Retain the prior release for rollback; do not prune it during installation.
 
-An interrupted download or failed validation must leave the active release untouched. A signature proves package origin/integrity, not factual correctness; content review remains a separate quality gate.
+A failed download, validation or activation must leave the current active library usable.
 
-### D. Offline search and interface
+### Offline search and interface
 
-Search must operate entirely against local records. Provide a simple home screen, obvious search, a small set of recognisable categories, emergency quick reference and a clear offline/update status. Article pages should use short headings, numbered actions, warnings, equipment lists and clear "when to get help" guidance.
+Search must operate entirely against local records. Provide a simple home screen, prominent search, recognisable categories, emergency quick reference and clear offline/update status. Article pages should use short headings, numbered actions, warnings, equipment lists and clear "when to get help" guidance.
 
-Do not introduce a large front-end framework or remote font/script dependency without measured need. Prefer the current lightweight PWA foundation.
+Do not introduce a large front-end framework or remote font/script dependency without measured need.
 
-## 5. Prototype implementation delivered\n\n- Added isolated `knowledge/engine.js` with its own IndexedDB database (`harcom-field-knowledge`), separate from all personal-data localStorage records.\n- Added versioned stores for articles, categories, sources, media, release metadata, settings and an inverted search-term index.\n- Added strict package shape checks, duplicate-ID detection, category/source reference validation, safety-level/review-date checks and size limits.\n- Added staged installation, read-back validation, atomic active-release pointer changes, previous-release retention and explicit rollback activation.\n- Added quota estimation guardrails and an optional user-invoked persistent-storage request; persistence is never assumed.\n- Added a device test page at `tests/knowledge-engine.html` and Node structural checks at `tests/knowledge-engine.mjs`.\n- The prototype is not yet connected to the app interface, service-worker precache or any online updater. Package authenticity/signature verification is not yet implemented.\n- Browser execution and Android physical-device tests remain required; structural CI checks are not a substitute.\n\n## 6. UK-first content scope
+## 6. UK-first content scope
 
-Priority content groups:
 1. UK emergency response, calling 999/112, location sharing and help-seeking.
 2. First aid and immediate life threats, grounded in current NHS / Resuscitation Council UK / St John Ambulance guidance.
 3. Water collection, treatment limits, storage and contamination.
@@ -119,7 +118,7 @@ Content must distinguish official guidance, established practical technique and 
 ## 8. Quality gates
 
 ### Gate 1 — Architecture spike
-Prove IndexedDB open/read/write, schema versioning, quota handling, transaction rollback and offline reads in Android Chrome and installed PWA. Compare failure modes against the existing localStorage baseline.
+Prove IndexedDB open/read/write, schema versioning, quota handling, transaction rollback and offline reads in Android Chrome / installed PWA. Compare failure modes against the existing localStorage baseline.
 
 ### Gate 2 — Content engine
 Test local indexing/search, article rendering, category browsing, media retrieval, schema validation and corrupt-record handling.
@@ -136,12 +135,12 @@ Install a diagnostic build alongside the existing app where possible. Test in ai
 ### Gate 6 — Independent review
 Review security boundaries, update authenticity, storage failure modes, accessibility, factual sources and safety wording. No release claims until evidence supports them.
 
-## 9. First implementation milestones
+## 9. Next implementation milestones
 
-1. Complete source and storage audit; capture baseline test result.
-2. Write and test a minimal IndexedDB compatibility/failure-mode spike on a separate branch.
-3. Define content schema and signed package format before authoring bulk content.
-4. Build a small representative UK content sample to test search and presentation.
+1. Complete source and storage audit; baseline captured.
+2. Implement isolated IndexedDB prototype and device harness; physical-device test pending.
+3. Independently review signed package format before enabling online updates.
+4. Build a small, reviewed UK content sample to test search and presentation.
 5. Add safe update staging, verification, activation and rollback.
 6. Expand the content library in reviewed batches.
 7. Integrate the simple home screen and navigation without removing existing personal tools.
@@ -158,4 +157,4 @@ Review security boundaries, update authenticity, storage failure modes, accessib
 - No changes to stable production until a reviewed release is explicitly approved.
 
 ---
-This document is a plan and baseline record, not evidence that the database or update engine has already been implemented.
+This is an engineering plan plus an isolated prototype. It is not a production release, and online content updates are not enabled.
