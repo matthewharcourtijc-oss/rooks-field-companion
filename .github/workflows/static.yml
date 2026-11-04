@@ -22,6 +22,7 @@ jobs:
   validate:
     name: Validate offline app
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -36,6 +37,7 @@ jobs:
       - name: Install headless Chromium for browser verification
         run: npx playwright install --with-deps --only-shell chromium
       - name: Run browser and offline smoke tests
+        timeout-minutes: 5
         run: node tests/knowledge-engine-browser.mjs
 
   deploy:
