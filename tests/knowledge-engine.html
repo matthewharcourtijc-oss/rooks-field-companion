@@ -34,7 +34,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
   status.textContent=window.indexedDB?"IndexedDB available — prototype can be tested offline.":"IndexedDB unavailable in this browser.";
   const sample=()=>({
     schemaVersion:1,
-    releaseId:"device-test-1",
+    releaseId:"device-test-"+Date.now(),
     createdAt:new Date().toISOString(),
     summary:"Small UK-first prototype test package.",
     categories:[{id:"water",title:"Water",description:"Water safety and treatment."}],
@@ -56,10 +56,19 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
       catch(error){results.push({test:"unsupported schema rejection",passed:error.code==="UNSUPPORTED_SCHEMA",code:error.code});}
       try{window.HarcomKnowledgeDB.validatePackage({...sample(),articles:[{...sample().articles[0],sourceIds:["missing"]}]});results.push({test:"missing source rejection",passed:false});}
       catch(error){results.push({test:"missing source rejection",passed:error.code==="MISSING_REFERENCE",code:error.code});}
-      const installed=await window.HarcomKnowledgeDB.installRelease(sample());
+      const firstPackage=sample();
+      const firstId=firstPackage.releaseId;
+      const installed=await window.HarcomKnowledgeDB.installRelease(firstPackage);
       results.push({test:"install and activate release",passed:installed.ok,release:installed.release.id});
       const active=await window.HarcomKnowledgeDB.getActiveRelease();
-      results.push({test:"active release read-back",passed:!!active&&active.id==="device-test-1"});
+      results.push({test:"active release read-back",passed:!!active&&active.id===firstId});
+      const secondPackage=sample();
+      secondPackage.releaseId=firstId+"-next";
+      const second=await window.HarcomKnowledgeDB.installRelease(secondPackage);
+      results.push({test:"second release activates without deleting first",passed:second.ok&&(await window.HarcomKnowledgeDB.getRelease(firstId)).status==="previous"});
+      await window.HarcomKnowledgeDB.activateRelease(firstId);
+      const rolledBack=await window.HarcomKnowledgeDB.getActiveRelease();
+      results.push({test:"rollback to previous release",passed:!!rolledBack&&rolledBack.id===firstId});
       const article=await window.HarcomKnowledgeDB.getArticle("water-basics");
       results.push({test:"article read-back",passed:!!article&&article.title==="Water safety basics"});
       const categories=await window.HarcomKnowledgeDB.listCategories();
