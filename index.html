@@ -326,6 +326,57 @@ button,.manual-link{border-radius:6px}
 .install-panel[hidden]{display:none!important}.install-head{display:flex;align-items:center;gap:10px}.install-mark{width:36px;height:36px;display:grid;place-items:center;border:1px solid #688493;border-radius:9px;color:#bcecff;font-size:19px;font-weight:900}.install-head strong{display:block;color:#f3f8fa;font-size:13px;letter-spacing:.08em}.install-head small{display:block;color:#aebdc6;font-size:11px}.install-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.install-actions button{min-height:44px}.install-help{margin-top:10px;color:#b9c9d1;font-size:11px;line-height:1.6}.install-help ol{padding-left:20px;margin-top:6px}.install-state{margin-top:9px;color:#bcecff;font-size:11px;font-weight:700}.install-secondary{background:#243641!important;color:#d8edf5!important;border:1px solid #587382!important;box-shadow:none!important}.install-chrome-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 13px;border-radius:8px;text-decoration:none;font:800 10px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.06em}
 @media(min-width:700px){.install-panel{display:flex;align-items:center;justify-content:space-between;gap:18px}.install-panel[hidden]{display:none!important}.install-copy{flex:1}.install-actions{margin-top:0}}
 </style>
+<style>
+.knowledge-panel{display:block}
+.knowledge-panel[hidden],.knowledge-panel [hidden]{display:none!important}
+.knowledge-hero{padding:20px;border:1px solid #526673;border-radius:13px;background:linear-gradient(115deg,#253640,#1a252e);margin-bottom:13px}
+.knowledge-eyebrow{font:800 9px ui-monospace,monospace;letter-spacing:.18em;color:#9edcf2}
+.knowledge-hero h2{font-size:clamp(21px,4vw,29px);margin:8px 0;color:#f2f8fa}
+.knowledge-hero p{color:#c0cdd4;font-size:13px}
+.knowledge-status{margin-top:14px;padding:9px 11px;border:1px solid #526673;border-radius:7px;color:#d9e9ef;font:800 10px ui-monospace,monospace;letter-spacing:.07em}
+.knowledge-status[data-state="success"]{border-color:#5c9870;color:#b7efc8}
+.knowledge-status[data-state="warning"]{border-color:#b77b45;color:#ffd3a6}
+.knowledge-search-card label{display:block;margin-bottom:8px;color:#cde5ee;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.knowledge-search-card input{flex:1;min-width:0}
+.knowledge-filter-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;color:#aebdc6;font-size:10px}
+.knowledge-filter-row button{padding:7px 10px;font-size:9px}
+.knowledge-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.knowledge-section-heading h2{margin:0}
+.knowledge-section-heading>span{font:800 8px ui-monospace,monospace;letter-spacing:.12em;color:#9edcf2;white-space:nowrap}
+.knowledge-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.knowledge-category{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:76px;padding:12px;text-align:left;text-transform:none;letter-spacing:0;background:#17232c;border:1px solid #455b68;color:#eaf3f7;box-shadow:none}
+.knowledge-category strong{font-size:12px}
+.knowledge-category span{font-size:10px;font-weight:500;line-height:1.4;color:#aebdc6}
+.knowledge-quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.knowledge-quick button{min-height:45px;text-align:left;text-transform:none;letter-spacing:0;font-size:11px}
+.knowledge-results{display:flex;flex-direction:column;gap:8px}
+.knowledge-result{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:12px;text-align:left;text-transform:none;letter-spacing:0;background:#17232c;border:1px solid #455b68;color:#eaf3f7;box-shadow:none}
+.knowledge-result-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.knowledge-result-top strong{font-size:12px}
+.knowledge-result-summary{font-size:11px;font-weight:500;color:#afbdc6;line-height:1.45}
+.knowledge-risk{flex:0 0 auto;padding:3px 6px;border-radius:4px;background:#344956;color:#d8f2fb;font:800 8px ui-monospace,monospace;letter-spacing:.08em}
+.knowledge-risk.risk-high{background:#4a2927;color:#ffc0b5}
+.knowledge-risk.risk-caution{background:#49381f;color:#ffe0a3}
+.knowledge-empty{color:#aebdc6;font-size:12px}
+.knowledge-article-card{padding:15px}
+.knowledge-back{margin-bottom:14px}
+.knowledge-article-meta{font:800 9px ui-monospace,monospace;letter-spacing:.08em;color:#9edcf2;margin-bottom:8px}
+.knowledge-article-card h2{font-size:21px;line-height:1.25;margin:0 0 8px}
+.knowledge-article-summary{color:#c6d7df;font-size:13px;font-weight:700;margin-bottom:10px}
+.knowledge-article-body{color:#d9e3e8;font-size:12px;line-height:1.65}
+.knowledge-article-section{margin-top:17px}
+.knowledge-article-section h3,.knowledge-stop h3{font-size:11px;color:#9edcf2;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.knowledge-article-section ol,.knowledge-article-section ul{padding-left:20px;color:#e3edf1;font-size:12px;line-height:1.6}
+.knowledge-article-section li{margin:6px 0}
+.knowledge-stop{margin-top:18px;padding:13px;border:1px solid #a65c4e;border-left:3px solid #f08a36;border-radius:8px;background:#382522;color:#ffe0d9}
+.knowledge-stop p{font-size:12px;line-height:1.55}
+.knowledge-article-section a{overflow-wrap:anywhere}
+.knowledge-update-card p{color:#aebdc6;font-size:11px;margin-bottom:10px}
+.knowledge-update-card button:disabled{opacity:.55;cursor:not-allowed;filter:grayscale(.5)}
+@media(max-width:560px){.knowledge-categories,.knowledge-quick{grid-template-columns:1fr 1fr}.knowledge-category{min-height:82px}.knowledge-filter-row{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.knowledge-result,.knowledge-category{transition:none}}
+</style>
+
 </head>
 <body>
 <header>
@@ -370,6 +421,7 @@ button,.manual-link{border-radius:6px}
     <button type="button" class="tab active" data-tab="tasks" aria-controls="tasks" aria-pressed="true">Tasks</button>
     <button type="button" class="tab" data-tab="notes" aria-controls="notes" aria-pressed="false">Notes</button>
     <button type="button" class="tab" data-tab="log" aria-controls="log" aria-pressed="false">Log</button>
+    <button type="button" class="tab" data-tab="library" aria-controls="library" aria-pressed="false">Library</button>
     <button type="button" class="tab" data-tab="guide" aria-controls="guide" aria-pressed="false">Field Manual</button>
     <button type="button" class="tab" data-tab="backup" aria-controls="backup" aria-pressed="false">Backup</button>
   </div>
@@ -382,6 +434,55 @@ button,.manual-link{border-radius:6px}
   </div>
   <div id="log" class="panel">
     <div class="card"><h2>Mission Log — running record in order</h2><div class="row"><input id="logInput" type="text" placeholder="Log event e.g. 02:15 Fox tracks at edge"><button id="addLog">Log</button></div><div id="logList" class="list"></div></div>
+  </div>
+
+  <div id="library" class="panel knowledge-panel">
+    <div class="knowledge-hero">
+      <div class="knowledge-eyebrow">HARCOM / FIELD KNOWLEDGE SYSTEM</div>
+      <h2>Offline Knowledge Library</h2>
+      <p>Practical UK field guidance. Search it, read it and use it without a signal.</p>
+      <div id="knowledgeStatus" class="knowledge-status" data-state="neutral" aria-live="polite">Preparing local library…</div>
+    </div>
+    <div class="card knowledge-search-card">
+      <label for="knowledgeSearch">Search field knowledge</label>
+      <div class="row">
+        <input id="knowledgeSearch" type="search" placeholder="Try: flood, hypothermia, water, fire…" autocomplete="off">
+        <button type="button" class="secondary" id="knowledgeClearSearch">Clear</button>
+      </div>
+      <div class="knowledge-filter-row">
+        <span>Showing: <strong id="knowledgeCategoryLabel">All topics</strong></span>
+        <button type="button" class="secondary" id="knowledgeClearCategory">All topics</button>
+      </div>
+    </div>
+    <div id="knowledgeBrowse">
+      <div class="card">
+        <div class="knowledge-section-heading"><h2>Browse by category</h2><span>UK FIRST</span></div>
+        <div id="knowledgeCategories" class="knowledge-categories"></div>
+      </div>
+      <div class="card">
+        <div class="knowledge-section-heading"><h2>Emergency quick reference</h2><span>FAST ACCESS</span></div>
+        <div class="knowledge-quick">
+          <button type="button" data-knowledge-article="suspected-poisoning">Suspected poisoning</button>
+          <button type="button" data-knowledge-article="hypothermia-recognition-response">Hypothermia</button>
+          <button type="button" data-knowledge-article="burns-first-response">Burns and scalds</button>
+          <button type="button" data-knowledge-article="flood-warning-actions">Flood warning</button>
+          <button type="button" data-knowledge-article="unexpected-cold-water-entry">Cold-water incident</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="knowledge-section-heading"><h2>Knowledge topics</h2><span>LOCAL SEARCH</span></div>
+        <div id="knowledgeResults" class="knowledge-results" aria-live="polite"></div>
+      </div>
+    </div>
+    <div id="knowledgeArticle" class="card knowledge-article-card" hidden>
+      <button type="button" class="secondary knowledge-back" id="knowledgeBack">← Back to library</button>
+      <div id="knowledgeArticleContent"></div>
+    </div>
+    <div class="card knowledge-update-card">
+      <div class="knowledge-section-heading"><h2>Library updates</h2><span>VERIFIED RELEASES</span></div>
+      <p id="knowledgeUpdateNote">Secure content updates are awaiting signing-key setup. Reading and searching are fully offline.</p>
+      <button type="button" id="knowledgeCheckUpdates" disabled>Check for updates</button>
+    </div>
   </div>
 
   <div id="guide" class="panel guide">
@@ -708,6 +809,9 @@ Treat it as a possible poisoning. Do not wait for symptoms: some dangerous toxin
     <div style="margin-top:8px" class="small">Your data stays in this browser. Export a backup regularly.</div>
   </div>
 
+<script src="./knowledge/crypto.js"></script>
+<script src="./knowledge/engine.js"></script>
+<script src="./knowledge/updater.js"></script>
 <script>
 function isStorageAvailable(){
   try{void localStorage.length; return {ok:true};}
@@ -1868,6 +1972,7 @@ document.getElementById('runTxTests').onclick=async()=>{
   window.addEventListener('online',updateCounts); window.addEventListener('offline',updateCounts);
 })();
 </script>
+<script src="./knowledge/ui.js"></script>
 
 <script>
 /* Android PWA install guidance. Browsers retain the final install confirmation. */
