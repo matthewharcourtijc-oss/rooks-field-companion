@@ -105,6 +105,13 @@ try {
     return status && status.textContent.includes("OFFLINE READY");
   }, null, { timeout: 15000 });
 
+  const personalAfterLibrary = await page.evaluate(() => {
+    const data = JSON.parse(localStorage.getItem("harcom_data"));
+    return { tasks: data.tasks, notes: data.notes, logs: data.logs };
+  });
+  assert.deepEqual(personalAfterLibrary, snapshotB,
+    "installing and opening the offline library must not alter Tasks, Notes or Mission Log");
+
   const initial = await page.evaluate(async () => {
     const release = await window.HarcomKnowledgeDB.getActiveRelease();
     const categories = await window.HarcomKnowledgeDB.listCategories();
@@ -189,6 +196,12 @@ try {
     return release && release.id;
   });
   assert.equal(offlineRelease, initial.release, "offline reload must retain the active IndexedDB release");
+  const personalAfterOfflineReload = await page.evaluate(() => {
+    const data = JSON.parse(localStorage.getItem("harcom_data"));
+    return { tasks: data.tasks, notes: data.notes, logs: data.logs };
+  });
+  assert.deepEqual(personalAfterOfflineReload, snapshotB,
+    "offline reload must preserve Tasks, Notes and Mission Log byte-for-byte at the record level");
 
   await page.locator("#knowledgeSearch").fill("handwashing");
   const handwashing = page.locator("#knowledgeResults button").filter({ hasText: /hand hygiene/i }).first();
