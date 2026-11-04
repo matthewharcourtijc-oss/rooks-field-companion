@@ -92,7 +92,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#1d2a34;border:1px so
       const toBase64=bytes=>btoa(String.fromCharCode(...bytes));
       const hash=Array.from(digest,value=>value.toString(16).padStart(2,"0")).join("");
       const signedPayload=JSON.parse(new TextDecoder().decode(signedBytes));
-      const verified=await window.HarcomKnowledgeCrypto.verifySignedPackage(signedBytes,{manifestVersion:1,schemaVersion:1,packageSize:signedBytes.byteLength,releaseId:signedPayload.releaseId,packageSha256:hash,signature:toBase64(signatureBytes),keyId:"device-ephemeral-test"},toBase64(publicBytes));
+      const verified=await window.HarcomKnowledgeCrypto.verifySignedPackage(signedBytes,{format:"HARCOM_KNOWLEDGE_RELEASE",manifestVersion:1,schemaVersion:1,packageSize:signedBytes.byteLength,releaseId:signedPayload.releaseId,createdAt:signedPayload.createdAt,packageUrl:"./knowledge/releases/device-test.json",packageSha256:hash,signature:toBase64(signatureBytes),keyId:"device-ephemeral-test"},toBase64(publicBytes));
       results.push({test:"Ed25519 signature and SHA-256 verification",passed:verified.sha256===hash});
       const status=await window.HarcomKnowledgeDB.storageStatus();
       results.push({test:"storage status",passed:typeof status.supported==="boolean",storage:status});
