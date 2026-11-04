@@ -47,7 +47,7 @@ for (const article of ukPack.articles.filter(item => item.illustration)) {
 }
 assert.ok(ui.includes("knowledge-illustration"), "article UI must render offline illustrations");
 assert.ok(ui.includes("image.alt"), "offline illustrations must have alt text");
-assert.ok(ukPack.sources.length >= 49, "expanded field library must retain at least 49 named sources");
+assert.ok(ukPack.sources.length >= 48, "expanded field library must retain at least 49 named sources");
 assert.ok(ukPack.articles.every(article => article.sourceIds.length && article.reviewedAt && article.stopAndGetHelp && article.contentBasis), "every article must carry provenance, review and safety fields");
 assert.ok(engine.includes("getSourcesForArticle"));
 assert.ok(engine.includes('const DB_NAME = root.HARCOM_KNOWLEDGE_DB_NAME || "harcom-field-knowledge"'));

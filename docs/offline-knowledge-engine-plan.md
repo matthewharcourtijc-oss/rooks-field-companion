@@ -183,7 +183,7 @@ Each batch gets source review, jurisdiction checks, article validation, safety r
 ## 8. Expansion pass — 4 November 2026
 
 - Knowledge package release: `uk-field-v2-2026-11-04`.
-- Library size: 48 articles, 18 categories and 49 named sources.
+- Library size: 48 articles, 18 categories and 48 named sources.
 - Added medical quick references for stroke, heart attack, severe bleeding and suspected fractures.
 - Added forestry entries for multi-feature tree identification, silver birch, oak, ash and yew hazards.
 - Added foraging safety entries for general field checks, wild-garlic lookalikes, bramble-fruit hygiene and fungi caution.
