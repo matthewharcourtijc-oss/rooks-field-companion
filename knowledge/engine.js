@@ -468,17 +468,20 @@
       await done;
       if (lists.some(list => !list.length)) return [];
       const scores = new Map();
-      lists.forEach(list => list.forEach(record => {
-        scores.set(record.articleId, (scores.get(record.articleId) || 0) + (record.titleHit ? 4 : 1));
+      lists.forEach((list, termIndex) => list.forEach(record => {
+        const current = scores.get(record.articleId) || { matched: new Set(), score: 0 };
+        current.matched.add(termIndex);
+        current.score += record.titleHit ? 4 : 1;
+        scores.set(record.articleId, current);
       }));
-      const matches = Array.from(scores.entries()).filter(([, score]) => score >= terms.length);
+      const matches = Array.from(scores.entries()).filter(([, value]) => value.matched.size === terms.length);
       if (!matches.length) return [];
       const articleTx = makeTransaction(db, [STORES.articles], "readonly");
       const articleDone = transactionDone(articleTx);
       const articles = await Promise.all(matches.map(([id]) => requestResult(articleTx.objectStore(STORES.articles).get([active.id, id]))));
       await articleDone;
       return articles.filter(Boolean).filter(article => !categoryId || article.categoryId === categoryId)
-        .map(article => ({ article, score: scores.get(article.id) || 0 }))
+        .map(article => ({ article, score: (scores.get(article.id) || { score: 0 }).score }))
         .sort((a, b) => b.score - a.score || a.article.title.localeCompare(b.article.title))
         .slice(0, limit).map(item => item.article);
     });
