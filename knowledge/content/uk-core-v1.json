@@ -339,9 +339,9 @@
     },
     {
       "id": "nhs-broken-bones",
-      "title": "Broken bones",
-      "publisher": "NHS",
-      "url": "https://www.nhs.uk/conditions/broken-bones/",
+      "title": "Broken bones and fractures",
+      "publisher": "St John Ambulance",
+      "url": "https://www.sja.org.uk/first-aid-advice/fractures-and-broken-bones/",
       "accessedAt": "2026-11-04"
     },
     {
@@ -362,7 +362,7 @@
       "id": "woodland-oak",
       "title": "Oak",
       "publisher": "Woodland Trust",
-      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/oak/",
+      "url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/british-trees/a-z-of-british-trees/english-oak/",
       "accessedAt": "2026-11-04"
     },
     {
