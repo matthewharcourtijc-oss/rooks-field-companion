@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "releaseId": "uk-field-v2-2026-11-04",
-  "createdAt": "2026-11-04T19:00:00.000Z",
+  "releaseId": "uk-field-v3-2026-11-04",
+  "createdAt": "2026-11-04T22:00:00.000Z",
   "summary": "Expanded UK field library: medical emergencies, forestry, foraging safety, bushcraft and offline illustrations.",
   "categories": [
     {
@@ -1078,7 +1078,7 @@
       "id": "heat-exhaustion-heatstroke",
       "title": "Heat exhaustion and heatstroke",
       "summary": "Cool someone with heat exhaustion and recognise heatstroke as a medical emergency.",
-      "body": "Heat exhaustion can progress to heatstroke. NHS guidance says a person with heat exhaustion should start to improve within 30 minutes of cooling. Heatstroke needs immediate emergency help.",
+      "body": "Heat exhaustion can progress to heatstroke. NHS guidance recommends moving the person somewhere cool, removing unnecessary clothing, giving cool fluids only if they are fully awake and able to swallow, and actively cooling the skin. They should begin to improve within 30 minutes. Suspected heatstroke needs immediate emergency help.",
       "categoryId": "first-aid",
       "tags": [
         "heat",
@@ -1088,7 +1088,13 @@
         "dehydration"
       ],
       "steps": [
-        "If heat-exhaustion symptoms do not improve after 30 minutes of cooling, call 999."
+        "Move the person to a cool place, such as shade or a cool indoor room.",
+        "Remove unnecessary clothing, such as a jacket or extra layers.",
+        "If they are fully awake and can swallow safely, give cool water or a suitable rehydration drink. Do not give drinks to someone who is confused, unconscious or unable to swallow.",
+        "Cool their skin with cool water by spraying or sponging, and fan them. Cold packs wrapped in cloth may be placed at the neck or under the armpits.",
+        "Stay with the person and watch for worsening symptoms.",
+        "Call 999 immediately if they show signs of heatstroke, including confusion, poor coordination, a seizure, loss of consciousness, very high temperature, or hot skin that is not sweating.",
+        "If they have not started to improve after 30 minutes of cooling, call 999. If symptoms are difficult to manage or worsening before then, seek urgent NHS 111 advice."
       ],
       "equipment": [
         "Cool water",
@@ -1099,13 +1105,14 @@
         "Leaving the person alone.",
         "Assuming heavy sweating rules out heatstroke.",
         "Giving drinks to someone who is confused, unconscious or unable to swallow safely.",
+        "Delaying 999 when heatstroke is suspected.",
         "Driving someone with suspected heatstroke to A&E instead of calling 999."
       ],
       "dangers": [
-        "Heatstroke can be life-threatening.",
-        "Confusion, seizures and loss of consciousness require emergency help."
+        "Heatstroke can be life-threatening and requires immediate emergency help.",
+        "Confusion, poor coordination, seizures and loss of consciousness are emergency warning signs."
       ],
-      "stopAndGetHelp": "Call 999 immediately for suspected heatstroke, or if heat-exhaustion symptoms have not improved after 30 minutes of cooling. Continue cooling while waiting for help.",
+      "stopAndGetHelp": "Call 999 immediately for suspected heatstroke, including confusion, poor coordination, seizure, loss of consciousness, or no improvement after 30 minutes of cooling. Continue active cooling while waiting for help. If heat-exhaustion symptoms are difficult to manage or are worsening, contact NHS 111 urgently.",
       "contentBasis": "official-guidance",
       "jurisdiction": "NHS guidance; check local service arrangements",
       "safetyLevel": "high",
