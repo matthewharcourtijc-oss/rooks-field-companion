@@ -174,7 +174,15 @@ assert.ok(floodResults.some(article => article.id === "flood-warning-actions"));
 assert.ok(floodResults.every(article => [article.title, article.summary, article.body, ...(article.tags || []), ...(article.steps || []), ...(article.equipment || []), ...(article.commonMistakes || []), ...(article.dangers || []), article.stopAndGetHelp].join(" ").toLowerCase().includes("flood") && [article.title, article.summary, article.body, ...(article.tags || []), ...(article.steps || []), ...(article.equipment || []), ...(article.commonMistakes || []), ...(article.dangers || []), article.stopAndGetHelp].join(" ").toLowerCase().includes("warning")));
 const hypothermiaResults = await db.search("hypothermia");
 assert.ok(hypothermiaResults.some(article => article.id === "hypothermia-recognition-response"));
-assert.equal((await db.search("tent fire")).length, 1);
+const tentFireResults = await db.search("tent fire");
+assert.ok(tentFireResults.some(article => article.id === "tent-fire-prevention"),
+  "multi-word tent/fire search must find the dedicated tent-fire safety article");
+assert.ok(tentFireResults.every(article => {
+  const searchable = [article.title, article.summary, article.body, ...(article.tags || []),
+    ...(article.steps || []), ...(article.equipment || []), ...(article.commonMistakes || []),
+    ...(article.dangers || []), article.stopAndGetHelp].join(" ").toLowerCase();
+  return searchable.includes("tent") && searchable.includes("fire");
+}), "multi-word search must return only articles containing every query term");
 assert.ok((await db.search("anaphylaxis")).some(article => article.id === "anaphylaxis-emergency-response"));
 assert.ok((await db.search("snake bite")).some(article => article.id === "uk-snake-bite-response"));
 assert.ok((await db.search("foraging")).some(article => article.id === "wild-foraging-safety"));
