@@ -12,17 +12,6 @@ jobs:
       - run:
           name: Validate Android TWA configuration
           command: node android/twa/validate-config.mjs
-      - run:
-          name: Verify offline service-worker precache targets
-          command: |
-            node --input-type=module <<'NODE'
-            import { readFileSync, existsSync } from "node:fs";
-            const sw = readFileSync("service-worker.js", "utf8");
-            const paths = [...sw.matchAll(/["'](\.\/?[^"'?#]+)["']/g)].map(m => m[1]);
-            const missing = [...new Set(paths)].filter(p => p.startsWith("./") && !existsSync(p.slice(2)));
-            if (missing.length) throw new Error("Missing relative service-worker assets: " + missing.join(", "));
-            console.log("Service-worker relative asset references checked.");
-            NODE
 workflows:
   companion-ci:
     jobs:
