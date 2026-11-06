@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 760" role="img" aria-labelledby="title desc">
+<title id="title">HARCOM Industries Viking emblem</title>
+<desc id="desc">A horned gunmetal Viking helmet, glowing orange eyes and a flame-like orange beard, framed by Norse knotwork.</desc>
+<defs>
+  <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0f3f4"/><stop offset=".22" stop-color="#687782"/><stop offset=".55" stop-color="#202a32"/><stop offset="1" stop-color="#87939a"/></linearGradient>
+  <linearGradient id="beard" x1="0" y1="0" x2=".15" y2="1"><stop stop-color="#ffd08a"/><stop offset=".28" stop-color="#ff8a25"/><stop offset="1" stop-color="#c94408"/></linearGradient>
+  <linearGradient id="horn" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0cf"/><stop offset=".5" stop-color="#9da8ad"/><stop offset="1" stop-color="#313d45"/></linearGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M258 246C154 230 95 167 90 82c48 58 91 67 148 64" stroke="#ff7518" stroke-width="9"/>
+  <path d="M542 246c104-16 163-79 168-164-48 58-91 67-148 64" stroke="#ff7518" stroke-width="9"/>
+  <path d="M258 246C154 230 95 167 90 82c48 58 91 67 148 64" stroke="url(#horn)" stroke-width="23"/>
+  <path d="M542 246c104-16 163-79 168-164-48 58-91 67-148 64" stroke="url(#horn)" stroke-width="23"/>
+  <path d="M170 330c-30 50-37 116-10 177M630 330c30 50 37 116 10 177" stroke="#87939a" stroke-width="9"/>
+  <path d="M185 343c-19 38-23 84-7 119M615 343c19 38 23 84 7 119" stroke="#ff7518" stroke-width="5"/>
+</g>
+<path d="M246 290Q252 155 400 116Q548 155 554 290L527 383H273Z" fill="url(#steel)" stroke="#080d11" stroke-width="18"/>
+<path d="M400 120V378M262 270l138-91 138 91" fill="none" stroke="#ff7518" stroke-width="9"/>
+<path d="M400 165l66 72-66 75-66-75Z" fill="#10171d" stroke="#ff7518" stroke-width="8"/>
+<path d="M400 192l35 45-35 43-35-43Z" fill="none" stroke="#cbd3d8" stroke-width="6"/>
+<path d="M248 292Q400 248 552 292L532 418Q400 470 268 418Z" fill="#111820" stroke="#080d11" stroke-width="18"/>
+<path d="M275 328Q335 300 380 333L350 358Q310 345 275 365Z" fill="#ff7518" filter="url(#glow)"/>
+<path d="M525 328Q465 300 420 333L450 358Q490 345 525 365Z" fill="#ff7518" filter="url(#glow)"/>
+<path d="M275 328Q335 300 380 333M525 328Q465 300 420 333" fill="none" stroke="#f5f1e8" stroke-width="7"/>
+<path d="M312 407Q400 445 488 407Q476 496 400 519Q324 496 312 407Z" fill="#1a2025" stroke="#090d10" stroke-width="12"/>
+<path d="M258 404Q224 465 258 543Q283 585 309 611Q299 554 331 527Q337 590 374 639Q391 662 400 680Q409 662 426 639Q463 590 469 527Q501 554 491 611Q517 585 542 543Q576 465 542 404Q513 457 479 462Q454 482 445 520Q424 493 400 486Q376 493 355 520Q346 482 321 462Q287 457 258 404Z" fill="url(#beard)" stroke="#111820" stroke-width="15"/>
+<path d="M400 490Q378 550 399 622Q419 551 400 490ZM319 483Q301 529 327 568M481 483Q499 529 473 568M278 450Q269 500 294 534M522 450Q531 500 506 534" fill="none" stroke="#ffca83" stroke-width="8" opacity=".85"/>
+<path d="M355 442Q400 463 445 442" fill="none" stroke="#111820" stroke-width="10"/>
+<path d="M195 610Q130 650 112 690M605 610Q670 650 688 690" fill="none" stroke="#87939a" stroke-width="8"/>
+<path d="M188 622q-30 28 0 49q30 21 0 45M612 622q30 28 0 49q-30 21 0 45" fill="none" stroke="#ff7518" stroke-width="7"/>
+</svg>

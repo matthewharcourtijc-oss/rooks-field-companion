@@ -4,12 +4,13 @@ import assert from "node:assert/strict";
 
 const html = fs.readFileSync("index.html", "utf8");
 const worker = fs.readFileSync("service-worker.js", "utf8");
+assert.match(worker, /harcom-field-companion-v0\.9\.14/, "service-worker cache revision must be v0.9.14");
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const readme = fs.readFileSync("README.md", "utf8");
 
 assert.ok(html.includes("Field Companion | HARCOM Industries"), "app title/brand mismatch");
 assert.match(html, /data-release="0\.9\.9"/, "HTML release metadata must match the v0.9.9 app release");
-assert.match(worker, /harcom-field-companion-v0\.9\.13/, "service-worker cache revision must be v0.9.13");
+assert.ok(worker.includes('"./assets/harcom-viking-emblem.svg"'), "official emblem must be precached for offline use");
 assert.ok(readme.includes("v0.9.5 — HARCOM Ownership & Provenance"), "README ownership history missing");
 assert.ok(readme.includes("v0.9.9 — Dangerous fungi & berries guide"), "README dangerous-species release note missing");
 assert.ok(html.includes('id="toxic-plants"'), "dangerous fungi and berries section missing");
@@ -100,7 +101,10 @@ assert.equal(manifest.scope, "./");
 assert.ok(manifest.name.includes("Field Companion"));
 assert.ok(fs.existsSync("icon.svg"), "manifest icon file is missing");
 const icon = fs.readFileSync("icon.svg", "utf8");
-assert.ok(icon.includes("viewBox=\"0 0 512 512\"") && icon.includes("#FF7518") && icon.includes("#000000") && icon.includes("Viking-head"), "official HARCOM Viking-head icon palette or dimensions missing");
+const officialEmblem = fs.readFileSync("assets/harcom-viking-emblem.svg", "utf8");
+assert.equal(icon, officialEmblem, "browser and installed SVG icon must use the canonical HARCOM emblem");
+assert.ok(icon.includes("viewBox=\"0 0 800 760\"") && icon.includes("#ff7518") && icon.includes("HARCOM Industries Viking emblem"), "official HARCOM Viking emblem artwork, palette or dimensions missing");
+assert.ok(html.includes('src="./assets/harcom-viking-emblem.svg"'), "app header must use the canonical HARCOM emblem");
 assert.ok(html.includes('<link rel="icon" type="image/svg+xml" href="./icon.svg">'), "browser favicon missing");
 assert.ok(manifest.icons.some(item => item.src === "./icon.svg" && item.type === "image/svg+xml"), "installed app icon missing");
 
@@ -117,7 +121,6 @@ for (const icon of [
   assert.ok(worker.includes('"./' + icon.path + '"'), icon.path + " is not precached");
 }
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.13/, "service-worker cache revision must be v0.9.13");
 assert.match(worker, /await cache\.addAll/);
 assert.equal(manifest.display, "standalone", "installed Field Companion must retain its standalone app display mode");
 const shellMatch = worker.match(/const APP_SHELL = \[([\s\S]*?)\]/);
