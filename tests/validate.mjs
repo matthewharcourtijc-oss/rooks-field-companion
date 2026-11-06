@@ -120,7 +120,7 @@ for (const icon of [
   assert.ok(worker.includes('"./' + icon.path + '"'), icon.path + " is not precached");
 }
 assert.match(html, /serviceWorker\.register/);
-assert.match(worker, /harcom-field-companion-v0.9.13/, "service-worker cache revision must be v0.9.13");
+assert.match(worker, /harcom-field-companion-v0.9.14/, "service-worker cache revision must be v0.9.13");
 assert.match(worker, /await cache\.addAll/);
 assert.equal(manifest.display, "standalone", "installed Field Companion must retain its standalone app display mode");
 const shellMatch = worker.match(/const APP_SHELL = \[([\s\S]*?)\]/);
