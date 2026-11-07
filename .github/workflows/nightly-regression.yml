@@ -1,8 +1,6 @@
 name: Nightly Field Companion regression
 
 on:
-  schedule:
-    - cron: '7 1 * * *'
   workflow_dispatch:
 
 permissions:
