@@ -1,13 +1,8 @@
-# Validate every proposed release; deploy Pages only from main.
-# Static-site deployment is triggered on every main-branch push.
+# Suspended pending CI provider review. Retained for a later controlled reactivation.
 name: Validate and deploy Field Companion
 
 on:
-  pull_request:
-    branches: ["main"]
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
